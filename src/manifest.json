@@ -1,0 +1,25 @@
+{
+	"manifest_version": 2,
+	"name": "media-db",
+	"short_name": "mdb",
+	"description": "",
+	"version": "0.0.0",
+	"minimum_chrome_version": "45",
+	"permissions": [
+		"storage"
+	],
+	"icons": {},
+	"background": {
+		"scripts": [
+			"pages/background/background.js"
+		],
+		"persistent": false
+	},
+	"content_scripts": [
+		"pages/content/content.js"
+	],
+	"page_action": {
+		"default_icon": {},
+		"default_popup": "html/popup/popup.html"
+	}
+}
