@@ -24,7 +24,9 @@
 		"transform-react-display-name",
 		// other
 		"transform-node-env-inline",
-		"transform-strict-mode"
+		"transform-strict-mode",
+		// external
+		"jsx-control-statements"
 	],
 	"env": {
 		"production": {

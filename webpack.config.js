@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const { join } = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
@@ -17,10 +19,17 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.jsx?$/, loader: 'babel' }
+			{ test: /\.js$/, loader: 'babel' },
+			{ test: /\.jsx$/, loaders: ['babel', 'react-map-styles'] },
+			{ test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css', 'postcss') },
+			{ test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css', 'postcss', 'sass') }
 		]
 	},
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin()
-	]
+		new webpack.optimize.UglifyJsPlugin(),
+		new ExtractTextPlugin('[name].bundle.css')
+	],
+	postcss() {
+		return [autoprefixer];
+	}
 };
