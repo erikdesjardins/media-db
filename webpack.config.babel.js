@@ -1,8 +1,8 @@
-const webpack = require('webpack');
-const { join } = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
+import webpack from 'webpack';
+import { join } from 'path';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 
 module.exports = {
     entry: {
