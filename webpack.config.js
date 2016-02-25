@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const { join } = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -27,7 +28,8 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin(),
-		new ExtractTextPlugin('[name].bundle.css')
+		new ExtractTextPlugin('[name].bundle.css'),
+		new NyanProgressPlugin()
 	],
 	postcss() {
 		return [autoprefixer];
