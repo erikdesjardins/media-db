@@ -5,18 +5,18 @@ import autoprefixer from 'autoprefixer';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 
 module.exports = {
-    entry: {
-        background: './src/pages/background/background.js',
-        content: './src/pages/content/content.js',
-        popup: './src/pages/popup/popup.js',
-        main: './src/pages/index.js'
-    },
-    output: {
-        path: join(__dirname, 'dist'),
-        filename: '[name].bundle.js'
-    },
+	entry: {
+		background: './src/pages/background/background.js',
+		content: './src/pages/content/content.js',
+		popup: './src/pages/popup/popup.js',
+		main: './src/pages/index.js'
+	},
+	output: {
+		path: join(__dirname, 'dist'),
+		filename: '[name].bundle.js'
+	},
 	resolve: {
-		extensions: ["", ".js", ".jsx"]
+		extensions: ['', '.js', '.jsx']
 	},
 	module: {
 		loaders: [
