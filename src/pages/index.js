@@ -13,6 +13,7 @@ render((
                 <Route path="items/by/:type/:query/:id" component={}/>
             </Route>
             <Route path="item/:id" component={}/>
+			<Route path="random" component={}/>
             <Route path="tabs" component={}/>
             <Route path="storage" component={}/>
             <Route path="*" component={}/>
