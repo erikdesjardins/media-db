@@ -10,9 +10,9 @@
   "license": "GPL-3.0",
   "scripts": {
     "prestart": "rimraf dist",
-    "start": "cross-env NODE_ENV=development webpack --progress --colors --watch",
+    "start": "cross-env NODE_ENV=development webpack --colors --watch",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors",
+    "build": "cross-env NODE_ENV=production webpack --colors",
     "postbuild": "gulp zip",
     "test": "eslint && scss-lint src && jest"
   },
