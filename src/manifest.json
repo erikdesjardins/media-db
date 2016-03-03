@@ -6,7 +6,8 @@
 	"version": "0.0.0",
 	"minimum_chrome_version": "45",
 	"permissions": [
-		"storage"
+		"storage",
+		"unlimitedStorage"
 	],
 	"icons": {},
 	"background": {
