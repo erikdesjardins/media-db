@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { IndexRoute, Route, Router, browserHistory } from 'react-router';
+import { render } from 'react-dom';
 
 render((
 	<Router history={browserHistory}>
