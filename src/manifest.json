@@ -2,9 +2,9 @@
 	"manifest_version": 2,
 	"name": "media-db",
 	"short_name": "mdb",
-	"description": "",
-	"version": "0.0.0",
-	"minimum_chrome_version": "45",
+	"description": "{{prop?description!../package.json}}",
+	"version": "{{prop?version!../package.json}}",
+	"minimum_chrome_version": "49",
 	"permissions": [
 		"storage",
 		"unlimitedStorage"
@@ -12,15 +12,15 @@
 	"icons": {},
 	"background": {
 		"scripts": [
-			"pages/background/background.js"
+			"{{./pages/background.entry.js}}"
 		],
 		"persistent": false
 	},
 	"content_scripts": [
-		"pages/content/content.js"
+		"{{./pages/content.entry.js}}"
 	],
 	"page_action": {
 		"default_icon": {},
-		"default_popup": "html/popup/popup.html"
+		"default_popup": "{{./html/popup.html}}"
 	}
 }
