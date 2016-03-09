@@ -10,11 +10,11 @@
   "license": "GPL-3.0",
   "scripts": {
     "prestart": "rimraf dist",
-    "start": "cross-env NODE_ENV=development webpack --progress --colors --watch",
+    "start": "cross-env NODE_ENV=development webpack --colors --watch",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors",
+    "build": "cross-env NODE_ENV=production webpack --colors",
     "postbuild": "gulp zip",
-    "test": "eslint && scss-lint src && jest"
+    "test": "eslint . && scss-lint src && jest"
   },
   "dependencies": {
     "core-decorators": "^0.9.2",
@@ -47,11 +47,11 @@
     "css-loader": "^0.23.1",
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-react": "^4.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "gulp": "^3.9.0",
     "gulp-zip": "^3.0.2",
     "jest-cli": "^0.8.2",
-    "jsx-control-statements": "^3.0.0",
     "node-sass": "^3.4.2",
     "nyan-progress-webpack-plugin": "^1.1.4",
     "postcss-loader": "^0.8.0",
