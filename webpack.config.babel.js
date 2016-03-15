@@ -1,3 +1,4 @@
+import BellOnBundlerErrorPlugin from 'bell-on-bundler-error-plugin';
 import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import autoprefixer from 'autoprefixer';
@@ -25,6 +26,7 @@ export default {
 	},
 	plugins: [
 		new InertEntryPlugin(),
+		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin()
 	],
 	postcss() {
