@@ -1,6 +1,7 @@
 {
 	"presets": ["stage-0", "react"],
 	"plugins": [
+		"./babelRelayPlugin",
 		"transform-decorators-legacy",
 		"transform-es2015-modules-commonjs",
 		"transform-dead-code-elimination",
@@ -11,6 +12,7 @@
 	"env": {
 		"production": {
 			"plugins": [
+				"./babelRelayPlugin",
 				"transform-decorators-legacy",
                 "transform-es2015-modules-commonjs",
                 "transform-dead-code-elimination",

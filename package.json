@@ -49,6 +49,7 @@
     "babel-plugin-transform-react-inline-elements": "^6.6.5",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-relay-plugin": "^0.7.3",
     "bell-on-bundler-error-plugin": "^1.0.8",
     "chrome-extension-deploy": "^1.0.0",
     "cross-env": "^1.0.7",
