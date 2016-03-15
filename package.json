@@ -9,11 +9,13 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "prestart": "rimraf dist",
+    "prefirst": "rimraf dist",
+    "first": "babel-node ./scripts/updateSchema.js",
+    "prestart": "npm run first",
     "start": "cross-env NODE_ENV=development webpack --watch",
-    "preonce": "rimraf dist",
+    "preonce": "npm run first",
     "once": "cross-env NODE_ENV=development webpack",
-    "prebuild": "rimraf dist",
+    "prebuild": "npm run first",
     "build": "cross-env NODE_ENV=production webpack",
     "postbuild": "gulp zip",
     "test": "eslint . && scss-lint && jest"
