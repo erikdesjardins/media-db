@@ -63,11 +63,11 @@ const itemType = new GraphQLObjectType({
 	fields: () => ({
 		id: globalIdField('Item'),
 		title: {
-			type: new GraphQLNonNull(GraphQLString),
+			type: GraphQLString,
 			description: 'The item\'s title',
 		},
 		author: {
-			type: new GraphQLNonNull(GraphQLString),
+			type: GraphQLString,
 			description: 'The item\'s author',
 		},
 		genres: {
@@ -79,7 +79,7 @@ const itemType = new GraphQLObjectType({
 			description: 'A list of the item\'s characters',
 		},
 		length: {
-			type: new GraphQLNonNull(GraphQLInt),
+			type: GraphQLInt,
 			description: 'The item\'s length (platform-specific)',
 		},
 		status: {
