@@ -57,7 +57,7 @@ const runtimeSendMessage = apiToPromise(chrome.runtime.sendMessage);
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
  */
-export async function send({ type, tabId, data } = {}) {
+export async function sendMessage({ type, tabId, data } = {}) {
 	const message = { type, data };
 	const target = parseInt(tabId, 10);
 

@@ -9,10 +9,7 @@ export default {
 	bail: process.env.NODE_ENV === 'production',
 	output: {
 		path: join(__dirname, 'dist'),
-		filename: 'manifest.json'
-	},
-	resolve: {
-		extensions: ['', '.js', '.jsx']
+		filename: 'manifest.json',
 	},
 	module: {
 		loaders: [
@@ -21,15 +18,15 @@ export default {
 			{ test: /\.jsx$/, loaders: ['babel', 'react-map-styles'] },
 			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
 			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
-			{ test: /\.png$/, loader: 'file?name=[name].[ext]' }
-		]
+			{ test: /\.png$/, loader: 'file?name=[name].[ext]' },
+		],
 	},
 	plugins: [
 		new InertEntryPlugin(),
 		new BellOnBundlerErrorPlugin(),
-		new NyanProgressPlugin()
+		new NyanProgressPlugin(),
 	],
 	postcss() {
 		return [autoprefixer];
-	}
+	},
 };
