@@ -1,5 +1,6 @@
 
 import {
+	GraphQLEnumType,
 	GraphQLID,
 	GraphQLInt,
 	GraphQLList,
@@ -21,6 +22,40 @@ import {
 	getItem,
 	getItems,
 } from './database';
+
+const statusEnum = new GraphQLEnumType({
+	name: 'Status',
+	description: 'The item\'s status',
+	values: {
+		PENDING: {
+			value: 'Pending',
+			description: 'Unviewed',
+		},
+		COMPLETE: {
+			value: 'Complete',
+			description: 'Viewed',
+		},
+	},
+});
+
+const productionStatusEnum = new GraphQLEnumType({
+	name: 'ProductionStatus',
+	description: 'The item\'s production status',
+	values: {
+		INCOMPLETE: {
+			value: 'Incomplete',
+		},
+		COMPLETE: {
+			value: 'Complete',
+		},
+		HIATUS: {
+			value: 'Hiatus',
+		},
+		CANCELLED: {
+			value: 'Cancelled',
+		},
+	},
+});
 
 const itemType = new GraphQLObjectType({
 	name: 'Item',
@@ -47,13 +82,17 @@ const itemType = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The item\'s length (platform-specific)',
 		},
-		rating: {
-			type: GraphQLInt,
-			description: 'The item\'s rating (nullable)',
+		status: {
+			type: statusEnum,
+			description: 'The item\'s status',
+		},
+		productionStatus: {
+			type: productionStatusEnum,
+			description: 'The item\'s production status',
 		},
 		date: {
 			type: new GraphQLNonNull(GraphQLInt),
-			description: 'The date at which this version of the item was updated'
+			description: 'The date at which this version of the item was updated',
 		},
 	}),
 	interfaces: [nodeInterface],

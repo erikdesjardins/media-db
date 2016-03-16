@@ -10,24 +10,26 @@ export class Item {
 	genres: Array<string>;
 	characters: Array<string>;
 	length: number;
-	rating: number;
+	status: string;
+	productionStatus: string;
 	date: number;
 
-	constructor(id, title, author, genres, characters, length, rating, date) {
+	constructor(id, title, author, genres, characters, length, status, productionStatus, date) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.genres = genres;
 		this.characters = characters;
 		this.length = length;
-		this.rating = rating;
+		this.status = status;
+		this.productionStatus = productionStatus;
 		this.date = date;
 	}
 }
 
 const db = new Dexie('MediaDB');
 
-db.version(1).stores({ media: 'id,title,author,*genres,*characters,length,rating,date' });
+db.version(1).stores({ media: 'id,title,author,*genres,*characters,length,status,productionStatus,date' });
 
 db.media.mapToClass(Item, {
 	id: String,
@@ -36,7 +38,8 @@ db.media.mapToClass(Item, {
 	genres: [String],
 	characters: [String],
 	length: Number,
-	rating: Number,
+	status: String,
+	productionStatus: String,
 	date: Number,
 });
 
