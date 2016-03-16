@@ -1,7 +1,6 @@
 
 import {
 	GraphQLEnumType,
-	GraphQLID,
 	GraphQLInt,
 	GraphQLList,
 	GraphQLNonNull,
@@ -15,10 +14,12 @@ import {
 	globalIdField,
 	mutationWithClientMutationId,
 	nodeDefinitions,
+	toGlobalId,
 } from 'graphql-relay';
 
 import {
 	Item,
+	addItem,
 	getItem,
 	getItems,
 } from './database';
@@ -125,32 +126,34 @@ const queryType = new GraphQLObjectType({
 	}),
 });
 
-var CheckHidingSpotForTreasureMutation = mutationWithClientMutationId({
-	name: 'CheckHidingSpotForTreasure',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-	},
+function randomId(length = 16) {
+	let id = '';
+	while (id.length < length) {
+		id += String(Math.random).slice(2);
+	}
+	return id.slice(0, length);
+}
+
+const AddItemMutation = mutationWithClientMutationId({
+	name: 'AddItem',
+	inputFields: {},
 	outputFields: {
-		hidingSpot: {
-			type: hidingSpotType,
-			resolve: ({localHidingSpotId}) => getHidingSpot(localHidingSpotId),
-		},
-		game: {
-			type: gameType,
-			resolve: () => getGame(),
+		item: {
+			type: itemType,
+			resolve: ({ itemId }) => getItem(itemId),
 		},
 	},
-	mutateAndGetPayload: ({id}) => {
-		var localHidingSpotId = fromGlobalId(id).id;
-		checkHidingSpotForTreasure(localHidingSpotId);
-		return {localHidingSpotId};
+	mutateAndGetPayload: () => {
+		const itemId = toGlobalId('Item', randomId());
+		addItem(itemId);
+		return { itemId };
 	},
 });
 
 const mutationType = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
-		checkHidingSpotForTreasure: CheckHidingSpotForTreasureMutation,
+		addItem: AddItemMutation,
 	}),
 });
 

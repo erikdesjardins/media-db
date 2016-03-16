@@ -43,6 +43,12 @@ export function getItems(limit, offset = 0) {
 	);
 }
 
+export function addItem(id) {
+	return db.transaction('rw', db.media, () =>
+		db.media.add({ id, date: Date.now() })
+	);
+}
+
 export function getItemsByAuthor(author) {
 	return db.transaction('r', db.media, () =>
 		db.media::current().where('author').equals(author).toArray()
