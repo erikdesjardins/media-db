@@ -3,29 +3,7 @@ import Dexie from 'dexie';
 const Promise = Dexie.Promise; // eslint-disable-line no-unused-vars
 
 // Model types
-export class Item {
-	id: string;
-	title: string;
-	author: string;
-	genres: Array<string>;
-	characters: Array<string>;
-	length: number;
-	status: string;
-	productionStatus: string;
-	date: number;
-
-	constructor(id, title, author, genres, characters, length, status, productionStatus, date) {
-		this.id = id;
-		this.title = title;
-		this.author = author;
-		this.genres = genres;
-		this.characters = characters;
-		this.length = length;
-		this.status = status;
-		this.productionStatus = productionStatus;
-		this.date = date;
-	}
-}
+export class Item {}
 
 const db = new Dexie('MediaDB');
 
