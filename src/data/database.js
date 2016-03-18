@@ -7,7 +7,7 @@ export class Item {}
 
 const db = new Dexie('MediaDB');
 
-db.version(1).stores({ media: 'id,title,creator,*genres,*characters,length,status,productionStatus,date' });
+db.version(1).stores({ media: ',id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]' });
 
 db.media.mapToClass(Item, {
 	id: String,
