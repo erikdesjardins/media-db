@@ -22,5 +22,6 @@
 	"page_action": {
 		"default_icon": {},
 		"default_popup": "{{./html/popup.html}}"
-	}
+	},
+	"index": "{{./html/index.html}}"
 }
