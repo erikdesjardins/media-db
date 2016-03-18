@@ -1,4 +1,3 @@
-
 import {
 	GraphQLEnumType,
 	GraphQLInt,
@@ -83,9 +82,9 @@ const itemType = new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'The item\'s title',
 		},
-		author: {
+		creator: {
 			type: GraphQLString,
-			description: 'The item\'s author',
+			description: 'The item\'s creator',
 		},
 		genres: {
 			type: new GraphQLList(GraphQLString),
@@ -97,7 +96,7 @@ const itemType = new GraphQLObjectType({
 		},
 		length: {
 			type: GraphQLInt,
-			description: 'The item\'s length (platform-specific)',
+			description: 'The item\'s length',
 		},
 		status: {
 			type: statusEnum,

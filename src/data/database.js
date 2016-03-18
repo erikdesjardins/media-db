@@ -7,12 +7,12 @@ export class Item {}
 
 const db = new Dexie('MediaDB');
 
-db.version(1).stores({ media: 'id,title,author,*genres,*characters,length,status,productionStatus,date' });
+db.version(1).stores({ media: 'id,title,creator,*genres,*characters,length,status,productionStatus,date' });
 
 db.media.mapToClass(Item, {
 	id: String,
 	title: String,
-	author: String,
+	creator: String,
 	genres: [String],
 	characters: [String],
 	length: Number,
@@ -49,9 +49,9 @@ export function addItem(id) {
 	);
 }
 
-export function getItemsByAuthor(author) {
+export function getItemsByCreator(creator) {
 	return db.transaction('r', db.media, () =>
-		db.media::current().where('author').equals(author).toArray()
+		db.media::current().where('creator').equals(creator).toArray()
 	);
 }
 
