@@ -10,7 +10,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "prefirst": "rimraf dist",
-    "first": "babel-node ./scripts/updateSchema.js",
+    "first": "babel-node ./updateSchema.js",
     "prestart": "npm run first",
     "start": "cross-env NODE_ENV=development webpack --watch",
     "preonce": "npm run first",
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.6.4",
     "babel-eslint": "^v6.0.0-beta.5",
     "babel-loader": "^6.2.4",
