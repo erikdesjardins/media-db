@@ -24,6 +24,22 @@ import {
 	getItems,
 } from './database';
 
+const { nodeInterface, nodeField } = nodeDefinitions(
+	globalId => {
+		const { type, id } = fromGlobalId(globalId);
+		if (type === 'Item') {
+			return getItem(id);
+		}
+		return null;
+	},
+	obj => {
+		if (obj instanceof Item) {
+			return itemType; // eslint-disable-line no-use-before-define
+		}
+		return null;
+	}
+);
+
 const statusEnum = new GraphQLEnumType({
 	name: 'Status',
 	description: 'The item\'s status',
@@ -98,22 +114,6 @@ const itemType = new GraphQLObjectType({
 	}),
 	interfaces: [nodeInterface],
 });
-
-const { nodeInterface, nodeField } = nodeDefinitions(
-	globalId => {
-		const { type, id } = fromGlobalId(globalId);
-		if (type === 'Item') {
-			return getItem(id);
-		}
-		return null;
-	},
-	obj => {
-		if (obj instanceof Item) {
-			return itemType;
-		}
-		return null;
-	}
-);
 
 const queryType = new GraphQLObjectType({
 	name: 'Query',
