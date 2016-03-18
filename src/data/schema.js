@@ -33,13 +33,13 @@ const { nodeInterface, nodeField } = nodeDefinitions(
 	},
 	obj => {
 		if (obj instanceof Item) {
-			return itemType; // eslint-disable-line no-use-before-define
+			return GraphQLItem; // eslint-disable-line no-use-before-define
 		}
 		return null;
 	}
 );
 
-const statusEnum = new GraphQLEnumType({
+const GraphQLStatusEnum = new GraphQLEnumType({
 	name: 'Status',
 	description: 'The item\'s status',
 	values: {
@@ -54,7 +54,7 @@ const statusEnum = new GraphQLEnumType({
 	},
 });
 
-const productionStatusEnum = new GraphQLEnumType({
+const GraphQLProductionStatusEnum = new GraphQLEnumType({
 	name: 'ProductionStatus',
 	description: 'The item\'s production status',
 	values: {
@@ -73,7 +73,7 @@ const productionStatusEnum = new GraphQLEnumType({
 	},
 });
 
-const itemType = new GraphQLObjectType({
+const GraphQLItem = new GraphQLObjectType({
 	name: 'Item',
 	description: 'A media item',
 	fields: () => ({
@@ -99,11 +99,11 @@ const itemType = new GraphQLObjectType({
 			description: 'The item\'s length',
 		},
 		status: {
-			type: statusEnum,
+			type: GraphQLStatusEnum,
 			description: 'The item\'s status',
 		},
 		productionStatus: {
-			type: productionStatusEnum,
+			type: GraphQLProductionStatusEnum,
 			description: 'The item\'s production status',
 		},
 		date: {
@@ -114,12 +114,12 @@ const itemType = new GraphQLObjectType({
 	interfaces: [nodeInterface],
 });
 
-const queryType = new GraphQLObjectType({
+const Query = new GraphQLObjectType({
 	name: 'Query',
 	fields: () => ({
 		node: nodeField,
 		items: {
-			type: new GraphQLList(itemType),
+			type: new GraphQLList(GraphQLItem),
 			resolve: () => getItems(100),
 		},
 	}),
@@ -133,12 +133,12 @@ function randomId(length = 16) {
 	return id.slice(0, length);
 }
 
-const AddItemMutation = mutationWithClientMutationId({
+const GraphQLAddItemMutation = mutationWithClientMutationId({
 	name: 'AddItem',
 	inputFields: {},
 	outputFields: {
 		item: {
-			type: itemType,
+			type: GraphQLItem,
 			resolve: ({ itemId }) => getItem(itemId),
 		},
 	},
@@ -149,14 +149,14 @@ const AddItemMutation = mutationWithClientMutationId({
 	},
 });
 
-const mutationType = new GraphQLObjectType({
+const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
-		addItem: AddItemMutation,
+		addItem: GraphQLAddItemMutation,
 	}),
 });
 
 export default new GraphQLSchema({
-	query: queryType,
-	mutation: mutationType,
+	query: Query,
+	mutation: Mutation,
 });
