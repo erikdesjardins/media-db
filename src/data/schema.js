@@ -9,6 +9,10 @@ import {
 } from 'graphql';
 
 import {
+	connectionArgs,
+	connectionDefinitions,
+	connectionFromArray,
+	cursorForObjectInConnection,
 	fromGlobalId,
 	globalIdField,
 	mutationWithClientMutationId,
@@ -114,13 +118,33 @@ const GraphQLItem = new GraphQLObjectType({
 	interfaces: [nodeInterface],
 });
 
+const {
+	connectionType: ItemsConnection,
+	edgeType: GraphQLItemEdge,
+} = connectionDefinitions({
+	name: 'Item',
+	nodeType: GraphQLItem,
+});
+
 const Query = new GraphQLObjectType({
 	name: 'Query',
 	fields: () => ({
 		node: nodeField,
 		items: {
-			type: new GraphQLList(GraphQLItem),
-			resolve: () => getItems(100),
+			type: ItemsConnection,
+			args: {
+				limit: {
+					type: GraphQLInt,
+					defaultValue: 100,
+				},
+				offset: {
+					type: GraphQLInt,
+					defaultValue: 0,
+				},
+				...connectionArgs,
+			},
+			resolve: (obj, { limit, offset, ...args }) =>
+				connectionFromArray(getItems(limit, offset), args),
 		},
 	}),
 });
@@ -137,9 +161,15 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	name: 'AddItem',
 	inputFields: {},
 	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ itemId }) => getItem(itemId),
+		itemEdge: {
+			type: GraphQLItemEdge,
+			resolve: ({ itemId }) => {
+				const item = getItem(itemId);
+				return {
+					cursor: cursorForObjectInConnection(getItems(), item),
+					node: item,
+				};
+			},
 		},
 	},
 	mutateAndGetPayload: () => {
