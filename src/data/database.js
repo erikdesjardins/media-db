@@ -22,7 +22,12 @@ db.media.mapToClass(Item, {
 });
 
 function current() {
-	this.orderBy('date').reverse().distinct(); // eslint-disable-line no-invalid-this
+	this.orderBy('date').reverse()::distinct('id'); // eslint-disable-line no-invalid-this
+}
+
+function distinct(key) {
+	const seenKeys = new Set();
+	this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k)); // eslint-disable-line no-invalid-this
 }
 
 export function getItemHistory(id) {
