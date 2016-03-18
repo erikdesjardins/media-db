@@ -37,7 +37,7 @@ export function getItem(id) {
 	);
 }
 
-export function getItems(limit, offset = 0) {
+export function getItems(limit = Infinity, offset = 0) {
 	return db.transaction('r', db.media, () =>
 		db.media::current().offset(offset).limit(limit).toArray()
 	);
