@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import fs from 'fs';
 import path from 'path';
 import deploy from 'chrome-extension-deploy';
@@ -11,8 +9,8 @@ deploy({
 	id: 'INSERT ID HERE',
 	zip: fs.readFileSync(path.join(__dirname, 'dist/media-db.zip')),
 }).then(() => {
-	console.log('Deploy complete!');
+	console.log('Deploy complete!'); // eslint-disable-line no-console
 }, err => {
-	console.error(err);
+	console.error(err); // eslint-disable-line no-console
 	process.exit(1);
 });
