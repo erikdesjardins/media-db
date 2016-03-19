@@ -50,13 +50,13 @@ render((
 				<IndexRoute
 					component={null}
 					queries={{
-						listing: () => Relay.QL`query { items(count: 100) }`,
+						listing: () => Relay.QL`query { items }`,
 					}}
 				/>
 				<Route
-					path="after/:after"
+					path="after/:first"
 					queries={{
-						listing: () => Relay.QL`query { items(count: 100, after: $after) }`,
+						listing: () => Relay.QL`query { items(first: $first) }`,
 					}}
 				/>
 				<Route path="items" component={null}>

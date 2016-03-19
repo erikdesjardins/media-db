@@ -6,16 +6,18 @@ import relay from 'relay-decorator';
 	prepareVariables() {
 		return {
 			limit: 10,
-			offset: 0,
+			first: 0,
 		};
 	},
 	fragments: {
 		items: () => Relay.QL`
-			items(limit: $limit, offset: $offset) {
-				edges {
-					node {
-						id,
-						date,
+			fragment on Query {
+				items(limit: $limit, first: $first) {
+					edges {
+						node {
+							id,
+							date,
+						}
 					}
 				}
 			}

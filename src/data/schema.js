@@ -137,14 +137,14 @@ const Query = new GraphQLObjectType({
 					type: GraphQLInt,
 					defaultValue: 100,
 				},
-				offset: {
+				first: {
 					type: GraphQLInt,
 					defaultValue: 0,
 				},
 				...connectionArgs,
 			},
-			resolve: (obj, { limit, offset, ...args }) =>
-				connectionFromArray(getItems(limit, offset), args),
+			resolve: (obj, { limit, first, ...args }) =>
+				connectionFromArray(getItems(limit, first), args),
 		},
 	}),
 });
