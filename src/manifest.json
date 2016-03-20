@@ -22,7 +22,10 @@
 		"persistent": false
 	},
 	"content_scripts": [
-		"{{./pages/content.entry.js}}"
+		{
+			"matches": ["*://*/*"],
+			"js": ["{{./pages/content.entry.js}}"]
+		}
 	],
 	"page_action": {
 		"default_icon": {
