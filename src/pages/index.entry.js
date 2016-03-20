@@ -46,19 +46,13 @@ render((
 	<RelayRouter
 		history={browserHistory}
 		routes={
-			<Route path="/" component={App}>
-				<IndexRoute
-					component={null}
-					queries={{
-						listing: () => Relay.QL`query { items }`,
-					}}
-				/>
-				<Route
-					path="after/:first"
-					queries={{
-						listing: () => Relay.QL`query { items(first: $first) }`,
-					}}
-				/>
+			<Route
+				path="/" component={App}
+				queries={{
+					viewer: () => Relay.QL`query { viewer }`,
+				}}
+			>
+				<IndexRoute component={null}/>
 				<Route path="items" component={null}>
 					<Route path="items/:id" component={null}/>
 				</Route>
