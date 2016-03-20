@@ -1,6 +1,14 @@
 import Relay from 'react-relay';
 
 export default class AddItemMutation extends Relay.Mutation {
+	static fragments = {
+		viewer: () => Relay.QL`
+			fragment on User {
+				id,
+			}
+		`,
+	};
+
 	getMutation() {
 		return Relay.QL`mutation { addItem }`;
 	}
@@ -8,7 +16,10 @@ export default class AddItemMutation extends Relay.Mutation {
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddItemPayload {
-				itemEdge
+				itemEdge,
+				viewer {
+					items,
+				},
 			}
 		`;
 	}
@@ -16,8 +27,8 @@ export default class AddItemMutation extends Relay.Mutation {
 	getConfigs() {
 		return [{
 			type: 'RANGE_ADD',
-			parentName: 'items',
-			parentID: 0,
+			parentName: 'viewer',
+			parentID: this.props.viewer.id,
 			connectionName: 'items',
 			edgeName: 'itemEdge',
 			rangeBehaviors: {
@@ -32,6 +43,9 @@ export default class AddItemMutation extends Relay.Mutation {
 				node: {
 					date: Date.now(),
 				},
+			},
+			viewer: {
+				id: this.props.viewer.id,
 			},
 		};
 	}
