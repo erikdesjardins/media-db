@@ -2,8 +2,8 @@ import Dexie from 'dexie';
 // to "polyfill" async functions
 const Promise = Dexie.Promise; // eslint-disable-line no-unused-vars
 
-// Model types
 export class Item {}
+export class User {}
 
 const db = new Dexie('MediaDB');
 
@@ -52,4 +52,23 @@ export function addItem(id) {
 	return db.transaction('rw', db.media, () =>
 		db.media.add({ id, date: Date.now() })
 	);
+}
+
+// Mock users until we actually need to _use_ them (get it?)
+
+const VIEWER_ID = 'hardcoded_viewer_id';
+
+const viewer = new User();
+viewer.id = VIEWER_ID;
+
+const usersById = {
+	[VIEWER_ID]: viewer,
+};
+
+export function getUser(id) {
+	return usersById[id];
+}
+
+export function getViewer() {
+	return getUser(VIEWER_ID);
 }
