@@ -22,9 +22,12 @@ import {
 
 import {
 	Item,
+	User,
 	addItem,
 	getItem,
 	getItems,
+	getUser,
+	getViewer,
 } from './database';
 
 const { nodeInterface, nodeField } = nodeDefinitions(
@@ -32,12 +35,16 @@ const { nodeInterface, nodeField } = nodeDefinitions(
 		const { type, id } = fromGlobalId(globalId);
 		if (type === 'Item') {
 			return getItem(id);
+		} else if (type === 'User') {
+			return getUser(id);
 		}
 		return null;
 	},
 	obj => {
 		if (obj instanceof Item) {
 			return GraphQLItem; // eslint-disable-line no-use-before-define
+		} else if (obj instanceof User) {
+			return GraphQLUser; // eslint-disable-line no-use-before-define
 		}
 		return null;
 	}
@@ -126,10 +133,10 @@ const {
 	nodeType: GraphQLItem,
 });
 
-const Query = new GraphQLObjectType({
-	name: 'Query',
-	fields: () => ({
-		node: nodeField,
+const GraphQLUser = new GraphQLObjectType({
+	name: 'User',
+	fields: {
+		id: globalIdField('User'),
 		items: {
 			type: ItemsConnection,
 			args: {
@@ -145,6 +152,17 @@ const Query = new GraphQLObjectType({
 			},
 			resolve: (obj, { limit, first, ...args }) =>
 				connectionFromArray(getItems(limit, first), args),
+		},
+	},
+});
+
+const Query = new GraphQLObjectType({
+	name: 'Query',
+	fields: () => ({
+		node: nodeField,
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
 		},
 	}),
 });
@@ -170,6 +188,10 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 					node: item,
 				};
 			},
+		},
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
 		},
 	},
 	mutateAndGetPayload: () => {
