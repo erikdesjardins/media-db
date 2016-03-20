@@ -32,27 +32,19 @@ function distinct(key) {
 }
 
 export function getItemHistory(id) {
-	return db.transaction('r', db.media, () =>
-		db.media.where('id').equals(id).orderBy('date').reverse().toArray()
-	);
+	return db.media.where('id').equals(id).orderBy('date').reverse().toArray();
 }
 
 export function getItem(id) {
-	return db.transaction('r', db.media, () =>
-		db.media.where('id').equals(id)::current().first()
-	);
+	return db.media.where('id').equals(id)::current().first();
 }
 
 export function getItems(limit = Infinity, offset = 0) {
-	return db.transaction('r', db.media, () =>
-		db.media::current().offset(offset).limit(limit).toArray()
-	);
+	return db.media::current().offset(offset).limit(limit).toArray();
 }
 
 export function addItem(id) {
-	return db.transaction('rw', db.media, () =>
-		db.media.add({ id, date: Date.now() })
-	);
+	return db.media.add({ id, date: Date.now() });
 }
 
 // Mock users until we actually need to _use_ them (get it?)
