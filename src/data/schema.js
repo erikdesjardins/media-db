@@ -11,7 +11,7 @@ import {
 import {
 	connectionArgs,
 	connectionDefinitions,
-	connectionFromArray,
+	connectionFromPromisedArray,
 	cursorForObjectInConnection,
 	fromGlobalId,
 	globalIdField,
@@ -151,7 +151,7 @@ const GraphQLUser = new GraphQLObjectType({
 				...connectionArgs,
 			},
 			resolve: (obj, { limit, first, ...args }) =>
-				connectionFromArray(getItems(limit, first), args),
+				connectionFromPromisedArray(getItems(limit, first), args),
 		},
 	},
 });
