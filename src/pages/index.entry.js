@@ -67,4 +67,4 @@ render((
 			</Route>
 		}
 	/>
-), document.body);
+), document.getElementById('app'));
