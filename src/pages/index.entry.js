@@ -1,9 +1,9 @@
 import App from '../components/App';
 import React from 'react';
+import Relay from 'react-relay';
 import formatRequestErrors from '../utils/formatRequestErrors';
 import { IndexRoute, Route, browserHistory } from 'react-router';
 import { QUERY } from '../constants/messages';
-import { Relay } from 'react-relay';
 import { RelayRouter } from 'react-router-relay';
 import { render } from 'react-dom';
 import { sendMessage } from '../api/messages';
