@@ -32,13 +32,13 @@ function distinct(key) {
 
 export function getItemHistory(id) {
 	return db.transaction('r', db.media, () =>
-		db.media.get(id).orderBy('date').reverse().toArray()
+		db.media.where('id').equals(id).orderBy('date').reverse().toArray()
 	);
 }
 
 export function getItem(id) {
 	return db.transaction('r', db.media, () =>
-		db.media::current().get(id).first()
+		db.media.where('id').equals(id)::current().first()
 	);
 }
 
@@ -51,23 +51,5 @@ export function getItems(limit = Infinity, offset = 0) {
 export function addItem(id) {
 	return db.transaction('rw', db.media, () =>
 		db.media.add({ id, date: Date.now() })
-	);
-}
-
-export function getItemsByCreator(creator) {
-	return db.transaction('r', db.media, () =>
-		db.media::current().where('creator').equals(creator).toArray()
-	);
-}
-
-export function getItemsByGenre(genre) {
-	return db.transaction('r', db.media, () =>
-		db.media::current().where('genres').equals(genre).toArray()
-	);
-}
-
-export function getItemsByCharacter(character) {
-	return db.transaction('r', db.media, () =>
-		db.media::current().where('characters').equals(character).toArray()
 	);
 }
