@@ -1,39 +1,29 @@
-import React from 'react';
+import ItemList from './ItemList';
+import React, { Component } from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
 @relay({
-	prepareVariables() {
-		return {
-			limit: 10,
-			first: 0,
-		};
+	initialVariables: {
+		limit: 10,
+		first: 0,
 	},
 	fragments: {
-		items: () => Relay.QL`
-			fragment on Query {
-				items(limit: $limit, first: $first) {
-					edges {
-						node {
-							id,
-							date,
-						}
-					}
-				}
+		viewer: vars => Relay.QL`
+			fragment on User {
+				${ItemList.getFragment('viewer', { limit: vars.limit, first: vars.first })}
 			}
 		`,
 	},
 })
-export default class App extends React.Component {
+export default class App extends Component {
 	render() {
-		const { items: { edges } } = this.props;
 		return (
-			<div>
-				<h1>{'Testing'}</h1>
-				{edges.map(({ id, date }) =>
-					<div key={id}>{'id:'}{id}{' '}{'date:'}{date}</div>
-				)}
-			</div>
+			<ItemList
+				limit={this.props.relay.variables.limit}
+				first={this.props.relay.variables.first}
+				viewer={this.props.viewer}
+			/>
 		);
 	}
 }
