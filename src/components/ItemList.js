@@ -1,5 +1,5 @@
 import Item from './Item';
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
@@ -23,7 +23,18 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemList extends Component {
+export default class ItemList extends React.Component {
+	static propTypes = {
+		first: PropTypes.number.isRequired,
+		viewer: PropTypes.shape({
+			items: PropTypes.shape({
+				edges: PropTypes.arrayOf(
+					Item.propTypes.item
+				).isRequired,
+			}).isRequired,
+		}).isRequired,
+	};
+
 	render() {
 		return (
 			<div>

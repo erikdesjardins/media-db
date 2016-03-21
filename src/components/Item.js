@@ -1,5 +1,5 @@
 import AddItemMutation from '../mutations/AddItemMutation';
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
@@ -18,7 +18,14 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class Item extends Component {
+export default class Item extends React.Component {
+	static propTypes = {
+		item: PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			date: PropTypes.number.isRequired,
+		}).isRequired,
+	};
+
 	render() {
 		const { item: { id, date } } = this.props;
 		return (
