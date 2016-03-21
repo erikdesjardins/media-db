@@ -7,7 +7,7 @@ export class User {}
 
 const db = new Dexie('MediaDB');
 
-db.version(1).stores({ media: ',id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]' });
+db.version(1).stores({ media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]' });
 db.open().catch(::console.error); // eslint-disable-line no-console
 
 db.media.mapToClass(Item, {
