@@ -10,7 +10,7 @@ branches:
     - /^v[0-9]/
 deploy:
   - provider: script
-    script: node deploy.js
+    script: npm run deploy
     skip_cleanup: true
     on:
       tags: true

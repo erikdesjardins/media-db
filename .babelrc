@@ -1,18 +1,30 @@
 {
 	"presets": ["stage-0", "react"],
-	"plugins": [
-		"transform-decorators-legacy",
-		"transform-es2015-modules-commonjs",
-		"transform-dead-code-elimination",
-		"transform-node-env-inline",
-		"lodash",
-		"transform-react-display-name"
-	],
+	"plugins": [],
 	"env": {
+		"node": {
+			"presets": ["es2015", "stage-0", "react"]
+		},
+		"development": {
+			"plugins": [
+				"./babelRelayPlugin",
+				"transform-decorators-legacy",
+				"transform-es2015-modules-commonjs",
+				"transform-es2015-destructuring",
+				"transform-es2015-parameters",
+				"transform-dead-code-elimination",
+				"transform-node-env-inline",
+				"lodash",
+				"transform-react-display-name"
+			]
+		},
 		"production": {
 			"plugins": [
+				"./babelRelayPlugin",
 				"transform-decorators-legacy",
                 "transform-es2015-modules-commonjs",
+				"transform-es2015-destructuring",
+				"transform-es2015-parameters",
                 "transform-dead-code-elimination",
                 "transform-node-env-inline",
                 "lodash",

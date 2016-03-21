@@ -1,20 +1,16 @@
-/* eslint-disable */
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const deploy = require('chrome-extension-deploy');
+import fs from 'fs';
+import path from 'path';
+import deploy from 'chrome-extension-deploy';
 
 deploy({
 	clientId: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 	refreshToken: process.env.REFRESH_TOKEN,
 	id: 'INSERT ID HERE',
-	zip: fs.readFileSync(path.join(__dirname, 'dist/media-db.zip'))
-}).then(function() {
-	console.log('Deploy complete!');
-}, function(err) {
-	console.error(err);
+	zip: fs.readFileSync(path.join(__dirname, 'dist/media-db.zip')),
+}).then(() => {
+	console.log('Deploy complete!'); // eslint-disable-line no-console
+}, err => {
+	console.error(err); // eslint-disable-line no-console
 	process.exit(1);
 });

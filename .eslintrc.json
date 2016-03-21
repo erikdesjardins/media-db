@@ -71,7 +71,7 @@
 
 		"prefer-spread/prefer-object-spread": 2,
 
-		"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
+		//"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
 		"filenames/filenames": [2, ".*", "match-regex-and-exported"],
 
@@ -161,7 +161,7 @@
 		"no-path-concat": 2,
 		"no-plusplus": 0,
 		"no-process-env": 0,
-		"no-process-exit": 2,
+		"no-process-exit": 0,
 		"no-proto": 2,
 		"no-redeclare": 2,
 		"no-regex-spaces": 2,
@@ -215,7 +215,7 @@
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"callback-return": 0,
 		"camelcase": 2,
-		"comma-dangle": 2,
+		"comma-dangle": [2, "always-multiline"],
 		"comma-spacing": 2,
 		"comma-style": 2,
 		"complexity": 2,
