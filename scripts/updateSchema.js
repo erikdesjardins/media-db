@@ -1,12 +1,12 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
-import schema from './src/data/schema';
+import schema from '../src/data/schema';
 import { graphql } from 'graphql';
 import { introspectionQuery, printSchema } from 'graphql/utilities';
 
 // make output dir
-mkdirp.sync('./dist');
+mkdirp.sync(path.join(__dirname, '../dist'));
 
 // Save JSON of full schema introspection for Babel Relay Plugin to use
 (async () => {
@@ -18,7 +18,7 @@ mkdirp.sync('./dist');
 		);
 	} else {
 		fs.writeFileSync(
-			path.join(__dirname, './dist/schema.json'),
+			path.join(__dirname, '../dist/schema.json'),
 			JSON.stringify(result, null, 2)
 		);
 	}
@@ -26,6 +26,6 @@ mkdirp.sync('./dist');
 
 // Save user readable type system shorthand of schema
 fs.writeFileSync(
-	path.join(__dirname, './dist/schema.graphql'),
+	path.join(__dirname, '../dist/schema.graphql'),
 	printSchema(schema)
 );

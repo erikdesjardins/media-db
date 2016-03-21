@@ -10,7 +10,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "prefirst": "rimraf dist",
-    "first": "cross-env NODE_ENV=node babel-node ./updateSchema.js",
+    "first": "cross-env NODE_ENV=node babel-node ./scripts/updateSchema.js",
     "prestart": "npm run first",
     "start": "cross-env NODE_ENV=development webpack --watch",
     "preonce": "npm run first",
