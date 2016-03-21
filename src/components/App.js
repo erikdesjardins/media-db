@@ -5,13 +5,12 @@ import relay from 'relay-decorator';
 
 @relay({
 	initialVariables: {
-		limit: 10,
-		first: 0,
+		first: 10,
 	},
 	fragments: {
 		viewer: vars => Relay.QL`
 			fragment on User {
-				${ItemList.getFragment('viewer', { limit: vars.limit, first: vars.first })}
+				${ItemList.getFragment('viewer', { first: vars.first })}
 			}
 		`,
 	},
@@ -20,7 +19,6 @@ export default class App extends Component {
 	render() {
 		return (
 			<ItemList
-				limit={this.props.relay.variables.limit}
 				first={this.props.relay.variables.first}
 				viewer={this.props.viewer}
 			/>

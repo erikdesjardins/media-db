@@ -5,13 +5,12 @@ import relay from 'relay-decorator';
 
 @relay({
 	initialVariables: {
-		limit: 10,
-		first: 0,
+		first: 10,
 	},
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(limit: $limit, first: $first) {
+				items(first: $first) {
 					edges {
 						node {
 							id
