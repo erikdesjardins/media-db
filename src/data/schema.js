@@ -9,6 +9,10 @@ import {
 } from 'graphql';
 
 import {
+	GraphQLLong,
+} from '../types/GraphQLLong';
+
+import {
 	connectionArgs,
 	connectionDefinitions,
 	connectionFromPromisedArray,
@@ -118,7 +122,7 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'The item\'s production status',
 		},
 		date: {
-			type: new GraphQLNonNull(GraphQLInt),
+			type: new GraphQLNonNull(GraphQLLong),
 			description: 'The date at which this version of the item was updated',
 		},
 	}),
