@@ -37,8 +37,8 @@ export function getItem(id) {
 	return db.media.where('id').equals(id)::current().first();
 }
 
-export function getItems(limit = Infinity, offset = 0) {
-	return db.media::current().offset(offset).limit(limit).toArray();
+export function getItems() {
+	return db.media::current().toArray();
 }
 
 export function addItem(id) {

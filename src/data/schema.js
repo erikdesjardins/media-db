@@ -192,14 +192,10 @@ const GraphQLUser = new GraphQLObjectType({
 		items: {
 			type: ItemsConnection,
 			args: {
-				first: {
-					type: GraphQLInt,
-					defaultValue: 100,
-				},
 				...connectionArgs,
 			},
-			resolve: (obj, { first, ...args }) =>
-				connectionFromPromisedArray(getItems(first), args),
+			resolve: (obj, args) =>
+				connectionFromPromisedArray(getItems(), args),
 		},
 		providers: {
 			type: ProvidersConnection,
