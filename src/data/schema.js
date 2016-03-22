@@ -16,11 +16,11 @@ import {
 	connectionArgs,
 	connectionDefinitions,
 	connectionFromPromisedArray,
-	cursorForObjectInConnection,
 	fromGlobalId,
 	globalIdField,
 	mutationWithClientMutationId,
 	nodeDefinitions,
+	offsetToCursor,
 	toGlobalId,
 } from 'graphql-relay';
 
@@ -233,11 +233,12 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	outputFields: {
 		itemEdge: {
 			type: GraphQLItemEdge,
-			resolve: ({ itemId }) => {
-				const item = getItem(itemId);
+			resolve: async ({ itemId }) => {
+				const items = await getItems();
+				const offset = items.findIndex(({ id }) => id === itemId);
 				return {
-					cursor: cursorForObjectInConnection(getItems(), item),
-					node: item,
+					cursor: offsetToCursor(offset),
+					node: items[offset],
 				};
 			},
 		},
@@ -259,11 +260,12 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	outputFields: {
 		providerEdge: {
 			type: GraphQLProviderEdge,
-			resolve: ({ providerId }) => {
-				const provider = getProvider(providerId);
+			resolve: async ({ providerId }) => {
+				const providers = await getProviders();
+				const offset = providers.findIndex(({ id }) => id === providerId);
 				return {
-					cursor: cursorForObjectInConnection(getProviders(), provider),
-					node: provider,
+					cursor: offsetToCursor(offset),
+					node: providers[offset],
 				};
 			},
 			viewer: {
