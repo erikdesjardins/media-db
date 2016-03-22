@@ -93,6 +93,14 @@ const GraphQLItem = new GraphQLObjectType({
 	description: 'A media item',
 	fields: () => ({
 		id: globalIdField('Item'),
+		url: {
+			type: GraphQLString,
+			description: 'The item\'s URL',
+		},
+		thumbnail: {
+			type: GraphQLString,
+			description: 'The item\'s thumbnail URL',
+		},
 		title: {
 			type: GraphQLString,
 			description: 'The item\'s title',
@@ -120,6 +128,10 @@ const GraphQLItem = new GraphQLObjectType({
 		productionStatus: {
 			type: GraphQLProductionStatusEnum,
 			description: 'The item\'s production status',
+		},
+		statusDate: {
+			type: new GraphQLNonNull(GraphQLLong),
+			description: 'The date at which the item\'s status was last updated',
 		},
 		date: {
 			type: new GraphQLNonNull(GraphQLLong),
