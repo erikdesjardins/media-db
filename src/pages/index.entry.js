@@ -1,46 +1,12 @@
 import App from '../components/App';
+import ChromeNetworkLayer from '../network/ChromeNetworkLayer';
 import React from 'react';
 import Relay from 'react-relay';
-import formatRequestErrors from '../utils/formatRequestErrors';
 import { IndexRoute, Route, browserHistory } from 'react-router';
-import { QUERY } from '../constants/messages';
 import { RelayRouter } from 'react-router-relay';
 import { render } from 'react-dom';
-import { sendMessage } from '../api/messages';
 
-// https://github.com/relay-tools/relay-local-schema/blob/master/src/__forks__/formatRequestErrors.js
-async function executeRequest(requestType, request) {
-	const { data, errors } = await sendMessage({
-		type: QUERY,
-		data: {
-			request: request.getQueryString(),
-			variables: request.getVariables(),
-		},
-	});
-
-	if (errors) {
-		request.reject(new Error(
-			`Failed to execute ${requestType} \`${request.getDebugName()}\` for ` +
-			`the following reasons:\n\n${formatRequestErrors(request, errors)}`
-		));
-	} else {
-		request.resolve({ response: data });
-	}
-}
-
-Relay.injectNetworkLayer({
-	sendMutation(mutationRequest) {
-		return executeRequest('mutation', mutationRequest);
-	},
-	sendQueries(queryRequests) {
-		return Promise.all(queryRequests.map(queryRequest =>
-			executeRequest('query', queryRequest)
-		));
-	},
-	supports() {
-		return false;
-	},
-});
+Relay.injectNetworkLayer(new ChromeNetworkLayer());
 
 render((
 	<RelayRouter
