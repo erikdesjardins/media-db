@@ -10,17 +10,7 @@ const db = new Dexie('MediaDB');
 db.version(1).stores({ media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]' });
 db.open().catch(::console.error); // eslint-disable-line no-console
 
-db.media.mapToClass(Item, {
-	id: String,
-	title: String,
-	creator: String,
-	genres: [String],
-	characters: [String],
-	length: Number,
-	status: String,
-	productionStatus: String,
-	date: Number,
-});
+db.media.mapToClass(Item);
 
 function current() {
 	return this.orderBy('date').reverse()::distinct('id'); // eslint-disable-line no-invalid-this
