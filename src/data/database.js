@@ -3,24 +3,22 @@ import Dexie from 'dexie';
 const Promise = Dexie.Promise; // eslint-disable-line no-unused-vars
 
 export class Item {}
+export class Provider {}
 export class User {}
 
 const db = new Dexie('MediaDB');
 
-db.version(1).stores({ media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]' });
+db.version(1).stores({
+	media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
+	provider: 'id, infoCallback',
+});
+
 db.open().catch(::console.error); // eslint-disable-line no-console
 
-db.media.mapToClass(Item, {
-	id: String,
-	title: String,
-	creator: String,
-	genres: [String],
-	characters: [String],
-	length: Number,
-	status: String,
-	productionStatus: String,
-	date: Number,
-});
+db.media.mapToClass(Item);
+db.provider.mapToClass(Provider);
+
+// db.media (Item)
 
 function current() {
 	return this.orderBy('date').reverse()::distinct('id'); // eslint-disable-line no-invalid-this
@@ -39,15 +37,29 @@ export function getItem(id) {
 	return db.media.where('id').equals(id)::current().first();
 }
 
-export function getItems(limit = Infinity, offset = 0) {
-	return db.media::current().offset(offset).limit(limit).toArray();
+export function getItems() {
+	return db.media::current().toArray();
 }
 
 export function addItem(id) {
 	return db.media.add({ id, date: Date.now() });
 }
 
-// Mock users until we actually need to _use_ them (get it?)
+// db.provider (Provider)
+
+export function getProvider(id) {
+	return db.provider.get(id);
+}
+
+export function getProviders() {
+	return db.provider.toArray();
+}
+
+export function addProvider(id) {
+	return db.provider.add({ id });
+}
+
+// mocked db (User)
 
 const VIEWER_ID = 'hardcoded_viewer_id';
 
