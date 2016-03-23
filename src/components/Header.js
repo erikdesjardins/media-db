@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactCSS from 'reactcss';
-import packageName from 'prop?name!../../package.json'; // eslint-disable-line
-import icon from '../images/icon32.png'; // eslint-disable-line
+import packageName from 'prop?name!../../package.json';
+import icon from '../images/icon32.png';
 
 export default class Header extends ReactCSS.Component {
 	classes() {

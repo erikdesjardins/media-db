@@ -11,6 +11,13 @@
 		"filenames",
 		"import"
 	],
+	"settings": {
+		"import/ignore": [
+			"node_modules",
+			"\\.(json|png|html|scss)$"
+		],
+		"import/resolver": "webpack"
+	},
 	"env": {
 		"browser": true,
 		"webextensions": true,
