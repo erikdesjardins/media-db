@@ -30,7 +30,7 @@ function distinct(key) {
 }
 
 export function getItemHistory(id) {
-	return db.media.where('id').equals(id).orderBy('date').reverse().toArray();
+	return db.media.where('id').equals(id).orderBy('date').toArray();
 }
 
 export function getItem(id) {
