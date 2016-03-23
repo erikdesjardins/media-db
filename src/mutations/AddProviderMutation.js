@@ -29,7 +29,7 @@ export default class AddProviderMutation extends Relay.Mutation {
 			type: 'RANGE_ADD',
 			parentName: 'viewer',
 			parentID: this.props.viewer.id,
-			connectionName: 'provider',
+			connectionName: 'providers',
 			edgeName: 'providerEdge',
 			rangeBehaviors: {
 				'': 'append',
