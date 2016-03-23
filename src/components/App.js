@@ -1,4 +1,5 @@
 import AddItemMutation from '../mutations/AddItemMutation';
+import Header from './Header';
 import ItemList from './ItemList';
 import React from 'react';
 import Relay from 'react-relay';
@@ -25,6 +26,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
+				<Header/>
 				<ItemList
 					first={this.props.relay.variables.first}
 					viewer={this.props.viewer}
