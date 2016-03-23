@@ -13,6 +13,10 @@ export default class AddProviderMutation extends Relay.Mutation {
 		return Relay.QL`mutation { addProvider }`;
 	}
 
+	getVariables() {
+		return {};
+	}
+
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddProviderPayload {

@@ -13,6 +13,10 @@ export default class AddItemMutation extends Relay.Mutation {
 		return Relay.QL`mutation { addItem }`;
 	}
 
+	getVariables() {
+		return {};
+	}
+
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddItemPayload {
