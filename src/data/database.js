@@ -21,12 +21,12 @@ db.provider.mapToClass(Provider);
 // db.media (Item)
 
 function current() {
-	return this.orderBy('date').reverse()::distinct('id'); // eslint-disable-line no-invalid-this
+	return this.orderBy('date').reverse()::distinct('id');
 }
 
 function distinct(key) {
 	const seenKeys = new Set();
-	return this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k)); // eslint-disable-line no-invalid-this
+	return this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k));
 }
 
 export function getItemHistory(id) {
