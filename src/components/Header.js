@@ -3,6 +3,8 @@ import ReactCSS from 'reactcss';
 import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
 
+const indexPath = 'index.html';
+
 export default class Header extends ReactCSS.Component {
 	classes() {
 		return {
@@ -27,10 +29,14 @@ export default class Header extends ReactCSS.Component {
 		return (
 			<div is="header">
 				<div is="img">
-					<img src={icon}/>
+					<a href={indexPath}>
+						<img src={icon}/>
+					</a>
 				</div>
 				<div is="title">
-					{packageName}
+					<a href={indexPath}>
+						{packageName}
+					</a>
 				</div>
 			</div>
 		);
