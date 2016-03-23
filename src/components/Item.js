@@ -1,4 +1,3 @@
-import AddItemMutation from '../mutations/AddItemMutation';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -9,11 +8,6 @@ import relay from 'relay-decorator';
 			fragment on Item {
 				id
 				date
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${AddItemMutation.getFragment('viewer')}
 			}
 		`,
 	},

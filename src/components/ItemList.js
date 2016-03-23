@@ -18,7 +18,6 @@ import relay from 'relay-decorator';
 						}
 					}
 				}
-				${Item.getFragment('viewer')}
 			}
 		`,
 	},
