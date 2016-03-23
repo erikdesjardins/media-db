@@ -36,7 +36,7 @@ export default class AddItemMutation extends Relay.Mutation {
 			connectionName: 'items',
 			edgeName: 'itemEdge',
 			rangeBehaviors: {
-				'': 'append',
+				'': 'prepend',
 			},
 		}];
 	}
