@@ -25,6 +25,7 @@ render((
 					<Route path="items/:id/history" component={null}/>
 				</Route>
 			</Route>
+			<Route path="search/:query" component={null}/>
 			<Route path="providers" component={null}/>
 			<Route path="storage" component={null}/>
 			<Route path="*" component={null}/>
