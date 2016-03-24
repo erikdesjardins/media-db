@@ -2,7 +2,6 @@ import App from '../containers/App';
 import ItemHistory from '../containers/ItemHistory';
 import ItemInfo from '../containers/ItemInfo';
 import Items from '../containers/Items';
-import NotFound from '../containers/NotFound';
 import Search from '../containers/Search';
 import Sidebar from '../containers/Sidebar';
 import Storage from '../containers/Storage';
@@ -35,7 +34,6 @@ render((
 			<Route path="search/:query" component={Search}/>
 			<Route path="providers" component={Providers}/>
 			<Route path="storage" component={Storage}/>
-			<Route path="*" component={NotFound}/>
 		</Route>
 	</RelayRouter>
 ), document.getElementById('app'));
