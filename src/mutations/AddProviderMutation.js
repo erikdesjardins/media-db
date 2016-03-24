@@ -40,4 +40,17 @@ export default class AddProviderMutation extends Relay.Mutation {
 			},
 		}];
 	}
+
+	getOptimisticResponse() {
+		return {
+			providerEdge: {
+				node: {
+					infoCallback: '',
+				},
+			},
+			viewer: {
+				id: this.props.viewer.id,
+			},
+		};
+	}
 }
