@@ -63,6 +63,10 @@ export function updateProvider(id, infoCallback) {
 	return db.provider.update(id, { infoCallback });
 }
 
+export function removeProvider(id) {
+	return db.provider.delete(id);
+}
+
 // mocked db (User)
 
 const VIEWER_ID = 'hardcoded_viewer_id';

@@ -39,6 +39,7 @@ import {
 	getProviders,
 	getUser,
 	getViewer,
+	removeProvider,
 	updateProvider,
 } from './database';
 
@@ -328,12 +329,35 @@ const GraphQLUpdateProviderMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLRemoveProviderMutation = mutationWithClientMutationId({
+	name: 'RemoveProvider',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+	},
+	outputFields: {
+		deletedProviderId: {
+			type: GraphQLID,
+			resolve: ({ id }) => id,
+		},
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
+		},
+	},
+	mutateAndGetPayload: ({ id }) => {
+		const localProviderId = fromGlobalId(id).id;
+		removeProvider(localProviderId);
+		return { id };
+	},
+});
+
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
 		addItem: GraphQLAddItemMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
+		removeProvider: GraphQLRemoveProviderMutation,
 	}),
 });
 
