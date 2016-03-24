@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
+import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
 import { Button, Input, Panel } from 'react-bootstrap';
@@ -12,6 +13,12 @@ import { Button, Input, Panel } from 'react-bootstrap';
 			fragment on Provider {
 				infoCallback,
 				${UpdateProviderMutation.getFragment('provider')}
+				${RemoveProviderMutation.getFragment('provider')}
+			}
+		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${RemoveProviderMutation.getFragment('viewer')}
 			}
 		`,
 	},
@@ -35,6 +42,13 @@ export default class Provider extends ReactCSS.Component {
 	handleChange = e => {
 		this.setState({ value: e.target.value });
 		this.save();
+	};
+
+	handleRemove = () => {
+		Relay.Store.commitUpdate(new RemoveProviderMutation({
+			provider: this.props.provider,
+			viewer: this.props.viewer,
+		}));
 	};
 
 	classes() {
@@ -63,7 +77,12 @@ export default class Provider extends ReactCSS.Component {
 		return (
 			<div>
 				{closeBrace}
-				<Button is="remove" bsStyle="danger" bsSize="xsmall">
+				<Button
+					is="remove"
+					bsStyle="danger"
+					bsSize="xsmall"
+					onClick={this.handleRemove}
+				>
 					{'Remove'}
 				</Button>
 			</div>

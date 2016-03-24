@@ -20,6 +20,7 @@ import { Button, Col, Grid, Row } from 'react-bootstrap';
 						}
 					}
 				}
+				${Provider.getFragment('viewer')}
 				${AddProviderMutation.getFragment('viewer')}
 			}
 		`,
@@ -43,6 +44,7 @@ export default class ProviderList extends React.Component {
 							<Provider
 								key={edge.node.id}
 								provider={edge.node}
+								viewer={this.props.viewer}
 							/>
 						)}
 						<Button bsStyle="primary" onClick={this.handleAddProvider}>
