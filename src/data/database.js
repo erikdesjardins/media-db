@@ -9,8 +9,8 @@ export class User {}
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
-	media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
-	provider: 'id, infoCallback',
+	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
+	provider: 'id,infoCallback',
 });
 
 db.open().catch(::console.error); // eslint-disable-line no-console
