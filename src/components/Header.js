@@ -5,6 +5,11 @@ import icon from '../images/icon32.png';
 import { Input, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
 
+// *sigh*
+const NavbarBrand = Navbar.Brand;
+const NavbarForm = Navbar.Form;
+const NavbarHeader = Navbar.Header;
+
 export default class Header extends ReactCSS.Component {
 	classes() {
 		return {
@@ -20,21 +25,21 @@ export default class Header extends ReactCSS.Component {
 	render() {
 		return (
 			<Navbar staticTop>
-				<Navbar.Header>
-					<Navbar.Brand>
+				<NavbarHeader>
+					<NavbarBrand>
 						<Link to="items">
 							<img is="img" src={icon}/>
 							{packageName}
 						</Link>
-					</Navbar.Brand>
-				</Navbar.Header>
+					</NavbarBrand>
+				</NavbarHeader>
 				<Nav>
 					<li><Link to="providers">{'Providers'}</Link></li>
 					<li><Link to="storage">{'Storage'}</Link></li>
 				</Nav>
-				<Navbar.Form pullRight>
+				<NavbarForm pullRight>
 					<Input type="text" placeholder="Search"/>
-				</Navbar.Form>
+				</NavbarForm>
 			</Navbar>
 		);
 	}
