@@ -11,11 +11,6 @@ Relay.injectNetworkLayer(sendMessageNetworkLayer);
 render((
 	<RelayRouter history={browserHistory}>
 		<Redirect from="/popup.html" to="/"/>
-		<Route
-			path="/" component={App}
-			queries={{
-				viewer: () => Relay.QL`query { viewer }`,
-			}}
-		/>
+		<Route path="/" component={App}/>
 	</RelayRouter>
 ), document.getElementById('app'));

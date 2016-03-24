@@ -1,3 +1,4 @@
+import AddItemMutation from '../mutations/AddItemMutation';
 import Item from './Item';
 import React from 'react';
 import Relay from 'react-relay';
@@ -18,11 +19,16 @@ import relay from 'relay-decorator';
 						}
 					}
 				}
+				${AddItemMutation.getFragment('viewer')}
 			}
 		`,
 	},
 })
 export default class ItemList extends React.Component {
+	handleAddItem = () => {
+		Relay.Store.commitUpdate(new AddItemMutation({ viewer: this.props.viewer }));
+	};
+
 	render() {
 		return (
 			<div>
@@ -34,6 +40,9 @@ export default class ItemList extends React.Component {
 						viewer={this.props.viewer}
 					/>
 				)}
+				<button onClick={this.handleAddItem}>
+					{'add item'}
+				</button>
 			</div>
 		);
 	}
