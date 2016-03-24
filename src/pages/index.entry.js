@@ -9,15 +9,14 @@ import Providers from '../containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
 import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';
-import { IndexRedirect, IndexRoute, Redirect, Route, browserHistory } from 'react-router';
+import { IndexRedirect, IndexRoute, Route, hashHistory } from 'react-router';
 import { RelayRouter } from 'react-router-relay';
 import { render } from 'react-dom';
 
 Relay.injectNetworkLayer(sendMessageNetworkLayer);
 
 render((
-	<RelayRouter history={browserHistory}>
-		<Redirect from="/index.html" to="/"/>
+	<RelayRouter history={hashHistory}>
 		<Route path="/" component={App}>
 			<IndexRedirect to="items"/>
 			<Route
