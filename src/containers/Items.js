@@ -2,6 +2,7 @@ import ItemList from '../components/ItemList';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
+import { Grid, PageHeader } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -15,11 +16,11 @@ import relay from 'relay-decorator';
 export default class Items extends React.Component {
 	render() {
 		return (
-			<div>
-				<h1>{'Testing'}</h1>
+			<Grid fluid>
+				<PageHeader>{'Items'}</PageHeader>
 				<ItemList viewer={this.props.viewer}/>
 				{this.props.children}
-			</div>
+			</Grid>
 		);
 	}
 }

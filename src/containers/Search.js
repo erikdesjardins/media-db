@@ -1,11 +1,15 @@
 import React from 'react';
+import { Grid, PageHeader } from 'react-bootstrap';
 
 export default class Search extends React.Component {
 	render() {
 		return (
-			<div>
-				{'search'}
-			</div>
+			<Grid fluid>
+				<PageHeader>
+					{'Search'}
+					<small>{this.props.params.query}</small>
+				</PageHeader>
+			</Grid>
 		);
 	}
 }

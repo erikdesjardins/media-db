@@ -1,11 +1,12 @@
 import React from 'react';
+import { Grid, PageHeader } from 'react-bootstrap';
 
 export default class Storage extends React.Component {
 	render() {
 		return (
-			<div>
-				{'storage'}
-			</div>
+			<Grid fluid>
+				<PageHeader>{'Storage'}</PageHeader>
+			</Grid>
 		);
 	}
 }
