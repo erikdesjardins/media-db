@@ -3,6 +3,7 @@ import Item from './Item';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
+import { Table } from 'react-bootstrap';
 
 @relay({
 	initialVariables: {
@@ -32,13 +33,27 @@ export default class ItemList extends React.Component {
 	render() {
 		return (
 			<div>
-				{this.props.viewer.items.edges.map(edge =>
-					<Item
-						key={edge.node.id}
-						item={edge.node}
-						viewer={this.props.viewer}
-					/>
-				)}
+				<Table striped condensed>
+					<thead>
+						<tr>
+							<th>{'Title'}</th>
+							<th>{'Creator'}</th>
+							<th>{'Genres'}</th>
+							<th>{'Characters'}</th>
+							<th>{'Date'}</th>
+							<th>{'Length'}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{this.props.viewer.items.edges.map(edge =>
+							<Item
+								key={edge.node.id}
+								item={edge.node}
+								viewer={this.props.viewer}
+							/>
+						)}
+					</tbody>
+				</Table>
 				<button onClick={this.handleAddItem}>
 					{'add item'}
 				</button>
