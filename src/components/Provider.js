@@ -4,7 +4,7 @@ import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
-import { Input, Panel } from 'react-bootstrap';
+import { Button, Input, Panel } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -47,8 +47,27 @@ export default class Provider extends ReactCSS.Component {
 					fontFamily: 'monospace',
 					resize: 'vertical',
 				},
+				remove: {
+					float: 'right',
+					marginTop: '-1px',
+					marginBottom: '-1px',
+					fontFamily: 'sans-serif',
+				},
 			},
 		};
+	}
+
+	renderFooter() {
+		// IntelliJ... -.-
+		const closeBrace = '}';
+		return (
+			<div>
+				{closeBrace}
+				<Button is="remove" bsStyle="danger" bsSize="xsmall">
+					{'Remove'}
+				</Button>
+			</div>
+		);
 	}
 
 	render() {
@@ -57,7 +76,7 @@ export default class Provider extends ReactCSS.Component {
 				<Panel
 					is="panel"
 					header="function fetchInfo(url) {"
-					footer="}"
+					footer={this.renderFooter()}
 				>
 					<Input
 						is="input"
