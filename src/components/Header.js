@@ -27,15 +27,15 @@ export default class Header extends ReactCSS.Component {
 			<Navbar staticTop>
 				<NavbarHeader>
 					<NavbarBrand>
-						<Link to="items">
+						<Link to="/items">
 							<img is="img" src={icon}/>
 							{packageName}
 						</Link>
 					</NavbarBrand>
 				</NavbarHeader>
 				<Nav>
-					<li><Link to="providers">{'Providers'}</Link></li>
-					<li><Link to="storage">{'Storage'}</Link></li>
+					<li><Link to="/providers">{'Providers'}</Link></li>
+					<li><Link to="/storage">{'Storage'}</Link></li>
 				</Nav>
 				<NavbarForm pullRight>
 					<Input type="text" placeholder="Search"/>
