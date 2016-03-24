@@ -3,6 +3,7 @@ import * as statusTypes from '../constants/statusTypes';
 
 import {
 	GraphQLEnumType,
+	GraphQLID,
 	GraphQLInt,
 	GraphQLList,
 	GraphQLNonNull,
@@ -38,6 +39,7 @@ import {
 	getProviders,
 	getUser,
 	getViewer,
+	updateProvider,
 } from './database';
 
 const { nodeInterface, nodeField } = nodeDefinitions(
@@ -307,11 +309,31 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLUpdateProviderMutation = mutationWithClientMutationId({
+	name: 'UpdateProvider',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		infoCallback: { type: new GraphQLNonNull(GraphQLString) },
+	},
+	outputFields: {
+		provider: {
+			type: GraphQLProvider,
+			resolve: ({ localProviderId }) => getProvider(localProviderId),
+		},
+	},
+	mutateAndGetPayload: ({ id, infoCallback }) => {
+		const localProviderId = fromGlobalId(id).id;
+		updateProvider(localProviderId, { infoCallback });
+		return { localProviderId };
+	},
+});
+
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
 		addItem: GraphQLAddItemMutation,
 		addProvider: GraphQLAddProviderMutation,
+		updateProvider: GraphQLUpdateProviderMutation,
 	}),
 });
 

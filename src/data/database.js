@@ -10,7 +10,7 @@ const db = new Dexie('MediaDB');
 
 db.version(1).stores({
 	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
-	provider: 'id,infoCallback',
+	provider: 'id',
 });
 
 db.open().catch(::console.error); // eslint-disable-line no-console
@@ -57,6 +57,10 @@ export function getProviders() {
 
 export function addProvider(id) {
 	return db.provider.add({ id });
+}
+
+export function updateProvider(id, patch) {
+	return db.provider.update(id, patch);
 }
 
 // mocked db (User)
