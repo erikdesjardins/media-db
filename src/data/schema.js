@@ -66,13 +66,21 @@ const GraphQLStatusEnum = new GraphQLEnumType({
 	name: 'Status',
 	description: 'The item\'s status',
 	values: {
+		WAITING: {
+			value: 'Waiting',
+			description: 'Unviewed',
+		},
 		PENDING: {
 			value: 'Pending',
-			description: 'Unviewed',
+			description: 'In progress',
 		},
 		COMPLETE: {
 			value: 'Complete',
 			description: 'Viewed',
+		},
+		REJECTED: {
+			value: 'Rejected',
+			description: 'Rejected',
 		},
 	},
 });
