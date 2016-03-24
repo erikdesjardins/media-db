@@ -24,7 +24,6 @@ import {
 	mutationWithClientMutationId,
 	nodeDefinitions,
 	offsetToCursor,
-	toGlobalId,
 } from 'graphql-relay';
 
 import {
@@ -248,9 +247,9 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	outputFields: {
 		itemEdge: {
 			type: GraphQLItemEdge,
-			resolve: async ({ itemId }) => {
+			resolve: async ({ localItemId }) => {
 				const items = await getItems();
-				const offset = items.findIndex(({ id }) => id === itemId);
+				const offset = items.findIndex(({ id }) => id === localItemId);
 				return {
 					cursor: offsetToCursor(offset),
 					node: items[offset],
@@ -263,10 +262,10 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 		},
 	},
 	mutateAndGetPayload: () => {
-		const itemId = toGlobalId('Item', randomId());
+		const localItemId = randomId();
 		addItem({
-			id: itemId,
-			collisionId: itemId,
+			id: localItemId,
+			collisionId: localItemId,
 			date: Date.now(),
 			url: '',
 			title: randomId(),
@@ -277,7 +276,7 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 			productionStatus: productionStatusTypes.COMPLETE,
 			statusDate: Date.now(),
 		});
-		return { itemId };
+		return { localItemId };
 	},
 });
 
@@ -287,9 +286,9 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	outputFields: {
 		providerEdge: {
 			type: GraphQLProviderEdge,
-			resolve: async ({ providerId }) => {
+			resolve: async ({ localProviderId }) => {
 				const providers = await getProviders();
-				const offset = providers.findIndex(({ id }) => id === providerId);
+				const offset = providers.findIndex(({ id }) => id === localProviderId);
 				return {
 					cursor: offsetToCursor(offset),
 					node: providers[offset],
@@ -302,9 +301,9 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 		},
 	},
 	mutateAndGetPayload: () => {
-		const providerId = toGlobalId('Provider', randomId());
-		addProvider(providerId);
-		return { providerId };
+		const localProviderId = randomId();
+		addProvider(localProviderId);
+		return { localProviderId };
 	},
 });
 
