@@ -34,7 +34,11 @@ export default class ProviderList extends React.Component {
 		return (
 			<Grid fluid>
 				<Row>
-					<Col xs={6} xsOffset={3}>
+					<Col
+						lg={6} lgOffset={3}
+						md={8} mdOffset={2}
+						xs={10} xsOffset={1}
+					>
 						{this.props.viewer.providers.edges.map(edge =>
 							<Provider
 								key={edge.node.id}
