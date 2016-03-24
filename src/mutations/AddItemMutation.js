@@ -13,10 +13,6 @@ export default class AddItemMutation extends Relay.Mutation {
 		return Relay.QL`mutation { addItem }`;
 	}
 
-	getVariables() {
-		return {};
-	}
-
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddItemPayload {
@@ -39,6 +35,10 @@ export default class AddItemMutation extends Relay.Mutation {
 				'': 'prepend',
 			},
 		}];
+	}
+
+	getVariables() {
+		return {};
 	}
 
 	getOptimisticResponse() {
