@@ -11,15 +11,5 @@ linters:
   LeadingZero:
     style: include_zero
 
-  NameFormat:
-    convention: ^(([A-Z][a-z]+)+-)?[a-z]+([A-Z][a-z]+)*$
-    convention_explanation: must follow css-bliss rules, i.e. [ModuleName-]variableName
-
-  SelectorFormat:
-    convention: ^([A-Z][a-z]+)+(-[a-z]+([A-Z][a-z]+)*)?(--[a-z]+([A-Z][a-z]+)*)?|is([A-Z][a-z]+)+$
-    convention_explanation: must follow css-bliss rules, i.e. ModuleName[-elementName][--modifierName] | isStateName
-    ignored_types:
-      - element
-
   PropertySortOrder:
     order: smacss
