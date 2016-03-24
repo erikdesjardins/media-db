@@ -11,6 +11,16 @@ const NavbarForm = Navbar.Form;
 const NavbarHeader = Navbar.Header;
 
 export default class Header extends ReactCSS.Component {
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
+
+	handleSearchInput = e => {
+		const query = e.target.value;
+		if (!query) return;
+		this.context.router.push(`/search/${query}`);
+	};
+
 	classes() {
 		return {
 			default: {
@@ -38,7 +48,7 @@ export default class Header extends ReactCSS.Component {
 					<li><Link to="/storage">{'Storage'}</Link></li>
 				</Nav>
 				<NavbarForm pullRight>
-					<Input type="text" placeholder="Search"/>
+					<Input type="text" placeholder="Search" onInput={this.handleSearchInput}/>
 				</NavbarForm>
 			</Navbar>
 		);
