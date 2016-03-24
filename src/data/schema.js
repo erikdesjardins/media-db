@@ -1,3 +1,6 @@
+import * as productionStatusTypes from '../constants/productionStatusTypes';
+import * as statusTypes from '../constants/statusTypes';
+
 import {
 	GraphQLEnumType,
 	GraphQLInt,
@@ -67,19 +70,19 @@ const GraphQLStatusEnum = new GraphQLEnumType({
 	description: 'The item\'s status',
 	values: {
 		WAITING: {
-			value: 'Waiting',
+			value: statusTypes.WAITING,
 			description: 'Unviewed',
 		},
 		PENDING: {
-			value: 'Pending',
+			value: statusTypes.PENDING,
 			description: 'In progress',
 		},
 		COMPLETE: {
-			value: 'Complete',
+			value: statusTypes.COMPLETE,
 			description: 'Viewed',
 		},
 		REJECTED: {
-			value: 'Rejected',
+			value: statusTypes.REJECTED,
 			description: 'Rejected',
 		},
 	},
@@ -90,16 +93,16 @@ const GraphQLProductionStatusEnum = new GraphQLEnumType({
 	description: 'The item\'s production status',
 	values: {
 		INCOMPLETE: {
-			value: 'Incomplete',
+			value: productionStatusTypes.INCOMPLETE,
 		},
 		COMPLETE: {
-			value: 'Complete',
+			value: productionStatusTypes.COMPLETE,
 		},
 		HIATUS: {
-			value: 'Hiatus',
+			value: productionStatusTypes.HIATUS,
 		},
 		CANCELLED: {
-			value: 'Cancelled',
+			value: productionStatusTypes.CANCELLED,
 		},
 	},
 });
