@@ -140,6 +140,10 @@ const GraphQLItem = new GraphQLObjectType({
 			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
 			description: 'A list of the item\'s characters',
 		},
+		notes: {
+			type: GraphQLString,
+			description: 'Notes about the item',
+		},
 		length: {
 			type: GraphQLInt,
 			description: 'The item\'s length',
