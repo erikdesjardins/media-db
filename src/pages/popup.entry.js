@@ -1,4 +1,4 @@
-import App from '../components/App';
+import Popup from '../components/Popup';
 import React from 'react';
 import Relay from 'react-relay';
 import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';
@@ -11,6 +11,6 @@ Relay.injectNetworkLayer(sendMessageNetworkLayer);
 render((
 	<RelayRouter history={browserHistory}>
 		<Redirect from="/popup.html" to="/"/>
-		<Route path="/" component={App}/>
+		<Route path="/" component={Popup}/>
 	</RelayRouter>
 ), document.getElementById('app'));
