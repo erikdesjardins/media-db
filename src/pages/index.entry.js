@@ -21,9 +21,7 @@ render((
 			<IndexRedirect to="items"/>
 			<Route
 				path="items" component={Items}
-				queries={{
-					viewer: () => Relay.QL`query { viewer }`,
-				}}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			>
 				<Route path="items/:id" component={Sidebar}>
 					<IndexRoute component={ItemInfo}/>
@@ -31,7 +29,10 @@ render((
 				</Route>
 			</Route>
 			<Route path="search/:query" component={Search}/>
-			<Route path="providers" component={Providers}/>
+			<Route
+				path="providers" component={Providers}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
+			/>
 			<Route path="storage" component={Storage}/>
 		</Route>
 	</RelayRouter>
