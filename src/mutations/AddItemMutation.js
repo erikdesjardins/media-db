@@ -46,6 +46,14 @@ export default class AddItemMutation extends Relay.Mutation {
 			itemEdge: {
 				node: {
 					date: Date.now(),
+					url: '',
+					title: '',
+					creator: '',
+					genres: [],
+					characters: [],
+					status: 'Complete',
+					productionStatus: 'Complete',
+					statusDate: Date.now(),
 				},
 			},
 			viewer: {

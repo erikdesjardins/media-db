@@ -41,8 +41,8 @@ export function getItems() {
 	return db.media::current().toArray();
 }
 
-export function addItem(id) {
-	return db.media.add({ id, date: Date.now() });
+export function addItem(item) {
+	return db.media.add(item);
 }
 
 // db.provider (Provider)

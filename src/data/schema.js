@@ -264,7 +264,19 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	},
 	mutateAndGetPayload: () => {
 		const itemId = toGlobalId('Item', randomId());
-		addItem(itemId);
+		addItem({
+			id: itemId,
+			collisionId: itemId,
+			date: Date.now(),
+			url: '',
+			title: randomId(),
+			creator: randomId(),
+			genres: [],
+			characters: [],
+			status: statusTypes.COMPLETE,
+			productionStatus: productionStatusTypes.COMPLETE,
+			statusDate: Date.now(),
+		});
 		return { itemId };
 	},
 });
