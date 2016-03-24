@@ -183,7 +183,7 @@ const GraphQLProvider = new GraphQLObjectType({
 	fields: () => ({
 		id: globalIdField('Provider'),
 		infoCallback: {
-			type: GraphQLString,
+			type: new GraphQLNonNull(GraphQLString),
 			description: 'The provider\'s info fetching callback. ' +
 				'Should accept one param `url`, returning false ' +
 				'if the url cannot be handled by this provider, ' +
@@ -323,7 +323,7 @@ const GraphQLUpdateProviderMutation = mutationWithClientMutationId({
 	},
 	mutateAndGetPayload: ({ id, infoCallback }) => {
 		const localProviderId = fromGlobalId(id).id;
-		updateProvider(localProviderId, { infoCallback });
+		updateProvider(localProviderId, infoCallback);
 		return { localProviderId };
 	},
 });

@@ -56,11 +56,11 @@ export function getProviders() {
 }
 
 export function addProvider(id) {
-	return db.provider.add({ id, createdDate: Date.now() });
+	return db.provider.add({ id, infoCallback: '', createdDate: Date.now() });
 }
 
-export function updateProvider(id, patch) {
-	return db.provider.update(id, patch);
+export function updateProvider(id, infoCallback) {
+	return db.provider.update(id, { infoCallback });
 }
 
 // mocked db (User)
