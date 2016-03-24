@@ -50,7 +50,6 @@ export default class ItemList extends React.Component {
 							<Item
 								key={edge.node.id}
 								item={edge.node}
-								viewer={this.props.viewer}
 							/>
 						)}
 					</tbody>
