@@ -40,6 +40,7 @@ export default class ItemList extends React.Component {
 							<th>{'Creator'}</th>
 							<th>{'Genres'}</th>
 							<th>{'Characters'}</th>
+							<th>{'Notes'}</th>
 							<th>{'Date'}</th>
 							<th>{'Length'}</th>
 						</tr>
