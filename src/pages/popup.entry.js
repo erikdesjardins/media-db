@@ -1,4 +1,4 @@
-import Popup from '../components/Popup';
+import Popup from '../containers/Popup';
 import React from 'react';
 import Relay from 'react-relay';
 import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';

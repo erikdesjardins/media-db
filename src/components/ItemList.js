@@ -32,7 +32,6 @@ export default class ItemList extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>{'Testing'}</h1>
 				{this.props.viewer.items.edges.map(edge =>
 					<Item
 						key={edge.node.id}

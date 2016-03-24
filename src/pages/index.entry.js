@@ -1,5 +1,12 @@
-import App from '../components/App';
-import ItemList from '../components/ItemList';
+import App from '../containers/App';
+import ItemHistory from '../containers/ItemHistory';
+import ItemInfo from '../containers/ItemInfo';
+import Items from '../containers/Items';
+import NotFound from '../containers/NotFound';
+import Search from '../containers/Search';
+import Sidebar from '../containers/Sidebar';
+import Storage from '../containers/Storage';
+import Providers from '../containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
 import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';
@@ -15,20 +22,20 @@ render((
 		<Route path="/" component={App}>
 			<IndexRedirect to="items"/>
 			<Route
-				path="items" component={ItemList}
+				path="items" component={Items}
 				queries={{
 					viewer: () => Relay.QL`query { viewer }`,
 				}}
 			>
-				<Route path="items/:id" component={null}>
-					<IndexRoute component={null}/>
-					<Route path="items/:id/history" component={null}/>
+				<Route path="items/:id" component={Sidebar}>
+					<IndexRoute component={ItemInfo}/>
+					<Route path="items/:id/history" component={ItemHistory}/>
 				</Route>
 			</Route>
-			<Route path="search/:query" component={null}/>
-			<Route path="providers" component={null}/>
-			<Route path="storage" component={null}/>
-			<Route path="*" component={null}/>
+			<Route path="search/:query" component={Search}/>
+			<Route path="providers" component={Providers}/>
+			<Route path="storage" component={Storage}/>
+			<Route path="*" component={NotFound}/>
 		</Route>
 	</RelayRouter>
 ), document.getElementById('app'));
