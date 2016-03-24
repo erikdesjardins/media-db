@@ -296,10 +296,10 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 					node: providers[offset],
 				};
 			},
-			viewer: {
-				type: GraphQLUser,
-				resolve: () => getViewer(),
-			},
+		},
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
 		},
 	},
 	mutateAndGetPayload: () => {
