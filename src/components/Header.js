@@ -11,7 +11,7 @@ export default class Header extends ReactCSS.Component {
 			default: {
 				header: {
 					width: '100%',
-					backgroundColor: '#50205d',
+					backgroundColor: '#b689c8',
 					display: 'flex',
 					alignItems: 'center',
 				},
