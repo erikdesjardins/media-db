@@ -13,13 +13,6 @@ export default class UpdateProviderMutation extends Relay.Mutation {
 		return Relay.QL`mutation { updateProvider }`;
 	}
 
-	getVariables() {
-		return {
-			id: this.props.provider.id,
-			infoCallback: this.props.infoCallback,
-		};
-	}
-
 	getFatQuery() {
 		return Relay.QL`
 			fragment on UpdateProviderPayload {
@@ -28,6 +21,13 @@ export default class UpdateProviderMutation extends Relay.Mutation {
 				},
 			}
 		`;
+	}
+
+	getVariables() {
+		return {
+			id: this.props.provider.id,
+			infoCallback: this.props.infoCallback,
+		};
 	}
 
 	getConfigs() {

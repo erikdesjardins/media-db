@@ -24,6 +24,10 @@ export default class AddItemMutation extends Relay.Mutation {
 		`;
 	}
 
+	getVariables() {
+		return {};
+	}
+
 	getConfigs() {
 		return [{
 			type: 'RANGE_ADD',
@@ -35,10 +39,6 @@ export default class AddItemMutation extends Relay.Mutation {
 				'': 'prepend',
 			},
 		}];
-	}
-
-	getVariables() {
-		return {};
 	}
 
 	getOptimisticResponse() {
