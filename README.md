@@ -15,4 +15,4 @@
 
 ## Build / Zip
 
-	npm build
+	npm run build
