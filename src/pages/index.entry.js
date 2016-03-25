@@ -33,7 +33,10 @@ render((
 				path="providers" component={Providers}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
-			<Route path="storage" component={Storage}/>
+			<Route
+				path="storage" component={Storage}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
+			/>
 		</Route>
 	</RelayRouter>
 ), document.getElementById('app'));
