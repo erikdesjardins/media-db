@@ -1,9 +1,10 @@
 import AddProviderMutation from '../mutations/AddProviderMutation';
+import CenteredColumn from './CenteredColumn';
 import Provider from './Provider';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Button, Col, Grid, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 @relay({
 	initialVariables: {
@@ -33,26 +34,18 @@ export default class ProviderList extends React.Component {
 
 	render() {
 		return (
-			<Grid fluid>
-				<Row>
-					<Col
-						lg={6} lgOffset={3}
-						md={8} mdOffset={2}
-						xs={10} xsOffset={1}
-					>
-						{this.props.viewer.providers.edges.map(edge =>
-							<Provider
-								key={edge.node.id}
-								provider={edge.node}
-								viewer={this.props.viewer}
-							/>
-						)}
-						<Button bsStyle="primary" onClick={this.handleAddProvider}>
-							{'Add Provider'}
-						</Button>
-					</Col>
-				</Row>
-			</Grid>
+			<CenteredColumn>
+				{this.props.viewer.providers.edges.map(edge =>
+					<Provider
+						key={edge.node.id}
+						provider={edge.node}
+						viewer={this.props.viewer}
+					/>
+				)}
+				<Button bsStyle="primary" onClick={this.handleAddProvider}>
+					{'Add Provider'}
+				</Button>
+			</CenteredColumn>
 		);
 	}
 }
