@@ -37,9 +37,11 @@ import {
 	getItems,
 	getProvider,
 	getProviders,
+	getRawItems,
 	getUser,
 	getViewer,
 	removeProvider,
+	setRawItems,
 	updateProvider,
 } from './database';
 
@@ -222,6 +224,10 @@ const GraphQLUser = new GraphQLObjectType({
 			resolve: (obj, args) =>
 				connectionFromPromisedArray(getProviders(), args),
 		},
+		rawItems: {
+			type: new GraphQLNonNull(GraphQLString),
+			resolve: async () => JSON.stringify(await getRawItems()),
+		},
 	},
 });
 
@@ -351,6 +357,23 @@ const GraphQLRemoveProviderMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLSetRawItemsMutation = mutationWithClientMutationId({
+	name: 'SetRawItems',
+	inputFields: {
+		rawItems: { type: new GraphQLNonNull(GraphQLString) },
+	},
+	outputFields: {
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
+		},
+	},
+	mutateAndGetPayload: ({ rawItems }) => {
+		setRawItems(JSON.parse(rawItems));
+		return {};
+	},
+});
+
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
@@ -358,6 +381,7 @@ const Mutation = new GraphQLObjectType({
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,
+		setRawItems: GraphQLSetRawItemsMutation,
 	}),
 });
 
