@@ -45,6 +45,17 @@ export function addItem(item) {
 	return db.media.add(item);
 }
 
+export function getRawItems() {
+	return db.media.toArray();
+}
+
+export function setRawItems(items) {
+	return db.transaction('rw', db.media, () => {
+		db.media.clear();
+		db.media.bulkAdd(items);
+	});
+}
+
 // db.provider (Provider)
 
 export function getProvider(id) {
