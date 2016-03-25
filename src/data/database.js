@@ -9,8 +9,8 @@ export class User {}
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
-	media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
-	provider: 'id, infoCallback',
+	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
+	provider: 'id,&createdDate',
 });
 
 db.open().catch(::console.error); // eslint-disable-line no-console
@@ -21,16 +21,16 @@ db.provider.mapToClass(Provider);
 // db.media (Item)
 
 function current() {
-	return this.orderBy('date').reverse()::distinct('id'); // eslint-disable-line no-invalid-this
+	return this.orderBy('date').reverse()::distinct('id');
 }
 
 function distinct(key) {
 	const seenKeys = new Set();
-	return this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k)); // eslint-disable-line no-invalid-this
+	return this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k));
 }
 
 export function getItemHistory(id) {
-	return db.media.where('id').equals(id).orderBy('date').reverse().toArray();
+	return db.media.where('id').equals(id).orderBy('date').toArray();
 }
 
 export function getItem(id) {
@@ -41,8 +41,19 @@ export function getItems() {
 	return db.media::current().toArray();
 }
 
-export function addItem(id) {
-	return db.media.add({ id, date: Date.now() });
+export function addItem(item) {
+	return db.media.add(item);
+}
+
+export function getRawItems() {
+	return db.media.toArray();
+}
+
+export function setRawItems(items) {
+	return db.transaction('rw', db.media, () => {
+		db.media.clear();
+		db.media.bulkAdd(items);
+	});
 }
 
 // db.provider (Provider)
@@ -52,11 +63,19 @@ export function getProvider(id) {
 }
 
 export function getProviders() {
-	return db.provider.toArray();
+	return db.provider.orderBy('createdDate').toArray();
 }
 
 export function addProvider(id) {
-	return db.provider.add({ id });
+	return db.provider.add({ id, infoCallback: '', createdDate: Date.now() });
+}
+
+export function updateProvider(id, infoCallback) {
+	return db.provider.update(id, { infoCallback });
+}
+
+export function removeProvider(id) {
+	return db.provider.delete(id);
 }
 
 // mocked db (User)

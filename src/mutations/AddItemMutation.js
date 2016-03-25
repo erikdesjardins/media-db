@@ -24,6 +24,10 @@ export default class AddItemMutation extends Relay.Mutation {
 		`;
 	}
 
+	getVariables() {
+		return {};
+	}
+
 	getConfigs() {
 		return [{
 			type: 'RANGE_ADD',
@@ -32,7 +36,7 @@ export default class AddItemMutation extends Relay.Mutation {
 			connectionName: 'items',
 			edgeName: 'itemEdge',
 			rangeBehaviors: {
-				'': 'append',
+				'': 'prepend',
 			},
 		}];
 	}
@@ -42,6 +46,14 @@ export default class AddItemMutation extends Relay.Mutation {
 			itemEdge: {
 				node: {
 					date: Date.now(),
+					url: '',
+					title: '',
+					creator: '',
+					genres: [],
+					characters: [],
+					status: 'Complete',
+					productionStatus: 'Complete',
+					statusDate: Date.now(),
 				},
 			},
 			viewer: {

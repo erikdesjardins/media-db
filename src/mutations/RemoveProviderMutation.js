@@ -1,7 +1,12 @@
 import Relay from 'react-relay';
 
-export default class AddProviderMutation extends Relay.Mutation {
+export default class RemoveProviderMutation extends Relay.Mutation {
 	static fragments = {
+		provider: () => Relay.QL`
+			fragment on Provider {
+				id,
+			}
+		`,
 		viewer: () => Relay.QL`
 			fragment on User {
 				id,
@@ -10,13 +15,13 @@ export default class AddProviderMutation extends Relay.Mutation {
 	};
 
 	getMutation() {
-		return Relay.QL`mutation { addProvider }`;
+		return Relay.QL`mutation { removeProvider }`;
 	}
 
 	getFatQuery() {
 		return Relay.QL`
-			fragment on AddProviderPayload {
-				providerEdge,
+			fragment on RemoveProviderPayload {
+				deletedProviderId,
 				viewer {
 					providers,
 				},
@@ -25,29 +30,24 @@ export default class AddProviderMutation extends Relay.Mutation {
 	}
 
 	getVariables() {
-		return {};
+		return {
+			id: this.props.provider.id,
+		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'RANGE_ADD',
+			type: 'NODE_DELETE',
 			parentName: 'viewer',
 			parentID: this.props.viewer.id,
 			connectionName: 'providers',
-			edgeName: 'providerEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			deletedIDFieldName: 'deletedProviderId',
 		}];
 	}
 
 	getOptimisticResponse() {
 		return {
-			providerEdge: {
-				node: {
-					infoCallback: '',
-				},
-			},
+			deletedProviderId: this.props.provider.id,
 			viewer: {
 				id: this.props.viewer.id,
 			},

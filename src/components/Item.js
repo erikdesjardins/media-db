@@ -1,28 +1,36 @@
-import AddItemMutation from '../mutations/AddItemMutation';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
+import { formatDate, formatNumber } from '../utils/format';
 
 @relay({
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				id
+				title
+				creator
+				genres
+				characters
+				notes
 				date
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${AddItemMutation.getFragment('viewer')}
+				length
 			}
 		`,
 	},
 })
 export default class Item extends React.Component {
 	render() {
-		const { item: { id, date } } = this.props;
+		const { item: { title, creator, genres, characters, notes, date, length } } = this.props;
 		return (
-			<div>{'id:'}{id}{' '}{'date:'}{date}</div>
+			<tr>
+				<td>{title}</td>
+				<td>{creator}</td>
+				<td>{genres.join(', ')}</td>
+				<td>{characters.join(', ')}</td>
+				<td>{notes}</td>
+				<td>{formatDate(date)}</td>
+				<td>{formatNumber(length)}</td>
+			</tr>
 		);
 	}
 }
