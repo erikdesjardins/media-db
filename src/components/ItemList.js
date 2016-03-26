@@ -2,9 +2,11 @@ import AddItemMutation from '../mutations/AddItemMutation';
 import Item from './Item';
 import React from 'react';
 import Relay from 'react-relay';
+import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Button, ButtonGroup, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+
 
 @relay({
 	initialVariables: {
@@ -28,47 +30,35 @@ import { Button, ButtonGroup, Table } from 'react-bootstrap';
 	},
 })
 export default class ItemList extends React.Component {
-	handleStatusChange(status) {
+	handleStatusChange = status => {
 		this.props.relay.setVariables({ status });
-	}
+	};
 
 	handleAddItem = () => {
 		Relay.Store.commitUpdate(new AddItemMutation({ viewer: this.props.viewer }));
 	};
 
-	isCurrentStatus(status) {
-		return this.props.relay.variables.status === status;
-	}
-
 	render() {
 		return (
 			<div>
-				<ButtonGroup bsSize="xsmall">
-					<Button
-						active={this.isCurrentStatus(statusTypes.WAITING)}
-						onClick={() => this.handleStatusChange(statusTypes.WAITING)}
-					>
-						{'Waiting'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.COMPLETE)}
-						onClick={() => this.handleStatusChange(statusTypes.COMPLETE)}
-					>
-						{'Complete'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.PENDING)}
-						onClick={() => this.handleStatusChange(statusTypes.PENDING)}
-					>
-						{'Pending'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.REJECTED)}
-						onClick={() => this.handleStatusChange(statusTypes.REJECTED)}
-					>
-						{'Rejected'}
-					</Button>
-				</ButtonGroup>
+				<SelectBar
+					bsSize="xsmall"
+					selected={this.props.relay.variables.status}
+					onSelect={this.handleStatusChange}
+					options={[{
+						value: statusTypes.WAITING,
+						name: 'Waiting',
+					}, {
+						value: statusTypes.COMPLETE,
+						name: 'Complete',
+					}, {
+						value: statusTypes.PENDING,
+						name: 'Pending',
+					}, {
+						value: statusTypes.REJECTED,
+						name: 'Rejected',
+					}]}
+				/>
 				<Table striped condensed>
 					<thead>
 						<tr>
