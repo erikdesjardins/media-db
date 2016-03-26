@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { formatDate, formatNumber } from '../utils/format';
@@ -21,7 +21,7 @@ import { formatDate, formatNumber } from '../utils/format';
 })
 export default class Item extends React.Component {
 	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
+		router: PropTypes.object.isRequired,
 	};
 
 	handleClick = () => {

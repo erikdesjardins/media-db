@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactCSS from 'reactcss';
 import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
@@ -12,7 +12,7 @@ const NavbarHeader = Navbar.Header;
 
 export default class Header extends ReactCSS.Component {
 	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
+		router: PropTypes.object.isRequired,
 	};
 
 	handleSearchInput = e => {
