@@ -7,22 +7,31 @@ import { formatDate, formatNumber } from '../utils/format';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				title
-				creator
-				genres
-				characters
-				notes
-				date
-				length
+				id,
+				title,
+				creator,
+				genres,
+				characters,
+				notes,
+				date,
+				length,
 			}
 		`,
 	},
 })
 export default class Item extends React.Component {
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
+
+	handleClick = () => {
+		this.context.router.push(`/items/${this.props.item.id}`);
+	};
+
 	render() {
 		const { item: { title, creator, genres, characters, notes, date, length } } = this.props;
 		return (
-			<tr>
+			<tr onClick={this.handleClick}>
 				<td>{title}</td>
 				<td>{creator}</td>
 				<td>{genres.join(', ')}</td>

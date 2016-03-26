@@ -34,6 +34,7 @@ import {
 	addItem,
 	addProvider,
 	getItem,
+	getItemHistory,
 	getItems,
 	getItemsWithStatus,
 	getProvider,
@@ -168,6 +169,11 @@ const GraphQLItem = new GraphQLObjectType({
 		date: {
 			type: new GraphQLNonNull(GraphQLLong),
 			description: 'The date at which this version of the item was updated',
+		},
+		history: {
+			type: new GraphQLNonNull(new GraphQLList(GraphQLItem)),
+			description: 'The item\'s past versions',
+			resolve: ({ id }) => getItemHistory(id),
 		},
 	}),
 	interfaces: [nodeInterface],
