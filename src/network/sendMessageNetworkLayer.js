@@ -16,7 +16,8 @@ async function executeRequest(requestType, request) {
 	if (errors) {
 		request.reject(new Error(
 			`Failed to execute ${requestType} \`${request.getDebugName()}\` for ` +
-			`the following reasons:\n\n${formatRequestErrors(request, errors)}`
+			`the following reasons:\n\n${formatRequestErrors(request, errors)}` +
+			`\n\n${request.getQueryString()}`
 		));
 	} else {
 		request.resolve({ response: data });
