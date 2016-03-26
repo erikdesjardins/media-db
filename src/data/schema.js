@@ -229,6 +229,7 @@ const GraphQLUser = new GraphQLObjectType({
 			resolve: async () => JSON.stringify(await getRawItems()),
 		},
 	},
+	interfaces: [nodeInterface],
 });
 
 const Query = new GraphQLObjectType({
