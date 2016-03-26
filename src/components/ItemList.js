@@ -59,7 +59,7 @@ export default class ItemList extends React.Component {
 						name: 'Rejected',
 					}]}
 				/>
-				<Table striped condensed hover>
+				<Table striped condensed hover responsive>
 					<thead>
 						<tr>
 							<th>{'Title'}</th>
