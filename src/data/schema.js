@@ -35,6 +35,7 @@ import {
 	addProvider,
 	getItem,
 	getItems,
+	getItemsWithStatus,
 	getProvider,
 	getProviders,
 	getRawItems,
@@ -211,10 +212,14 @@ const GraphQLUser = new GraphQLObjectType({
 		items: {
 			type: ItemsConnection,
 			args: {
+				status: {
+					type: GraphQLStatusEnum,
+				},
 				...connectionArgs,
 			},
-			resolve: (obj, args) =>
-				connectionFromPromisedArray(getItems(), args),
+			// status is nullable, in which case getItemsWithStatus() === getItems()
+			resolve: (obj, { status, ...args }) =>
+				connectionFromPromisedArray(getItemsWithStatus(status), args),
 		},
 		providers: {
 			type: ProvidersConnection,

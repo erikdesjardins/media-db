@@ -64,6 +64,10 @@ export function getItemHistory(id) {
 	return db.media.where('id').equals(id).sortBy('date')::reverse();
 }
 
+export function getItemsWithStatus(status) {
+	return getItems()::whereEqualsIf('status', status, !!status);
+}
+
 export function addItem(item) {
 	return db.media.add(item);
 }
