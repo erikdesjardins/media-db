@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { formatDate, formatNumber } from '../utils/format';
@@ -9,6 +10,7 @@ import { formatDate, formatNumber } from '../utils/format';
 			fragment on Item {
 				id,
 				url,
+				thumbnail,
 				title,
 				creator,
 				genres,
@@ -20,7 +22,7 @@ import { formatDate, formatNumber } from '../utils/format';
 		`,
 	},
 })
-export default class Item extends React.Component {
+export default class Item extends ReactCSS.Component {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
 	};
@@ -29,10 +31,23 @@ export default class Item extends React.Component {
 		this.context.router.push(`/items/${this.props.item.id}`);
 	};
 
+	classes() {
+		return {
+			default: {
+				thumbnail: {
+					maxHeight: '20px',
+					marginTop: '-2px',
+					marginBottom: 0,
+				},
+			},
+		};
+	}
+
 	render() {
-		const { item: { url, title, creator, genres, characters, notes, statusDate, length } } = this.props;
+		const { item: { url, thumbnail, title, creator, genres, characters, notes, statusDate, length } } = this.props;
 		return (
 			<tr onClick={this.handleClick}>
+				<td><img is="thumbnail" src={thumbnail}/></td>
 				<td><a href={url}>{title}</a></td>
 				<td>{creator}</td>
 				<td>{genres.join(', ')}</td>

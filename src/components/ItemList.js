@@ -62,6 +62,7 @@ export default class ItemList extends React.Component {
 				<Table striped condensed hover responsive>
 					<thead>
 						<tr>
+							<th>{''}</th>
 							<th>{'Title'}</th>
 							<th>{'Creator'}</th>
 							<th>{'Genres'}</th>
