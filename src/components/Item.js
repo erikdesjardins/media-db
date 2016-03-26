@@ -14,7 +14,7 @@ import { formatDate, formatNumber } from '../utils/format';
 				genres,
 				characters,
 				notes,
-				date,
+				statusDate,
 				length,
 			}
 		`,
@@ -30,7 +30,7 @@ export default class Item extends React.Component {
 	};
 
 	render() {
-		const { item: { url, title, creator, genres, characters, notes, date, length } } = this.props;
+		const { item: { url, title, creator, genres, characters, notes, statusDate, length } } = this.props;
 		return (
 			<tr onClick={this.handleClick}>
 				<td><a href={url}>{title}</a></td>
@@ -38,7 +38,7 @@ export default class Item extends React.Component {
 				<td>{genres.join(', ')}</td>
 				<td>{characters.join(', ')}</td>
 				<td>{notes}</td>
-				<td>{formatDate(date)}</td>
+				<td>{formatDate(statusDate)}</td>
 				<td>{formatNumber(length)}</td>
 			</tr>
 		);
