@@ -34,7 +34,9 @@ import {
 	addItem,
 	addProvider,
 	getItem,
+	getItemHistory,
 	getItems,
+	getItemsWithStatus,
 	getProvider,
 	getProviders,
 	getRawItems,
@@ -168,6 +170,11 @@ const GraphQLItem = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLLong),
 			description: 'The date at which this version of the item was updated',
 		},
+		history: {
+			type: new GraphQLNonNull(new GraphQLList(GraphQLItem)),
+			description: 'The item\'s past versions',
+			resolve: ({ id }) => getItemHistory(id),
+		},
 	}),
 	interfaces: [nodeInterface],
 });
@@ -211,10 +218,14 @@ const GraphQLUser = new GraphQLObjectType({
 		items: {
 			type: ItemsConnection,
 			args: {
+				status: {
+					type: GraphQLStatusEnum,
+				},
 				...connectionArgs,
 			},
-			resolve: (obj, args) =>
-				connectionFromPromisedArray(getItems(), args),
+			// status is nullable, in which case getItemsWithStatus() === getItems()
+			resolve: (obj, { status, ...args }) =>
+				connectionFromPromisedArray(getItemsWithStatus(status), args),
 		},
 		providers: {
 			type: ProvidersConnection,
@@ -229,6 +240,7 @@ const GraphQLUser = new GraphQLObjectType({
 			resolve: async () => JSON.stringify(await getRawItems()),
 		},
 	},
+	interfaces: [nodeInterface],
 });
 
 const Query = new GraphQLObjectType({

@@ -1,4 +1,4 @@
-export const INCOMPLETE = 'Incomplete';
-export const COMPLETE = 'Complete';
-export const HIATUS = 'Hiatus';
-export const CANCELLED = 'Cancelled';
+export const INCOMPLETE = 'INCOMPLETE';
+export const COMPLETE = 'COMPLETE';
+export const HIATUS = 'HIATUS';
+export const CANCELLED = 'CANCELLED';

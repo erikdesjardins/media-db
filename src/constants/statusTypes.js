@@ -1,4 +1,4 @@
-export const WAITING = 'Waiting';
-export const PENDING = 'Pending';
-export const COMPLETE = 'Complete';
-export const REJECTED = 'Rejected';
+export const WAITING = 'WAITING';
+export const PENDING = 'PENDING';
+export const COMPLETE = 'COMPLETE';
+export const REJECTED = 'REJECTED';

@@ -18,27 +18,54 @@ db.open().catch(::console.error); // eslint-disable-line no-console
 db.media.mapToClass(Item);
 db.provider.mapToClass(Provider);
 
+// Promise<Array> -> Promise<Array>
+function whereEquals(key, val) {
+	return this.then(arr => arr.filter(({ [key]: v }) => v === val));
+}
+
+// Promise<Array> -> Promise<Array>
+function whereEqualsIf(key, val, shouldApply) {
+	if (!shouldApply) return this;
+	return this::whereEquals(key, val);
+}
+
+// Promise<Array> -> Promise<Array>
+function reverse() {
+	return this.then(arr => arr.reverse());
+}
+
+// Promise<Array<T>> -> T
+function first() {
+	return this.then(arr => arr[0]);
+}
+
+// Collection -> Collection
+function distinct(key) {
+	const seen = new Set();
+	return this.and(({ [key]: v }) => !seen.has(v) && seen.add(v));
+}
+
 // db.media (Item)
 
+// Table -> Promise<Array>
 function current() {
-	return this.orderBy('date').reverse()::distinct('id');
-}
-
-function distinct(key) {
-	const seenKeys = new Set();
-	return this.and(({ [key]: k }) => !seenKeys.has(k) && seenKeys.add(k));
-}
-
-export function getItemHistory(id) {
-	return db.media.where('id').equals(id).orderBy('date').toArray();
-}
-
-export function getItem(id) {
-	return db.media.where('id').equals(id)::current().first();
+	return this.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
 }
 
 export function getItems() {
-	return db.media::current().toArray();
+	return db.media::current();
+}
+
+export function getItem(id) {
+	return getItems()::whereEquals('id', id)::first();
+}
+
+export function getItemHistory(id) {
+	return db.media.where('id').equals(id).sortBy('date')::reverse();
+}
+
+export function getItemsWithStatus(status) {
+	return getItems()::whereEqualsIf('status', status, !!status);
 }
 
 export function addItem(item) {
