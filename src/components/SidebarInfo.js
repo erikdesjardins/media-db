@@ -28,7 +28,7 @@ export default class SidebarInfo extends React.Component {
 		return (
 			<div>
 				<SelectBar
-					bsSize="xsmall"
+					bsSize="small"
 					selected={this.state.activeTab}
 					onSelect={this.handleTabChange}
 					options={[{

@@ -42,7 +42,7 @@ export default class ItemList extends React.Component {
 		return (
 			<div>
 				<SelectBar
-					bsSize="xsmall"
+					bsSize="small"
 					selected={this.props.relay.variables.status}
 					onSelect={this.handleStatusChange}
 					options={[{
