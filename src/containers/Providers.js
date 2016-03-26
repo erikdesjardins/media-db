@@ -2,7 +2,7 @@ import ProviderList from '../components/ProviderList';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Grid, PageHeader } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -17,7 +17,6 @@ export default class Providers extends React.Component {
 	render() {
 		return (
 			<Grid fluid>
-				<PageHeader>{'Providers'}</PageHeader>
 				<ProviderList viewer={this.props.viewer}/>
 			</Grid>
 		);
