@@ -39,9 +39,10 @@ export default class AddItemMutation extends Relay.Mutation {
 			rangeBehaviors: {
 				'': 'append',
 				[`status(${statusTypes.WAITING})`]: null,
+				[`status(${statusTypes.PENDING})`]: null,
+				[`status(${statusTypes.IN_PROGRESS})`]: null,
 				// note: this corresponds to the status of the added node
 				[`status(${statusTypes.COMPLETE})`]: 'append',
-				[`status(${statusTypes.PENDING})`]: null,
 				[`status(${statusTypes.REJECTED})`]: null,
 			},
 		}];

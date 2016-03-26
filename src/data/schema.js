@@ -77,11 +77,15 @@ const GraphQLStatusEnum = new GraphQLEnumType({
 	values: {
 		WAITING: {
 			value: statusTypes.WAITING,
-			description: 'Unviewed',
+			description: 'Waiting',
 		},
 		PENDING: {
 			value: statusTypes.PENDING,
-			description: 'In progress',
+			description: 'Unviewed',
+		},
+		IN_PROGRESS: {
+			value: statusTypes.IN_PROGRESS,
+			description: 'In Progress',
 		},
 		COMPLETE: {
 			value: statusTypes.COMPLETE,

@@ -49,11 +49,14 @@ export default class ItemList extends React.Component {
 						value: statusTypes.WAITING,
 						name: 'Waiting',
 					}, {
-						value: statusTypes.COMPLETE,
-						name: 'Complete',
-					}, {
 						value: statusTypes.PENDING,
 						name: 'Pending',
+					}, {
+						value: statusTypes.IN_PROGRESS,
+						name: 'In Progress',
+					}, {
+						value: statusTypes.COMPLETE,
+						name: 'Complete',
 					}, {
 						value: statusTypes.REJECTED,
 						name: 'Rejected',
