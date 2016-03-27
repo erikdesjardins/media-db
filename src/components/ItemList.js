@@ -5,8 +5,7 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Table } from 'react-bootstrap';
-
+import { Panel, Table } from 'react-bootstrap';
 
 @relay({
 	initialVariables: {
@@ -40,7 +39,7 @@ export default class ItemList extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<Panel>
 				<SelectBar
 					bsSize="small"
 					selected={this.props.relay.variables.status}
@@ -88,7 +87,7 @@ export default class ItemList extends React.Component {
 				<button onClick={this.handleAddItem}>
 					{'add item'}
 				</button>
-			</div>
+			</Panel>
 		);
 	}
 }

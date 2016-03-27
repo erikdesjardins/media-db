@@ -4,6 +4,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
+import { Panel } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -26,7 +27,7 @@ export default class SidebarInfo extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<Panel>
 				<SelectBar
 					bsSize="small"
 					selected={this.state.activeTab}
@@ -41,7 +42,7 @@ export default class SidebarInfo extends React.Component {
 				/>
 				{this.state.activeTab === 'info' && <ItemInfo item={this.props.item}/>}
 				{this.state.activeTab === 'history' && <ItemHistory item={this.props.item}/>}
-			</div>
+			</Panel>
 		);
 	}
 }
