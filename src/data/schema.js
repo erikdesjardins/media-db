@@ -106,11 +106,11 @@ const GraphQLProductionStatusEnum = new GraphQLEnumType({
 		INCOMPLETE: {
 			value: productionStatusTypes.INCOMPLETE,
 		},
-		COMPLETE: {
-			value: productionStatusTypes.COMPLETE,
-		},
 		HIATUS: {
 			value: productionStatusTypes.HIATUS,
+		},
+		COMPLETE: {
+			value: productionStatusTypes.COMPLETE,
 		},
 		CANCELLED: {
 			value: productionStatusTypes.CANCELLED,
