@@ -5,6 +5,7 @@ import { Input } from 'react-bootstrap';
 export default class AutosaveInput extends React.Component {
 	static propTypes = {
 		type: Input.propTypes.type,
+		label: PropTypes.node,
 		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 		hasFeedback: PropTypes.bool,
 		defaultValue: PropTypes.oneOfType([
@@ -36,6 +37,7 @@ export default class AutosaveInput extends React.Component {
 			<Input
 				bsSize="small"
 				type={this.props.type}
+				label={this.props.label}
 				style={this.props.style}
 				hasFeedback={this.props.hasFeedback}
 				bsStyle={this.isDirty() ? 'warning' : null}
