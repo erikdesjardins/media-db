@@ -61,11 +61,16 @@ export function getFilteredItems(filterMap) {
 
 export function addItem(id, item) {
 	const now = Date.now();
-	return db.media.add({
-		...item,
-		id,
-		date: now,
-		statusDate: now,
+	return db.transaction('rw', db.media, function* trans() {
+		if (yield getItem(id)) {
+			throw new Error(`Tried to add item with in-use id: ${id}`);
+		}
+		db.media.add({
+			...item,
+			id,
+			date: now,
+			statusDate: now,
+		});
 	});
 }
 
