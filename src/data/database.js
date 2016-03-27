@@ -1,6 +1,5 @@
 import Dexie from 'dexie';
-// to "polyfill" async functions
-const Promise = Dexie.Promise; // eslint-disable-line no-unused-vars
+import deepEqual from 'only-shallow';
 
 export class Item {}
 export class Provider {}
@@ -9,7 +8,7 @@ export class User {}
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
-	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,date,&[id+date]',
+	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,statusDate,date,&[id+date]',
 	provider: 'id,&createdDate',
 });
 
@@ -75,6 +74,30 @@ export function addItem(id, item) {
 		id,
 		date: now,
 		statusDate: now,
+	});
+}
+
+export function updateItem(id, patch) {
+	// using a generator here instead of async because Dexie wants you to polyfill their Promise impl
+	// and I'm not convinced that Babel's transformed async functions will use it
+	return db.transaction('rw', db.media, function* trans() {
+		const existing = yield getItem(id);
+		if (!existing) {
+			throw new Error(`Tried to update non-extant item with id: ${id}`);
+		}
+		const updated = { ...existing, ...patch };
+		if (deepEqual(existing, updated)) {
+			// nothing changed, don't create a new version
+			return;
+		}
+		// something changed, make a new version with new date
+		updated.date = Date.now();
+		if (updated.status !== existing.status) {
+			// status changed, update the statusDate
+			updated.statusDate = updated.date;
+		}
+		// add the new version
+		db.media.add(updated);
 	});
 }
 
