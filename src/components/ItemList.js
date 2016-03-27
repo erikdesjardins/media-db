@@ -73,6 +73,7 @@ export default class ItemList extends React.Component {
 							<th>{'Notes'}</th>
 							<th>{'Date'}</th>
 							<th>{'Length'}</th>
+							<th>{''}</th>
 						</tr>
 					</thead>
 					<tbody>
