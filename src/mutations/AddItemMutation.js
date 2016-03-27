@@ -26,7 +26,9 @@ export default class AddItemMutation extends Relay.Mutation {
 	}
 
 	getVariables() {
-		return {};
+		return {
+			localId: String(Math.random()).slice(2),
+		};
 	}
 
 	getConfigs() {

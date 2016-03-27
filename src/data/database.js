@@ -9,7 +9,7 @@ export class User {}
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
-	media: '++,id,collisionId,title,creator,*genres,*characters,length,status,productionStatus,statusDate,date,&[id+date]',
+	media: '++,id,title,creator,*genres,*characters,length,status,productionStatus,statusDate,date,&[id+date]',
 	provider: 'id,&createdDate',
 });
 
