@@ -1,3 +1,4 @@
+import ItemCharacters from './ItemCharacters';
 import ItemGenres from './ItemGenres';
 import ItemLength from './ItemLength';
 import React from 'react';
@@ -15,12 +16,12 @@ import { formatDate } from '../utils/format';
 				thumbnail,
 				title,
 				creator,
-				characters,
 				notes,
 				status,
 				productionStatus,
 				statusDate,
 				${ItemGenres.getFragment('item')}
+				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
 			}
 		`,
@@ -28,13 +29,13 @@ import { formatDate } from '../utils/format';
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item: { url, thumbnail, title, creator, characters, notes, status, productionStatus, statusDate } } = this.props;
+		const { item: { url, thumbnail, title, creator, notes, status, productionStatus, statusDate } } = this.props;
 		return (
 			<div key={this.props.item.id}>
 				<Thumbnail src={thumbnail}>
 					<h3><a href={url}>{title}</a><small>{' by '}{creator}</small></h3>
 					<ItemGenres item={this.props.item}/>
-					<p>{'Characters: '}{characters.join(', ')}</p>
+					<ItemCharacters item={this.props.item}/>
 					<p>{'Notes: '}{notes}</p>
 					<ItemLength item={this.props.item}/>
 					<p>{'Status: '}{status}</p>
