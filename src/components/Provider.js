@@ -75,31 +75,28 @@ export default class Provider extends ReactCSS.Component {
 		};
 	}
 
-	renderFooter() {
-		// IntelliJ... -.-
-		const closeBrace = '}';
-		return (
-			<div>
-				{closeBrace}
-				<Button
-					is="remove"
-					bsStyle="danger"
-					bsSize="xsmall"
-					onClick={this.handleRemove}
-				>
-					{'Remove'}
-				</Button>
-			</div>
-		);
-	}
-
 	render() {
+		// IntelliJ can't deal with braces in strings in JSX... -.-
+		const prefix = 'function fetchInfo(url) {';
+		const suffix = '}';
 		return (
 			<div>
 				<Panel
 					is="panel"
-					header="function fetchInfo(url) {"
-					footer={this.renderFooter()}
+					header={
+						<div>
+							{prefix}
+							<Button
+								is="remove"
+								bsStyle="danger"
+								bsSize="xsmall"
+								onClick={this.handleRemove}
+							>
+								{'Remove'}
+							</Button>
+						</div>
+					}
+					footer={suffix}
 				>
 					<Input
 						is="input"
