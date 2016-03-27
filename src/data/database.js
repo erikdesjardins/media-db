@@ -33,11 +33,6 @@ function reverse() {
 	return this.then(arr => arr.reverse());
 }
 
-// Promise<Array<T>> -> T
-function first() {
-	return this.then(arr => arr[0]);
-}
-
 // Collection -> Collection
 function distinct(key) {
 	const seen = new Set();
@@ -46,21 +41,20 @@ function distinct(key) {
 
 // db.media (Item)
 
-// Table -> Promise<Array>
-function current() {
-	return this.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
-}
-
-export function getItems() {
-	return db.media::current();
+function _getItemHistory(id) {
+	return db.media.where('[id+date]').between([id, -Infinity], [id, Infinity]);
 }
 
 export function getItem(id) {
-	return getItems()::whereEquals('id', id)::first();
+	return _getItemHistory(id).last();
 }
 
 export function getItemHistory(id) {
-	return db.media.where('id').equals(id).sortBy('date')::reverse();
+	return _getItemHistory(id).toArray();
+}
+
+export function getItems() {
+	return db.media.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
 }
 
 export function getItemsWithStatus(status) {
