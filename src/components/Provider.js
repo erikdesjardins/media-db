@@ -1,11 +1,11 @@
-import _ from 'lodash';
+import AutosaveInput from './AutosaveInput';
 import React from 'react';
 import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
-import { Button, Input, Panel } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -24,24 +24,11 @@ import { Button, Input, Panel } from 'react-bootstrap';
 	},
 })
 export default class Provider extends ReactCSS.Component {
-	state = {
-		value: this.props.provider.infoCallback,
-	};
-
-	isDirty() {
-		return this.state.value !== this.props.provider.infoCallback;
-	}
-
-	save = _.debounce(() => {
+	handleSave = value => {
 		Relay.Store.commitUpdate(new UpdateProviderMutation({
 			provider: this.props.provider,
-			infoCallback: this.state.value,
+			infoCallback: value,
 		}));
-	}, 1000);
-
-	handleChange = e => {
-		this.setState({ value: e.target.value });
-		this.save();
 	};
 
 	handleRemove = () => {
@@ -98,14 +85,12 @@ export default class Provider extends ReactCSS.Component {
 					}
 					footer={suffix}
 				>
-					<Input
+					<AutosaveInput
 						is="input"
 						type="textarea"
-						bsSize="small"
-						bsStyle={this.isDirty() ? 'warning' : null}
 						hasFeedback
-						value={this.state.value}
-						onChange={this.handleChange}
+						defaultValue={this.props.provider.infoCallback}
+						onSave={this.handleSave}
 					/>
 				</Panel>
 			</div>
