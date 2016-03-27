@@ -23,7 +23,7 @@ export default class Items extends React.Component {
 						<ItemList viewer={this.props.viewer}/>
 					</Col>
 					<Col xs={4}>
-						<AutoAffix viewportOffsetTop={15} container={this}>
+						<AutoAffix viewportOffsetTop={20} container={this}>
 							<div>
 								{this.props.children}
 							</div>
