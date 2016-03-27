@@ -8,6 +8,7 @@ import { formatDate } from '../utils/format';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
+				id,
 				url,
 				thumbnail,
 				title,
@@ -27,7 +28,7 @@ export default class ItemInfo extends React.Component {
 	render() {
 		const { item: { url, thumbnail, title, creator, genres, characters, notes, length, status, productionStatus, statusDate } } = this.props;
 		return (
-			<div>
+			<div key={this.props.item.id}>
 				<Thumbnail src={thumbnail}>
 					<h3><a href={url}>{title}</a><small>{' by '}{creator}</small></h3>
 					<p>{'Genres: '}{genres.join(', ')}</p>
