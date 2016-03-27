@@ -52,14 +52,13 @@ export default class AddItemMutation extends Relay.Mutation {
 		return {
 			itemEdge: {
 				node: {
-					date: Date.now(),
 					url: '',
 					title: '',
 					creator: '',
 					genres: [],
 					characters: [],
-					status: 'Complete',
-					productionStatus: 'Complete',
+					status: 'COMPLETE',
+					productionStatus: 'COMPLETE',
 					statusDate: Date.now(),
 				},
 			},

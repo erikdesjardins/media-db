@@ -68,8 +68,12 @@ export function getItemsWithStatus(status) {
 	return getItems()::whereEqualsIf('status', status, !!status);
 }
 
-export function addItem(item) {
-	return db.media.add(item);
+export function addItem(id, item) {
+	return db.media.add({
+		...item,
+		id,
+		date: Date.now(),
+	});
 }
 
 export function getRawItems() {

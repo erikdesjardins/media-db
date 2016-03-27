@@ -170,10 +170,6 @@ const GraphQLItem = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLLong),
 			description: 'The date at which the item\'s status was last updated',
 		},
-		date: {
-			type: new GraphQLNonNull(GraphQLLong),
-			description: 'The date at which this version of the item was updated',
-		},
 		history: {
 			type: new GraphQLNonNull(new GraphQLList(GraphQLItem)),
 			description: 'The item\'s past versions',
@@ -288,10 +284,8 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	},
 	mutateAndGetPayload: () => {
 		const localItemId = randomId();
-		addItem({
-			id: localItemId,
+		addItem(localItemId, {
 			collisionId: localItemId,
-			date: Date.now(),
 			url: '',
 			title: randomId(),
 			creator: randomId(),

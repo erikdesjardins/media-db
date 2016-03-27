@@ -19,14 +19,13 @@ import { formatDate } from '../utils/format';
 				status,
 				productionStatus,
 				statusDate,
-				date,
 			}
 		`,
 	},
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item: { url, thumbnail, title, creator, genres, characters, notes, length, status, productionStatus, statusDate, date } } = this.props;
+		const { item: { url, thumbnail, title, creator, genres, characters, notes, length, status, productionStatus, statusDate } } = this.props;
 		return (
 			<div>
 				<Thumbnail src={thumbnail}>
@@ -38,7 +37,6 @@ export default class ItemInfo extends React.Component {
 					<p>{'Status: '}{status}</p>
 					<p>{'Production status: '}{productionStatus}</p>
 					<p>{'Status updated: '}{formatDate(statusDate)}</p>
-					<p>{'Updated: '}{formatDate(date)}</p>
 				</Thumbnail>
 			</div>
 		);
