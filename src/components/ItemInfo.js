@@ -1,3 +1,4 @@
+import ItemLength from './ItemLength';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -16,17 +17,17 @@ import { formatDate } from '../utils/format';
 				genres,
 				characters,
 				notes,
-				length,
 				status,
 				productionStatus,
 				statusDate,
+				${ItemLength.getFragment('item')}
 			}
 		`,
 	},
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item: { url, thumbnail, title, creator, genres, characters, notes, length, status, productionStatus, statusDate } } = this.props;
+		const { item: { url, thumbnail, title, creator, genres, characters, notes, status, productionStatus, statusDate } } = this.props;
 		return (
 			<div key={this.props.item.id}>
 				<Thumbnail src={thumbnail}>
@@ -34,7 +35,7 @@ export default class ItemInfo extends React.Component {
 					<p>{'Genres: '}{genres.join(', ')}</p>
 					<p>{'Characters: '}{characters.join(', ')}</p>
 					<p>{'Notes: '}{notes}</p>
-					<p>{'Length: '}{length}</p>
+					<ItemLength item={this.props.item}/>
 					<p>{'Status: '}{status}</p>
 					<p>{'Production status: '}{productionStatus}</p>
 					<p>{'Status updated: '}{formatDate(statusDate)}</p>

@@ -44,6 +44,7 @@ import {
 	getViewer,
 	removeProvider,
 	setRawItems,
+	updateItem,
 	updateProvider,
 } from './database';
 
@@ -294,6 +295,25 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLEditItemLengthMutation = mutationWithClientMutationId({
+	name: 'EditItemLength',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		length: { type: new GraphQLNonNull(GraphQLInt) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: ({ id, length }) => {
+		const localItemId = fromGlobalId(id).id;
+		updateItem(localItemId, { length });
+		return { localItemId };
+	},
+});
+
 const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	name: 'AddProvider',
 	inputFields: {},
@@ -383,6 +403,7 @@ const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
 		addItem: GraphQLAddItemMutation,
+		editItemLength: GraphQLEditItemLengthMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,
