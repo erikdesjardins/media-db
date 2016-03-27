@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactCSS from 'reactcss';
 import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
-import { Input, Nav, Navbar } from 'react-bootstrap';
+import { Input, Nav, NavItem, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 
 // *sigh*
 const NavbarBrand = Navbar.Brand;
@@ -12,7 +13,7 @@ const NavbarHeader = Navbar.Header;
 
 export default class Header extends ReactCSS.Component {
 	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
+		router: PropTypes.object.isRequired,
 	};
 
 	handleSearchInput = e => {
@@ -44,8 +45,8 @@ export default class Header extends ReactCSS.Component {
 					</NavbarBrand>
 				</NavbarHeader>
 				<Nav>
-					<li><Link to="/providers">{'Providers'}</Link></li>
-					<li><Link to="/storage">{'Storage'}</Link></li>
+					<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
+					<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
 				</Nav>
 				<NavbarForm pullRight>
 					<Input type="text" placeholder="Search" onInput={this.handleSearchInput}/>

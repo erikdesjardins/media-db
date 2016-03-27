@@ -2,7 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import StorageEdit from '../components/StorageEdit';
 import relay from 'relay-decorator';
-import { Grid, PageHeader } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -17,7 +17,6 @@ export default class Storage extends React.Component {
 	render() {
 		return (
 			<Grid fluid>
-				<PageHeader>{'Storage'}</PageHeader>
 				<StorageEdit viewer={this.props.viewer}/>
 			</Grid>
 		);

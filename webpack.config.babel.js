@@ -17,9 +17,9 @@ export default {
 			{ test: /\.js$/, exclude: join(__dirname, 'node_modules'), loaders: ['babel', 'react-map-styles'] },
 			{ test: /\.js$/, include: join(__dirname, 'node_modules'), loader: 'babel', query: { plugins: ['transform-dead-code-elimination', 'transform-node-env-inline'], babelrc: false } },
 			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
-			{ test: /\.css$/, loader: 'file?name=[name].[ext]' },
+			{ test: /\.css$/, loaders: ['file?name=[name].[ext]', 'extricate?resolve=\\.js$', 'css'] },
 			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
-			{ test: /\.png$/, loader: 'file?name=[name].[ext]' },
+			{ test: /\.(png|svg|woff2?|ttf|eot)$/, loader: 'file?name=[name].[ext]' },
 		],
 	},
 	plugins: [

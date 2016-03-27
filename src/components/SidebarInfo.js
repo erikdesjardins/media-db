@@ -2,8 +2,9 @@ import ItemInfo from '../components/ItemInfo';
 import ItemHistory from '../components/ItemHistory';
 import React from 'react';
 import Relay from 'react-relay';
+import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -20,34 +21,28 @@ export default class SidebarInfo extends React.Component {
 		activeTab: 'info',
 	};
 
-	handleTabChange(tab) {
+	handleTabChange = tab => {
 		this.setState({ activeTab: tab });
-	}
-
-	isActiveTab(tab) {
-		return this.state.activeTab === tab;
-	}
+	};
 
 	render() {
 		return (
-			<div>
-				<ButtonGroup bsSize="xsmall">
-					<Button
-						active={this.isActiveTab('info')}
-						onClick={() => this.handleTabChange('info')}
-					>
-						{'Info'}
-					</Button>
-					<Button
-						active={this.isActiveTab('history')}
-						onClick={() => this.handleTabChange('history')}
-					>
-						{'History'}
-					</Button>
-				</ButtonGroup>
+			<Panel>
+				<SelectBar
+					bsSize="small"
+					selected={this.state.activeTab}
+					onSelect={this.handleTabChange}
+					options={[{
+						value: 'info',
+						name: 'Info',
+					}, {
+						value: 'history',
+						name: 'History',
+					}]}
+				/>
 				{this.state.activeTab === 'info' && <ItemInfo item={this.props.item}/>}
 				{this.state.activeTab === 'history' && <ItemHistory item={this.props.item}/>}
-			</div>
+			</Panel>
 		);
 	}
 }

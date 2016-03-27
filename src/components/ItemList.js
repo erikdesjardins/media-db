@@ -2,9 +2,10 @@ import AddItemMutation from '../mutations/AddItemMutation';
 import Item from './Item';
 import React from 'react';
 import Relay from 'react-relay';
+import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Button, ButtonGroup, Table } from 'react-bootstrap';
+import { Panel, Table } from 'react-bootstrap';
 
 @relay({
 	initialVariables: {
@@ -28,50 +29,42 @@ import { Button, ButtonGroup, Table } from 'react-bootstrap';
 	},
 })
 export default class ItemList extends React.Component {
-	handleStatusChange(status) {
+	handleStatusChange = status => {
 		this.props.relay.setVariables({ status });
-	}
+	};
 
 	handleAddItem = () => {
 		Relay.Store.commitUpdate(new AddItemMutation({ viewer: this.props.viewer }));
 	};
 
-	isCurrentStatus(status) {
-		return this.props.relay.variables.status === status;
-	}
-
 	render() {
 		return (
-			<div>
-				<ButtonGroup bsSize="xsmall">
-					<Button
-						active={this.isCurrentStatus(statusTypes.WAITING)}
-						onClick={() => this.handleStatusChange(statusTypes.WAITING)}
-					>
-						{'Waiting'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.COMPLETE)}
-						onClick={() => this.handleStatusChange(statusTypes.COMPLETE)}
-					>
-						{'Complete'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.PENDING)}
-						onClick={() => this.handleStatusChange(statusTypes.PENDING)}
-					>
-						{'Pending'}
-					</Button>
-					<Button
-						active={this.isCurrentStatus(statusTypes.REJECTED)}
-						onClick={() => this.handleStatusChange(statusTypes.REJECTED)}
-					>
-						{'Rejected'}
-					</Button>
-				</ButtonGroup>
-				<Table striped condensed>
+			<Panel>
+				<SelectBar
+					bsSize="small"
+					selected={this.props.relay.variables.status}
+					onSelect={this.handleStatusChange}
+					options={[{
+						value: statusTypes.WAITING,
+						name: 'Waiting',
+					}, {
+						value: statusTypes.PENDING,
+						name: 'Pending',
+					}, {
+						value: statusTypes.IN_PROGRESS,
+						name: 'In Progress',
+					}, {
+						value: statusTypes.COMPLETE,
+						name: 'Complete',
+					}, {
+						value: statusTypes.REJECTED,
+						name: 'Rejected',
+					}]}
+				/>
+				<Table striped condensed hover responsive>
 					<thead>
 						<tr>
+							<th>{''}</th>
 							<th>{'Title'}</th>
 							<th>{'Creator'}</th>
 							<th>{'Genres'}</th>
@@ -79,6 +72,7 @@ export default class ItemList extends React.Component {
 							<th>{'Notes'}</th>
 							<th>{'Date'}</th>
 							<th>{'Length'}</th>
+							<th>{''}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -93,7 +87,7 @@ export default class ItemList extends React.Component {
 				<button onClick={this.handleAddItem}>
 					{'add item'}
 				</button>
-			</div>
+			</Panel>
 		);
 	}
 }

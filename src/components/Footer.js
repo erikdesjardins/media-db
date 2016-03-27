@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactCSS from 'reactcss';
-import { Jumbotron } from 'react-bootstrap';
 
 export default class Footer extends ReactCSS.Component {
 	classes() {
 		return {
 			default: {
-				jumbotron: {
+				spacer: {
 					marginTop: '20px',
-					marginBottom: 0,
 				},
 			},
 		};
@@ -16,7 +14,7 @@ export default class Footer extends ReactCSS.Component {
 
 	render() {
 		return (
-			<Jumbotron is="jumbotron"/>
+			<div is="spacer"/>
 		);
 	}
 }
