@@ -33,10 +33,10 @@ import {
 	User,
 	addItem,
 	addProvider,
+	getFilteredItems,
 	getItem,
 	getItemHistory,
 	getItems,
-	getItemsWithStatus,
 	getProvider,
 	getProviders,
 	getRawItems,
@@ -223,9 +223,9 @@ const GraphQLUser = new GraphQLObjectType({
 				},
 				...connectionArgs,
 			},
-			// status is nullable, in which case getItemsWithStatus() === getItems()
+			// status is nullable, in which case getFilteredItems() === getItems()
 			resolve: (obj, { status, ...args }) =>
-				connectionFromPromisedArray(getItemsWithStatus(status), args),
+				connectionFromPromisedArray(getFilteredItems({ status }), args),
 		},
 		providers: {
 			type: ProvidersConnection,

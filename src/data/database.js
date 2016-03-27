@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
 
@@ -20,12 +21,6 @@ db.provider.mapToClass(Provider);
 // Promise<Array> -> Promise<Array>
 function whereEquals(key, val) {
 	return this.then(arr => arr.filter(({ [key]: v }) => v === val));
-}
-
-// Promise<Array> -> Promise<Array>
-function whereEqualsIf(key, val, shouldApply) {
-	if (!shouldApply) return this;
-	return this::whereEquals(key, val);
 }
 
 // Promise<Array> -> Promise<Array>
@@ -57,8 +52,11 @@ export function getItems() {
 	return db.media.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
 }
 
-export function getItemsWithStatus(status) {
-	return getItems()::whereEqualsIf('status', status, !!status);
+export function getFilteredItems(filterMap) {
+	return _.toPairs(filterMap).reduce(
+		(items, [key, value]) => (value ? items::whereEquals(key, value) : items),
+		getItems()
+	);
 }
 
 export function addItem(id, item) {
