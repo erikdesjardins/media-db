@@ -20,7 +20,7 @@ export default class AutosaveInput extends React.Component {
 	};
 
 	isDirty() {
-		return this.state.value !== this.props.defaultValue;
+		return String(this.state.value) !== String(this.props.defaultValue);
 	}
 
 	save = _.debounce(() => {
