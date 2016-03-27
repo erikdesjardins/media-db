@@ -60,6 +60,10 @@ export default class Provider extends ReactCSS.Component {
 				input: {
 					fontFamily: 'monospace',
 					resize: 'vertical',
+					margin: '-15px -15px -30px -15px',
+					width: 'calc(100% + 30px)',
+					boxShadow: 'none',
+					border: 'none',
 				},
 				remove: {
 					float: 'right',
@@ -100,6 +104,7 @@ export default class Provider extends ReactCSS.Component {
 					<Input
 						is="input"
 						type="textarea"
+						bsSize="small"
 						bsStyle={this.isDirty() ? 'warning' : null}
 						value={this.state.value}
 						onChange={this.handleChange}
