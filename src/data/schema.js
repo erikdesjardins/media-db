@@ -293,7 +293,6 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 			characters: [],
 			status: statusTypes.COMPLETE,
 			productionStatus: productionStatusTypes.COMPLETE,
-			statusDate: Date.now(),
 		});
 		return { localItemId };
 	},

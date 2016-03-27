@@ -69,10 +69,12 @@ export function getItemsWithStatus(status) {
 }
 
 export function addItem(id, item) {
+	const now = Date.now();
 	return db.media.add({
 		...item,
 		id,
-		date: Date.now(),
+		date: now,
+		statusDate: now,
 	});
 }
 
