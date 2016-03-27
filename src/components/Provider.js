@@ -103,6 +103,7 @@ export default class Provider extends ReactCSS.Component {
 						type="textarea"
 						bsSize="small"
 						bsStyle={this.isDirty() ? 'warning' : null}
+						hasFeedback
 						value={this.state.value}
 						onChange={this.handleChange}
 					/>
