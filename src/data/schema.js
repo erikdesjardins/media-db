@@ -314,6 +314,25 @@ const GraphQLEditItemLengthMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLEditItemProductionStatusMutation = mutationWithClientMutationId({
+	name: 'EditItemProductionStatus',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		productionStatus: { type: new GraphQLNonNull(GraphQLProductionStatusEnum) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: ({ id, productionStatus }) => {
+		const localItemId = fromGlobalId(id).id;
+		updateItem(localItemId, { productionStatus });
+		return { localItemId };
+	},
+});
+
 const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	name: 'AddProvider',
 	inputFields: {},
@@ -404,6 +423,7 @@ const Mutation = new GraphQLObjectType({
 	fields: () => ({
 		addItem: GraphQLAddItemMutation,
 		editItemLength: GraphQLEditItemLengthMutation,
+		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,
