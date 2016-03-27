@@ -148,11 +148,11 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'A list of the item\'s characters',
 		},
 		notes: {
-			type: GraphQLString,
+			type: new GraphQLNonNull(GraphQLString),
 			description: 'Notes about the item',
 		},
 		length: {
-			type: GraphQLInt,
+			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The item\'s length',
 		},
 		status: {
