@@ -172,9 +172,13 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'The date at which this version of the item was updated',
 		},
 		history: {
-			type: new GraphQLNonNull(new GraphQLList(GraphQLItem)),
+			type: ItemsConnection, // eslint-disable-line no-use-before-define
 			description: 'The item\'s past versions',
-			resolve: ({ id }) => getItemHistory(id),
+			args: {
+				...connectionArgs,
+			},
+			resolve: (obj, args) =>
+				connectionFromPromisedArray(getItemHistory(obj.id), args),
 		},
 	}),
 	interfaces: [nodeInterface],
