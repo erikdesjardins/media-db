@@ -30,17 +30,17 @@ import { Thumbnail } from 'react-bootstrap';
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item: { url, thumbnail, title, creator } } = this.props;
+		const { item } = this.props;
 		return (
-			<div key={this.props.item.id}>
-				<Thumbnail src={thumbnail}>
-					<h3><a href={url}>{title}</a><small>{' by '}{creator}</small></h3>
-					<ItemGenres item={this.props.item}/>
-					<ItemCharacters item={this.props.item}/>
-					<ItemLength item={this.props.item}/>
-					<ItemProductionStatus item={this.props.item}/>
-					<ItemStatus item={this.props.item}/>
-					<ItemNotes item={this.props.item}/>
+			<div key={item.id}>
+				<Thumbnail src={item.thumbnail}>
+					<h3><a href={item.url}>{item.title}</a><small>{' by '}{item.creator}</small></h3>
+					<ItemGenres item={item}/>
+					<ItemCharacters item={item}/>
+					<ItemLength item={item}/>
+					<ItemProductionStatus item={item}/>
+					<ItemStatus item={item}/>
+					<ItemNotes item={item}/>
 				</Thumbnail>
 			</div>
 		);
