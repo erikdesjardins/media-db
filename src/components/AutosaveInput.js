@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import { Input } from 'react-bootstrap';
 
@@ -23,13 +22,12 @@ export default class AutosaveInput extends React.Component {
 		return String(this.state.value) !== String(this.props.defaultValue);
 	}
 
-	save = _.debounce(() => {
+	handleBlur = () => {
 		this.props.onSave(this.state.value);
-	}, 1000);
+	};
 
 	handleChange = e => {
 		this.setState({ value: e.target.value });
-		this.save();
 	};
 
 	render() {
@@ -43,6 +41,7 @@ export default class AutosaveInput extends React.Component {
 				bsStyle={this.isDirty() ? 'warning' : null}
 				value={this.state.value}
 				onChange={this.handleChange}
+				onBlur={this.handleBlur}
 			/>
 		);
 	}
