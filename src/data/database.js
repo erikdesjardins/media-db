@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
-import { distinct, whereEquals, reverse } from '../utils/db';
+import { distinct, map, whereEquals, reverse } from '../utils/db';
 
 export class Item {}
 export class Provider {}
@@ -30,7 +30,10 @@ export function getItem(id) {
 }
 
 export function getItemHistory(id) {
-	return _getItemHistory(id).toArray();
+	return _getItemHistory(id).toArray()::map((item, i) => ({
+		...item,
+		id: `${item.id}-history${i}`,
+	}));
 }
 
 export function getItems() {

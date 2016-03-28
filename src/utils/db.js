@@ -13,3 +13,8 @@ export function distinct(key) {
 	const seen = new Set();
 	return this.and(({ [key]: v }) => !seen.has(v) && seen.add(v));
 }
+
+// Promise<Array> -> Promise<Array>
+export function map(callback, thisArg) {
+	return this.then(arr => arr.map(callback, thisArg));
+}
