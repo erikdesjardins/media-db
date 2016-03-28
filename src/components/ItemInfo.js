@@ -2,11 +2,11 @@ import ItemCharacters from './ItemCharacters';
 import ItemGenres from './ItemGenres';
 import ItemLength from './ItemLength';
 import ItemProductionStatus from './ItemProductionStatus';
+import ItemStatus from './ItemStatus';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { Thumbnail } from 'react-bootstrap';
-import { formatDate } from '../utils/format';
 
 @relay({
 	fragments: {
@@ -18,19 +18,18 @@ import { formatDate } from '../utils/format';
 				title,
 				creator,
 				notes,
-				status,
-				statusDate,
 				${ItemGenres.getFragment('item')}
 				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
 				${ItemProductionStatus.getFragment('item')}
+				${ItemStatus.getFragment('item')}
 			}
 		`,
 	},
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item: { url, thumbnail, title, creator, notes, status, statusDate } } = this.props;
+		const { item: { url, thumbnail, title, creator, notes } } = this.props;
 		return (
 			<div key={this.props.item.id}>
 				<Thumbnail src={thumbnail}>
@@ -40,8 +39,7 @@ export default class ItemInfo extends React.Component {
 					<p>{'Notes: '}{notes}</p>
 					<ItemLength item={this.props.item}/>
 					<ItemProductionStatus item={this.props.item}/>
-					<p>{'Status: '}{status}</p>
-					<p>{'Status updated: '}{formatDate(statusDate)}</p>
+					<ItemStatus item={this.props.item}/>
 				</Thumbnail>
 			</div>
 		);
