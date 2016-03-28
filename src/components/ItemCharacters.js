@@ -3,6 +3,8 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { FormControls } from 'react-bootstrap';
 
+const FormControlsStatic = FormControls.Static;
+
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -15,7 +17,7 @@ import { FormControls } from 'react-bootstrap';
 export default class ItemCharacters extends React.Component {
 	render() {
 		return (
-			<FormControls.Static
+			<FormControlsStatic
 				label="Characters"
 				value={this.props.item.characters.join(', ')}
 			/>
