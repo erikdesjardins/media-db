@@ -7,6 +7,11 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 				id,
 			}
 		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				id,
+			}
+		`,
 	};
 
 	getMutation() {
@@ -19,6 +24,9 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 				item {
 					status,
 					statusDate,
+				},
+				viewer {
+					items,
 				},
 			}
 		`;
@@ -36,6 +44,7 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
 				item: this.props.item.id,
+				viewer: this.props.viewer.id,
 			},
 		}];
 	}
@@ -46,6 +55,9 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 				id: this.props.item.id,
 				status: this.props.status,
 				statusDate: Date.now(),
+			},
+			viewer: {
+				id: this.props.viewer.id,
 			},
 		};
 	}

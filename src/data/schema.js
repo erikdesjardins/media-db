@@ -354,6 +354,10 @@ const GraphQLEditItemStatusMutation = mutationWithClientMutationId({
 			type: GraphQLItem,
 			resolve: ({ localItemId }) => getItem(localItemId),
 		},
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
+		},
 	},
 	mutateAndGetPayload: ({ id, status }) => {
 		const localItemId = fromGlobalId(id).id;

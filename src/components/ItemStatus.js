@@ -15,12 +15,18 @@ import { formatDate } from '../utils/format';
 				${EditItemStatusMutation.getFragment('item')}
 			}
 		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${EditItemStatusMutation.getFragment('viewer')}
+			}
+		`,
 	},
 })
 export default class ItemStatus extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new EditItemStatusMutation({
 			item: this.props.item,
+			viewer: this.props.viewer,
 			status: value,
 		}));
 	};

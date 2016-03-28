@@ -26,11 +26,16 @@ import { Thumbnail } from 'react-bootstrap';
 				${ItemNotes.getFragment('item')}
 			}
 		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${ItemStatus.getFragment('viewer')}
+			}
+		`,
 	},
 })
 export default class ItemInfo extends React.Component {
 	render() {
-		const { item } = this.props;
+		const { item, viewer } = this.props;
 		return (
 			<div key={item.id}>
 				<Thumbnail src={item.thumbnail}>
@@ -39,7 +44,7 @@ export default class ItemInfo extends React.Component {
 					<ItemCharacters item={item}/>
 					<ItemLength item={item}/>
 					<ItemProductionStatus item={item}/>
-					<ItemStatus item={item}/>
+					<ItemStatus item={item} viewer={viewer}/>
 					<ItemNotes item={item}/>
 				</Thumbnail>
 			</div>
