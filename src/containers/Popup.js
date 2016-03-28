@@ -4,7 +4,10 @@ import React from 'react';
 export default class Popup extends React.Component {
 	render() {
 		return (
-			<PopupHeader/>
+			<div>
+				<PopupHeader/>
+				{this.props.children}
+			</div>
 		);
 	}
 }
