@@ -352,6 +352,25 @@ const GraphQLEditItemStatusMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLEditItemNotesMutation = mutationWithClientMutationId({
+	name: 'EditItemNotes',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		notes: { type: new GraphQLNonNull(GraphQLString) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: ({ id, notes }) => {
+		const localItemId = fromGlobalId(id).id;
+		updateItem(localItemId, { notes });
+		return { localItemId };
+	},
+});
+
 const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	name: 'AddProvider',
 	inputFields: {},
@@ -444,6 +463,7 @@ const Mutation = new GraphQLObjectType({
 		editItemLength: GraphQLEditItemLengthMutation,
 		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		editItemStatus: GraphQLEditItemStatusMutation,
+		editItemNotes: GraphQLEditItemNotesMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,
