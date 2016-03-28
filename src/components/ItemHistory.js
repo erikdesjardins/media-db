@@ -4,24 +4,44 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { diff } from 'deep-diff';
 import { formatDate } from '../utils/format';
+import { intersperse } from '../utils/array';
 
 @relay({
+	initialVariables: {
+		first: 2147483647,
+	},
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				history,
+				history(first: $first) {
+					edges {
+						node {
+							url,
+							thumbnail,
+							title,
+							creator,
+							genres,
+							characters,
+							notes,
+							length,
+							status,
+							productionStatus,
+							date,
+						}
+					}
+				}
 			}
 		`,
 	},
 })
 export default class ItemHistory extends React.Component {
 	render() {
-		const { item: { history } } = this.props;
+		const history = this.props.item.history.edges.map(edge => edge.node);
 
 		const diffs = [
 			`created on ${formatDate(history[0].date)}`,
 			..._.zipWith(history.slice(0, -1), history.slice(1), (from, to) => `${
-				diff(from, to)
+				diff(from, to, (path, key) => key === 'date' || String(key).charAt(0) === '_')
 					.map(({ kind, path, lhs, rhs, item }) => {
 						const isArray = kind === 'A';
 						const prefix = `${isArray ? 'a ' : ''}${path.join('.')}`;
@@ -42,7 +62,7 @@ export default class ItemHistory extends React.Component {
 					})
 					.join(', and ')
 			} on ${formatDate(to.date)}`),
-		];
+		]::intersperse(<br/>);
 
 		return (
 			<div>

@@ -26,7 +26,9 @@ export default class AddItemMutation extends Relay.Mutation {
 	}
 
 	getVariables() {
-		return {};
+		return {
+			localId: String(Math.random()).slice(2),
+		};
 	}
 
 	getConfigs() {
@@ -52,14 +54,13 @@ export default class AddItemMutation extends Relay.Mutation {
 		return {
 			itemEdge: {
 				node: {
-					date: Date.now(),
 					url: '',
 					title: '',
 					creator: '',
 					genres: [],
 					characters: [],
-					status: 'Complete',
-					productionStatus: 'Complete',
+					status: 'COMPLETE',
+					productionStatus: 'COMPLETE',
 					statusDate: Date.now(),
 				},
 			},

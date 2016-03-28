@@ -1,11 +1,11 @@
-import _ from 'lodash';
+import AutosaveInput from './AutosaveInput';
 import React from 'react';
 import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
-import { Button, Input, Panel } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -24,24 +24,11 @@ import { Button, Input, Panel } from 'react-bootstrap';
 	},
 })
 export default class Provider extends ReactCSS.Component {
-	state = {
-		value: this.props.provider.infoCallback,
-	};
-
-	isDirty() {
-		return this.state.value !== this.props.provider.infoCallback;
-	}
-
-	save = _.debounce(() => {
+	handleSave = value => {
 		Relay.Store.commitUpdate(new UpdateProviderMutation({
 			provider: this.props.provider,
-			infoCallback: this.state.value,
+			infoCallback: value,
 		}));
-	}, 1000);
-
-	handleChange = e => {
-		this.setState({ value: e.target.value });
-		this.save();
 	};
 
 	handleRemove = () => {
@@ -60,6 +47,10 @@ export default class Provider extends ReactCSS.Component {
 				input: {
 					fontFamily: 'monospace',
 					resize: 'vertical',
+					margin: '-15px -15px -30px -15px',
+					width: 'calc(100% + 30px)',
+					boxShadow: 'none',
+					border: 'none',
 				},
 				remove: {
 					float: 'right',
@@ -71,38 +62,35 @@ export default class Provider extends ReactCSS.Component {
 		};
 	}
 
-	renderFooter() {
-		// IntelliJ... -.-
-		const closeBrace = '}';
-		return (
-			<div>
-				{closeBrace}
-				<Button
-					is="remove"
-					bsStyle="danger"
-					bsSize="xsmall"
-					onClick={this.handleRemove}
-				>
-					{'Remove'}
-				</Button>
-			</div>
-		);
-	}
-
 	render() {
+		// IntelliJ can't deal with braces in strings in JSX... -.-
+		const prefix = 'function fetchInfo(url) {';
+		const suffix = '}';
 		return (
 			<div>
 				<Panel
 					is="panel"
-					header="function fetchInfo(url) {"
-					footer={this.renderFooter()}
+					header={
+						<div>
+							{prefix}
+							<Button
+								is="remove"
+								bsStyle="danger"
+								bsSize="xsmall"
+								onClick={this.handleRemove}
+							>
+								{'Remove'}
+							</Button>
+						</div>
+					}
+					footer={suffix}
 				>
-					<Input
+					<AutosaveInput
 						is="input"
 						type="textarea"
-						bsStyle={this.isDirty() ? 'warning' : null}
-						value={this.state.value}
-						onChange={this.handleChange}
+						hasFeedback
+						defaultValue={this.props.provider.infoCallback}
+						onSave={this.handleSave}
 					/>
 				</Panel>
 			</div>
