@@ -298,6 +298,8 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 			characters: [],
 			status: statusTypes.COMPLETE,
 			productionStatus: productionStatusTypes.COMPLETE,
+			notes: '',
+			length: 12345,
 		});
 		return { localItemId };
 	},

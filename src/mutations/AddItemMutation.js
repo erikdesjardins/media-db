@@ -62,6 +62,8 @@ export default class AddItemMutation extends Relay.Mutation {
 					status: 'COMPLETE',
 					productionStatus: 'COMPLETE',
 					statusDate: Date.now(),
+					notes: '',
+					length: 12345,
 				},
 			},
 			viewer: {
