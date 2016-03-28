@@ -6,7 +6,7 @@ deploy({
 	clientId: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 	refreshToken: process.env.REFRESH_TOKEN,
-	id: 'INSERT ID HERE',
+	id: 'jhneopniogogjaodebilaefmllbffcmf',
 	zip: fs.readFileSync(path.join(__dirname, 'dist/media-db.zip')),
 }).then(() => {
 	console.log('Deploy complete!'); // eslint-disable-line no-console
