@@ -16,6 +16,8 @@ import {
 	GraphQLLong,
 } from '../types/GraphQLLong';
 
+import { activeTab } from '../api/tabs';
+
 import {
 	connectionArgs,
 	connectionDefinitions,
@@ -255,6 +257,18 @@ const Query = new GraphQLObjectType({
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
+		},
+		itemForActiveTab: {
+			type: GraphQLItem,
+			resolve: async () => {
+				const { url } = await activeTab();
+				const providers = await getProviders();
+				const found = await providers.reduce((promise, { infoCallback }) =>
+					promise.then(result => result || new Function('url', infoCallback)(url)), // eslint-disable-line no-new-func
+					Promise.resolve(false)
+				);
+				return found || null;
+			},
 		},
 	}),
 });
