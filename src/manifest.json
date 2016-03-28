@@ -10,6 +10,7 @@
 		"storage",
 		"unlimitedStorage"
 	],
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"icons": {
 		"16": "{{./images/icon16.png}}",
 		"32": "{{./images/icon32.png}}",
