@@ -1,3 +1,4 @@
+import Markdown from './Markdown';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -14,9 +15,7 @@ import relay from 'relay-decorator';
 export default class ItemListCharacters extends React.Component {
 	render() {
 		return (
-			<span>
-				{this.props.item.characters}
-			</span>
+			<Markdown source={this.props.item.characters}/>
 		);
 	}
 }
