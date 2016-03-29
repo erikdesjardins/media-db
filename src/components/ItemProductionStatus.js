@@ -1,4 +1,5 @@
 import EditItemProductionStatusMutation from '../mutations/EditItemProductionStatusMutation';
+import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import SelectBar from './SelectBar';
@@ -13,6 +14,7 @@ const FormControlsStatic = FormControls.Static;
 		item: () => Relay.QL`
 			fragment on Item {
 				productionStatus,
+				${ItemRefreshButton.getFragment('item')}
 				${EditItemProductionStatusMutation.getFragment('item')}
 			}
 		`,
@@ -28,7 +30,18 @@ export default class ItemProductionStatus extends React.Component {
 
 	render() {
 		return (
-			<FormControlsStatic label="Production Status">
+			<FormControlsStatic
+				label={
+					<div>
+						{'Production Status'}
+						{' '}
+						<ItemRefreshButton
+							item={this.props.item}
+							fields={['productionStatus']}
+						/>
+					</div>
+				}
+			>
 				<SelectBar
 					bsSize="xsmall"
 					selected={this.props.item.productionStatus}
