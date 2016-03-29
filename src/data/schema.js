@@ -275,9 +275,12 @@ const Query = new GraphQLObjectType({
 		},
 		itemForActiveTab: {
 			type: GraphQLItem,
+			description: 'The stored item corresponding the current URL',
 			resolve: async () => {
 				const { url } = await activeTab();
-				const item = await runProviders(url);
+				const info = await runProviders(url);
+				if (!info) return null;
+				const item = await getItem(info.id);
 				return item || null;
 			},
 		},
