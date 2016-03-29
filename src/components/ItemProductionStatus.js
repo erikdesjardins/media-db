@@ -4,6 +4,9 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
+import { FormControls } from 'react-bootstrap';
+
+const FormControlsStatic = FormControls.Static;
 
 @relay({
 	fragments: {
@@ -25,24 +28,26 @@ export default class ItemProductionStatus extends React.Component {
 
 	render() {
 		return (
-			<SelectBar
-				bsSize="xsmall"
-				selected={this.props.item.productionStatus}
-				onSelect={this.handleSave}
-				options={[{
-					value: productionStatusTypes.INCOMPLETE,
-					name: 'Incomplete',
-				}, {
-					value: productionStatusTypes.HIATUS,
-					name: 'Hiatus',
-				}, {
-					value: productionStatusTypes.COMPLETE,
-					name: 'Complete',
-				}, {
-					value: productionStatusTypes.CANCELLED,
-					name: 'Cancelled',
-				}]}
-			/>
+			<FormControlsStatic label="Production Status">
+				<SelectBar
+					bsSize="xsmall"
+					selected={this.props.item.productionStatus}
+					onSelect={this.handleSave}
+					options={[{
+						value: productionStatusTypes.INCOMPLETE,
+						name: 'Incomplete',
+					}, {
+						value: productionStatusTypes.HIATUS,
+						name: 'Hiatus',
+					}, {
+						value: productionStatusTypes.COMPLETE,
+						name: 'Complete',
+					}, {
+						value: productionStatusTypes.CANCELLED,
+						name: 'Cancelled',
+					}]}
+				/>
+			</FormControlsStatic>
 		);
 	}
 }

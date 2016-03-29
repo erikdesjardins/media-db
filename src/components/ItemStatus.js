@@ -4,6 +4,9 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
+import { FormControls } from 'react-bootstrap';
+
+const FormControlsStatic = FormControls.Static;
 
 @relay({
 	fragments: {
@@ -31,7 +34,7 @@ export default class ItemStatus extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<FormControlsStatic label="Status">
 				<SelectBar
 					bsSize="xsmall"
 					selected={this.props.item.status}
@@ -53,7 +56,7 @@ export default class ItemStatus extends React.Component {
 						name: 'Rejected',
 					}]}
 				/>
-			</div>
+			</FormControlsStatic>
 		);
 	}
 }
