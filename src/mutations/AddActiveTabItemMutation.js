@@ -45,6 +45,12 @@ export default class AddActiveTabItemMutation extends Relay.Mutation {
 				[`status(${statusTypes.COMPLETE})`]: null,
 				[`status(${statusTypes.REJECTED})`]: null,
 			},
+		}, {
+			// the `itemForActiveTab` field may (should) change
+			type: 'FIELDS_CHANGE',
+			fieldIDs: {
+				viewer: this.props.viewer.id,
+			},
 		}];
 	}
 }
