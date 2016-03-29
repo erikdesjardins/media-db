@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-export default class UpdateItemMutation extends Relay.Mutation {
+export default class UpdateItemFieldsMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
@@ -11,12 +11,12 @@ export default class UpdateItemMutation extends Relay.Mutation {
 	};
 
 	getMutation() {
-		return Relay.QL`mutation { updateItem }`;
+		return Relay.QL`mutation { updateItemFields }`;
 	}
 
 	getFatQuery() {
 		return Relay.QL`
-			fragment on UpdateItemPayload {
+			fragment on UpdateItemFieldsPayload {
 				item {
 					thumbnail,
 					title,

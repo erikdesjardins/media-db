@@ -1,6 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
-import UpdateItemMutation from '../mutations/UpdateItemMutation';
+import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
 import { Button, Glyphicon } from 'react-bootstrap';
 
@@ -9,7 +9,7 @@ import { Button, Glyphicon } from 'react-bootstrap';
 		item: () => Relay.QL`
 			fragment on Item {
 				fieldUpdates,
-				${UpdateItemMutation.getFragment('item')}
+				${UpdateItemFieldsMutation.getFragment('item')}
 			}
 		`,
 	},
@@ -21,7 +21,7 @@ export default class ItemFieldUpdates extends React.Component {
 
 	handleClick = () => {
 		if (this.isDisabled()) return;
-		Relay.Store.commitUpdate(new UpdateItemMutation({
+		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
 			item: this.props.item,
 			fieldNames: this.props.item.fieldUpdates,
 		}));

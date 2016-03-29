@@ -457,8 +457,8 @@ const GraphQLEditItemNotesMutation = mutationWithClientMutationId({
 	},
 });
 
-const GraphQLUpdateItemMutation = mutationWithClientMutationId({
-	name: 'UpdateItem',
+const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
+	name: 'UpdateItemFields',
 	inputFields: {
 		id: { type: new GraphQLNonNull(GraphQLID) },
 		url: { type: new GraphQLNonNull(GraphQLString) },
@@ -572,7 +572,7 @@ const Mutation = new GraphQLObjectType({
 		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		editItemStatus: GraphQLEditItemStatusMutation,
 		editItemNotes: GraphQLEditItemNotesMutation,
-		updateItem: GraphQLUpdateItemMutation,
+		updateItemFields: GraphQLUpdateItemFieldsMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,
