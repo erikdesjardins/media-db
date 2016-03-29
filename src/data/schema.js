@@ -4,6 +4,7 @@ import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
 
 import {
+	GraphQLBoolean,
 	GraphQLEnumType,
 	GraphQLID,
 	GraphQLInt,
@@ -282,6 +283,15 @@ const Query = new GraphQLObjectType({
 				if (!info) return null;
 				const item = await getItem(info.id);
 				return item || null;
+			},
+		},
+		providerMatchesActiveTab: {
+			type: new GraphQLNonNull(GraphQLBoolean),
+			description: 'Whether or not a provider handles the current URL',
+			resolve: async () => {
+				const { url } = await activeTab();
+				const info = await runProviders(url);
+				return !!info;
 			},
 		},
 	}),
