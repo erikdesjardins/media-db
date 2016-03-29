@@ -1,31 +1,35 @@
+import ItemListCharacters from './ItemListCharacters';
+import ItemListCreator from './ItemListCreator';
+import ItemListGenres from './ItemListGenres';
+import ItemListLength from './ItemListLength';
+import ItemListNotes from './ItemListNotes';
+import ItemListProductionStatus from './ItemListProductionStatus';
+import ItemListStatusDate from './ItemListStatusDate';
+import ItemListThumbnail from './ItemListThumbnail';
+import ItemListTitle from './ItemListTitle';
 import React, { PropTypes } from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import * as productionStatusTypes from '../constants/productionStatusTypes';
-import { Glyphicon } from 'react-bootstrap';
-import { formatDate, formatNumber } from '../utils/format';
 
 @relay({
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
 				id,
-				url,
-				thumbnail,
-				title,
-				creator,
-				genres,
-				characters,
-				notes,
-				productionStatus,
-				statusDate,
-				length,
+				${ItemListThumbnail.getFragment('item')}
+				${ItemListTitle.getFragment('item')}
+				${ItemListCreator.getFragment('item')}
+				${ItemListGenres.getFragment('item')}
+				${ItemListCharacters.getFragment('item')}
+				${ItemListNotes.getFragment('item')}
+				${ItemListStatusDate.getFragment('item')}
+				${ItemListLength.getFragment('item')}
+				${ItemListProductionStatus.getFragment('item')}
 			}
 		`,
 	},
 })
-export default class Item extends ReactCSS.Component {
+export default class Item extends React.Component {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
 	};
@@ -34,54 +38,19 @@ export default class Item extends ReactCSS.Component {
 		this.context.router.push(`/items/${this.props.item.id}`);
 	};
 
-	classes() {
-		return {
-			default: {
-				thumbnail: {
-					maxHeight: '20px',
-					marginTop: '-2px',
-					marginBottom: 0,
-				},
-			},
-		};
-	}
-
-	renderProductionStatusIcon() {
-		const { item: { productionStatus } } = this.props;
-		const props = {
-			[productionStatusTypes.INCOMPLETE]: {
-				glyph: 'pencil',
-				style: { color: '#f7a616' },
-			},
-			[productionStatusTypes.COMPLETE]: {
-				glyph: 'ok',
-				style: { color: '#63bd40' },
-			},
-			[productionStatusTypes.HIATUS]: {
-				glyph: 'pause',
-				style: { color: '#bd7b40' },
-			},
-			[productionStatusTypes.CANCELLED]: {
-				glyph: 'ban-circle',
-				style: { color: '#bc3131' },
-			},
-		};
-		return <Glyphicon {...props[productionStatus]}/>;
-	}
-
 	render() {
-		const { item: { url, thumbnail, title, creator, genres, characters, notes, statusDate, length } } = this.props;
+		const { item } = this.props;
 		return (
 			<tr onClick={this.handleClick}>
-				<td><img is="thumbnail" src={thumbnail}/></td>
-				<td><a href={url}>{title}</a></td>
-				<td>{creator}</td>
-				<td>{genres.join(', ')}</td>
-				<td>{characters.join(', ')}</td>
-				<td>{notes}</td>
-				<td>{formatDate(statusDate)}</td>
-				<td>{formatNumber(length)}</td>
-				<td>{this.renderProductionStatusIcon()}</td>
+				<td><ItemListThumbnail item={item}/></td>
+				<td><ItemListTitle item={item}/></td>
+				<td><ItemListCreator item={item}/></td>
+				<td><ItemListGenres item={item}/></td>
+				<td><ItemListCharacters item={item}/></td>
+				<td><ItemListNotes item={item}/></td>
+				<td><ItemListStatusDate item={item}/></td>
+				<td><ItemListLength item={item}/></td>
+				<td><ItemListProductionStatus item={item}/></td>
 			</tr>
 		);
 	}
