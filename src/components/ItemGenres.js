@@ -1,25 +1,34 @@
+import AutosaveInput from './AutosaveInput';
+import EditItemGenresMutation from '../mutations/EditItemGenresMutation';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { FormControls } from 'react-bootstrap';
-
-const FormControlsStatic = FormControls.Static;
 
 @relay({
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
 				genres,
+				${EditItemGenresMutation.getFragment('item')}
 			}
 		`,
 	},
 })
 export default class ItemGenres extends React.Component {
+	handleSave = value => {
+		Relay.Store.commitUpdate(new EditItemGenresMutation({
+			item: this.props.item,
+			genres: value,
+		}));
+	};
+
 	render() {
 		return (
-			<FormControlsStatic
+			<AutosaveInput
+				type="text"
 				label="Genres"
-				value={this.props.item.genres}
+				defaultValue={this.props.item.genres}
+				onSave={this.handleSave}
 			/>
 		);
 	}
