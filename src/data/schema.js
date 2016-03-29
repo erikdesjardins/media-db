@@ -476,6 +476,25 @@ const GraphQLEditItemGenresMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLEditItemCharactersMutation = mutationWithClientMutationId({
+	name: 'EditItemCharacters',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		characters: { type: new GraphQLNonNull(GraphQLString) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: ({ id, characters }) => {
+		const localItemId = fromGlobalId(id).id;
+		updateItem(localItemId, { characters });
+		return { localItemId };
+	},
+});
+
 const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 	name: 'UpdateItemFields',
 	inputFields: {
@@ -592,6 +611,7 @@ const Mutation = new GraphQLObjectType({
 		editItemStatus: GraphQLEditItemStatusMutation,
 		editItemNotes: GraphQLEditItemNotesMutation,
 		editItemGenres: GraphQLEditItemGenresMutation,
+		editItemCharacters: GraphQLEditItemCharactersMutation,
 		updateItemFields: GraphQLUpdateItemFieldsMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
