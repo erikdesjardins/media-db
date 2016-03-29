@@ -6,6 +6,7 @@
 	"version": "{{prop?version!../package.json}}",
 	"minimum_chrome_version": "49",
 	"permissions": [
+		"<all_urls>",
 		"activeTab",
 		"storage",
 		"unlimitedStorage"
