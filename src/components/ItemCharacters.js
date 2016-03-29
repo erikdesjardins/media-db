@@ -1,5 +1,6 @@
 import AutosaveInput from './AutosaveInput';
 import EditItemCharactersMutation from '../mutations/EditItemCharactersMutation';
+import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -9,6 +10,7 @@ import relay from 'relay-decorator';
 		item: () => Relay.QL`
 			fragment on Item {
 				characters,
+				${ItemRefreshButton.getFragment('item')}
 				${EditItemCharactersMutation.getFragment('item')}
 			}
 		`,
@@ -26,7 +28,16 @@ export default class ItemCharacters extends React.Component {
 		return (
 			<AutosaveInput
 				type="text"
-				label="Characters"
+				label={
+					<div>
+						{'Characters'}
+						{' '}
+						<ItemRefreshButton
+							item={this.props.item}
+							fields={['characters']}
+						/>
+					</div>
+				}
 				defaultValue={this.props.item.characters}
 				onSave={this.handleSave}
 			/>
