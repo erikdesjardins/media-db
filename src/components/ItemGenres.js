@@ -1,5 +1,6 @@
 import AutosaveInput from './AutosaveInput';
 import EditItemGenresMutation from '../mutations/EditItemGenresMutation';
+import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -9,6 +10,7 @@ import relay from 'relay-decorator';
 		item: () => Relay.QL`
 			fragment on Item {
 				genres,
+				${ItemRefreshButton.getFragment('item')}
 				${EditItemGenresMutation.getFragment('item')}
 			}
 		`,
@@ -26,7 +28,16 @@ export default class ItemGenres extends React.Component {
 		return (
 			<AutosaveInput
 				type="text"
-				label="Genres"
+				label={
+					<div>
+						{'Genres'}
+						{' '}
+						<ItemRefreshButton
+							item={this.props.item}
+							fields={['genres']}
+						/>
+					</div>
+				}
 				defaultValue={this.props.item.genres}
 				onSave={this.handleSave}
 			/>
