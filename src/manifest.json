@@ -7,7 +7,7 @@
 	"minimum_chrome_version": "49",
 	"permissions": [
 		"<all_urls>",
-		"activeTab",
+		"tabs",
 		"storage",
 		"unlimitedStorage"
 	],
