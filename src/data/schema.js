@@ -305,11 +305,9 @@ function randomId(length = 16) {
 	return id.slice(0, length);
 }
 
-const GraphQLAddItemMutation = mutationWithClientMutationId({
-	name: 'AddItem',
-	inputFields: {
-		localId: { type: new GraphQLNonNull(GraphQLID) },
-	},
+const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
+	name: 'AddActiveTabItem',
+	inputFields: {},
 	outputFields: {
 		itemEdge: {
 			type: GraphQLItemEdge,
@@ -327,18 +325,37 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 			resolve: () => getViewer(),
 		},
 	},
-	mutateAndGetPayload: ({ localId: localItemId }) => {
+	mutateAndGetPayload: async () => {
+		const { url } = await activeTab();
+
+		const info = await runProviders(url);
+		if (!info) {
+			throw new Error(`No provider handled: ${url} - this should never happen`);
+		}
+
+		const localItemId = info.id;
+		if (!localItemId) {
+			throw new Error('No `id` provided');
+		}
+
 		addItem(localItemId, {
-			url: '',
-			title: randomId(),
-			creator: randomId(),
+			// defaults (may be overridden by the provider)
+			thumbnail: null,
+			title: '',
+			creator: '',
 			genres: [],
 			characters: [],
-			status: statusTypes.COMPLETE,
+			length: 0,
 			productionStatus: productionStatusTypes.COMPLETE,
+
+			...info,
+
+			// always provided by us (along with `date` and `statusDate` handled by the db)
+			url,
+			status: statusTypes.PENDING,
 			notes: '',
-			length: 12345,
 		});
+
 		return { localItemId };
 	},
 });
@@ -511,7 +528,7 @@ const GraphQLSetRawItemsMutation = mutationWithClientMutationId({
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
-		addItem: GraphQLAddItemMutation,
+		addActiveTabItem: GraphQLAddActiveTabItemMutation,
 		editItemLength: GraphQLEditItemLengthMutation,
 		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		editItemStatus: GraphQLEditItemStatusMutation,
