@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import deepEqual from 'only-shallow';
 
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
@@ -52,6 +53,19 @@ import {
 	updateItem,
 	updateProvider,
 } from './database';
+
+const runInfoCallback = _.memoize(
+	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
+	(infoCallback, url) => `${url}###${infoCallback}`,
+);
+
+async function runProviders(url) {
+	const providers = await getProviders();
+	return providers.reduce((promise, { infoCallback }) =>
+			promise.then(result => result || runInfoCallback(infoCallback, url)),
+		Promise.resolve(false)
+	);
+}
 
 const { nodeInterface, nodeField } = nodeDefinitions(
 	globalId => {
@@ -185,6 +199,22 @@ const GraphQLItem = new GraphQLObjectType({
 			resolve: (obj, args) =>
 				connectionFromPromisedArray(getItemHistory(obj.id), args),
 		},
+		fieldUpdates: {
+			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
+			description: 'Fields which differ in the provider\'s representation',
+			resolve: async obj => {
+				const eligibleFields = ['thumbnail', 'title', 'creator', 'genres', 'characters', 'length', 'productionStatus'];
+				const info = await runProviders(obj.url);
+				const updated = { ...obj, ...info };
+				const updatedFields = [];
+				for (const field of eligibleFields) {
+					if (!deepEqual(obj[field], updated[field])) {
+						updatedFields.push(field);
+					}
+				}
+				return updatedFields;
+			},
+		},
 	}),
 	interfaces: [nodeInterface],
 });
@@ -220,19 +250,6 @@ const {
 	name: 'Provider',
 	nodeType: GraphQLProvider,
 });
-
-const runInfoCallback = _.memoize(
-	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
-	(infoCallback, url) => `${url}###${infoCallback}`,
-);
-
-async function runProviders(url) {
-	const providers = await getProviders();
-	return providers.reduce((promise, { infoCallback }) =>
-			promise.then(result => result || runInfoCallback(infoCallback, url)),
-		Promise.resolve(false)
-	);
-}
 
 const GraphQLUser = new GraphQLObjectType({
 	name: 'User',
@@ -440,6 +457,28 @@ const GraphQLEditItemNotesMutation = mutationWithClientMutationId({
 	},
 });
 
+const GraphQLUpdateItemMutation = mutationWithClientMutationId({
+	name: 'UpdateItem',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		url: { type: new GraphQLNonNull(GraphQLString) },
+		fieldNames: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: async ({ id, url, fieldNames }) => {
+		const localItemId = fromGlobalId(id).id;
+		const info = await runProviders(url);
+		const patch = _.pick(info, fieldNames);
+		updateItem(localItemId, patch);
+		return { localItemId };
+	},
+});
+
 const GraphQLAddProviderMutation = mutationWithClientMutationId({
 	name: 'AddProvider',
 	inputFields: {},
@@ -533,6 +572,7 @@ const Mutation = new GraphQLObjectType({
 		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		editItemStatus: GraphQLEditItemStatusMutation,
 		editItemNotes: GraphQLEditItemNotesMutation,
+		updateItem: GraphQLUpdateItemMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,

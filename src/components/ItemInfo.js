@@ -1,4 +1,5 @@
 import ItemCharacters from './ItemCharacters';
+import ItemFieldUpdates from './ItemFieldUpdates';
 import ItemGenres from './ItemGenres';
 import ItemLength from './ItemLength';
 import ItemNotes from './ItemNotes';
@@ -18,6 +19,7 @@ import { Thumbnail } from 'react-bootstrap';
 				thumbnail,
 				title,
 				creator,
+				${ItemFieldUpdates.getFragment('item')}
 				${ItemGenres.getFragment('item')}
 				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
@@ -40,6 +42,7 @@ export default class ItemInfo extends React.Component {
 			<div key={item.id}>
 				<Thumbnail src={item.thumbnail}>
 					<h3><a href={item.url}>{item.title}</a><small>{' by '}{item.creator}</small></h3>
+					<ItemFieldUpdates item={item}/>
 					<ItemGenres item={item}/>
 					<ItemCharacters item={item}/>
 					<ItemLength item={item}/>
