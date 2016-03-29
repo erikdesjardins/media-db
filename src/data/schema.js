@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
 
@@ -250,6 +252,19 @@ const GraphQLUser = new GraphQLObjectType({
 	interfaces: [nodeInterface],
 });
 
+const runInfoCallback = _.memoize(
+	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
+	(infoCallback, url) => `${url}###${infoCallback}`,
+);
+
+async function runProviders(url) {
+	const providers = await getProviders();
+	return providers.reduce((promise, { infoCallback }) =>
+			promise.then(result => result || runInfoCallback(infoCallback, url)),
+		Promise.resolve(false)
+	);
+}
+
 const Query = new GraphQLObjectType({
 	name: 'Query',
 	fields: () => ({
@@ -262,12 +277,8 @@ const Query = new GraphQLObjectType({
 			type: GraphQLItem,
 			resolve: async () => {
 				const { url } = await activeTab();
-				const providers = await getProviders();
-				const found = await providers.reduce((promise, { infoCallback }) =>
-					promise.then(result => result || new Function('url', infoCallback)(url)), // eslint-disable-line no-new-func
-					Promise.resolve(false)
-				);
-				return found || null;
+				const item = await runProviders(url);
+				return item || null;
 			},
 		},
 	}),
