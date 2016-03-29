@@ -15,7 +15,11 @@ import { Thumbnail } from 'react-bootstrap';
 export default class ItemThumbnail extends React.Component {
 	render() {
 		return (
-			<Thumbnail src={this.props.item.thumbnail}/>
+			<div>
+				{this.props.item.thumbnail &&
+					<Thumbnail src={this.props.item.thumbnail}/>
+				}
+			</div>
 		);
 	}
 }
