@@ -19,7 +19,7 @@ export default class ItemCharacters extends React.Component {
 		return (
 			<FormControlsStatic
 				label="Characters"
-				value={this.props.item.characters.join(', ')}
+				value={this.props.item.characters}
 			/>
 		);
 	}

@@ -15,7 +15,7 @@ export default class ItemListCharacters extends React.Component {
 	render() {
 		return (
 			<span>
-				{this.props.item.characters.join(', ')}
+				{this.props.item.characters}
 			</span>
 		);
 	}
