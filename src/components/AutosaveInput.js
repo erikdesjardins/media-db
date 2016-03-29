@@ -18,6 +18,16 @@ export default class AutosaveInput extends React.Component {
 		value: this.props.defaultValue,
 	};
 
+	componentWillReceiveProps(nextProps) {
+		// if the component is clean and the default value is changed,
+		// `value` should follow `defaultValue` to avoid dirtying the component
+		if (!this.isDirty() && nextProps.defaultValue !== this.props.defaultValue) {
+			this.setState({
+				value: nextProps.defaultValue,
+			});
+		}
+	}
+
 	isDirty() {
 		return String(this.state.value) !== String(this.props.defaultValue);
 	}
