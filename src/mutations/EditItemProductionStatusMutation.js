@@ -18,6 +18,7 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 			fragment on EditItemProductionStatusPayload {
 				item {
 					productionStatus,
+					fieldUpdates,
 				},
 			}
 		`;

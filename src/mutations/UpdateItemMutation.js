@@ -25,6 +25,7 @@ export default class UpdateItemMutation extends Relay.Mutation {
 					characters,
 					length,
 					productionStatus,
+					fieldUpdates,
 				},
 			}
 		`;
