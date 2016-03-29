@@ -1,3 +1,4 @@
+import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -9,6 +10,7 @@ import relay from 'relay-decorator';
 				url,
 				title,
 				creator,
+				${ItemRefreshButton.getFragment('item')}
 			}
 		`,
 	},
@@ -19,7 +21,14 @@ export default class ItemTitleBlock extends React.Component {
 		return (
 			<h3>
 				<a href={item.url}>{item.title}</a>
-				<small>{' by '}{item.creator}</small>
+				<small>
+					{' by '}{item.creator}
+					{' '}
+					<ItemRefreshButton
+						item={item}
+						fields={['title', 'creator']}
+					/>
+				</small>
 			</h3>
 		);
 	}
