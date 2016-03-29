@@ -1,5 +1,4 @@
 import ItemCharacters from './ItemCharacters';
-import ItemFieldUpdates from './ItemFieldUpdates';
 import ItemGenres from './ItemGenres';
 import ItemLength from './ItemLength';
 import ItemNotes from './ItemNotes';
@@ -20,7 +19,6 @@ import relay from 'relay-decorator';
 				${ItemTitleBlock.getFragment('item')}
 				${ItemStatus.getFragment('item')}
 				${ItemProductionStatus.getFragment('item')}
-				${ItemFieldUpdates.getFragment('item')}
 				${ItemGenres.getFragment('item')}
 				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
@@ -43,7 +41,6 @@ export default class ItemInfo extends React.Component {
 				<ItemTitleBlock item={item}/>
 				<ItemStatus item={item} viewer={viewer}/>
 				<ItemProductionStatus item={item}/>
-				<ItemFieldUpdates item={item}/>
 				<ItemGenres item={item}/>
 				<ItemCharacters item={item}/>
 				<ItemLength item={item}/>
