@@ -3,11 +3,11 @@ import { markdown } from 'snudown-js';
 
 export default class Markdown extends React.Component {
 	static propTypes = {
-		text: PropTypes.string.isRequired,
+		source: PropTypes.string.isRequired,
 	};
 
 	renderHtml() {
-		return { __html: markdown(this.props.text) };
+		return { __html: markdown(this.props.source) };
 	}
 
 	render() {
