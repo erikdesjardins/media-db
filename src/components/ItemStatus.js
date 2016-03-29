@@ -4,14 +4,12 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { formatDate } from '../utils/format';
 
 @relay({
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
 				status,
-				statusDate
 				${EditItemStatusMutation.getFragment('item')}
 			}
 		`,
@@ -55,7 +53,6 @@ export default class ItemStatus extends React.Component {
 						name: 'Rejected',
 					}]}
 				/>
-				{'Updated: '}{formatDate(this.props.item.statusDate)}
 			</div>
 		);
 	}
