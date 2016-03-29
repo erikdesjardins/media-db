@@ -14,10 +14,7 @@ render((
 		<Route path="/" component={Popup}>
 			<IndexRoute
 				component={PopupInfo}
-				queries={{
-					item: () => Relay.QL`query { itemForActiveTab }`,
-					viewer: () => Relay.QL`query { viewer }`,
-				}}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
 		</Route>
 	</RelayRouter>

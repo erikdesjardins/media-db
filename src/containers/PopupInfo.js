@@ -5,13 +5,11 @@ import relay from 'relay-decorator';
 
 @relay({
 	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				${ItemInfo.getFragment('item')}
-			}
-		`,
 		viewer: () => Relay.QL`
 			fragment on User {
+				itemForActiveTab {
+					${ItemInfo.getFragment('item')}
+				},
 				${ItemInfo.getFragment('viewer')}
 			}
 		`,
@@ -21,9 +19,9 @@ export default class PopupInfo extends React.Component {
 	render() {
 		return (
 			<div>
-				{this.props.item &&
+				{this.props.viewer.itemForActiveTab &&
 					<ItemInfo
-						item={this.props.item}
+						item={this.props.viewer.itemForActiveTab}
 						viewer={this.props.viewer}
 					/>
 				}

@@ -20,6 +20,7 @@ export default class AddActiveTabItemMutation extends Relay.Mutation {
 				itemEdge,
 				viewer {
 					items,
+					itemForActiveTab,
 				},
 			}
 		`;

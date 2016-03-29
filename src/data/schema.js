@@ -221,6 +221,19 @@ const {
 	nodeType: GraphQLProvider,
 });
 
+const runInfoCallback = _.memoize(
+	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
+	(infoCallback, url) => `${url}###${infoCallback}`,
+);
+
+async function runProviders(url) {
+	const providers = await getProviders();
+	return providers.reduce((promise, { infoCallback }) =>
+			promise.then(result => result || runInfoCallback(infoCallback, url)),
+		Promise.resolve(false)
+	);
+}
+
 const GraphQLUser = new GraphQLObjectType({
 	name: 'User',
 	fields: {
@@ -249,31 +262,6 @@ const GraphQLUser = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLString),
 			resolve: async () => JSON.stringify(await getRawItems()),
 		},
-	},
-	interfaces: [nodeInterface],
-});
-
-const runInfoCallback = _.memoize(
-	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
-	(infoCallback, url) => `${url}###${infoCallback}`,
-);
-
-async function runProviders(url) {
-	const providers = await getProviders();
-	return providers.reduce((promise, { infoCallback }) =>
-			promise.then(result => result || runInfoCallback(infoCallback, url)),
-		Promise.resolve(false)
-	);
-}
-
-const Query = new GraphQLObjectType({
-	name: 'Query',
-	fields: () => ({
-		node: nodeField,
-		viewer: {
-			type: GraphQLUser,
-			resolve: () => getViewer(),
-		},
 		itemForActiveTab: {
 			type: GraphQLItem,
 			description: 'The stored item corresponding the current URL',
@@ -293,6 +281,18 @@ const Query = new GraphQLObjectType({
 				const info = await runProviders(url);
 				return !!info;
 			},
+		},
+	},
+	interfaces: [nodeInterface],
+});
+
+const Query = new GraphQLObjectType({
+	name: 'Query',
+	fields: () => ({
+		node: nodeField,
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
 		},
 	}),
 });
