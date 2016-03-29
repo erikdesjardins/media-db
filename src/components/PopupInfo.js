@@ -2,6 +2,7 @@ import ItemInfo from '../components/ItemInfo';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
+import { Grid } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -18,14 +19,14 @@ import relay from 'relay-decorator';
 export default class PopupInfo extends React.Component {
 	render() {
 		return (
-			<div>
+			<Grid fluid>
 				{this.props.viewer.itemForActiveTab &&
 					<ItemInfo
 						item={this.props.viewer.itemForActiveTab}
 						viewer={this.props.viewer}
 					/>
 				}
-			</div>
+			</Grid>
 		);
 	}
 }
