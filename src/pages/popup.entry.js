@@ -10,6 +10,9 @@ Relay.injectNetworkLayer(sendMessageNetworkLayer);
 
 render((
 	<RelayRouter history={hashHistory}>
-		<Route path="/" component={Popup}/>
+		<Route
+			path="/" component={Popup}
+			queries={{ viewer: () => Relay.QL`query { viewer }` }}
+		/>
 	</RelayRouter>
 ), document.getElementById('app'));

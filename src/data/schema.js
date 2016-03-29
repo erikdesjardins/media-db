@@ -1,7 +1,11 @@
+import _ from 'lodash';
+import deepEqual from 'only-shallow';
+
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
 
 import {
+	GraphQLBoolean,
 	GraphQLEnumType,
 	GraphQLID,
 	GraphQLInt,
@@ -15,6 +19,8 @@ import {
 import {
 	GraphQLLong,
 } from '../types/GraphQLLong';
+
+import { activeTab } from '../api/tabs';
 
 import {
 	connectionArgs,
@@ -47,6 +53,19 @@ import {
 	updateItem,
 	updateProvider,
 } from './database';
+
+const runInfoCallback = _.memoize(
+	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
+	(infoCallback, url) => `${url}###${infoCallback}`,
+);
+
+async function runProviders(url) {
+	const providers = await getProviders();
+	return providers.reduce((promise, { infoCallback }) =>
+			promise.then(result => result || runInfoCallback(infoCallback, url)),
+		Promise.resolve(false)
+	);
+}
 
 const { nodeInterface, nodeField } = nodeDefinitions(
 	globalId => {
@@ -180,6 +199,22 @@ const GraphQLItem = new GraphQLObjectType({
 			resolve: (obj, args) =>
 				connectionFromPromisedArray(getItemHistory(obj.id), args),
 		},
+		fieldUpdates: {
+			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
+			description: 'Fields which differ in the provider\'s representation',
+			resolve: async obj => {
+				const eligibleFields = ['thumbnail', 'title', 'creator', 'genres', 'characters', 'length', 'productionStatus'];
+				const info = await runProviders(obj.url);
+				const updated = { ...obj, ...info };
+				const updatedFields = [];
+				for (const field of eligibleFields) {
+					if (!deepEqual(obj[field], updated[field])) {
+						updatedFields.push(field);
+					}
+				}
+				return updatedFields;
+			},
+		},
 	}),
 	interfaces: [nodeInterface],
 });
@@ -244,6 +279,26 @@ const GraphQLUser = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLString),
 			resolve: async () => JSON.stringify(await getRawItems()),
 		},
+		itemForActiveTab: {
+			type: GraphQLItem,
+			description: 'The stored item corresponding the current URL',
+			resolve: async () => {
+				const { url } = await activeTab();
+				const info = await runProviders(url);
+				if (!info) return null;
+				const item = await getItem(info.id);
+				return item || null;
+			},
+		},
+		providerMatchesActiveTab: {
+			type: new GraphQLNonNull(GraphQLBoolean),
+			description: 'Whether or not a provider handles the current URL',
+			resolve: async () => {
+				const { url } = await activeTab();
+				const info = await runProviders(url);
+				return !!info;
+			},
+		},
 	},
 	interfaces: [nodeInterface],
 });
@@ -267,11 +322,9 @@ function randomId(length = 16) {
 	return id.slice(0, length);
 }
 
-const GraphQLAddItemMutation = mutationWithClientMutationId({
-	name: 'AddItem',
-	inputFields: {
-		localId: { type: new GraphQLNonNull(GraphQLID) },
-	},
+const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
+	name: 'AddActiveTabItem',
+	inputFields: {},
 	outputFields: {
 		itemEdge: {
 			type: GraphQLItemEdge,
@@ -289,16 +342,37 @@ const GraphQLAddItemMutation = mutationWithClientMutationId({
 			resolve: () => getViewer(),
 		},
 	},
-	mutateAndGetPayload: ({ localId: localItemId }) => {
+	mutateAndGetPayload: async () => {
+		const { url } = await activeTab();
+
+		const info = await runProviders(url);
+		if (!info) {
+			throw new Error(`No provider handled: ${url} - this should never happen`);
+		}
+
+		const localItemId = info.id;
+		if (!localItemId) {
+			throw new Error('No `id` provided');
+		}
+
 		addItem(localItemId, {
-			url: '',
-			title: randomId(),
-			creator: randomId(),
+			// defaults (may be overridden by the provider)
+			thumbnail: null,
+			title: '',
+			creator: '',
 			genres: [],
 			characters: [],
-			status: statusTypes.COMPLETE,
+			length: 0,
 			productionStatus: productionStatusTypes.COMPLETE,
+
+			...info,
+
+			// always provided by us (along with `date` and `statusDate` handled by the db)
+			url,
+			status: statusTypes.PENDING,
+			notes: '',
 		});
+
 		return { localItemId };
 	},
 });
@@ -352,6 +426,10 @@ const GraphQLEditItemStatusMutation = mutationWithClientMutationId({
 			type: GraphQLItem,
 			resolve: ({ localItemId }) => getItem(localItemId),
 		},
+		viewer: {
+			type: GraphQLUser,
+			resolve: () => getViewer(),
+		},
 	},
 	mutateAndGetPayload: ({ id, status }) => {
 		const localItemId = fromGlobalId(id).id;
@@ -375,6 +453,28 @@ const GraphQLEditItemNotesMutation = mutationWithClientMutationId({
 	mutateAndGetPayload: ({ id, notes }) => {
 		const localItemId = fromGlobalId(id).id;
 		updateItem(localItemId, { notes });
+		return { localItemId };
+	},
+});
+
+const GraphQLUpdateItemMutation = mutationWithClientMutationId({
+	name: 'UpdateItem',
+	inputFields: {
+		id: { type: new GraphQLNonNull(GraphQLID) },
+		url: { type: new GraphQLNonNull(GraphQLString) },
+		fieldNames: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
+	},
+	outputFields: {
+		item: {
+			type: GraphQLItem,
+			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+	},
+	mutateAndGetPayload: async ({ id, url, fieldNames }) => {
+		const localItemId = fromGlobalId(id).id;
+		const info = await runProviders(url);
+		const patch = _.pick(info, fieldNames);
+		updateItem(localItemId, patch);
 		return { localItemId };
 	},
 });
@@ -467,11 +567,12 @@ const GraphQLSetRawItemsMutation = mutationWithClientMutationId({
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
-		addItem: GraphQLAddItemMutation,
+		addActiveTabItem: GraphQLAddActiveTabItemMutation,
 		editItemLength: GraphQLEditItemLengthMutation,
 		editItemProductionStatus: GraphQLEditItemProductionStatusMutation,
 		editItemStatus: GraphQLEditItemStatusMutation,
 		editItemNotes: GraphQLEditItemNotesMutation,
+		updateItem: GraphQLUpdateItemMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,
 		removeProvider: GraphQLRemoveProviderMutation,

@@ -10,13 +10,18 @@ import relay from 'relay-decorator';
 				${SidebarInfo.getFragment('item')}
 			}
 		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${SidebarInfo.getFragment('viewer')}
+			}
+		`,
 	},
 })
 export default class Sidebar extends React.Component {
 	render() {
 		return (
 			<div>
-				<SidebarInfo item={this.props.item}/>
+				<SidebarInfo item={this.props.item} viewer={this.props.viewer}/>
 			</div>
 		);
 	}

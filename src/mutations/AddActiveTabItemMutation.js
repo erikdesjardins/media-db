@@ -1,7 +1,7 @@
 import Relay from 'react-relay';
 import * as statusTypes from '../constants/statusTypes';
 
-export default class AddItemMutation extends Relay.Mutation {
+export default class AddActiveTabItemMutation extends Relay.Mutation {
 	static fragments = {
 		viewer: () => Relay.QL`
 			fragment on User {
@@ -11,24 +11,23 @@ export default class AddItemMutation extends Relay.Mutation {
 	};
 
 	getMutation() {
-		return Relay.QL`mutation { addItem }`;
+		return Relay.QL`mutation { addActiveTabItem }`;
 	}
 
 	getFatQuery() {
 		return Relay.QL`
-			fragment on AddItemPayload {
+			fragment on AddActiveTabItemPayload {
 				itemEdge,
 				viewer {
 					items,
+					itemForActiveTab,
 				},
 			}
 		`;
 	}
 
 	getVariables() {
-		return {
-			localId: String(Math.random()).slice(2),
-		};
+		return {};
 	}
 
 	getConfigs() {
@@ -41,32 +40,17 @@ export default class AddItemMutation extends Relay.Mutation {
 			rangeBehaviors: {
 				'': 'append',
 				[`status(${statusTypes.WAITING})`]: null,
-				[`status(${statusTypes.PENDING})`]: null,
+				[`status(${statusTypes.PENDING})`]: 'append',
 				[`status(${statusTypes.IN_PROGRESS})`]: null,
-				// note: this corresponds to the status of the added node
-				[`status(${statusTypes.COMPLETE})`]: 'append',
+				[`status(${statusTypes.COMPLETE})`]: null,
 				[`status(${statusTypes.REJECTED})`]: null,
 			},
+		}, {
+			// the `itemForActiveTab` field may (should) change
+			type: 'FIELDS_CHANGE',
+			fieldIDs: {
+				viewer: this.props.viewer.id,
+			},
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			itemEdge: {
-				node: {
-					url: '',
-					title: '',
-					creator: '',
-					genres: [],
-					characters: [],
-					status: 'COMPLETE',
-					productionStatus: 'COMPLETE',
-					statusDate: Date.now(),
-				},
-			},
-			viewer: {
-				id: this.props.viewer.id,
-			},
-		};
 	}
 }

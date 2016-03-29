@@ -4,15 +4,18 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { formatDate } from '../utils/format';
 
 @relay({
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
 				status,
-				statusDate
 				${EditItemStatusMutation.getFragment('item')}
+			}
+		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${EditItemStatusMutation.getFragment('viewer')}
 			}
 		`,
 	},
@@ -21,6 +24,7 @@ export default class ItemStatus extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new EditItemStatusMutation({
 			item: this.props.item,
+			viewer: this.props.viewer,
 			status: value,
 		}));
 	};
@@ -49,7 +53,6 @@ export default class ItemStatus extends React.Component {
 						name: 'Rejected',
 					}]}
 				/>
-				{'Updated: '}{formatDate(this.props.item.statusDate)}
 			</div>
 		);
 	}

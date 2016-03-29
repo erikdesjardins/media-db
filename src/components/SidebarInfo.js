@@ -14,6 +14,11 @@ import { Panel } from 'react-bootstrap';
 				${ItemHistory.getFragment('item')}
 			}
 		`,
+		viewer: () => Relay.QL`
+			fragment on User {
+				${ItemInfo.getFragment('viewer')}
+			}
+		`,
 	},
 })
 export default class SidebarInfo extends React.Component {
@@ -40,7 +45,7 @@ export default class SidebarInfo extends React.Component {
 						name: 'History',
 					}]}
 				/>
-				{this.state.activeTab === 'info' && <ItemInfo item={this.props.item}/>}
+				{this.state.activeTab === 'info' && <ItemInfo item={this.props.item} viewer={this.props.viewer}/>}
 				{this.state.activeTab === 'history' && <ItemHistory item={this.props.item}/>}
 			</Panel>
 		);

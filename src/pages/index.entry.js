@@ -23,7 +23,10 @@ render((
 			>
 				<Route
 					path=":id" component={Sidebar}
-					queries={{ item: () => Relay.QL`query { node(id: $id) }` }}
+					queries={{
+						item: () => Relay.QL`query { node(id: $id) }`,
+						viewer: () => Relay.QL`query { viewer }`,
+					}}
 				/>
 			</Route>
 			<Route path="search/:query" component={Search}/>

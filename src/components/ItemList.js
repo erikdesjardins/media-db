@@ -1,4 +1,3 @@
-import AddItemMutation from '../mutations/AddItemMutation';
 import Item from './Item';
 import React from 'react';
 import Relay from 'react-relay';
@@ -23,7 +22,6 @@ import { Panel, Table } from 'react-bootstrap';
 						}
 					}
 				}
-				${AddItemMutation.getFragment('viewer')}
 			}
 		`,
 	},
@@ -31,10 +29,6 @@ import { Panel, Table } from 'react-bootstrap';
 export default class ItemList extends React.Component {
 	handleStatusChange = status => {
 		this.props.relay.setVariables({ status });
-	};
-
-	handleAddItem = () => {
-		Relay.Store.commitUpdate(new AddItemMutation({ viewer: this.props.viewer }));
 	};
 
 	render() {
@@ -84,9 +78,6 @@ export default class ItemList extends React.Component {
 						)}
 					</tbody>
 				</Table>
-				<button onClick={this.handleAddItem}>
-					{'add item'}
-				</button>
 			</Panel>
 		);
 	}
