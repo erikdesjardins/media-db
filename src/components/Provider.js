@@ -47,6 +47,7 @@ export default class Provider extends ReactCSS.Component {
 				input: {
 					fontFamily: 'monospace',
 					resize: 'vertical',
+					minHeight: '200px',
 					margin: '-15px -15px -30px -15px',
 					width: 'calc(100% + 30px)',
 					boxShadow: 'none',
