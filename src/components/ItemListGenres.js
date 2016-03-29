@@ -15,7 +15,7 @@ export default class ItemListGenres extends React.Component {
 	render() {
 		return (
 			<span>
-				{this.props.item.genres.join(', ')}
+				{this.props.item.genres}
 			</span>
 		);
 	}

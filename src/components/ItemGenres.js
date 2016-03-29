@@ -19,7 +19,7 @@ export default class ItemGenres extends React.Component {
 		return (
 			<FormControlsStatic
 				label="Genres"
-				value={this.props.item.genres.join(', ')}
+				value={this.props.item.genres}
 			/>
 		);
 	}

@@ -159,8 +159,8 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'The item\'s creator',
 		},
 		genres: {
-			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
-			description: 'A list of the item\'s genres',
+			type: new GraphQLNonNull(GraphQLString),
+			description: 'The item\'s genres',
 		},
 		characters: {
 			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
@@ -360,7 +360,7 @@ const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 			thumbnail: null,
 			title: '',
 			creator: '',
-			genres: [],
+			genres: '',
 			characters: [],
 			length: 0,
 			productionStatus: productionStatusTypes.COMPLETE,
