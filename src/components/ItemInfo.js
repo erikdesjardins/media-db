@@ -5,6 +5,7 @@ import ItemLength from './ItemLength';
 import ItemNotes from './ItemNotes';
 import ItemProductionStatus from './ItemProductionStatus';
 import ItemStatus from './ItemStatus';
+import ItemTitleBlock from './ItemTitleBlock';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -15,10 +16,8 @@ import { Thumbnail } from 'react-bootstrap';
 		item: () => Relay.QL`
 			fragment on Item {
 				id,
-				url,
 				thumbnail,
-				title,
-				creator,
+				${ItemTitleBlock.getFragment('item')}
 				${ItemFieldUpdates.getFragment('item')}
 				${ItemGenres.getFragment('item')}
 				${ItemCharacters.getFragment('item')}
@@ -41,7 +40,7 @@ export default class ItemInfo extends React.Component {
 		return (
 			<div key={item.id}>
 				<Thumbnail src={item.thumbnail}>
-					<h3><a href={item.url}>{item.title}</a><small>{' by '}{item.creator}</small></h3>
+					<ItemTitleBlock item={item}/>
 					<ItemFieldUpdates item={item}/>
 					<ItemGenres item={item}/>
 					<ItemCharacters item={item}/>
