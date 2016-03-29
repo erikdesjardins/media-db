@@ -21,7 +21,7 @@ export default class ItemRefreshButton extends React.Component {
 	};
 
 	isDisabled() {
-		return !this.props.fields.every(field => this.props.item.fieldUpdates.includes(field));
+		return this.props.fields.every(field => !this.props.item.fieldUpdates.includes(field));
 	}
 
 	handleClick = () => {
