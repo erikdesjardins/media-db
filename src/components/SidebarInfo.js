@@ -5,6 +5,7 @@ import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
+import * as sidebarTabTypes from '../constants/sidebarTabTypes';
 import { Panel } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
@@ -25,7 +26,7 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 })
 export default class SidebarInfo extends ReactCSS.Component {
 	state = {
-		activeTab: 'info',
+		activeTab: sidebarTabTypes.INFO,
 	};
 
 	handleTabChange = tab => {
@@ -52,17 +53,17 @@ export default class SidebarInfo extends ReactCSS.Component {
 						selected={this.state.activeTab}
 						onSelect={this.handleTabChange}
 						options={[{
-							value: 'info',
+							value: sidebarTabTypes.INFO,
 							name: 'Info',
 						}, {
-							value: 'history',
+							value: sidebarTabTypes.HISTORY,
 							name: 'History',
 						}]}
 					/>
 				}
 			>
-				{this.state.activeTab === 'info' && <ItemInfo item={this.props.item} viewer={this.props.viewer}/>}
-				{this.state.activeTab === 'history' && <ItemHistory item={this.props.item}/>}
+				{this.state.activeTab === sidebarTabTypes.INFO && <ItemInfo item={this.props.item} viewer={this.props.viewer}/>}
+				{this.state.activeTab === sidebarTabTypes.HISTORY && <ItemHistory item={this.props.item}/>}
 			</Panel>
 		);
 	}
