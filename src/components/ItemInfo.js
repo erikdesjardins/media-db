@@ -18,12 +18,12 @@ import relay from 'relay-decorator';
 				id,
 				${ItemThumbnail.getFragment('item')}
 				${ItemTitleBlock.getFragment('item')}
+				${ItemStatus.getFragment('item')}
+				${ItemProductionStatus.getFragment('item')}
 				${ItemFieldUpdates.getFragment('item')}
 				${ItemGenres.getFragment('item')}
 				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
-				${ItemProductionStatus.getFragment('item')}
-				${ItemStatus.getFragment('item')}
 				${ItemNotes.getFragment('item')}
 			}
 		`,
@@ -41,12 +41,12 @@ export default class ItemInfo extends React.Component {
 			<div key={item.id}>
 				<ItemThumbnail item={item}/>
 				<ItemTitleBlock item={item}/>
+				<ItemStatus item={item} viewer={viewer}/>
+				<ItemProductionStatus item={item}/>
 				<ItemFieldUpdates item={item}/>
 				<ItemGenres item={item}/>
 				<ItemCharacters item={item}/>
 				<ItemLength item={item}/>
-				<ItemProductionStatus item={item}/>
-				<ItemStatus item={item} viewer={viewer}/>
 				<ItemNotes item={item}/>
 			</div>
 		);
