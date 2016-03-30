@@ -110,7 +110,7 @@ export default class ItemList extends ReactCSS.Component {
 					/>
 				}
 			>
-				<Table striped condensed hover responsive>
+				<Table striped condensed hover>
 					<thead>
 						<tr>
 							<th>{''}</th>
