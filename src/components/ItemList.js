@@ -5,23 +5,30 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Panel, Table } from 'react-bootstrap';
+import { Button, Glyphicon, Pager, Panel, Table } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
 	initialVariables: {
-		first: 2147483647,
 		status: statusTypes.IN_PROGRESS,
+		page: 1,
 	},
+	prepareVariables: ({ status, page }) => ({
+		status,
+		limit: page * 10,
+	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(first: $first, status: $status) {
+				items(status: $status, first: $limit) {
 					edges {
 						node {
 							id
 							${Item.getFragment('item')}
 						}
+					}
+					pageInfo {
+						hasNextPage,
 					}
 				}
 			}
@@ -30,7 +37,16 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 })
 export default class ItemList extends ReactCSS.Component {
 	handleStatusChange = status => {
-		this.props.relay.setVariables({ status });
+		this.props.relay.setVariables({
+			status,
+			page: 1,
+		});
+	};
+
+	handleLoadMore = () => {
+		this.props.relay.setVariables({
+			page: this.props.relay.variables.page + 1,
+		});
 	};
 
 	classes() {
@@ -94,6 +110,16 @@ export default class ItemList extends ReactCSS.Component {
 						)}
 					</tbody>
 				</Table>
+				{this.props.viewer.items.pageInfo.hasNextPage &&
+					<Pager>
+						<Button
+							bsSize="small"
+							onClick={this.handleLoadMore}
+						>
+							<Glyphicon glyph="chevron-down"/>
+						</Button>
+					</Pager>
+				}
 			</Panel>
 		);
 	}
