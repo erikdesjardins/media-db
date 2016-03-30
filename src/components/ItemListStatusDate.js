@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { formatDate } from '../utils/format';
@@ -12,10 +13,20 @@ import { formatDate } from '../utils/format';
 		`,
 	},
 })
-export default class ItemListStatusDate extends React.Component {
+export default class ItemListStatusDate extends ReactCSS.Component {
+	classes() {
+		return {
+			default: {
+				date: {
+					whiteSpace: 'nowrap',
+				},
+			},
+		};
+	}
+
 	render() {
 		return (
-			<span>
+			<span is="date">
 				{formatDate(this.props.item.statusDate)}
 			</span>
 		);
