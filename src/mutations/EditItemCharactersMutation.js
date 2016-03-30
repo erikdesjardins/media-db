@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-export default class EditItemProductionStatusMutation extends Relay.Mutation {
+export default class EditItemCharactersMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
@@ -10,16 +10,16 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 	};
 
 	getMutation() {
-		return Relay.QL`mutation { editItemProductionStatus }`;
+		return Relay.QL`mutation { editItemCharacters }`;
 	}
 
 	getFatQuery() {
 		return Relay.QL`
-			fragment on EditItemProductionStatusPayload {
+			fragment on EditItemCharactersPayload {
 				item {
-					productionStatus,
+					characters,
 					fieldUpdates {
-						productionStatus,
+						characters,
 					},
 				},
 			}
@@ -29,7 +29,7 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 	getVariables() {
 		return {
 			id: this.props.item.id,
-			productionStatus: this.props.productionStatus,
+			characters: this.props.characters,
 		};
 	}
 
@@ -46,7 +46,7 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 		return {
 			item: {
 				id: this.props.item.id,
-				productionStatus: this.props.productionStatus,
+				characters: this.props.characters,
 			},
 		};
 	}

@@ -1,5 +1,6 @@
 import AutosaveInput from './AutosaveInput';
 import EditItemLengthMutation from '../mutations/EditItemLengthMutation';
+import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -9,6 +10,7 @@ import relay from 'relay-decorator';
 		item: () => Relay.QL`
 			fragment on Item {
 				length,
+				${ItemRefreshButton.getFragment('item')}
 				${EditItemLengthMutation.getFragment('item')}
 			}
 		`,
@@ -26,7 +28,16 @@ export default class ItemLength extends React.Component {
 		return (
 			<AutosaveInput
 				type="number"
-				label="Length"
+				label={
+					<div>
+						{'Length'}
+						{' '}
+						<ItemRefreshButton
+							item={this.props.item}
+							fields={['length']}
+						/>
+					</div>
+				}
 				defaultValue={this.props.item.length}
 				onSave={this.handleSave}
 			/>

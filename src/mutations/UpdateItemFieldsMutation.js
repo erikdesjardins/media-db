@@ -1,22 +1,21 @@
 import Relay from 'react-relay';
 
-export default class UpdateItemMutation extends Relay.Mutation {
+export default class UpdateItemFieldsMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
 				id,
-				url,
 			}
 		`,
 	};
 
 	getMutation() {
-		return Relay.QL`mutation { updateItem }`;
+		return Relay.QL`mutation { updateItemFields }`;
 	}
 
 	getFatQuery() {
 		return Relay.QL`
-			fragment on UpdateItemPayload {
+			fragment on UpdateItemFieldsPayload {
 				item {
 					thumbnail,
 					title,
@@ -25,6 +24,15 @@ export default class UpdateItemMutation extends Relay.Mutation {
 					characters,
 					length,
 					productionStatus,
+					fieldUpdates {
+						thumbnail,
+						title,
+						creator,
+						genres,
+						characters,
+						length,
+						productionStatus,
+					},
 				},
 			}
 		`;
@@ -33,8 +41,7 @@ export default class UpdateItemMutation extends Relay.Mutation {
 	getVariables() {
 		return {
 			id: this.props.item.id,
-			url: this.props.item.url,
-			fieldNames: this.props.fieldNames,
+			fieldUpdates: this.props.fieldUpdates,
 		};
 	}
 

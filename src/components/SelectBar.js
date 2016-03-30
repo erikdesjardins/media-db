@@ -10,6 +10,7 @@ export default class SelectBar extends React.Component {
 		selected: PropTypes.string,
 		onSelect: PropTypes.func,
 		bsSize: Button.propTypes.bsSize,
+		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 	};
 
 	static defaultProps = {
@@ -26,7 +27,7 @@ export default class SelectBar extends React.Component {
 
 	render() {
 		return (
-			<ButtonGroup bsSize={this.props.bsSize}>
+			<ButtonGroup bsSize={this.props.bsSize} style={this.props.style}>
 				{this.props.options.map(({ value, name }) =>
 					<Button
 						key={value}

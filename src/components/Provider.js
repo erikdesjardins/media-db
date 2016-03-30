@@ -6,6 +6,7 @@ import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
 import { Button, Panel } from 'react-bootstrap';
+import { panelHeaderButtonRight } from '../styles/bootstrap';
 
 @relay({
 	fragments: {
@@ -47,15 +48,14 @@ export default class Provider extends ReactCSS.Component {
 				input: {
 					fontFamily: 'monospace',
 					resize: 'vertical',
+					minHeight: '200px',
 					margin: '-15px -15px -30px -15px',
 					width: 'calc(100% + 30px)',
 					boxShadow: 'none',
 					border: 'none',
 				},
 				remove: {
-					float: 'right',
-					marginTop: '-1px',
-					marginBottom: '-1px',
+					...panelHeaderButtonRight,
 					fontFamily: 'sans-serif',
 				},
 			},

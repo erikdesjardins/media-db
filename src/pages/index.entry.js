@@ -2,6 +2,8 @@ import App from '../containers/App';
 import Items from '../containers/Items';
 import Search from '../containers/Search';
 import Sidebar from '../containers/Sidebar';
+import SidebarInfo from '../containers/SidebarInfo';
+import SidebarHistory from '../containers/SidebarHistory';
 import Storage from '../containers/Storage';
 import Providers from '../containers/Providers';
 import React from 'react';
@@ -21,13 +23,20 @@ render((
 				path="items" component={Items}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			>
-				<Route
-					path=":id" component={Sidebar}
-					queries={{
-						item: () => Relay.QL`query { node(id: $id) }`,
-						viewer: () => Relay.QL`query { viewer }`,
-					}}
-				/>
+				<Route path=":id" component={Sidebar}>
+					<IndexRedirect to="info"/>
+					<Route
+						path="info" component={SidebarInfo}
+						queries={{
+							item: () => Relay.QL`query { node(id: $id) }`,
+							viewer: () => Relay.QL`query { viewer }`,
+						}}
+					/>
+					<Route
+						path="history" component={SidebarHistory}
+						queries={{ item: () => Relay.QL`query { node(id: $id) }` }}
+					/>
+				</Route>
 			</Route>
 			<Route path="search/:query" component={Search}/>
 			<Route
