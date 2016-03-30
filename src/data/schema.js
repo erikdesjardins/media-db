@@ -234,6 +234,13 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'Fields which differ in the provider\'s representation',
 			resolve: async obj => {
 				const info = await runProviders(obj.url);
+				if (!info) {
+					// no providers could handle it. this shouldn't happen, but we won't die here because it is possible
+					return {};
+				}
+				if (info.id !== obj.id) {
+					throw new Error(`id: ${info.id} returned by provider is not expected id: ${obj.id}`);
+				}
 				// this will get every field that differs, even those not eligible for update by the provider
 				// but that's okay, because Relay won't allow them to be accessed on the `ItemFieldUpdates`
 				return _.pickBy({ ...obj, ...info }, (value, key) => !deepEqual(value, obj[key]));
