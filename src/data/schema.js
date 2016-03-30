@@ -371,123 +371,56 @@ const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 	},
 });
 
-const GraphQLEditItemLengthMutation = mutationWithClientMutationId({
-	name: 'EditItemLength',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		length: { type: new GraphQLNonNull(GraphQLInt) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
+function editItemMutation(name, field, type, additionalFields = {}) {
+	return mutationWithClientMutationId({
+		name,
+		inputFields: {
+			id: { type: new GraphQLNonNull(GraphQLID) },
+			[field]: { type },
 		},
-	},
-	mutateAndGetPayload: ({ id, length }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { length });
-		return { localItemId };
-	},
-});
+		outputFields: {
+			item: {
+				type: GraphQLItem,
+				resolve: ({ localItemId }) => getItem(localItemId),
+			},
+			...additionalFields,
+		},
+		mutateAndGetPayload: ({ id, [field]: val }) => {
+			const localItemId = fromGlobalId(id).id;
+			updateItem(localItemId, { [field]: val });
+			return { localItemId };
+		},
+	});
+}
 
-const GraphQLEditItemProductionStatusMutation = mutationWithClientMutationId({
-	name: 'EditItemProductionStatus',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		productionStatus: { type: new GraphQLNonNull(GraphQLProductionStatusEnum) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
-		},
-	},
-	mutateAndGetPayload: ({ id, productionStatus }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { productionStatus });
-		return { localItemId };
-	},
-});
+const GraphQLEditItemLengthMutation = editItemMutation(
+	'EditItemLength', 'length', new GraphQLNonNull(GraphQLInt)
+);
 
-const GraphQLEditItemStatusMutation = mutationWithClientMutationId({
-	name: 'EditItemStatus',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		status: { type: new GraphQLNonNull(GraphQLStatusEnum) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
-		},
+const GraphQLEditItemProductionStatusMutation = editItemMutation(
+	'EditItemProductionStatus', 'productionStatus', new GraphQLNonNull(GraphQLProductionStatusEnum)
+);
+
+const GraphQLEditItemStatusMutation = editItemMutation(
+	'EditItemStatus', 'status', new GraphQLNonNull(GraphQLStatusEnum), {
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
 		},
-	},
-	mutateAndGetPayload: ({ id, status }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { status });
-		return { localItemId };
-	},
-});
+	}
+);
 
-const GraphQLEditItemNotesMutation = mutationWithClientMutationId({
-	name: 'EditItemNotes',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		notes: { type: new GraphQLNonNull(GraphQLString) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
-		},
-	},
-	mutateAndGetPayload: ({ id, notes }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { notes });
-		return { localItemId };
-	},
-});
+const GraphQLEditItemNotesMutation = editItemMutation(
+	'EditItemNotes', 'notes', new GraphQLNonNull(GraphQLString)
+);
 
-const GraphQLEditItemGenresMutation = mutationWithClientMutationId({
-	name: 'EditItemGenres',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		genres: { type: new GraphQLNonNull(GraphQLString) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
-		},
-	},
-	mutateAndGetPayload: ({ id, genres }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { genres });
-		return { localItemId };
-	},
-});
+const GraphQLEditItemGenresMutation = editItemMutation(
+	'EditItemGenres', 'genres', new GraphQLNonNull(GraphQLString)
+);
 
-const GraphQLEditItemCharactersMutation = mutationWithClientMutationId({
-	name: 'EditItemCharacters',
-	inputFields: {
-		id: { type: new GraphQLNonNull(GraphQLID) },
-		characters: { type: new GraphQLNonNull(GraphQLString) },
-	},
-	outputFields: {
-		item: {
-			type: GraphQLItem,
-			resolve: ({ localItemId }) => getItem(localItemId),
-		},
-	},
-	mutateAndGetPayload: ({ id, characters }) => {
-		const localItemId = fromGlobalId(id).id;
-		updateItem(localItemId, { characters });
-		return { localItemId };
-	},
-});
+const GraphQLEditItemCharactersMutation = editItemMutation(
+	'EditItemCharacters', 'characters', new GraphQLNonNull(GraphQLString)
+);
 
 const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 	name: 'UpdateItemFields',
