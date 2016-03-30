@@ -18,7 +18,9 @@ export default class EditItemLengthMutation extends Relay.Mutation {
 			fragment on EditItemLengthPayload {
 				item {
 					length,
-					fieldUpdates,
+					fieldUpdates {
+						length,
+					},
 				},
 			}
 		`;

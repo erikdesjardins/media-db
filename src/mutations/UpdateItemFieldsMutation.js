@@ -5,7 +5,6 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 		item: () => Relay.QL`
 			fragment on Item {
 				id,
-				url,
 			}
 		`,
 	};
@@ -25,7 +24,15 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 					characters,
 					length,
 					productionStatus,
-					fieldUpdates,
+					fieldUpdates {
+						thumbnail,
+						title,
+						creator,
+						genres,
+						characters,
+						length,
+						productionStatus,
+					},
 				},
 			}
 		`;
@@ -34,8 +41,7 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 	getVariables() {
 		return {
 			id: this.props.item.id,
-			url: this.props.item.url,
-			fieldNames: this.props.fieldNames,
+			fieldUpdates: this.props.fieldUpdates,
 		};
 	}
 

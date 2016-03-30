@@ -8,8 +8,8 @@ import {
 	GraphQLBoolean,
 	GraphQLEnumType,
 	GraphQLID,
+	GraphQLInputObjectType,
 	GraphQLInt,
-	GraphQLList,
 	GraphQLNonNull,
 	GraphQLObjectType,
 	GraphQLSchema,
@@ -139,6 +139,34 @@ const GraphQLProductionStatusEnum = new GraphQLEnumType({
 	},
 });
 
+const GraphQLItemFieldUpdates = new GraphQLObjectType({
+	name: 'ItemFieldUpdates',
+	description: 'All fields that the provider may provide, and therefore may be updated',
+	fields: () => ({
+		thumbnail: { type: GraphQLString },
+		title: { type: GraphQLString },
+		creator: { type: GraphQLString },
+		genres: { type: GraphQLString },
+		characters: { type: GraphQLString },
+		length: { type: GraphQLInt },
+		productionStatus: { type: GraphQLProductionStatusEnum },
+	}),
+});
+
+// *sigh*
+const GraphQLItemFieldUpdatesInput = new GraphQLInputObjectType({
+	name: 'ItemFieldUpdatesInput',
+	fields: () => ({
+		thumbnail: { type: GraphQLString },
+		title: { type: GraphQLString },
+		creator: { type: GraphQLString },
+		genres: { type: GraphQLString },
+		characters: { type: GraphQLString },
+		length: { type: GraphQLInt },
+		productionStatus: { type: GraphQLProductionStatusEnum },
+	}),
+});
+
 const GraphQLItem = new GraphQLObjectType({
 	name: 'Item',
 	description: 'A media item',
@@ -202,19 +230,13 @@ const GraphQLItem = new GraphQLObjectType({
 				connectionFromPromisedArray(getItemHistory(obj.id), args),
 		},
 		fieldUpdates: {
-			type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
+			type: new GraphQLNonNull(GraphQLItemFieldUpdates),
 			description: 'Fields which differ in the provider\'s representation',
 			resolve: async obj => {
-				const eligibleFields = ['thumbnail', 'title', 'creator', 'genres', 'characters', 'length', 'productionStatus'];
 				const info = await runProviders(obj.url);
-				const updated = { ...obj, ...info };
-				const updatedFields = [];
-				for (const field of eligibleFields) {
-					if (!deepEqual(obj[field], updated[field])) {
-						updatedFields.push(field);
-					}
-				}
-				return updatedFields;
+				// this will get every field that differs, even those not eligible for update by the provider
+				// but that's okay, because Relay won't allow them to be accessed on the `ItemFieldUpdates`
+				return _.pickBy({ ...obj, ...info }, (value, key) => !deepEqual(value, obj[key]));
 			},
 		},
 	}),
@@ -426,8 +448,7 @@ const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 	name: 'UpdateItemFields',
 	inputFields: {
 		id: { type: new GraphQLNonNull(GraphQLID) },
-		url: { type: new GraphQLNonNull(GraphQLString) },
-		fieldNames: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
+		fieldUpdates: { type: new GraphQLNonNull(GraphQLItemFieldUpdatesInput) },
 	},
 	outputFields: {
 		item: {
@@ -435,10 +456,9 @@ const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 			resolve: ({ localItemId }) => getItem(localItemId),
 		},
 	},
-	mutateAndGetPayload: async ({ id, url, fieldNames }) => {
+	mutateAndGetPayload: ({ id, fieldUpdates }) => {
 		const localItemId = fromGlobalId(id).id;
-		const info = await runProviders(url);
-		const patch = _.pick(info, fieldNames);
+		const patch = _.pickBy(fieldUpdates); // truthy
 		updateItem(localItemId, patch);
 		return { localItemId };
 	},

@@ -18,7 +18,9 @@ export default class EditItemGenresMutation extends Relay.Mutation {
 			fragment on EditItemGenresPayload {
 				item {
 					genres,
-					fieldUpdates,
+					fieldUpdates {
+						genres,
+					},
 				},
 			}
 		`;

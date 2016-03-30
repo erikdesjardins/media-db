@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
@@ -6,10 +7,20 @@ import { Button, Glyphicon } from 'react-bootstrap';
 
 @relay({
 	fragments: {
+		// unfortunately we need to fetch all of the fields of `fieldUpdates` to make this generic
+		// but that's okay, because it's not any more expensive
 		item: () => Relay.QL`
 			fragment on Item {
 				id,
-				fieldUpdates,
+				fieldUpdates {
+					thumbnail,
+					title,
+					creator,
+					genres,
+					characters,
+					length,
+					productionStatus,
+				},
 				${UpdateItemFieldsMutation.getFragment('item')}
 			}
 		`,
@@ -21,14 +32,14 @@ export default class ItemRefreshButton extends React.Component {
 	};
 
 	isDisabled() {
-		return this.props.fields.every(field => !this.props.item.fieldUpdates.includes(field));
+		return this.props.fields.every(field => !this.props.item.fieldUpdates[field]);
 	}
 
 	handleClick = () => {
 		if (this.isDisabled()) return;
 		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
 			item: this.props.item,
-			fieldNames: this.props.fields,
+			fieldUpdates: _.pick(this.props.item.fieldUpdates, this.props.fields),
 		}));
 	};
 

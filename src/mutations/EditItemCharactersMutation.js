@@ -18,7 +18,9 @@ export default class EditItemCharactersMutation extends Relay.Mutation {
 			fragment on EditItemCharactersPayload {
 				item {
 					characters,
-					fieldUpdates,
+					fieldUpdates {
+						characters,
+					},
 				},
 			}
 		`;
