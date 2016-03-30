@@ -11,7 +11,7 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 @relay({
 	initialVariables: {
 		first: 10,
-		status: statusTypes.COMPLETE,
+		status: statusTypes.IN_PROGRESS,
 	},
 	fragments: {
 		viewer: () => Relay.QL`
