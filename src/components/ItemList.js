@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Item from './Item';
 import React from 'react';
 import ReactCSS from 'reactcss';
@@ -5,23 +6,26 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Button, Glyphicon, Pager, Panel, Table } from 'react-bootstrap';
+import { Glyphicon, PageItem, Pager, Panel, Table } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
 	initialVariables: {
 		status: statusTypes.IN_PROGRESS,
-		page: 1,
+		after: null,
+		breadcrumbs: [],
 	},
-	prepareVariables: ({ status, page }) => ({
+	prepareVariables: ({ status, after }) => ({
 		status,
-		limit: page * 10,
+		after,
+		limit: 10,
 	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(status: $status, first: $limit) {
+				items(status: $status, first: $limit, after: $after) {
 					edges {
+						cursor,
 						node {
 							id
 							${Item.getFragment('item')}
@@ -39,13 +43,32 @@ export default class ItemList extends ReactCSS.Component {
 	handleStatusChange = status => {
 		this.props.relay.setVariables({
 			status,
-			page: 1,
+			after: null,
+			breadcrumbs: [],
 		});
 	};
 
-	handleLoadMore = () => {
+	hasPrev() {
+		return !!this.props.relay.variables.breadcrumbs.length;
+	}
+
+	hasNext() {
+		return this.props.viewer.items.pageInfo.hasNextPage;
+	}
+
+	handlePrev = () => {
+		const { breadcrumbs } = this.props.relay.variables;
 		this.props.relay.setVariables({
-			page: this.props.relay.variables.page + 1,
+			after: _.last(breadcrumbs),
+			breadcrumbs: breadcrumbs.slice(0, -1),
+		});
+	};
+
+	handleNext = () => {
+		const { after, breadcrumbs } = this.props.relay.variables;
+		this.props.relay.setVariables({
+			after: _.last(this.props.viewer.items.edges).cursor,
+			breadcrumbs: [...breadcrumbs, after],
 		});
 	};
 
@@ -110,16 +133,21 @@ export default class ItemList extends ReactCSS.Component {
 						)}
 					</tbody>
 				</Table>
-				{this.props.viewer.items.pageInfo.hasNextPage &&
-					<Pager>
-						<Button
-							bsSize="small"
-							onClick={this.handleLoadMore}
-						>
-							<Glyphicon glyph="chevron-down"/>
-						</Button>
-					</Pager>
-				}
+				<Pager>
+					<PageItem
+						disabled={!this.hasPrev()}
+						onSelect={this.handlePrev}
+					>
+						<Glyphicon glyph="chevron-left"/>
+					</PageItem>
+					{' '}
+					<PageItem
+						disabled={!this.hasNext()}
+						onSelect={this.handleNext}
+					>
+						<Glyphicon glyph="chevron-right"/>
+					</PageItem>
+				</Pager>
 			</Panel>
 		);
 	}
