@@ -15,7 +15,7 @@ import relay from 'relay-decorator';
 export default class ItemListNotes extends React.Component {
 	render() {
 		return (
-			<div className="item-autowrap">
+			<div className="Item--autowrap">
 				<Markdown source={this.props.item.notes}/>
 			</div>
 		);
