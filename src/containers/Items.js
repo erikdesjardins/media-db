@@ -2,7 +2,6 @@ import ItemList from '../components/ItemList';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { AutoAffix } from 'react-overlays';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 @relay({
@@ -23,11 +22,7 @@ export default class Items extends React.Component {
 						<ItemList viewer={this.props.viewer}/>
 					</Col>
 					<Col xs={4}>
-						<AutoAffix viewportOffsetTop={20} container={this}>
-							<div>
-								{this.props.children}
-							</div>
-						</AutoAffix>
+						{this.props.children}
 					</Col>
 				</Row>
 			</Grid>
