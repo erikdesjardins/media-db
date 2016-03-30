@@ -22,6 +22,7 @@
 			left: calc(100% - #{$width});
 			background: fade-in($color);
 			content: '';
+			pointer-events: none;
 
 			.table-striped > tbody > tr:nth-of-type(odd) & {
 				background: fade-in($color-stripe);
