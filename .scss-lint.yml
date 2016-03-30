@@ -13,3 +13,9 @@ linters:
 
   PropertySortOrder:
     order: smacss
+
+  SelectorDepth:
+    enabled: false
+
+  NestingDepth:
+    enabled: false
