@@ -1,0 +1,3 @@
+@function fade-in($color) {
+	@return linear-gradient(to right, rgba($color, 0), rgba($color, 1));
+}
