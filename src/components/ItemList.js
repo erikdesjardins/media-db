@@ -10,7 +10,7 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
 	initialVariables: {
-		first: 10,
+		first: 2147483647,
 		status: statusTypes.IN_PROGRESS,
 	},
 	fragments: {
