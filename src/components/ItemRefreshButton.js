@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -45,13 +45,25 @@ export default class ItemRefreshButton extends React.Component {
 
 	render() {
 		return (
-			<Button
-				bsSize="xsmall"
-				disabled={this.isDisabled()}
-				onClick={this.handleClick}
+			<OverlayTrigger
+				placement="right"
+				animation={false}
+				trigger={this.isDisabled() ? [] : ['hover']}
+				rootClose
+				overlay={
+					<Tooltip>
+						{_.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields))).join(', ')}
+					</Tooltip>
+				}
 			>
-				<Glyphicon glyph="refresh"/>
-			</Button>
+				<Button
+					bsSize="xsmall"
+					disabled={this.isDisabled()}
+					onClick={this.handleClick}
+				>
+					<Glyphicon glyph="refresh"/>
+				</Button>
+			</OverlayTrigger>
 		);
 	}
 }
