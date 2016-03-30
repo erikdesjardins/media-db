@@ -18,7 +18,7 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 	prepareVariables: ({ status, after }) => ({
 		status,
 		after,
-		limit: 10,
+		limit: 25,
 	}),
 	fragments: {
 		viewer: () => Relay.QL`
