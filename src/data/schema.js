@@ -33,6 +33,8 @@ import {
 	offsetToCursor,
 } from 'graphql-relay';
 
+import { randomId } from '../utils/schema';
+
 import {
 	Item,
 	Provider,
@@ -313,14 +315,6 @@ const Query = new GraphQLObjectType({
 		},
 	}),
 });
-
-function randomId(length = 16) {
-	let id = '';
-	while (id.length < length) {
-		id += String(Math.random()).slice(2);
-	}
-	return id.slice(0, length);
-}
 
 const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 	name: 'AddActiveTabItem',
