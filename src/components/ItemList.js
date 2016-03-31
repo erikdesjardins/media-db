@@ -6,7 +6,7 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Glyphicon, PageItem, Pager, Panel, Table } from 'react-bootstrap';
+import { Glyphicon, PageItem, Pager, Panel } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
@@ -110,7 +110,7 @@ export default class ItemList extends ReactCSS.Component {
 					/>
 				}
 			>
-				<Table striped condensed hover>
+				<table className="CompactTable">
 					<thead>
 						<tr>
 							<th>{''}</th>
@@ -120,7 +120,7 @@ export default class ItemList extends ReactCSS.Component {
 							<th>{'Characters'}</th>
 							<th>{'Notes'}</th>
 							<th>{'Date'}</th>
-							<th>{'Length'}</th>
+							<th>{'Len.'}</th>
 							<th>{''}</th>
 						</tr>
 					</thead>
@@ -132,7 +132,7 @@ export default class ItemList extends ReactCSS.Component {
 							/>
 						)}
 					</tbody>
-				</Table>
+				</table>
 				<Pager>
 					<PageItem
 						disabled={!this.hasPrev()}

@@ -1,12 +1,15 @@
+@import '../colors';
 @import '../functions';
+
+
 
 .Item {
 	&--autowrap {
-		$parent-height: 20px;
-		$width: 50%;
-		$color: #fff;
-		$color-stripe: #f9f9f9;
-		$color-hover: #f5f5f5;
+		$parent-height: 1.6em;
+		$width: 25%;
+		$color: $table-base;
+		$color-stripe: $table-stripe;
+		$color-hover: $table-hover;
 
 		max-height: $parent-height;
 		overflow: hidden;
@@ -25,11 +28,11 @@
 				content: '';
 				pointer-events: none;
 
-				.table-striped > tbody > tr:nth-of-type(odd) & {
+				tr:nth-of-type(odd) & {
 					background: fade-in($color-stripe);
 				}
 
-				.table-hover > tbody > tr:hover & {
+				tr:hover & {
 					background: fade-in($color-hover);
 				}
 			}
@@ -38,5 +41,9 @@
 
 	&--nowrap {
 		white-space: nowrap;
+	}
+
+	&--small {
+		font-size: smaller;
 	}
 }

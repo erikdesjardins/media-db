@@ -18,8 +18,8 @@ export default class ItemListThumbnail extends ReactCSS.Component {
 			default: {
 				thumbnail: {
 					maxHeight: '20px',
-					marginTop: '-2px',
-					marginBottom: 0,
+					marginTop: '-8px',
+					marginBottom: '-6px',
 				},
 			},
 		};

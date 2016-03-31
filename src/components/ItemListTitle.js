@@ -15,7 +15,9 @@ import relay from 'relay-decorator';
 export default class ItemListTitle extends React.Component {
 	render() {
 		return (
-			<a href={this.props.item.url}>{this.props.item.title}</a>
+			<div className="Item--nowrap">
+				<a href={this.props.item.url}>{this.props.item.title}</a>
+			</div>
 		);
 	}
 }
