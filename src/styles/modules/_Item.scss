@@ -1,17 +1,12 @@
-@import '../colors';
 @import '../functions';
-
-
+@import './CompactTable';
 
 .Item {
 	&--autowrap {
-		$parent-height: 1.6em;
+		$height: 1.6em;
 		$width: 25%;
-		$color: $table-base;
-		$color-stripe: $table-stripe;
-		$color-hover: $table-hover;
 
-		max-height: $parent-height;
+		max-height: $height;
 		overflow: hidden;
 		word-break: break-all;
 
@@ -22,18 +17,18 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-				bottom: $parent-height;
+				bottom: $height;
 				left: calc(100% - #{$width});
-				background: fade-in($color);
+				background: fade-in($CompactTable-base);
 				content: '';
 				pointer-events: none;
 
 				tr:nth-of-type(odd) & {
-					background: fade-in($color-stripe);
+					background: fade-in($CompactTable-stripe);
 				}
 
 				tr:hover & {
-					background: fade-in($color-hover);
+					background: fade-in($CompactTable-hover);
 				}
 			}
 		}

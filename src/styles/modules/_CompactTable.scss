@@ -1,4 +1,7 @@
-@import '../colors';
+$CompactTable-base: #fff;
+$CompactTable-stripe: #eee;
+$CompactTable-hover: #ddd;
+$CompactTable-border: #e5e3da;
 
 .CompactTable {
 	width: 100%;
@@ -9,16 +12,16 @@
 	}
 
 	tr {
-		background-color: $table-base;
+		background-color: $CompactTable-base;
 	}
 
 	tbody tr {
 		&:nth-of-type(odd) {
-			background-color: $table-stripe;
+			background-color: $CompactTable-stripe;
 		}
 
 		&:hover {
-			background-color: $table-hover;
+			background-color: $CompactTable-hover;
 		}
 	}
 
@@ -26,7 +29,7 @@
 	th {
 		padding: 4px 9px;
 
-		border: 1px solid $table-border;
+		border: 1px solid $CompactTable-border;
 		border-top-width: 0;
 		border-bottom-width: 0;
 
