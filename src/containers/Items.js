@@ -1,4 +1,4 @@
-import ItemList from '../components/ItemList';
+import ItemView from '../components/ItemView';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -8,7 +8,7 @@ import { Col, Grid, Row } from 'react-bootstrap';
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				${ItemList.getFragment('viewer')}
+				${ItemView.getFragment('viewer')}
 			}
 		`,
 	},
@@ -24,7 +24,7 @@ export default class Items extends React.Component {
 						md={8}
 						lg={9}
 					>
-						<ItemList viewer={this.props.viewer}/>
+						<ItemView viewer={this.props.viewer}/>
 					</Col>
 					<Col
 						xs={12}
