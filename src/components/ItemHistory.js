@@ -2,9 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { diff } from 'deep-diff';
+import { diff as deepDiff } from 'deep-diff';
 import { formatDate } from '../utils/format';
-import { intersperse } from '../utils/array';
 
 @relay({
 	initialVariables: {
@@ -39,9 +38,15 @@ export default class ItemHistory extends React.Component {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
 		const diffs = [
-			`created on ${formatDate(history[0].date)}`,
-			..._.zipWith(history.slice(0, -1), history.slice(1), (from, to) => `${
-				diff(from, to, (path, key) => key === 'date' || String(key).charAt(0) === '_')
+			['created', formatDate(history[0].date)],
+			..._.zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
+				const diff = deepDiff(from, to, (path, key) => key === 'date' || String(key).startsWith('_'));
+
+				if (!diff) {
+					return ['no change', to.date];
+				}
+
+				const description = diff
 					.map(({ kind, path, lhs, rhs, item }) => {
 						const isArray = kind === 'A';
 						const prefix = `${isArray ? 'a ' : ''}${path.join('.')}`;
@@ -54,20 +59,37 @@ export default class ItemHistory extends React.Component {
 							case 'D':
 								return `removed ${prefix}: ${lhs}`;
 							case 'E':
-								return `changed ${prefix}: ${lhs} -> ${rhs}`;
+								return `changed ${prefix}: ${lhs} → ${rhs}`;
 							case 'A':
 							default:
 								return 'pls no';
 						}
 					})
-					.join(', and ')
-			} on ${formatDate(to.date)}`),
-		]::intersperse(<br/>);
+					.join(', and ');
+
+				return [description, to.date];
+			}),
+		];
 
 		return (
-			<div>
-				{diffs}
-			</div>
+			<table className="CompactTable CompactTable--stripe">
+				<tbody>
+					{diffs.map(([description, date]) =>
+						<tr key={date}>
+							<td>
+								<div className="CompactTable-item CompactTable-item--autowrap">
+									<p>{description}</p>
+								</div>
+							</td>
+							<td>
+								<div className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
+									<p>{formatDate(date)}</p>
+								</div>
+							</td>
+						</tr>
+					)}
+				</tbody>
+			</table>
 		);
 	}
 }
