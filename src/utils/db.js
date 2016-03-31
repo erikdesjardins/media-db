@@ -3,6 +3,14 @@ export function whereEquals(key, val) {
 	return this.then(arr => arr.filter(({ [key]: v }) => v === val));
 }
 
+// // Promise<Array> -> Promise<Array>
+export function whereRegex(key, regex) {
+	return this.then(arr => {
+		const re = new RegExp(regex, 'i');
+		return arr.filter(({ [key]: v }) => re.test(v));
+	});
+}
+
 // Promise<Array> -> Promise<Array>
 export function reverse() {
 	return this.then(arr => arr.reverse());

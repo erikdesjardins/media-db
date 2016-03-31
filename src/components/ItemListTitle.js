@@ -17,7 +17,7 @@ import relay from 'relay-decorator';
 export default class ItemListTitle extends React.Component {
 	render() {
 		return (
-			<div className="Item--nowrap">
+			<div className="CompactTable-item CompactTable-item--nowrap">
 				<Markdown
 					source={`[${this.props.item.title}](${this.props.item.url})${this.props.item.tags}`}
 				/>

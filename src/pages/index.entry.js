@@ -27,6 +27,7 @@ render((
 					<IndexRedirect to="info"/>
 					<Route
 						path="info" component={SidebarInfo}
+						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
 						queries={{
 							item: () => Relay.QL`query { node(id: $id) }`,
 							viewer: () => Relay.QL`query { viewer }`,
@@ -38,7 +39,11 @@ render((
 					/>
 				</Route>
 			</Route>
-			<Route path="search/:query" component={Search}/>
+			<Route
+				path="search/:query" component={Search}
+				prepareParams={({ query }) => ({ query: decodeURIComponent(query) })}
+				queries={{ items: () => Relay.QL`query { searchItems(query: $query) }` }}
+			/>
 			<Route
 				path="providers" component={Providers}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}

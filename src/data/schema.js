@@ -47,6 +47,7 @@ import {
 	getItems,
 	getProvider,
 	getProviders,
+	getQueriedItems,
 	getRawItems,
 	getUser,
 	getViewer,
@@ -225,7 +226,7 @@ const GraphQLItem = new GraphQLObjectType({
 			description: 'The date at which this version of the item was updated',
 		},
 		history: {
-			type: ItemsConnection, // eslint-disable-line no-use-before-define
+			type: ItemConnection, // eslint-disable-line no-use-before-define
 			description: 'The item\'s past versions',
 			args: {
 				...connectionArgs,
@@ -255,7 +256,7 @@ const GraphQLItem = new GraphQLObjectType({
 });
 
 const {
-	connectionType: ItemsConnection,
+	connectionType: ItemConnection,
 	edgeType: GraphQLItemEdge,
 } = connectionDefinitions({
 	name: 'Item',
@@ -279,7 +280,7 @@ const GraphQLProvider = new GraphQLObjectType({
 });
 
 const {
-	connectionType: ProvidersConnection,
+	connectionType: ProviderConnection,
 	edgeType: GraphQLProviderEdge,
 } = connectionDefinitions({
 	name: 'Provider',
@@ -291,7 +292,7 @@ const GraphQLUser = new GraphQLObjectType({
 	fields: {
 		id: globalIdField('User'),
 		items: {
-			type: ItemsConnection,
+			type: ItemConnection,
 			args: {
 				status: {
 					type: GraphQLStatusEnum,
@@ -303,7 +304,7 @@ const GraphQLUser = new GraphQLObjectType({
 				connectionFromPromisedArray(getFilteredItems({ status }), args),
 		},
 		providers: {
-			type: ProvidersConnection,
+			type: ProviderConnection,
 			args: {
 				...connectionArgs,
 			},
@@ -345,6 +346,17 @@ const Query = new GraphQLObjectType({
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
+		},
+		searchItems: {
+			type: ItemConnection,
+			args: {
+				query: {
+					type: new GraphQLNonNull(GraphQLString),
+				},
+				...connectionArgs,
+			},
+			resolve: (obj, { query, ...args }) =>
+				connectionFromPromisedArray(getQueriedItems(query), args),
 		},
 	}),
 });

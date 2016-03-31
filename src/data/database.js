@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
-import { distinct, map, whereEquals, reverse } from '../utils/db';
+import { distinct, map, whereEquals, whereRegex, reverse } from '../utils/db';
+import { reduce, repeatWhile } from '../utils/generator';
 
 export class Item {}
 export class Provider {}
@@ -43,6 +44,15 @@ export function getItems() {
 export function getFilteredItems(filterMap) {
 	return _.toPairs(filterMap).reduce(
 		(items, [key, value]) => (value ? items::whereEquals(key, value) : items),
+		getItems()
+	);
+}
+
+// field:regex field2:regex with spaces
+export function getQueriedItems(query) {
+	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
+	return repeatWhile(() => re.exec(query))::reduce(
+		(items, [, key, regex]) => (regex ? items::whereRegex(key, regex) : items),
 		getItems()
 	);
 }

@@ -1,6 +1,13 @@
-@import '../colors';
+@import '../functions';
+
+$CompactTable-base: #fff;
+$CompactTable-stripe: #eee;
+$CompactTable-hover: #ddd;
+$CompactTable-border: #e5e3da;
 
 .CompactTable {
+	$root: &;
+
 	width: 100%;
 	font-size: 13px;
 
@@ -9,24 +16,14 @@
 	}
 
 	tr {
-		background-color: $table-base;
-	}
-
-	tbody tr {
-		&:nth-of-type(odd) {
-			background-color: $table-stripe;
-		}
-
-		&:hover {
-			background-color: $table-hover;
-		}
+		background-color: $CompactTable-base;
 	}
 
 	td,
 	th {
 		padding: 4px 9px;
 
-		border: 1px solid $table-border;
+		border: 1px solid $CompactTable-border;
 		border-top-width: 0;
 		border-bottom-width: 0;
 
@@ -40,19 +37,81 @@
 		&:last-of-type {
 			border-right-width: 0;
 		}
-
-		&:nth-of-type(1),
-		&:nth-of-type(3),
-		&:nth-of-type(4),
-		&:nth-of-type(5),
-		&:nth-of-type(7),
-		&:nth-of-type(8),
-		&:nth-of-type(9) {
-			text-align: center;
-		}
 	}
 
 	th {
 		border-bottom-width: 2px;
+	}
+
+	&--stripe {
+		tbody tr:nth-of-type(odd) {
+			background-color: $CompactTable-stripe;
+		}
+	}
+
+	&--hover {
+		tbody tr:hover {
+			background-color: $CompactTable-hover;
+		}
+	}
+
+	&--align {
+		// custom alignments for the main item table
+		td,
+		th {
+			&:nth-of-type(1),
+			&:nth-of-type(3),
+			&:nth-of-type(4),
+			&:nth-of-type(5),
+			&:nth-of-type(7),
+			&:nth-of-type(8),
+			&:nth-of-type(9) {
+				text-align: center;
+			}
+		}
+	}
+
+	&-item {
+		&--autowrap {
+			$height: 1.6em;
+			$width: 25%;
+
+			&:not(:hover) {
+				max-height: $height;
+				overflow: hidden;
+				word-break: break-all;
+
+				p {
+					position: relative;
+
+					&::after {
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: $height;
+						left: calc(100% - #{$width});
+						background: fade-in($CompactTable-base);
+						content: '';
+						pointer-events: none;
+
+						#{$root}--stripe tr:nth-of-type(odd) & {
+							background: fade-in($CompactTable-stripe);
+						}
+
+						#{$root}--hover tr:hover & {
+							background: fade-in($CompactTable-hover);
+						}
+					}
+				}
+			}
+		}
+
+		&--nowrap {
+			white-space: nowrap;
+		}
+
+		&--small {
+			font-size: smaller;
+		}
 	}
 }

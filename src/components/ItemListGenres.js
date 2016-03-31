@@ -15,7 +15,7 @@ import relay from 'relay-decorator';
 export default class ItemListGenres extends React.Component {
 	render() {
 		return (
-			<div className="Item--small Item--nowrap">
+			<div className="CompactTable-item CompactTable-item--small CompactTable-item--nowrap">
 				<Markdown source={this.props.item.genres}/>
 			</div>
 		);

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
@@ -26,7 +27,7 @@ import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 		`,
 	},
 })
-export default class ItemRefreshButton extends React.Component {
+export default class ItemRefreshButton extends ReactCSS.Component {
 	static propTypes = {
 		fields: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 	};
@@ -43,6 +44,17 @@ export default class ItemRefreshButton extends React.Component {
 		}));
 	};
 
+	classes() {
+		return {
+			default: {
+				refreshButton: {
+					marginTop: '-2px',
+					marginBottom: '-2px',
+				},
+			},
+		};
+	}
+
 	render() {
 		return (this.isDisabled() ? null :
 			<OverlayTrigger
@@ -56,6 +68,7 @@ export default class ItemRefreshButton extends React.Component {
 				}
 			>
 				<Button
+					is="refreshButton"
 					bsSize="xsmall"
 					disabled={this.isDisabled()}
 					onClick={this.handleClick}

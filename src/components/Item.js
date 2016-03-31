@@ -35,7 +35,7 @@ export default class Item extends React.Component {
 	};
 
 	handleClick = () => {
-		this.context.router.push(`/items/${this.props.item.id}`);
+		this.context.router.push(`/items/${encodeURIComponent(this.props.item.id)}/info`);
 	};
 
 	render() {
