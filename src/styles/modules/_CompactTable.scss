@@ -6,6 +6,8 @@ $CompactTable-hover: #ddd;
 $CompactTable-border: #e5e3da;
 
 .CompactTable {
+	$root: &;
+
 	width: 100%;
 	font-size: 13px;
 
@@ -15,16 +17,6 @@ $CompactTable-border: #e5e3da;
 
 	tr {
 		background-color: $CompactTable-base;
-	}
-
-	tbody tr {
-		&:nth-of-type(odd) {
-			background-color: $CompactTable-stripe;
-		}
-
-		&:hover {
-			background-color: $CompactTable-hover;
-		}
 	}
 
 	td,
@@ -61,6 +53,18 @@ $CompactTable-border: #e5e3da;
 		border-bottom-width: 2px;
 	}
 
+	&--stripe {
+		tbody tr:nth-of-type(odd) {
+			background-color: $CompactTable-stripe;
+		}
+	}
+
+	&--hover {
+		tbody tr:hover {
+			background-color: $CompactTable-hover;
+		}
+	}
+
 	&-item {
 		&--autowrap {
 			$height: 1.6em;
@@ -83,11 +87,11 @@ $CompactTable-border: #e5e3da;
 					content: '';
 					pointer-events: none;
 
-					tr:nth-of-type(odd) & {
+					#{$root}--stripe tr:nth-of-type(odd) & {
 						background: fade-in($CompactTable-stripe);
 					}
 
-					tr:hover & {
+					#{$root}--hover tr:hover & {
 						background: fade-in($CompactTable-hover);
 					}
 				}
