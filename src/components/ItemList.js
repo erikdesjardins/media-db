@@ -110,7 +110,7 @@ export default class ItemList extends ReactCSS.Component {
 					/>
 				}
 			>
-				<table className="CompactTable CompactTable--stripe CompactTable--hover">
+				<table className="CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
 					<thead>
 						<tr>
 							<th>{''}</th>
