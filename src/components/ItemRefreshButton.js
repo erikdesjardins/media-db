@@ -44,11 +44,10 @@ export default class ItemRefreshButton extends React.Component {
 	};
 
 	render() {
-		return (
+		return (this.isDisabled() ? null :
 			<OverlayTrigger
 				placement="right"
 				animation={false}
-				trigger={this.isDisabled() ? [] : ['hover']}
 				rootClose
 				overlay={
 					<Tooltip>

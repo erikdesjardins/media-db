@@ -18,10 +18,20 @@ export default class Items extends React.Component {
 		return (
 			<Grid fluid>
 				<Row>
-					<Col xs={8}>
+					<Col
+						xs={12}
+						sm={12}
+						md={8}
+						lg={9}
+					>
 						<ItemList viewer={this.props.viewer}/>
 					</Col>
-					<Col xs={4}>
+					<Col
+						xs={12}
+						sm={8} smOffset={2}
+						md={4} mdOffset={0}
+						lg={3}
+					>
 						{this.props.children}
 					</Col>
 				</Row>

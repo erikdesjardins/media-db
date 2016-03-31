@@ -200,6 +200,10 @@ const GraphQLItem = new GraphQLObjectType({
 			type: new GraphQLNonNull(GraphQLString),
 			description: 'Notes about the item',
 		},
+		tags: {
+			type: new GraphQLNonNull(GraphQLString),
+			description: 'The item\'s tags',
+		},
 		length: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The item\'s length',
@@ -394,6 +398,7 @@ const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 			url,
 			status: statusTypes.PENDING,
 			notes: '',
+			tags: '',
 		});
 
 		return { localItemId };
@@ -449,6 +454,10 @@ const GraphQLEditItemGenresMutation = editItemMutation(
 
 const GraphQLEditItemCharactersMutation = editItemMutation(
 	'EditItemCharacters', 'characters', new GraphQLNonNull(GraphQLString)
+);
+
+const GraphQLEditItemTagsMutation = editItemMutation(
+	'EditItemTags', 'tags', new GraphQLNonNull(GraphQLString)
 );
 
 const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
@@ -566,6 +575,7 @@ const Mutation = new GraphQLObjectType({
 		editItemNotes: GraphQLEditItemNotesMutation,
 		editItemGenres: GraphQLEditItemGenresMutation,
 		editItemCharacters: GraphQLEditItemCharactersMutation,
+		editItemTags: GraphQLEditItemTagsMutation,
 		updateItemFields: GraphQLUpdateItemFieldsMutation,
 		addProvider: GraphQLAddProviderMutation,
 		updateProvider: GraphQLUpdateProviderMutation,

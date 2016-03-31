@@ -15,7 +15,9 @@ import relay from 'relay-decorator';
 export default class ItemListCharacters extends React.Component {
 	render() {
 		return (
-			<Markdown source={this.props.item.characters}/>
+			<div className="Item--small Item--nowrap">
+				<Markdown source={this.props.item.characters}/>
+			</div>
 		);
 	}
 }

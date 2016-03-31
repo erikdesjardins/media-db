@@ -7,9 +7,10 @@ export default class CenteredColumn extends React.Component {
 			<Grid fluid>
 				<Row>
 					<Col
-						lg={6} lgOffset={3}
+						xs={12} xsOffset={0}
+						sm={10} smOffset={1}
 						md={8} mdOffset={2}
-						xs={10} xsOffset={1}
+						lg={6} lgOffset={3}
 					>
 						{this.props.children}
 					</Col>

@@ -1,0 +1,49 @@
+@import '../colors';
+@import '../functions';
+
+
+
+.Item {
+	&--autowrap {
+		$parent-height: 1.6em;
+		$width: 25%;
+		$color: $table-base;
+		$color-stripe: $table-stripe;
+		$color-hover: $table-hover;
+
+		max-height: $parent-height;
+		overflow: hidden;
+		word-break: break-all;
+
+		p {
+			position: relative;
+
+			&::after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: $parent-height;
+				left: calc(100% - #{$width});
+				background: fade-in($color);
+				content: '';
+				pointer-events: none;
+
+				tr:nth-of-type(odd) & {
+					background: fade-in($color-stripe);
+				}
+
+				tr:hover & {
+					background: fade-in($color-hover);
+				}
+			}
+		}
+	}
+
+	&--nowrap {
+		white-space: nowrap;
+	}
+
+	&--small {
+		font-size: smaller;
+	}
+}

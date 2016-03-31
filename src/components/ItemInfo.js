@@ -4,6 +4,7 @@ import ItemLength from './ItemLength';
 import ItemNotes from './ItemNotes';
 import ItemProductionStatus from './ItemProductionStatus';
 import ItemStatus from './ItemStatus';
+import ItemTags from './ItemTags';
 import ItemThumbnail from './ItemThumbnail';
 import ItemTitleBlock from './ItemTitleBlock';
 import React from 'react';
@@ -23,6 +24,7 @@ import relay from 'relay-decorator';
 				${ItemCharacters.getFragment('item')}
 				${ItemLength.getFragment('item')}
 				${ItemNotes.getFragment('item')}
+				${ItemTags.getFragment('item')}
 			}
 		`,
 		viewer: () => Relay.QL`
@@ -45,6 +47,7 @@ export default class ItemInfo extends React.Component {
 				<ItemCharacters item={item}/>
 				<ItemLength item={item}/>
 				<ItemNotes item={item}/>
+				<ItemTags item={item}/>
 			</div>
 		);
 	}

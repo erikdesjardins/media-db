@@ -1,3 +1,4 @@
+import Markdown from './Markdown';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
@@ -8,6 +9,7 @@ import relay from 'relay-decorator';
 			fragment on Item {
 				url,
 				title,
+				tags,
 			}
 		`,
 	},
@@ -15,7 +17,11 @@ import relay from 'relay-decorator';
 export default class ItemListTitle extends React.Component {
 	render() {
 		return (
-			<a href={this.props.item.url}>{this.props.item.title}</a>
+			<div className="Item--nowrap">
+				<Markdown
+					source={`[${this.props.item.title}](${this.props.item.url})${this.props.item.tags}`}
+				/>
+			</div>
 		);
 	}
 }

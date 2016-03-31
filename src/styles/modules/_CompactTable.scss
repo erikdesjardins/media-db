@@ -1,0 +1,58 @@
+@import '../colors';
+
+.CompactTable {
+	width: 100%;
+	font-size: 13px;
+
+	p {
+		margin: 0;
+	}
+
+	tr {
+		background-color: $table-base;
+	}
+
+	tbody tr {
+		&:nth-of-type(odd) {
+			background-color: $table-stripe;
+		}
+
+		&:hover {
+			background-color: $table-hover;
+		}
+	}
+
+	td,
+	th {
+		padding: 4px 9px;
+
+		border: 1px solid $table-border;
+		border-top-width: 0;
+		border-bottom-width: 0;
+
+		font-size: 1em;
+		line-height: 1.4285714285714286em;
+
+		&:first-of-type {
+			border-left-width: 0;
+		}
+
+		&:last-of-type {
+			border-right-width: 0;
+		}
+
+		&:nth-of-type(1),
+		&:nth-of-type(3),
+		&:nth-of-type(4),
+		&:nth-of-type(5),
+		&:nth-of-type(7),
+		&:nth-of-type(8),
+		&:nth-of-type(9) {
+			text-align: center;
+		}
+	}
+
+	th {
+		border-bottom-width: 2px;
+	}
+}

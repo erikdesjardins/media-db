@@ -15,24 +15,16 @@ import { Thumbnail } from 'react-bootstrap';
 	},
 })
 export default class ItemThumbnail extends React.Component {
-	renderRefreshButton() {
-		return (
-			<ItemRefreshButton
-				item={this.props.item}
-				fields={['thumbnail']}
-			/>
-		);
-	}
-
 	render() {
 		return (
 			<div>
-				{this.props.item.thumbnail ?
-					<Thumbnail src={this.props.item.thumbnail}>
-						{this.renderRefreshButton()}
-					</Thumbnail> :
-					this.renderRefreshButton()
+				{this.props.item.thumbnail &&
+					<Thumbnail src={this.props.item.thumbnail}/>
 				}
+				<ItemRefreshButton
+					item={this.props.item}
+					fields={['thumbnail']}
+				/>
 			</div>
 		);
 	}

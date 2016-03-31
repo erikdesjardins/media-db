@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Item from './Item';
 import React from 'react';
 import ReactCSS from 'reactcss';
@@ -5,23 +6,33 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Panel, Table } from 'react-bootstrap';
+import { Glyphicon, PageItem, Pager, Panel } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
 	initialVariables: {
-		first: 2147483647,
 		status: statusTypes.IN_PROGRESS,
+		after: null,
+		breadcrumbs: [],
 	},
+	prepareVariables: ({ status, after }) => ({
+		status,
+		after,
+		limit: 25,
+	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(first: $first, status: $status) {
+				items(status: $status, first: $limit, after: $after) {
 					edges {
+						cursor,
 						node {
 							id
 							${Item.getFragment('item')}
 						}
+					}
+					pageInfo {
+						hasNextPage,
 					}
 				}
 			}
@@ -30,7 +41,35 @@ import { panelHeaderButtonCenter } from '../styles/bootstrap';
 })
 export default class ItemList extends ReactCSS.Component {
 	handleStatusChange = status => {
-		this.props.relay.setVariables({ status });
+		this.props.relay.setVariables({
+			status,
+			after: null,
+			breadcrumbs: [],
+		});
+	};
+
+	hasPrev() {
+		return !!this.props.relay.variables.breadcrumbs.length;
+	}
+
+	hasNext() {
+		return this.props.viewer.items.pageInfo.hasNextPage;
+	}
+
+	handlePrev = () => {
+		const { breadcrumbs } = this.props.relay.variables;
+		this.props.relay.setVariables({
+			after: _.last(breadcrumbs),
+			breadcrumbs: breadcrumbs.slice(0, -1),
+		});
+	};
+
+	handleNext = () => {
+		const { after, breadcrumbs } = this.props.relay.variables;
+		this.props.relay.setVariables({
+			after: _.last(this.props.viewer.items.edges).cursor,
+			breadcrumbs: [...breadcrumbs, after],
+		});
 	};
 
 	classes() {
@@ -71,7 +110,7 @@ export default class ItemList extends ReactCSS.Component {
 					/>
 				}
 			>
-				<Table striped condensed hover responsive>
+				<table className="CompactTable">
 					<thead>
 						<tr>
 							<th>{''}</th>
@@ -81,7 +120,7 @@ export default class ItemList extends ReactCSS.Component {
 							<th>{'Characters'}</th>
 							<th>{'Notes'}</th>
 							<th>{'Date'}</th>
-							<th>{'Length'}</th>
+							<th>{'Len.'}</th>
 							<th>{''}</th>
 						</tr>
 					</thead>
@@ -93,7 +132,22 @@ export default class ItemList extends ReactCSS.Component {
 							/>
 						)}
 					</tbody>
-				</Table>
+				</table>
+				<Pager>
+					<PageItem
+						disabled={!this.hasPrev()}
+						onSelect={this.handlePrev}
+					>
+						<Glyphicon glyph="chevron-left"/>
+					</PageItem>
+					{' '}
+					<PageItem
+						disabled={!this.hasNext()}
+						onSelect={this.handleNext}
+					>
+						<Glyphicon glyph="chevron-right"/>
+					</PageItem>
+				</Pager>
 			</Panel>
 		);
 	}
