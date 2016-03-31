@@ -27,6 +27,7 @@ render((
 					<IndexRedirect to="info"/>
 					<Route
 						path="info" component={SidebarInfo}
+						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
 						queries={{
 							item: () => Relay.QL`query { node(id: $id) }`,
 							viewer: () => Relay.QL`query { viewer }`,
