@@ -1,0 +1,11 @@
+[href='#info'] {
+	float: right;
+	color: inherit;
+	font-size: x-small;
+	text-decoration: none;
+	cursor: default;
+
+	&:not(:last-of-type)::before {
+		content: ', ';
+	}
+}
