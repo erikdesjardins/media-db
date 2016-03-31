@@ -35,7 +35,9 @@ const props = {
 export default class ItemListProductionStatus extends React.Component {
 	render() {
 		return (
-			<Glyphicon {...props[this.props.item.productionStatus]}/>
+			<div className="CompactTable-item">
+				<Glyphicon {...props[this.props.item.productionStatus]}/>
+			</div>
 		);
 	}
 }

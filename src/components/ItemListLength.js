@@ -15,7 +15,7 @@ import { formatNumber } from '../utils/format';
 export default class ItemListLength extends React.Component {
 	render() {
 		return (
-			<span>
+			<span className="CompactTable-item">
 				{formatNumber(this.props.item.length)}
 			</span>
 		);

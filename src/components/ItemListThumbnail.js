@@ -27,7 +27,7 @@ export default class ItemListThumbnail extends ReactCSS.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="CompactTable-item">
 				{this.props.item.thumbnail &&
 					<img is="thumbnail" src={this.props.item.thumbnail}/>
 				}

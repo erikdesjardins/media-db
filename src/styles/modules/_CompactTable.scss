@@ -1,3 +1,5 @@
+@import '../functions';
+
 $CompactTable-base: #fff;
 $CompactTable-stripe: #eee;
 $CompactTable-hover: #ddd;
@@ -57,5 +59,47 @@ $CompactTable-border: #e5e3da;
 
 	th {
 		border-bottom-width: 2px;
+	}
+
+	&-item {
+		&--autowrap {
+			$height: 1.6em;
+			$width: 25%;
+
+			max-height: $height;
+			overflow: hidden;
+			word-break: break-all;
+
+			p {
+				position: relative;
+
+				&::after {
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: $height;
+					left: calc(100% - #{$width});
+					background: fade-in($CompactTable-base);
+					content: '';
+					pointer-events: none;
+
+					tr:nth-of-type(odd) & {
+						background: fade-in($CompactTable-stripe);
+					}
+
+					tr:hover & {
+						background: fade-in($CompactTable-hover);
+					}
+				}
+			}
+		}
+
+		&--nowrap {
+			white-space: nowrap;
+		}
+
+		&--small {
+			font-size: smaller;
+		}
 	}
 }

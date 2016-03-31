@@ -15,7 +15,7 @@ import relay from 'relay-decorator';
 export default class ItemListCreator extends React.Component {
 	render() {
 		return (
-			<div className="Item--nowrap">
+			<div className="CompactTable-item CompactTable-item--nowrap">
 				<Markdown source={this.props.item.creator}/>
 			</div>
 		);

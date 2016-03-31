@@ -15,7 +15,7 @@ import { formatDate } from '../utils/format';
 export default class ItemListStatusDate extends React.Component {
 	render() {
 		return (
-			<span className="Item--nowrap Item--small">
+			<span className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
 				{formatDate(this.props.item.statusDate)}
 			</span>
 		);
