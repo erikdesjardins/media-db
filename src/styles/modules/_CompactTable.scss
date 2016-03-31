@@ -70,29 +70,31 @@ $CompactTable-border: #e5e3da;
 			$height: 1.6em;
 			$width: 25%;
 
-			max-height: $height;
-			overflow: hidden;
-			word-break: break-all;
+			&:not(:hover) {
+				max-height: $height;
+				overflow: hidden;
+				word-break: break-all;
 
-			p {
-				position: relative;
+				p {
+					position: relative;
 
-				&::after {
-					position: absolute;
-					top: 0;
-					right: 0;
-					bottom: $height;
-					left: calc(100% - #{$width});
-					background: fade-in($CompactTable-base);
-					content: '';
-					pointer-events: none;
+					&::after {
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: $height;
+						left: calc(100% - #{$width});
+						background: fade-in($CompactTable-base);
+						content: '';
+						pointer-events: none;
 
-					#{$root}--stripe tr:nth-of-type(odd) & {
-						background: fade-in($CompactTable-stripe);
-					}
+						#{$root}--stripe tr:nth-of-type(odd) & {
+							background: fade-in($CompactTable-stripe);
+						}
 
-					#{$root}--hover tr:hover & {
-						background: fade-in($CompactTable-hover);
+						#{$root}--hover tr:hover & {
+							background: fade-in($CompactTable-hover);
+						}
 					}
 				}
 			}
