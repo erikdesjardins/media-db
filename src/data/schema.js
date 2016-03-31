@@ -47,6 +47,7 @@ import {
 	getItems,
 	getProvider,
 	getProviders,
+	getQueriedItems,
 	getRawItems,
 	getUser,
 	getViewer,
@@ -345,6 +346,17 @@ const Query = new GraphQLObjectType({
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
+		},
+		searchItems: {
+			type: ItemConnection,
+			args: {
+				query: {
+					type: new GraphQLNonNull(GraphQLString),
+				},
+				...connectionArgs,
+			},
+			resolve: (obj, { query, ...args }) =>
+				connectionFromPromisedArray(getQueriedItems(query), args),
 		},
 	}),
 });

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import ReactCSS from 'reactcss';
 import packageName from 'prop?name!../../package.json';
@@ -17,10 +16,9 @@ export default class Header extends ReactCSS.Component {
 		router: PropTypes.object.isRequired,
 	};
 
-	handleSearchInput = _.debounce(query => {
-		if (!query) return;
-		this.context.router.push(`/search/${query}`);
-	}, 1000);
+	handleSearchInput = query => {
+		this.context.router.push(`/search/${encodeURIComponent(query)}`);
+	};
 
 	classes() {
 		return {
