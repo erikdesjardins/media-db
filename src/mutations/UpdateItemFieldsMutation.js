@@ -24,6 +24,7 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 					characters,
 					length,
 					productionStatus,
+					history,
 					fieldUpdates {
 						thumbnail,
 						title,
@@ -50,6 +51,15 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
 				item: this.props.item.id,
+			},
+		}, {
+			type: 'RANGE_ADD',
+			parentName: 'item',
+			parentID: this.props.item.id,
+			connectionName: 'history',
+			edgeName: 'historyItemEdge',
+			rangeBehaviors: {
+				'': 'append',
 			},
 		}];
 	}

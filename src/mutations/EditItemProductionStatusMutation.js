@@ -18,6 +18,7 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 			fragment on EditItemProductionStatusPayload {
 				item {
 					productionStatus,
+					history,
 					fieldUpdates {
 						productionStatus,
 					},
@@ -38,6 +39,15 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
 				item: this.props.item.id,
+			},
+		}, {
+			type: 'RANGE_ADD',
+			parentName: 'item',
+			parentID: this.props.item.id,
+			connectionName: 'history',
+			edgeName: 'historyItemEdge',
+			rangeBehaviors: {
+				'': 'append',
 			},
 		}];
 	}
