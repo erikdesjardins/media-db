@@ -22,6 +22,7 @@ import { formatDate } from '../utils/format';
 							genres,
 							characters,
 							notes,
+							tags,
 							length,
 							status,
 							productionStatus,

@@ -18,6 +18,7 @@ export default class EditItemNotesMutation extends Relay.Mutation {
 			fragment on EditItemNotesPayload {
 				item {
 					notes,
+					history,
 				},
 			}
 		`;
@@ -35,6 +36,15 @@ export default class EditItemNotesMutation extends Relay.Mutation {
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
 				item: this.props.item.id,
+			},
+		}, {
+			type: 'RANGE_ADD',
+			parentName: 'item',
+			parentID: this.props.item.id,
+			connectionName: 'history',
+			edgeName: 'historyItemEdge',
+			rangeBehaviors: {
+				'': 'append',
 			},
 		}];
 	}

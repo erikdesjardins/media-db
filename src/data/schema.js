@@ -429,6 +429,17 @@ function editItemMutation(name, field, type, additionalFields = {}) {
 				type: GraphQLItem,
 				resolve: ({ localItemId }) => getItem(localItemId),
 			},
+			historyItemEdge: {
+				type: GraphQLItemEdge,
+				resolve: async ({ localItemId }) => {
+					const history = await getItemHistory(localItemId);
+					const offset = history.length - 1;
+					return {
+						cursor: offsetToCursor(offset),
+						node: history[offset],
+					};
+				},
+			},
 			...additionalFields,
 		},
 		mutateAndGetPayload: ({ id, [field]: val }) => {
@@ -482,6 +493,17 @@ const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 		item: {
 			type: GraphQLItem,
 			resolve: ({ localItemId }) => getItem(localItemId),
+		},
+		historyItemEdge: {
+			type: GraphQLItemEdge,
+			resolve: async ({ localItemId }) => {
+				const history = await getItemHistory(localItemId);
+				const offset = history.length - 1;
+				return {
+					cursor: offsetToCursor(offset),
+					node: history[offset],
+				};
+			},
 		},
 	},
 	mutateAndGetPayload: ({ id, fieldUpdates }) => {

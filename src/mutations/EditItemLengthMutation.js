@@ -18,6 +18,7 @@ export default class EditItemLengthMutation extends Relay.Mutation {
 			fragment on EditItemLengthPayload {
 				item {
 					length,
+					history,
 					fieldUpdates {
 						length,
 					},
@@ -38,6 +39,15 @@ export default class EditItemLengthMutation extends Relay.Mutation {
 			type: 'FIELDS_CHANGE',
 			fieldIDs: {
 				item: this.props.item.id,
+			},
+		}, {
+			type: 'RANGE_ADD',
+			parentName: 'item',
+			parentID: this.props.item.id,
+			connectionName: 'history',
+			edgeName: 'historyItemEdge',
+			rangeBehaviors: {
+				'': 'append',
 			},
 		}];
 	}

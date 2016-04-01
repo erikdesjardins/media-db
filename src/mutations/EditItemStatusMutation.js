@@ -24,6 +24,7 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 				item {
 					status,
 					statusDate,
+					history,
 				},
 				viewer {
 					items,
@@ -45,6 +46,15 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 			fieldIDs: {
 				item: this.props.item.id,
 				viewer: this.props.viewer.id,
+			},
+		}, {
+			type: 'RANGE_ADD',
+			parentName: 'item',
+			parentID: this.props.item.id,
+			connectionName: 'history',
+			edgeName: 'historyItemEdge',
+			rangeBehaviors: {
+				'': 'append',
 			},
 		}];
 	}
