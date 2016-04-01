@@ -303,6 +303,17 @@ const GraphQLUser = new GraphQLObjectType({
 			resolve: (obj, { status, ...args }) =>
 				connectionFromPromisedArray(getFilteredItems({ status }), args),
 		},
+		searchItems: {
+			type: ItemConnection,
+			args: {
+				query: {
+					type: new GraphQLNonNull(GraphQLString),
+				},
+				...connectionArgs,
+			},
+			resolve: (obj, { query, ...args }) =>
+				connectionFromPromisedArray(getQueriedItems(query), args),
+		},
 		providers: {
 			type: ProviderConnection,
 			args: {
@@ -346,17 +357,6 @@ const Query = new GraphQLObjectType({
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
-		},
-		searchItems: {
-			type: ItemConnection,
-			args: {
-				query: {
-					type: new GraphQLNonNull(GraphQLString),
-				},
-				...connectionArgs,
-			},
-			resolve: (obj, { query, ...args }) =>
-				connectionFromPromisedArray(getQueriedItems(query), args),
 		},
 	}),
 });

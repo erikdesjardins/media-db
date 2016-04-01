@@ -16,8 +16,26 @@ export default class Header extends ReactCSS.Component {
 		router: PropTypes.object.isRequired,
 	};
 
-	handleSearchInput = query => {
-		this.context.router.push(`/search/${encodeURIComponent(query)}`);
+	state = {
+		query: '',
+	};
+
+	handleChangeSearch = e => {
+		this.setState({
+			query: e.target.value,
+		});
+		this.context.router.push({
+			pathname: `/search/${encodeURIComponent(e.target.value)}`,
+			query: { preview: true },
+		});
+	};
+
+	handleSubmitSearch = e => {
+		e.preventDefault();
+		this.context.router.push({
+			pathname: `/search/${encodeURIComponent(this.state.query)}`,
+			query: {},
+		});
 	};
 
 	classes() {
@@ -47,7 +65,14 @@ export default class Header extends ReactCSS.Component {
 					<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
 				</Nav>
 				<NavbarForm pullRight>
-					<Input type="text" placeholder="Search" onInput={e => this.handleSearchInput(e.target.value)}/>
+					<form onSubmit={this.handleSubmitSearch}>
+						<Input
+							type="text"
+							placeholder="Search"
+							value={this.state.query}
+							onChange={this.handleChangeSearch}
+						/>
+					</form>
 				</NavbarForm>
 			</Navbar>
 		);
