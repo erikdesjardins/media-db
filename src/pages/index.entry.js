@@ -41,8 +41,9 @@ render((
 			</Route>
 			<Route
 				path="search/:query" component={Search}
-				prepareParams={({ query }) => ({ query: decodeURIComponent(query) })}
-				queries={{ items: () => Relay.QL`query { searchItems(query: $query) }` }}
+				queryParams={['preview']}
+				prepareParams={({ query, preview }) => ({ query: decodeURIComponent(query), preview })}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
 			<Route
 				path="providers" component={Providers}

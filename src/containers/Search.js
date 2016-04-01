@@ -5,10 +5,20 @@ import relay from 'relay-decorator';
 import { Col, Grid, Row } from 'react-bootstrap';
 
 @relay({
+	initialVariables: {
+		query: '',
+		preview: 'true',
+	},
+	prepareVariables: ({ query, preview }) => ({
+		query,
+		limit: preview ? 25 : 2147483647,
+	}),
 	fragments: {
-		items: () => Relay.QL`
-			fragment on ItemConnection {
-				${SearchList.getFragment('items')}
+		viewer: () => Relay.QL`
+			fragment on User {
+				searchItems(query: $query, first: $limit) {
+					${SearchList.getFragment('items')}
+				}
 			}
 		`,
 	},
@@ -18,13 +28,8 @@ export default class Search extends React.Component {
 		return (
 			<Grid fluid>
 				<Row>
-					<Col
-						xs={12}
-						sm={12}
-						md={10} mdOffset={1}
-						lg={8} lgOffset={2}
-					>
-						<SearchList items={this.props.items}/>
+					<Col xs={12}>
+						<SearchList items={this.props.viewer.searchItems}/>
 					</Col>
 				</Row>
 			</Grid>
