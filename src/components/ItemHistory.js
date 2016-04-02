@@ -39,15 +39,21 @@ export default class ItemHistory extends React.Component {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
 		const diffs = [
-			['created', formatDate(history[0].date)],
-			..._.zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
+			{
+				description: 'created',
+				date: history[0].date,
+			},
+			..._.flatten(_.zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
 				const diff = deepDiff(from, to, (path, key) => key === 'date' || String(key).startsWith('_'));
 
 				if (!diff) {
-					return ['no change', to.date];
+					return {
+						description: 'no change',
+						date: to.date,
+					};
 				}
 
-				const description = diff
+				return diff
 					.map(({ kind, path, lhs, rhs, item }) => {
 						const isArray = kind === 'A';
 						const prefix = `${isArray ? 'a ' : ''}${path.join('.')}`;
@@ -66,16 +72,17 @@ export default class ItemHistory extends React.Component {
 								return 'pls no';
 						}
 					})
-					.join(', and ');
-
-				return [description, to.date];
-			}),
+					.map((description, i) => ({
+						description,
+						date: to.date + i, // to ensure React keys are unique
+					}));
+			})),
 		];
 
 		return (
 			<table className="CompactTable CompactTable--stripe">
 				<tbody>
-					{diffs.map(([description, date]) =>
+					{diffs.map(({ description, date }) =>
 						<tr key={date}>
 							<td>
 								<div className="CompactTable-item CompactTable-item--autowrap">
