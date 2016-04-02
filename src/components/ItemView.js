@@ -7,7 +7,7 @@ import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
 import { Button, ButtonGroup, Glyphicon, Panel } from 'react-bootstrap';
-import { panelHeaderButtonCenter } from '../styles/bootstrap';
+import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
 	initialVariables: {
@@ -77,6 +77,9 @@ export default class ItemView extends ReactCSS.Component {
 				statusSelect: {
 					...panelHeaderButtonCenter,
 				},
+				itemList: {
+					...fillPanelBody,
+				},
 				pageButtons: {
 					float: 'right',
 				},
@@ -131,7 +134,10 @@ export default class ItemView extends ReactCSS.Component {
 					</div>
 				}
 			>
-				<ItemList items={this.props.viewer.items}/>
+				<ItemList
+					is="itemList"
+					items={this.props.viewer.items}
+				/>
 			</Panel>
 		);
 	}

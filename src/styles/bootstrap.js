@@ -3,3 +3,8 @@ export const panelHeaderButtonCenter = {
 	left: '50%',
 	transform: 'translateX(-50%)',
 };
+
+export const fillPanelBody = {
+	margin: '-15px',
+	width: 'calc(100% + 30px)',
+};
