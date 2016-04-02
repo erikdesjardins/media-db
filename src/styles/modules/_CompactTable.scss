@@ -106,6 +106,17 @@ $CompactTable-border: #e5e3da;
 			}
 		}
 
+		&--truncate {
+			$width: 350px;
+
+			max-width: $width;
+
+			p {
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
 		&--nowrap {
 			white-space: nowrap;
 		}
