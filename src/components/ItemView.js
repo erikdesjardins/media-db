@@ -6,7 +6,7 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Glyphicon, PageItem, Pager, Panel } from 'react-bootstrap';
+import { Button, ButtonGroup, Glyphicon, Panel } from 'react-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 @relay({
@@ -54,6 +54,7 @@ export default class ItemView extends ReactCSS.Component {
 	}
 
 	handlePrev = () => {
+		if (!this.hasPrev()) return;
 		const { breadcrumbs } = this.props.relay.variables;
 		this.props.relay.setVariables({
 			after: _.last(breadcrumbs),
@@ -62,6 +63,7 @@ export default class ItemView extends ReactCSS.Component {
 	};
 
 	handleNext = () => {
+		if (!this.hasNext()) return;
 		const { after, breadcrumbs } = this.props.relay.variables;
 		this.props.relay.setVariables({
 			after: _.last(this.props.viewer.items.edges).cursor,
@@ -75,6 +77,9 @@ export default class ItemView extends ReactCSS.Component {
 				statusSelect: {
 					...panelHeaderButtonCenter,
 				},
+				pageButtons: {
+					float: 'right',
+				},
 			},
 		};
 	}
@@ -83,46 +88,50 @@ export default class ItemView extends ReactCSS.Component {
 		return (
 			<Panel
 				header={
-					<SelectBar
-						is="statusSelect"
-						bsSize="xsmall"
-						selected={this.props.relay.variables.status}
-						onSelect={this.handleStatusChange}
-						options={[{
-							value: statusTypes.WAITING,
-							name: 'Waiting',
-						}, {
-							value: statusTypes.PENDING,
-							name: 'Pending',
-						}, {
-							value: statusTypes.IN_PROGRESS,
-							name: 'In Progress',
-						}, {
-							value: statusTypes.COMPLETE,
-							name: 'Complete',
-						}, {
-							value: statusTypes.REJECTED,
-							name: 'Rejected',
-						}]}
-					/>
+					<div>
+						<SelectBar
+							is="statusSelect"
+							bsSize="xsmall"
+							selected={this.props.relay.variables.status}
+							onSelect={this.handleStatusChange}
+							options={[{
+								value: statusTypes.WAITING,
+								name: 'Waiting',
+							}, {
+								value: statusTypes.PENDING,
+								name: 'Pending',
+							}, {
+								value: statusTypes.IN_PROGRESS,
+								name: 'In Progress',
+							}, {
+								value: statusTypes.COMPLETE,
+								name: 'Complete',
+							}, {
+								value: statusTypes.REJECTED,
+								name: 'Rejected',
+							}]}
+						/>
+						<ButtonGroup
+							is="pageButtons"
+							bsSize="xsmall"
+						>
+							<Button
+								disabled={!this.hasPrev()}
+								onClick={this.handlePrev}
+							>
+								<Glyphicon glyph="chevron-left"/>
+							</Button>
+							<Button
+								disabled={!this.hasNext()}
+								onClick={this.handleNext}
+							>
+								<Glyphicon glyph="chevron-right"/>
+							</Button>
+						</ButtonGroup>
+					</div>
 				}
 			>
 				<ItemList items={this.props.viewer.items}/>
-				<Pager>
-					<PageItem
-						disabled={!this.hasPrev()}
-						onSelect={this.handlePrev}
-					>
-						<Glyphicon glyph="chevron-left"/>
-					</PageItem>
-					{' '}
-					<PageItem
-						disabled={!this.hasNext()}
-						onSelect={this.handleNext}
-					>
-						<Glyphicon glyph="chevron-right"/>
-					</PageItem>
-				</Pager>
 			</Panel>
 		);
 	}
