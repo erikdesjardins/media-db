@@ -19,6 +19,9 @@ export default class SearchList extends ReactCSS.Component {
 	classes() {
 		return {
 			default: {
+				panel: {
+					overflow: 'hidden',
+				},
 				itemList: {
 					...fillPanelBody,
 				},
@@ -28,7 +31,7 @@ export default class SearchList extends ReactCSS.Component {
 
 	render() {
 		return (
-			<Panel>
+			<Panel is="panel">
 				<ItemList
 					is="itemList"
 					items={this.props.items}

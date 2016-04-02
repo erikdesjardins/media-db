@@ -77,6 +77,9 @@ export default class ItemView extends ReactCSS.Component {
 				statusSelect: {
 					...panelHeaderButtonCenter,
 				},
+				panel: {
+					overflow: 'hidden',
+				},
 				itemList: {
 					...fillPanelBody,
 				},
@@ -90,6 +93,7 @@ export default class ItemView extends ReactCSS.Component {
 	render() {
 		return (
 			<Panel
+				is="panel"
 				header={
 					<div>
 						<SelectBar
