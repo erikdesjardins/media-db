@@ -1,8 +1,10 @@
 import ItemList from './ItemList';
 import React from 'react';
+import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { Panel } from 'react-bootstrap';
+import { fillPanelBody } from '../styles/bootstrap';
 
 @relay({
 	fragments: {
@@ -13,11 +15,27 @@ import { Panel } from 'react-bootstrap';
 		`,
 	},
 })
-export default class SearchList extends React.Component {
+export default class SearchList extends ReactCSS.Component {
+	classes() {
+		return {
+			default: {
+				panel: {
+					overflow: 'hidden',
+				},
+				itemList: {
+					...fillPanelBody,
+				},
+			},
+		};
+	}
+
 	render() {
 		return (
-			<Panel>
-				<ItemList items={this.props.items}/>
+			<Panel is="panel">
+				<ItemList
+					is="itemList"
+					items={this.props.items}
+				/>
 			</Panel>
 		);
 	}
