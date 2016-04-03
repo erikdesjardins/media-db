@@ -76,7 +76,6 @@
     "eslint-plugin-prefer-spread": "^1.0.3",
     "eslint-plugin-react": "^4.2.3",
     "eslint-plugin-sort-imports-es6": "0.0.3",
-    "extract-text-webpack-plugin": "^1.0.1",
     "extricate-loader": "0.0.2",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
