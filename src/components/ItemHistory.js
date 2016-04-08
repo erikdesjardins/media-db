@@ -72,9 +72,9 @@ export default class ItemHistory extends React.Component {
 								return 'pls no';
 						}
 					})
-					.map((description, i) => ({
+					.map(description => ({
 						description,
-						date: to.date + i, // to ensure React keys are unique
+						date: to.date,
 					}));
 			})),
 		];
@@ -82,8 +82,10 @@ export default class ItemHistory extends React.Component {
 		return (
 			<table className="CompactTable CompactTable--stripe">
 				<tbody>
-					{diffs.map(({ description, date }) =>
-						<tr key={date}>
+					{diffs.map(({ description, date }, i) =>
+						// ensures React keys are unique
+						// this is fine because items can only be appended to history
+						<tr key={date + i}>
 							<td>
 								<div className="CompactTable-item CompactTable-item--autowrap">
 									<p>{description}</p>
