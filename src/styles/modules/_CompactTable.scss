@@ -72,6 +72,9 @@ $CompactTable-border: #e5e3da;
 	}
 
 	&-item {
+		cursor: default;
+		user-select: none;
+
 		&--autowrap {
 			$height: 1.6em;
 			$width: 25%;
