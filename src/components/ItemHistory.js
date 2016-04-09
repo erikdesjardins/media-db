@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
+import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { diff as deepDiff } from 'deep-diff';
+import { fillPanelBody } from '../styles/bootstrap';
 import { formatDate } from '../utils/format';
 
 @relay({
@@ -34,7 +36,17 @@ import { formatDate } from '../utils/format';
 		`,
 	},
 })
-export default class ItemHistory extends React.Component {
+export default class ItemHistory extends ReactCSS.Component {
+	classes() {
+		return {
+			default: {
+				historyTable: {
+					...fillPanelBody,
+				},
+			},
+		};
+	}
+
 	render() {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
@@ -72,18 +84,23 @@ export default class ItemHistory extends React.Component {
 								return 'pls no';
 						}
 					})
-					.map((description, i) => ({
+					.map(description => ({
 						description,
-						date: to.date + i, // to ensure React keys are unique
+						date: to.date,
 					}));
 			})),
 		];
 
 		return (
-			<table className="CompactTable CompactTable--stripe">
+			<table
+				is="historyTable"
+				className="CompactTable CompactTable--stripe"
+			>
 				<tbody>
-					{diffs.map(({ description, date }) =>
-						<tr key={date}>
+					{diffs.map(({ description, date }, i) =>
+						// ensures React keys are unique
+						// this is fine because items can only be appended to history
+						<tr key={date + i}>
 							<td>
 								<div className="CompactTable-item CompactTable-item--autowrap">
 									<p>{description}</p>

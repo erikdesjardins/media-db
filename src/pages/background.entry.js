@@ -5,4 +5,4 @@ import { graphql } from 'graphql';
 
 // http://graphql.org/docs/api-reference-graphql/#graphql
 // https://github.com/relay-tools/relay-local-schema/blob/master/src/NetworkLayer.js
-addListener(QUERY, ({ request, variables }) => graphql(schema, request, null, variables));
+addListener(QUERY, ({ request, variables }) => graphql(schema, request, null, null, variables));

@@ -31,7 +31,7 @@ export function addListener(type, callback) {
 const tabSendMessage = apiToPromise(chrome.tabs.sendMessage);
 const runtimeSendMessage = apiToPromise(chrome.runtime.sendMessage);
 
-/**
+/*
  * Send a message to non-content scripts or to the content script at `tabId` (if specified).
  * @param {string} type
  * @param {number|string} [tabId]
