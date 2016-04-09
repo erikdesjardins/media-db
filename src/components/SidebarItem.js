@@ -16,6 +16,9 @@ export default class SidebarItem extends ReactCSS.Component {
 	classes() {
 		return {
 			default: {
+				panel: {
+					overflow: 'hidden',
+				},
 				tabSelect: {
 					...panelHeaderButtonCenter,
 				},
@@ -26,6 +29,7 @@ export default class SidebarItem extends ReactCSS.Component {
 	render() {
 		return (
 			<Panel
+				is="panel"
 				header={
 					<ButtonGroup
 						is="tabSelect"
