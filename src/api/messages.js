@@ -72,13 +72,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		throw e;
 	}
 
-	if (response instanceof Promise) {
+	if (response && typeof response.then === 'function') {
 		response
-			.then(data => sendResponse({ data }))
-			.catch(error => {
-				sendResponse();
-				throw error;
-			});
+			.then(
+				data => sendResponse({ data }),
+				error => {
+					sendResponse();
+					throw error;
+				}
+			);
 		return true;
 	}
 	sendResponse({ data: response });
