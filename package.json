@@ -1,6 +1,6 @@
 {
   "name": "media-db",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "",
   "private": true,
   "repository": {
@@ -91,7 +91,7 @@
     "react-map-styles": "^0.3.0",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
-    "spawn-loader": "0.0.5",
+    "spawn-loader": "0.1.0",
     "webpack": "^1.12.15"
   }
 }
