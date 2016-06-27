@@ -30,7 +30,6 @@ export default class StorageEdit extends React.Component {
 	};
 
 	handleSave = () => {
-		if (!this.isDirty()) return;
 		Relay.Store.commitUpdate(new SetRawItemsMutation({
 			rawItems: this.state.value,
 			viewer: this.props.viewer,

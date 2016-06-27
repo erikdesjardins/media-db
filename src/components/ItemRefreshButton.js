@@ -36,7 +36,6 @@ export default class ItemRefreshButton extends React.Component {
 	}
 
 	handleClick = () => {
-		if (this.isDisabled()) return;
 		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
 			item: this.props.item,
 			fieldUpdates: _.pick(this.props.item.fieldUpdates, this.props.fields),

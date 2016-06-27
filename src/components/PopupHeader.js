@@ -26,8 +26,6 @@ const indexPath = 'index.html';
 })
 export default class PopupHeader extends React.Component {
 	handleAddItem = () => {
-		if (!this.props.viewer.providerMatchesActiveTab) return;
-
 		Relay.Store.commitUpdate(new AddActiveTabItemMutation({
 			viewer: this.props.viewer,
 		}));
