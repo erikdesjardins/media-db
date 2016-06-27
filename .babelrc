@@ -14,8 +14,7 @@
 				"transform-es2015-parameters",
 				"transform-dead-code-elimination",
 				"transform-node-env-inline",
-				"lodash",
-				"transform-react-display-name"
+				"lodash"
 			]
 		},
 		"production": {
@@ -28,7 +27,6 @@
                 "transform-dead-code-elimination",
                 "transform-node-env-inline",
                 "lodash",
-                "transform-react-display-name",
 
 				"transform-react-constant-elements",
 				"transform-react-inline-elements"
