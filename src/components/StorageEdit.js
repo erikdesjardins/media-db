@@ -1,6 +1,5 @@
 import CenteredColumn from './CenteredColumn';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import moment from 'moment';
@@ -17,7 +16,7 @@ import { Button, ButtonToolbar, Input } from 'react-bootstrap';
 		`,
 	},
 })
-export default class StorageEdit extends ReactCSS.Component {
+export default class StorageEdit extends React.Component {
 	state = {
 		value: this.props.viewer.rawItems,
 	};
@@ -46,22 +45,18 @@ export default class StorageEdit extends ReactCSS.Component {
 		a.click();
 	};
 
-	classes() {
-		return {
-			default: {
-				textarea: {
-					resize: 'vertical',
-					height: '500px',
-				},
+	render() {
+		const styles = {
+			textarea: {
+				resize: 'vertical',
+				height: '500px',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<CenteredColumn>
 				<Input
-					is="textarea"
+					style={styles.textarea}
 					type="textarea"
 					value={this.state.value}
 					onChange={this.handleChange}

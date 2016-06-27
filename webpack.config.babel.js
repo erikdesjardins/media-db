@@ -14,7 +14,7 @@ export default {
 	module: {
 		loaders: [
 			{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', 'babel'] },
-			{ test: /\.js$/, exclude: join(__dirname, 'node_modules'), loaders: ['babel', 'react-map-styles'] },
+			{ test: /\.js$/, exclude: join(__dirname, 'node_modules'), loader: 'babel' },
 			{ test: /\.js$/, include: join(__dirname, 'node_modules'), loader: 'babel', query: { plugins: ['transform-dead-code-elimination', 'transform-node-env-inline'], compact: true, babelrc: false } },
 			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
 			{ test: /\.css$/, loaders: ['file?name=[name].[ext]', 'extricate?resolve=\\.js$', 'css'] },

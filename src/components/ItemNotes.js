@@ -1,7 +1,6 @@
 import AutosaveInput from './AutosaveInput';
 import EditItemNotesMutation from '../mutations/EditItemNotesMutation';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
@@ -15,7 +14,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemNotes extends ReactCSS.Component {
+export default class ItemNotes extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new EditItemNotesMutation({
 			item: this.props.item,
@@ -23,20 +22,16 @@ export default class ItemNotes extends ReactCSS.Component {
 		}));
 	};
 
-	classes() {
-		return {
-			default: {
-				textarea: {
-					resize: 'vertical',
-				},
+	render() {
+		const styles = {
+			textarea: {
+				resize: 'vertical',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<AutosaveInput
-				is="textarea"
+				style={styles.textarea}
 				type="textarea"
 				label="Notes"
 				defaultValue={this.props.item.notes}

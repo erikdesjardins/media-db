@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactCSS from 'reactcss';
 import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
 import { Input, Nav, NavItem, Navbar } from 'react-bootstrap';
@@ -11,7 +10,7 @@ const NavbarBrand = Navbar.Brand;
 const NavbarForm = Navbar.Form;
 const NavbarHeader = Navbar.Header;
 
-export default class Header extends ReactCSS.Component {
+export default class Header extends React.Component {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
 	};
@@ -38,24 +37,20 @@ export default class Header extends ReactCSS.Component {
 		});
 	};
 
-	classes() {
-		return {
-			default: {
-				img: {
-					display: 'inline',
-					margin: '-6px 10px -6px 0',
-				},
+	render() {
+		const styles = {
+			img: {
+				display: 'inline',
+				margin: '-6px 10px -6px 0',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<Navbar staticTop>
 				<NavbarHeader>
 					<NavbarBrand>
 						<Link to="/items">
-							<img is="img" src={icon}/>
+							<img style={styles.img} src={icon}/>
 							{packageName}
 						</Link>
 					</NavbarBrand>

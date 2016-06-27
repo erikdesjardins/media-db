@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
-import ReactCSS from 'reactcss';
 import { Button, ButtonGroup, Panel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
-export default class SidebarItem extends ReactCSS.Component {
+export default class SidebarItem extends React.Component {
 	static contextTypes = {
 		location: PropTypes.object.isRequired,
 	};
@@ -13,26 +12,22 @@ export default class SidebarItem extends ReactCSS.Component {
 		return `${this.context.location.pathname.split('/').slice(0, -1).join('/')}/${path}`;
 	}
 
-	classes() {
-		return {
-			default: {
-				panel: {
-					overflow: 'hidden',
-				},
-				tabSelect: {
-					...panelHeaderButtonCenter,
-				},
+	render() {
+		const styles = {
+			panel: {
+				overflow: 'hidden',
+			},
+			tabSelect: {
+				...panelHeaderButtonCenter,
 			},
 		};
-	}
 
-	render() {
 		return (
 			<Panel
-				is="panel"
+				style={styles.panel}
 				header={
 					<ButtonGroup
-						is="tabSelect"
+						style={styles.tabSelect}
 						bsSize="xsmall"
 					>
 						<LinkContainer to={this.relativePath('info')}>

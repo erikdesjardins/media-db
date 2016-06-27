@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import ItemList from './ItemList';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
@@ -36,7 +35,7 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 		`,
 	},
 })
-export default class ItemView extends ReactCSS.Component {
+export default class ItemView extends React.Component {
 	handleStatusChange = status => {
 		this.props.relay.setVariables({
 			status,
@@ -71,33 +70,29 @@ export default class ItemView extends ReactCSS.Component {
 		});
 	};
 
-	classes() {
-		return {
-			default: {
-				statusSelect: {
-					...panelHeaderButtonCenter,
-				},
-				panel: {
-					overflow: 'hidden',
-				},
-				itemList: {
-					...fillPanelBody,
-				},
-				pageButtons: {
-					float: 'right',
-				},
+	render() {
+		const styles = {
+			statusSelect: {
+				...panelHeaderButtonCenter,
+			},
+			panel: {
+				overflow: 'hidden',
+			},
+			itemList: {
+				...fillPanelBody,
+			},
+			pageButtons: {
+				float: 'right',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<Panel
-				is="panel"
+				style={styles.panel}
 				header={
 					<div>
 						<SelectBar
-							is="statusSelect"
+							style={styles.statusSelect}
 							bsSize="xsmall"
 							selected={this.props.relay.variables.status}
 							onSelect={this.handleStatusChange}
@@ -119,7 +114,7 @@ export default class ItemView extends ReactCSS.Component {
 							}]}
 						/>
 						<ButtonGroup
-							is="pageButtons"
+							style={styles.pageButtons}
 							bsSize="xsmall"
 						>
 							<Button
@@ -139,7 +134,7 @@ export default class ItemView extends ReactCSS.Component {
 				}
 			>
 				<ItemList
-					is="itemList"
+					style={styles.itemList}
 					items={this.props.viewer.items}
 				/>
 			</Panel>

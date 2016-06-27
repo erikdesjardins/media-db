@@ -39,7 +39,6 @@
     "react-router": "2.5.1",
     "react-router-bootstrap": "0.23.0",
     "react-router-relay": "0.13.3",
-    "reactcss": "0.4.5",
     "relay-decorator": "1.0.3",
     "snudown-js": "1.4.0-2"
   },
@@ -86,7 +85,6 @@
     "nyan-progress-webpack-plugin": "1.1.4",
     "postcss-loader": "0.9.1",
     "prop-loader": "0.0.5",
-    "react-map-styles": "0.3.0",
     "rimraf": "2.5.2",
     "sass-loader": "4.0.0",
     "spawn-loader": "0.1.0",
