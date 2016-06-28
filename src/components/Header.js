@@ -24,7 +24,7 @@ export default class Header extends React.Component {
 			query: e.target.value,
 		});
 		this.context.router.push({
-			pathname: `/search/${encodeURIComponent(e.target.value)}`,
+			pathname: `/search/${btoa(e.target.value)}`,
 			query: { preview: true },
 		});
 	};
@@ -32,7 +32,7 @@ export default class Header extends React.Component {
 	handleSubmitSearch = e => {
 		e.preventDefault();
 		this.context.router.push({
-			pathname: `/search/${encodeURIComponent(this.state.query)}`,
+			pathname: `/search/${btoa(this.state.query)}`,
 			query: {},
 		});
 	};
