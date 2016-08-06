@@ -32,7 +32,7 @@ export default class ItemNotes extends React.Component {
 		return (
 			<AutosaveInput
 				style={styles.textarea}
-				type="textarea"
+				componentClass="textarea"
 				label="Notes"
 				defaultValue={this.props.item.notes}
 				onSave={this.handleSave}

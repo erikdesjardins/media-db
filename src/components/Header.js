@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
-import { Input, Nav, NavItem, Navbar } from 'react-bootstrap';
+import { FormControl, FormGroup, Nav, NavItem, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -55,12 +55,14 @@ export default class Header extends React.Component {
 				</Nav>
 				<NavbarForm pullRight>
 					<form onSubmit={this.handleSubmitSearch}>
-						<Input
-							type="text"
-							placeholder="Search"
-							value={this.state.query}
-							onChange={this.handleChangeSearch}
-						/>
+						<FormGroup>
+							<FormControl
+								type="text"
+								placeholder="Search"
+								value={this.state.query}
+								onChange={this.handleChangeSearch}
+							/>
+						</FormGroup>
 					</form>
 				</NavbarForm>
 			</Navbar>

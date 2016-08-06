@@ -4,7 +4,7 @@ import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import moment from 'moment';
 import relay from 'relay-decorator';
-import { Button, ButtonToolbar, Input } from 'react-bootstrap';
+import { Button, ButtonToolbar, FormControl, FormGroup } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -54,12 +54,14 @@ export default class StorageEdit extends React.Component {
 
 		return (
 			<CenteredColumn>
-				<Input
-					style={styles.textarea}
-					type="textarea"
-					value={this.state.value}
-					onChange={this.handleChange}
-				/>
+				<FormGroup>
+					<FormControl
+						style={styles.textarea}
+						componentClass="textarea"
+						value={this.state.value}
+						onChange={this.handleChange}
+					/>
+				</FormGroup>
 				<ButtonToolbar>
 					<Button bsStyle="primary" disabled={!this.isDirty()} onClick={this.handleSave}>{'Save'}</Button>
 					<Button onClick={this.handleDownload}>{'Download'}</Button>

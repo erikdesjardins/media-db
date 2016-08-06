@@ -81,7 +81,7 @@ export default class Provider extends React.Component {
 				>
 					<AutosaveInput
 						style={styles.input}
-						type="textarea"
+						componentClass="textarea"
 						hasFeedback
 						defaultValue={this.props.provider.infoCallback}
 						onSave={this.handleSave}
