@@ -12,7 +12,7 @@ export default class Markdown extends React.PureComponent {
 
 	render() {
 		return (
-			<div dangerouslySetInnerHTML={this.renderHtml()}></div> // eslint-disable-line react/no-danger
+			<div dangerouslySetInnerHTML={this.renderHtml()}/> // eslint-disable-line react/no-danger
 		);
 	}
 }
