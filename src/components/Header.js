@@ -23,18 +23,12 @@ export default class Header extends React.Component {
 		this.setState({
 			query: e.target.value,
 		});
-		this.context.router.push({
-			pathname: `/search/${btoa(e.target.value)}`,
-			query: { preview: true },
-		});
+		this.context.router.push(`/search/${btoa(e.target.value)}/preview`);
 	};
 
 	handleSubmitSearch = e => {
 		e.preventDefault();
-		this.context.router.push({
-			pathname: `/search/${btoa(this.state.query)}`,
-			query: {},
-		});
+		this.context.router.push(`/search/${btoa(this.state.query)}/full`);
 	};
 
 	render() {

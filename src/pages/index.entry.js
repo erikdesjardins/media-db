@@ -44,8 +44,8 @@ render((
 				</Route>
 			</Route>
 			<Route
-				path="search/:query" component={Search}
-				prepareParams={({ query }, { location }) => ({ query: atob(query), preview: location.query.preview })}
+				path="search/:query/:preview" component={Search}
+				prepareParams={({ query, preview }) => ({ query: atob(query), preview: preview === 'preview' })}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
 			<Route

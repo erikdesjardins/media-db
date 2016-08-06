@@ -14,15 +14,10 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 		after: null,
 		breadcrumbs: [],
 	},
-	prepareVariables: ({ status, after }) => ({
-		status,
-		after,
-		limit: 25,
-	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(status: $status, first: $limit, after: $after) {
+				items(status: $status, first: 25, after: $after) {
 					edges {
 						cursor,
 					}

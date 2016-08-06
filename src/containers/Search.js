@@ -7,7 +7,8 @@ import { Col, Grid, Row } from 'react-bootstrap';
 @relay({
 	initialVariables: {
 		query: '',
-		preview: 'true',
+		preview: true,
+		limit: 25,
 	},
 	prepareVariables: ({ query, preview }) => ({
 		query,
