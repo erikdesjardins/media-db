@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
-import pureRender from 'pure-render-decorator';
 import { markdown } from 'snudown-js';
 
-@pureRender
-export default class Markdown extends React.Component {
+export default class Markdown extends React.PureComponent {
 	static propTypes = {
 		source: PropTypes.string.isRequired,
 	};

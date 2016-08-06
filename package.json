@@ -31,7 +31,6 @@
     "moment": "2.14.1",
     "numeral": "1.5.3",
     "only-shallow": "1.2.0",
-    "pure-render-decorator": "1.1.1",
     "react": "15.3.0",
     "react-bootstrap": "0.29.5",
     "react-dom": "15.3.0",
