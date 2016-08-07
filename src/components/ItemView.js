@@ -48,6 +48,7 @@ export default class ItemView extends React.Component {
 	}
 
 	handlePrev = () => {
+		if (this.props.relay.pendingVariables) return;
 		const { breadcrumbs } = this.props.relay.variables;
 		this.props.relay.setVariables({
 			after: _.last(breadcrumbs),
@@ -56,6 +57,7 @@ export default class ItemView extends React.Component {
 	};
 
 	handleNext = () => {
+		if (this.props.relay.pendingVariables) return;
 		const { after, breadcrumbs } = this.props.relay.variables;
 		this.props.relay.setVariables({
 			after: _.last(this.props.viewer.items.edges).cursor,
