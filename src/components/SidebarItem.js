@@ -4,12 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 export default class SidebarItem extends React.Component {
-	static contextTypes = {
-		location: PropTypes.object.isRequired,
+	static propTypes = {
+		pathname: PropTypes.string.isRequired,
 	};
 
 	relativePath(path) {
-		return `${this.context.location.pathname.split('/').slice(0, -1).join('/')}/${path}`;
+		return `${this.props.pathname.split('/').slice(0, -1).join('/')}/${path}`;
 	}
 
 	render() {
