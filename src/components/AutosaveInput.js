@@ -36,7 +36,9 @@ export default class AutosaveInput extends React.Component {
 	}
 
 	handleBlur = () => {
-		this.props.onSave(this.state.value);
+		if (this.isDirty()) {
+			this.props.onSave(this.state.value);
+		}
 	};
 
 	handleChange = e => {
