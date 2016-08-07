@@ -14,7 +14,7 @@ export default class AutosaveInput extends React.Component {
 			PropTypes.string,
 			PropTypes.number,
 		]).isRequired,
-		onSave: PropTypes.func,
+		onSave: PropTypes.func.isRequired,
 	};
 
 	state = {
