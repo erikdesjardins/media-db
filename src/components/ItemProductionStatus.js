@@ -5,9 +5,9 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
-import { FormControls } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
-const FormControlsStatic = FormControls.Static;
+const FormControlStatic = FormControl.Static;
 
 @relay({
 	fragments: {
@@ -30,37 +30,36 @@ export default class ItemProductionStatus extends React.Component {
 
 	render() {
 		return (
-			<FormControlsStatic
-				label={
-					<div>
-						{'Production Status'}
-						{' '}
-						<ItemRefreshButton
-							item={this.props.item}
-							fields={['productionStatus']}
-						/>
-					</div>
-				}
-			>
-				<SelectBar
-					bsSize="xsmall"
-					selected={this.props.item.productionStatus}
-					onSelect={this.handleSave}
-					options={[{
-						value: productionStatusTypes.INCOMPLETE,
-						name: 'Incomplete',
-					}, {
-						value: productionStatusTypes.HIATUS,
-						name: 'Hiatus',
-					}, {
-						value: productionStatusTypes.COMPLETE,
-						name: 'Complete',
-					}, {
-						value: productionStatusTypes.CANCELLED,
-						name: 'Cancelled',
-					}]}
-				/>
-			</FormControlsStatic>
+			<FormGroup>
+				<ControlLabel>
+					{'Production Status'}
+					{' '}
+					<ItemRefreshButton
+						item={this.props.item}
+						fields={['productionStatus']}
+					/>
+				</ControlLabel>
+				<FormControlStatic>
+					<SelectBar
+						bsSize="xsmall"
+						selected={this.props.item.productionStatus}
+						onSelect={this.handleSave}
+						options={[{
+							value: productionStatusTypes.INCOMPLETE,
+							name: 'Incomplete',
+						}, {
+							value: productionStatusTypes.HIATUS,
+							name: 'Hiatus',
+						}, {
+							value: productionStatusTypes.COMPLETE,
+							name: 'Complete',
+						}, {
+							value: productionStatusTypes.CANCELLED,
+							name: 'Cancelled',
+						}]}
+					/>
+				</FormControlStatic>
+			</FormGroup>
 		);
 	}
 }

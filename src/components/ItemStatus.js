@@ -4,9 +4,9 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { FormControls } from 'react-bootstrap';
+import { ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
-const FormControlsStatic = FormControls.Static;
+const FormControlStatic = FormControl.Static;
 
 @relay({
 	fragments: {
@@ -34,29 +34,32 @@ export default class ItemStatus extends React.Component {
 
 	render() {
 		return (
-			<FormControlsStatic label="Status">
-				<SelectBar
-					bsSize="xsmall"
-					selected={this.props.item.status}
-					onSelect={this.handleSave}
-					options={[{
-						value: statusTypes.WAITING,
-						name: 'Waiting',
-					}, {
-						value: statusTypes.PENDING,
-						name: 'Pending',
-					}, {
-						value: statusTypes.IN_PROGRESS,
-						name: 'In Progress',
-					}, {
-						value: statusTypes.COMPLETE,
-						name: 'Complete',
-					}, {
-						value: statusTypes.REJECTED,
-						name: 'Rejected',
-					}]}
-				/>
-			</FormControlsStatic>
+			<FormGroup>
+				<ControlLabel>{'Status'}</ControlLabel>
+				<FormControlStatic>
+					<SelectBar
+						bsSize="xsmall"
+						selected={this.props.item.status}
+						onSelect={this.handleSave}
+						options={[{
+							value: statusTypes.WAITING,
+							name: 'Waiting',
+						}, {
+							value: statusTypes.PENDING,
+							name: 'Pending',
+						}, {
+							value: statusTypes.IN_PROGRESS,
+							name: 'In Progress',
+						}, {
+							value: statusTypes.COMPLETE,
+							name: 'Complete',
+						}, {
+							value: statusTypes.REJECTED,
+							name: 'Rejected',
+						}]}
+					/>
+				</FormControlStatic>
+			</FormGroup>
 		);
 	}
 }
