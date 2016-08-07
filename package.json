@@ -32,7 +32,7 @@
     "numeral": "1.5.3",
     "only-shallow": "1.2.0",
     "react": "15.3.0",
-    "react-bootstrap": "0.29.5",
+    "react-bootstrap": "0.30.2",
     "react-dom": "15.3.0",
     "react-relay": "0.9.2",
     "react-router": "2.6.1",
