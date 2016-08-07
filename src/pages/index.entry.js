@@ -39,6 +39,7 @@ render((
 					/>
 					<Route
 						path="history" component={SidebarHistory}
+						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
 						queries={{ item: () => Relay.QL`query { node(id: $id) }` }}
 					/>
 				</Route>
