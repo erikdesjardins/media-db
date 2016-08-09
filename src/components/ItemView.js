@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import ItemList from './ItemList';
 import React from 'react';
 import Relay from 'react-relay';
@@ -11,16 +10,13 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 @relay({
 	initialVariables: {
 		status: statusTypes.IN_PROGRESS,
-		after: null,
-		breadcrumbs: [],
+		offset: 0,
+		LIMIT: 25,
 	},
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(status: $status, first: 25, after: $after) {
-					edges {
-						cursor,
-					}
+				items(status: $status, offset: $offset, first: $LIMIT) {
 					pageInfo {
 						hasNextPage,
 					}
@@ -34,13 +30,12 @@ export default class ItemView extends React.Component {
 	handleStatusChange = status => {
 		this.props.relay.setVariables({
 			status,
-			after: null,
-			breadcrumbs: [],
+			offset: 0,
 		});
 	};
 
 	hasPrev() {
-		return !!this.props.relay.variables.breadcrumbs.length;
+		return !!this.props.relay.variables.offset;
 	}
 
 	hasNext() {
@@ -49,19 +44,17 @@ export default class ItemView extends React.Component {
 
 	handlePrev = () => {
 		if (this.props.relay.pendingVariables) return;
-		const { breadcrumbs } = this.props.relay.variables;
+		const { offset, LIMIT } = this.props.relay.variables;
 		this.props.relay.setVariables({
-			after: _.last(breadcrumbs),
-			breadcrumbs: breadcrumbs.slice(0, -1),
+			offset: offset - LIMIT,
 		});
 	};
 
 	handleNext = () => {
 		if (this.props.relay.pendingVariables) return;
-		const { after, breadcrumbs } = this.props.relay.variables;
+		const { offset, LIMIT } = this.props.relay.variables;
 		this.props.relay.setVariables({
-			after: _.last(this.props.viewer.items.edges).cursor,
-			breadcrumbs: [...breadcrumbs, after],
+			offset: offset + LIMIT,
 		});
 	};
 

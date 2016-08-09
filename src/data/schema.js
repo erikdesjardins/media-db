@@ -294,14 +294,16 @@ const GraphQLUser = new GraphQLObjectType({
 		items: {
 			type: ItemConnection,
 			args: {
-				status: {
+				status: { // default: no filtering by status
 					type: GraphQLStatusEnum,
+				},
+				offset: { // default: 0
+					type: GraphQLInt,
 				},
 				...connectionArgs,
 			},
-			// status is nullable, in which case getFilteredItems() === getItems()
-			resolve: (obj, { status, ...args }) =>
-				connectionFromPromisedArray(getFilteredItems({ status }), args),
+			resolve: (obj, { status, offset, ...args }) =>
+				connectionFromPromisedArray(getFilteredItems({ status }).then(a => a.slice(offset || 0)), args),
 		},
 		searchItems: {
 			type: ItemConnection,
