@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 
-export default class CenteredColumn extends React.Component {
+export default class CenteredColumn extends React.PureComponent {
 	render() {
 		return (
 			<Grid fluid>

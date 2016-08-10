@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Panel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
-export default class SidebarItem extends React.Component {
+export default class SidebarItem extends React.PureComponent {
 	static propTypes = {
 		pathname: PropTypes.string.isRequired,
 	};

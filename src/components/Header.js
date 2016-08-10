@@ -10,7 +10,7 @@ const NavbarBrand = Navbar.Brand;
 const NavbarForm = Navbar.Form;
 const NavbarHeader = Navbar.Header;
 
-export default class Header extends React.Component {
+export default class Header extends React.PureComponent {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
 	};

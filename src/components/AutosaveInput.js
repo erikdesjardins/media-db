@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
 const FormControlFeedback = FormControl.Feedback;
 
-export default class AutosaveInput extends React.Component {
+export default class AutosaveInput extends React.PureComponent {
 	static propTypes = {
 		type: FormControl.propTypes.type,
 		componentClass: FormControl.propTypes.componentClass,

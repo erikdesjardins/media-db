@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
-export default class SelectBar extends React.Component {
+export default class SelectBar extends React.PureComponent {
 	static propTypes = {
 		options: PropTypes.arrayOf(PropTypes.shape({
 			value: PropTypes.any.isRequired,
