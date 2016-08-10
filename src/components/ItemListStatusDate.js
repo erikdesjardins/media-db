@@ -7,7 +7,7 @@ import { formatDate } from '../utils/format';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				statusDate,
+				statusDate
 			}
 		`,
 	},

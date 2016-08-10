@@ -4,7 +4,7 @@ export default class EditItemNotesMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,9 +17,9 @@ export default class EditItemNotesMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on EditItemNotesPayload {
 				item {
-					notes,
-					history,
-				},
+					notes
+					history
+				}
 			}
 		`;
 	}

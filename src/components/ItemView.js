@@ -1,7 +1,5 @@
-import _ from 'lodash';
 import ItemList from './ItemList';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
@@ -9,95 +7,86 @@ import * as statusTypes from '../constants/statusTypes';
 import { Button, ButtonGroup, Glyphicon, Panel } from 'react-bootstrap';
 import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 
+const LIMIT = 25;
+
 @relay({
 	initialVariables: {
 		status: statusTypes.IN_PROGRESS,
-		after: null,
-		breadcrumbs: [],
 	},
-	prepareVariables: ({ status, after }) => ({
-		status,
-		after,
-		limit: 25,
-	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(status: $status, first: $limit, after: $after) {
-					edges {
-						cursor,
-					}
-					pageInfo {
-						hasNextPage,
-					}
+				items(status: $status, first: 2147483647) {
+					edges
 					${ItemList.getFragment('items')}
 				}
 			}
 		`,
 	},
 })
-export default class ItemView extends ReactCSS.Component {
+export default class ItemView extends React.Component {
+	state = {
+		offset: 0,
+	};
+
 	handleStatusChange = status => {
 		this.props.relay.setVariables({
 			status,
-			after: null,
-			breadcrumbs: [],
+		});
+		this.setState({
+			offset: 0,
 		});
 	};
 
 	hasPrev() {
-		return !!this.props.relay.variables.breadcrumbs.length;
+		return (
+			!this.props.relay.pendingVariables &&
+			this.state.offset > 0
+		);
 	}
 
 	hasNext() {
-		return this.props.viewer.items.pageInfo.hasNextPage;
+		return (
+			!this.props.relay.pendingVariables &&
+			this.state.offset + LIMIT < this.props.viewer.items.edges.length
+		);
 	}
 
 	handlePrev = () => {
-		if (!this.hasPrev()) return;
-		const { breadcrumbs } = this.props.relay.variables;
-		this.props.relay.setVariables({
-			after: _.last(breadcrumbs),
-			breadcrumbs: breadcrumbs.slice(0, -1),
+		this.setState({
+			offset: this.state.offset - LIMIT,
 		});
 	};
 
 	handleNext = () => {
-		if (!this.hasNext()) return;
-		const { after, breadcrumbs } = this.props.relay.variables;
-		this.props.relay.setVariables({
-			after: _.last(this.props.viewer.items.edges).cursor,
-			breadcrumbs: [...breadcrumbs, after],
+		this.setState({
+			offset: this.state.offset + LIMIT,
 		});
 	};
 
-	classes() {
-		return {
-			default: {
-				statusSelect: {
-					...panelHeaderButtonCenter,
-				},
-				panel: {
-					overflow: 'hidden',
-				},
-				itemList: {
-					...fillPanelBody,
-				},
-				pageButtons: {
-					float: 'right',
-				},
+	render() {
+		const styles = {
+			statusSelect: {
+				...panelHeaderButtonCenter,
+			},
+			panel: {
+				overflow: 'hidden',
+			},
+			itemList: {
+				...fillPanelBody,
+			},
+			pageButtons: {
+				float: 'right',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<Panel
-				is="panel"
+				style={styles.panel}
 				header={
 					<div>
 						<SelectBar
-							is="statusSelect"
+							style={styles.statusSelect}
 							bsSize="xsmall"
 							selected={this.props.relay.variables.status}
 							onSelect={this.handleStatusChange}
@@ -119,7 +108,7 @@ export default class ItemView extends ReactCSS.Component {
 							}]}
 						/>
 						<ButtonGroup
-							is="pageButtons"
+							style={styles.pageButtons}
 							bsSize="xsmall"
 						>
 							<Button
@@ -139,8 +128,10 @@ export default class ItemView extends ReactCSS.Component {
 				}
 			>
 				<ItemList
-					is="itemList"
+					style={styles.itemList}
 					items={this.props.viewer.items}
+					offset={this.state.offset}
+					limit={LIMIT}
 				/>
 			</Panel>
 		);

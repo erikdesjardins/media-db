@@ -1,6 +1,5 @@
 import AutosaveInput from './AutosaveInput';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
@@ -11,7 +10,7 @@ import { Button, Panel } from 'react-bootstrap';
 	fragments: {
 		provider: () => Relay.QL`
 			fragment on Provider {
-				infoCallback,
+				infoCallback
 				${UpdateProviderMutation.getFragment('provider')}
 				${RemoveProviderMutation.getFragment('provider')}
 			}
@@ -23,7 +22,7 @@ import { Button, Panel } from 'react-bootstrap';
 		`,
 	},
 })
-export default class Provider extends ReactCSS.Component {
+export default class Provider extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new UpdateProviderMutation({
 			provider: this.props.provider,
@@ -38,42 +37,38 @@ export default class Provider extends ReactCSS.Component {
 		}));
 	};
 
-	classes() {
-		return {
-			default: {
-				panel: {
-					fontFamily: 'monospace',
-				},
-				input: {
-					fontFamily: 'monospace',
-					resize: 'vertical',
-					minHeight: '200px',
-					margin: '-15px -15px -30px -15px',
-					width: 'calc(100% + 30px)',
-					boxShadow: 'none',
-					border: 'none',
-				},
-				remove: {
-					float: 'right',
-					fontFamily: 'sans-serif',
-				},
+	render() {
+		const styles = {
+			panel: {
+				fontFamily: 'monospace',
+			},
+			input: {
+				fontFamily: 'monospace',
+				resize: 'vertical',
+				minHeight: '200px',
+				margin: '-15px -15px -30px -15px',
+				width: 'calc(100% + 30px)',
+				boxShadow: 'none',
+				border: 'none',
+			},
+			remove: {
+				float: 'right',
+				fontFamily: 'sans-serif',
 			},
 		};
-	}
 
-	render() {
 		// IntelliJ can't deal with braces in strings in JSX... -.-
 		const prefix = 'function fetchInfo(url) {';
 		const suffix = '}';
 		return (
 			<div>
 				<Panel
-					is="panel"
+					style={styles.panel}
 					header={
 						<div>
 							{prefix}
 							<Button
-								is="remove"
+								style={styles.remove}
 								bsStyle="danger"
 								bsSize="xsmall"
 								onClick={this.handleRemove}
@@ -85,8 +80,8 @@ export default class Provider extends ReactCSS.Component {
 					footer={suffix}
 				>
 					<AutosaveInput
-						is="input"
-						type="textarea"
+						style={styles.input}
+						componentClass="textarea"
 						hasFeedback
 						defaultValue={this.props.provider.infoCallback}
 						onSave={this.handleSave}

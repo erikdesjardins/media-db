@@ -4,7 +4,7 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,24 +17,24 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on UpdateItemFieldsPayload {
 				item {
-					thumbnail,
-					title,
-					creator,
-					genres,
-					characters,
-					length,
-					productionStatus,
-					history,
+					thumbnail
+					title
+					creator
+					genres
+					characters
+					length
+					productionStatus
+					history
 					fieldUpdates {
-						thumbnail,
-						title,
-						creator,
-						genres,
-						characters,
-						length,
-						productionStatus,
-					},
-				},
+						thumbnail
+						title
+						creator
+						genres
+						characters
+						length
+						productionStatus
+					}
+				}
 			}
 		`;
 	}

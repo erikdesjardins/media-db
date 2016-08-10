@@ -128,4 +128,10 @@ $CompactTable-border: #e5e3da;
 			font-size: smaller;
 		}
 	}
+
+	&-thumbnail {
+		max-height: 20px;
+		margin-top: -8px;
+		margin-bottom: -6px;
+	}
 }

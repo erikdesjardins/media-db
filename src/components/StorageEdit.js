@@ -1,23 +1,22 @@
 import CenteredColumn from './CenteredColumn';
 import React from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import moment from 'moment';
 import relay from 'relay-decorator';
-import { Button, ButtonToolbar, Input } from 'react-bootstrap';
+import { Button, ButtonToolbar, FormControl, FormGroup } from 'react-bootstrap';
 
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				rawItems,
+				rawItems
 				${SetRawItemsMutation.getFragment('viewer')}
 			}
 		`,
 	},
 })
-export default class StorageEdit extends ReactCSS.Component {
+export default class StorageEdit extends React.Component {
 	state = {
 		value: this.props.viewer.rawItems,
 	};
@@ -31,7 +30,6 @@ export default class StorageEdit extends ReactCSS.Component {
 	};
 
 	handleSave = () => {
-		if (!this.isDirty()) return;
 		Relay.Store.commitUpdate(new SetRawItemsMutation({
 			rawItems: this.state.value,
 			viewer: this.props.viewer,
@@ -46,26 +44,24 @@ export default class StorageEdit extends ReactCSS.Component {
 		a.click();
 	};
 
-	classes() {
-		return {
-			default: {
-				textarea: {
-					resize: 'vertical',
-					height: '500px',
-				},
+	render() {
+		const styles = {
+			textarea: {
+				resize: 'vertical',
+				height: '500px',
 			},
 		};
-	}
 
-	render() {
 		return (
 			<CenteredColumn>
-				<Input
-					is="textarea"
-					type="textarea"
-					value={this.state.value}
-					onChange={this.handleChange}
-				/>
+				<FormGroup>
+					<FormControl
+						style={styles.textarea}
+						componentClass="textarea"
+						value={this.state.value}
+						onChange={this.handleChange}
+					/>
+				</FormGroup>
 				<ButtonToolbar>
 					<Button bsStyle="primary" disabled={!this.isDirty()} onClick={this.handleSave}>{'Save'}</Button>
 					<Button onClick={this.handleDownload}>{'Download'}</Button>

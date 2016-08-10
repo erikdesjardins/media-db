@@ -4,7 +4,7 @@ export default class UpdateProviderMutation extends Relay.Mutation {
 	static fragments = {
 		provider: () => Relay.QL`
 			fragment on Provider {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,8 +17,8 @@ export default class UpdateProviderMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on UpdateProviderPayload {
 				provider {
-					infoCallback,
-				},
+					infoCallback
+				}
 			}
 		`;
 	}

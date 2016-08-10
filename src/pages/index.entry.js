@@ -9,14 +9,18 @@ import Providers from '../containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
 import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';
-import { IndexRedirect, Route, hashHistory } from 'react-router';
-import { RelayRouter } from 'react-router-relay';
+import { IndexRedirect, Route, Router, applyRouterMiddleware, hashHistory } from 'react-router';
+import useRelay from 'react-router-relay';
 import { render } from 'react-dom';
 
 Relay.injectNetworkLayer(sendMessageNetworkLayer);
 
 render((
-	<RelayRouter history={hashHistory}>
+	<Router
+		history={hashHistory}
+		render={applyRouterMiddleware(useRelay)}
+		environment={Relay.Store}
+	>
 		<Route path="/" component={App}>
 			<IndexRedirect to="items"/>
 			<Route
@@ -35,14 +39,14 @@ render((
 					/>
 					<Route
 						path="history" component={SidebarHistory}
+						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
 						queries={{ item: () => Relay.QL`query { node(id: $id) }` }}
 					/>
 				</Route>
 			</Route>
 			<Route
-				path="search/:query" component={Search}
-				queryParams={['preview']}
-				prepareParams={({ query, preview }) => ({ query: decodeURIComponent(query), preview })}
+				path="search/:query/:preview" component={Search}
+				prepareParams={({ query, preview }) => ({ query: atob(query), preview: preview === 'preview' })}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
 			<Route
@@ -54,5 +58,5 @@ render((
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
 			/>
 		</Route>
-	</RelayRouter>
+	</Router>
 ), document.getElementById('app'));

@@ -7,13 +7,10 @@ import relay from 'relay-decorator';
 import { Button } from 'react-bootstrap';
 
 @relay({
-	prepareVariables: () => ({
-		limit: 2147483647,
-	}),
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				providers(first: $limit) {
+				providers(first: 2147483647) {
 					edges {
 						node {
 							id

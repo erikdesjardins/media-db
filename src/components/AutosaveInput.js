@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
-import { Input } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
-export default class AutosaveInput extends React.Component {
+const FormControlFeedback = FormControl.Feedback;
+
+export default class AutosaveInput extends React.PureComponent {
 	static propTypes = {
-		type: Input.propTypes.type,
+		type: FormControl.propTypes.type,
+		componentClass: FormControl.propTypes.componentClass,
 		label: PropTypes.node,
 		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 		hasFeedback: PropTypes.bool,
@@ -11,7 +14,7 @@ export default class AutosaveInput extends React.Component {
 			PropTypes.string,
 			PropTypes.number,
 		]).isRequired,
-		onSave: PropTypes.func,
+		onSave: PropTypes.func.isRequired,
 	};
 
 	state = {
@@ -33,7 +36,9 @@ export default class AutosaveInput extends React.Component {
 	}
 
 	handleBlur = () => {
-		this.props.onSave(this.state.value);
+		if (this.isDirty()) {
+			this.props.onSave(this.state.value);
+		}
 	};
 
 	handleChange = e => {
@@ -42,17 +47,25 @@ export default class AutosaveInput extends React.Component {
 
 	render() {
 		return (
-			<Input
+			<FormGroup
 				bsSize="small"
-				type={this.props.type}
-				label={this.props.label}
-				style={this.props.style}
-				hasFeedback={this.props.hasFeedback}
-				bsStyle={this.isDirty() ? 'warning' : null}
-				value={this.state.value}
-				onChange={this.handleChange}
-				onBlur={this.handleBlur}
-			/>
+				validationState={this.isDirty() ? 'warning' : null}
+			>
+				{this.props.label &&
+					<ControlLabel>{this.props.label}</ControlLabel>
+				}
+				<FormControl
+					type={this.props.type}
+					componentClass={this.props.componentClass}
+					style={this.props.style}
+					value={this.state.value}
+					onChange={this.handleChange}
+					onBlur={this.handleBlur}
+				/>
+				{this.props.hasFeedback &&
+					<FormControlFeedback/>
+				}
+			</FormGroup>
 		);
 	}
 }

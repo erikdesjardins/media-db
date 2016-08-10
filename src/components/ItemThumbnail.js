@@ -8,7 +8,7 @@ import { Thumbnail } from 'react-bootstrap';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				thumbnail,
+				thumbnail
 				${ItemRefreshButton.getFragment('item')}
 			}
 		`,

@@ -4,7 +4,7 @@ export default class SetRawItemsMutation extends Relay.Mutation {
 	static fragments = {
 		viewer: () => Relay.QL`
 			fragment on User {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,8 +17,8 @@ export default class SetRawItemsMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on SetRawItemsPayload {
 				viewer {
-					rawItems,
-				},
+					rawItems
+				}
 			}
 		`;
 	}

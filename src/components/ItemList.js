@@ -19,13 +19,22 @@ import relay from 'relay-decorator';
 })
 export default class ItemList extends React.Component {
 	static propTypes = {
+		offset: PropTypes.number,
+		limit: PropTypes.number,
 		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 	};
 
+	static defaultProps = {
+		offset: 0,
+		limit: Infinity,
+	};
+
 	render() {
+		const { items, offset, limit, style } = this.props;
+
 		return (
 			<table
-				style={this.props.style}
+				style={style}
 				className="CompactTable CompactTable--stripe CompactTable--hover CompactTable--align"
 			>
 				<thead>
@@ -42,7 +51,7 @@ export default class ItemList extends React.Component {
 					</tr>
 				</thead>
 				<tbody>
-					{this.props.items.edges.map(edge =>
+					{items.edges.slice(offset, offset + limit).map(edge =>
 						<Item
 							key={edge.node.id}
 							item={edge.node}

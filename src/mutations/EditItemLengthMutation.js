@@ -4,7 +4,7 @@ export default class EditItemLengthMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,12 +17,12 @@ export default class EditItemLengthMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on EditItemLengthPayload {
 				item {
-					length,
-					history,
+					length
+					history
 					fieldUpdates {
-						length,
-					},
-				},
+						length
+					}
+				}
 			}
 		`;
 	}

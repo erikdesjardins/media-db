@@ -9,7 +9,7 @@ import relay from 'relay-decorator';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				length,
+				length
 				${ItemRefreshButton.getFragment('item')}
 				${EditItemLengthMutation.getFragment('item')}
 			}

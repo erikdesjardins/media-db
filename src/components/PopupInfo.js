@@ -10,7 +10,7 @@ import { Grid } from 'react-bootstrap';
 			fragment on User {
 				itemForActiveTab {
 					${ItemInfo.getFragment('item')}
-				},
+				}
 				${ItemInfo.getFragment('viewer')}
 			}
 		`,

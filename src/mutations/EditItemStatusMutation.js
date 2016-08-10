@@ -4,12 +4,12 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 	static fragments = {
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 			}
 		`,
 		viewer: () => Relay.QL`
 			fragment on User {
-				id,
+				id
 			}
 		`,
 	};
@@ -22,13 +22,13 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 		return Relay.QL`
 			fragment on EditItemStatusPayload {
 				item {
-					status,
-					statusDate,
-					history,
-				},
+					status
+					statusDate
+					history
+				}
 				viewer {
-					items,
-				},
+					items
+				}
 			}
 		`;
 	}

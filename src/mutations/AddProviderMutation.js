@@ -4,7 +4,7 @@ export default class AddProviderMutation extends Relay.Mutation {
 	static fragments = {
 		viewer: () => Relay.QL`
 			fragment on User {
-				id,
+				id
 			}
 		`,
 	};
@@ -16,10 +16,10 @@ export default class AddProviderMutation extends Relay.Mutation {
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddProviderPayload {
-				providerEdge,
+				providerEdge
 				viewer {
-					providers,
-				},
+					providers
+				}
 			}
 		`;
 	}

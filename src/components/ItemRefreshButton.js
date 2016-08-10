@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
-import ReactCSS from 'reactcss';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
@@ -12,22 +11,22 @@ import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 		// but that's okay, because it's not any more expensive
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 				fieldUpdates {
-					thumbnail,
-					title,
-					creator,
-					genres,
-					characters,
-					length,
-					productionStatus,
-				},
+					thumbnail
+					title
+					creator
+					genres
+					characters
+					length
+					productionStatus
+				}
 				${UpdateItemFieldsMutation.getFragment('item')}
 			}
 		`,
 	},
 })
-export default class ItemRefreshButton extends ReactCSS.Component {
+export default class ItemRefreshButton extends React.Component {
 	static propTypes = {
 		fields: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 	};
@@ -37,38 +36,33 @@ export default class ItemRefreshButton extends ReactCSS.Component {
 	}
 
 	handleClick = () => {
-		if (this.isDisabled()) return;
 		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
 			item: this.props.item,
 			fieldUpdates: _.pick(this.props.item.fieldUpdates, this.props.fields),
 		}));
 	};
 
-	classes() {
-		return {
-			default: {
-				refreshButton: {
-					marginTop: '-2px',
-					marginBottom: '-2px',
-				},
+	render() {
+		const styles = {
+			refreshButton: {
+				marginTop: '-2px',
+				marginBottom: '-2px',
 			},
 		};
-	}
 
-	render() {
 		return (this.isDisabled() ? null :
 			<OverlayTrigger
 				placement="right"
 				animation={false}
 				rootClose
 				overlay={
-					<Tooltip>
+					<Tooltip id="field-updates">
 						{_.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields))).join(', ')}
 					</Tooltip>
 				}
 			>
 				<Button
-					is="refreshButton"
+					style={styles.refreshButton}
 					bsSize="xsmall"
 					disabled={this.isDisabled()}
 					onClick={this.handleClick}

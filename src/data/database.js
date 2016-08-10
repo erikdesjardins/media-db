@@ -15,7 +15,7 @@ db.version(1).stores({
 	provider: 'id,&createdDate',
 });
 
-db.open().catch(::console.error); // eslint-disable-line no-console
+db.open();
 
 db.media.mapToClass(Item);
 db.provider.mapToClass(Provider);
