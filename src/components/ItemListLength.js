@@ -7,7 +7,7 @@ import { formatNumber } from '../utils/format';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				length,
+				length
 			}
 		`,
 	},

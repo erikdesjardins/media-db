@@ -5,7 +5,7 @@ export default class AddActiveTabItemMutation extends Relay.Mutation {
 	static fragments = {
 		viewer: () => Relay.QL`
 			fragment on User {
-				id,
+				id
 			}
 		`,
 	};
@@ -17,11 +17,11 @@ export default class AddActiveTabItemMutation extends Relay.Mutation {
 	getFatQuery() {
 		return Relay.QL`
 			fragment on AddActiveTabItemPayload {
-				itemEdge,
+				itemEdge
 				viewer {
-					items,
-					itemForActiveTab,
-				},
+					items
+					itemForActiveTab
+				}
 			}
 		`;
 	}

@@ -17,8 +17,8 @@ const indexPath = 'index.html';
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				itemForActiveTab,
-				providerMatchesActiveTab,
+				itemForActiveTab
+				providerMatchesActiveTab
 				${AddActiveTabItemMutation.getFragment('viewer')}
 			}
 		`,

@@ -4,12 +4,12 @@ export default class RemoveProviderMutation extends Relay.Mutation {
 	static fragments = {
 		provider: () => Relay.QL`
 			fragment on Provider {
-				id,
+				id
 			}
 		`,
 		viewer: () => Relay.QL`
 			fragment on User {
-				id,
+				id
 			}
 		`,
 	};
@@ -21,10 +21,10 @@ export default class RemoveProviderMutation extends Relay.Mutation {
 	getFatQuery() {
 		return Relay.QL`
 			fragment on RemoveProviderPayload {
-				deletedProviderId,
+				deletedProviderId
 				viewer {
-					providers,
-				},
+					providers
+				}
 			}
 		`;
 	}

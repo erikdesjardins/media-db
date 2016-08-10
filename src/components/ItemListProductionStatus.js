@@ -27,7 +27,7 @@ const props = {
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				productionStatus,
+				productionStatus
 			}
 		`,
 	},

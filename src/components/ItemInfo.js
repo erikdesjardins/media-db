@@ -15,7 +15,7 @@ import relay from 'relay-decorator';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 				${ItemThumbnail.getFragment('item')}
 				${ItemTitleBlock.getFragment('item')}
 				${ItemStatus.getFragment('item')}

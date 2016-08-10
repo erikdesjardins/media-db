@@ -8,7 +8,7 @@ import relay from 'relay-decorator';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				tags,
+				tags
 				${EditItemTagsMutation.getFragment('item')}
 			}
 		`,

@@ -13,18 +13,18 @@ import { formatDate } from '../utils/format';
 				history(first: 2147483647) {
 					edges {
 						node {
-							url,
-							thumbnail,
-							title,
-							creator,
-							genres,
-							characters,
-							notes,
-							tags,
-							length,
-							status,
-							productionStatus,
-							date,
+							url
+							thumbnail
+							title
+							creator
+							genres
+							characters
+							notes
+							tags
+							length
+							status
+							productionStatus
+							date
 						}
 					}
 				}

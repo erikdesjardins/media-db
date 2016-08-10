@@ -12,7 +12,7 @@ const FormControlStatic = FormControl.Static;
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				status,
+				status
 				${EditItemStatusMutation.getFragment('item')}
 			}
 		`,

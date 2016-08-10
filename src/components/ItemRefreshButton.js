@@ -11,16 +11,16 @@ import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 		// but that's okay, because it's not any more expensive
 		item: () => Relay.QL`
 			fragment on Item {
-				id,
+				id
 				fieldUpdates {
-					thumbnail,
-					title,
-					creator,
-					genres,
-					characters,
-					length,
-					productionStatus,
-				},
+					thumbnail
+					title
+					creator
+					genres
+					characters
+					length
+					productionStatus
+				}
 				${UpdateItemFieldsMutation.getFragment('item')}
 			}
 		`,

@@ -13,7 +13,7 @@ const FormControlStatic = FormControl.Static;
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				productionStatus,
+				productionStatus
 				${ItemRefreshButton.getFragment('item')}
 				${EditItemProductionStatusMutation.getFragment('item')}
 			}

@@ -10,7 +10,7 @@ import { Button, Panel } from 'react-bootstrap';
 	fragments: {
 		provider: () => Relay.QL`
 			fragment on Provider {
-				infoCallback,
+				infoCallback
 				${UpdateProviderMutation.getFragment('provider')}
 				${RemoveProviderMutation.getFragment('provider')}
 			}

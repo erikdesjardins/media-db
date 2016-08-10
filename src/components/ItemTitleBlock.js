@@ -7,9 +7,9 @@ import relay from 'relay-decorator';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				url,
-				title,
-				creator,
+				url
+				title
+				creator
 				${ItemRefreshButton.getFragment('item')}
 			}
 		`,

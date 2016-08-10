@@ -10,7 +10,7 @@ import { Button, ButtonToolbar, FormControl, FormGroup } from 'react-bootstrap';
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				rawItems,
+				rawItems
 				${SetRawItemsMutation.getFragment('viewer')}
 			}
 		`,
