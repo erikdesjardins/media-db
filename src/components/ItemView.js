@@ -39,22 +39,26 @@ export default class ItemView extends React.Component {
 	};
 
 	hasPrev() {
-		return !!this.state.offset;
+		return (
+			!this.props.relay.pendingVariables &&
+			this.state.offset > 0
+		);
 	}
 
 	hasNext() {
-		return this.state.offset + LIMIT < this.props.viewer.items.edges.length;
+		return (
+			!this.props.relay.pendingVariables &&
+			this.state.offset + LIMIT < this.props.viewer.items.edges.length
+		);
 	}
 
 	handlePrev = () => {
-		if (this.props.relay.pendingVariables) return;
 		this.setState({
 			offset: this.state.offset - LIMIT,
 		});
 	};
 
 	handleNext = () => {
-		if (this.props.relay.pendingVariables) return;
 		this.setState({
 			offset: this.state.offset + LIMIT,
 		});
