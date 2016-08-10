@@ -393,7 +393,7 @@ const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 			throw new Error('No `id` provided');
 		}
 
-		addItem(localItemId, {
+		await addItem(localItemId, {
 			// defaults (may be overridden by the provider)
 			thumbnail: null,
 			title: '',
@@ -441,9 +441,9 @@ function editItemMutation(name, field, type, additionalFields = {}) {
 			},
 			...additionalFields,
 		},
-		mutateAndGetPayload: ({ id, [field]: val }) => {
+		mutateAndGetPayload: async ({ id, [field]: val }) => {
 			const localItemId = fromGlobalId(id).id;
-			updateItem(localItemId, { [field]: val });
+			await updateItem(localItemId, { [field]: val });
 			return { localItemId };
 		},
 	});
@@ -505,10 +505,10 @@ const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 			},
 		},
 	},
-	mutateAndGetPayload: ({ id, fieldUpdates }) => {
+	mutateAndGetPayload: async ({ id, fieldUpdates }) => {
 		const localItemId = fromGlobalId(id).id;
 		const patch = _.pickBy(fieldUpdates); // truthy
-		updateItem(localItemId, patch);
+		await updateItem(localItemId, patch);
 		return { localItemId };
 	},
 });
@@ -533,9 +533,9 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 			resolve: () => getViewer(),
 		},
 	},
-	mutateAndGetPayload: () => {
+	mutateAndGetPayload: async () => {
 		const localProviderId = randomId();
-		addProvider(localProviderId);
+		await addProvider(localProviderId);
 		return { localProviderId };
 	},
 });
@@ -552,9 +552,9 @@ const GraphQLUpdateProviderMutation = mutationWithClientMutationId({
 			resolve: ({ localProviderId }) => getProvider(localProviderId),
 		},
 	},
-	mutateAndGetPayload: ({ id, infoCallback }) => {
+	mutateAndGetPayload: async ({ id, infoCallback }) => {
 		const localProviderId = fromGlobalId(id).id;
-		updateProvider(localProviderId, infoCallback);
+		await updateProvider(localProviderId, infoCallback);
 		return { localProviderId };
 	},
 });
@@ -574,9 +574,9 @@ const GraphQLRemoveProviderMutation = mutationWithClientMutationId({
 			resolve: () => getViewer(),
 		},
 	},
-	mutateAndGetPayload: ({ id }) => {
+	mutateAndGetPayload: async ({ id }) => {
 		const localProviderId = fromGlobalId(id).id;
-		removeProvider(localProviderId);
+		await removeProvider(localProviderId);
 		return { id };
 	},
 });
@@ -592,8 +592,8 @@ const GraphQLSetRawItemsMutation = mutationWithClientMutationId({
 			resolve: () => getViewer(),
 		},
 	},
-	mutateAndGetPayload: ({ rawItems }) => {
-		setRawItems(JSON.parse(rawItems));
+	mutateAndGetPayload: async ({ rawItems }) => {
+		await setRawItems(JSON.parse(rawItems));
 		return {};
 	},
 });
