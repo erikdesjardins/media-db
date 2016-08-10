@@ -7,19 +7,17 @@ import * as statusTypes from '../constants/statusTypes';
 import { Button, ButtonGroup, Glyphicon, Panel } from 'react-bootstrap';
 import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 
+const LIMIT = 25;
+
 @relay({
 	initialVariables: {
 		status: statusTypes.IN_PROGRESS,
-		offset: 0,
-		LIMIT: 25,
 	},
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				items(status: $status, offset: $offset, first: $LIMIT) {
-					pageInfo {
-						hasNextPage,
-					}
+				items(status: $status, first: 2147483647) {
+					edges
 					${ItemList.getFragment('items')}
 				}
 			}
@@ -27,34 +25,38 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 	},
 })
 export default class ItemView extends React.Component {
+	state = {
+		offset: 0,
+	};
+
 	handleStatusChange = status => {
 		this.props.relay.setVariables({
 			status,
+		});
+		this.setState({
 			offset: 0,
 		});
 	};
 
 	hasPrev() {
-		return !!this.props.relay.variables.offset;
+		return !!this.state.offset;
 	}
 
 	hasNext() {
-		return this.props.viewer.items.pageInfo.hasNextPage;
+		return this.state.offset + LIMIT < this.props.viewer.items.edges.length;
 	}
 
 	handlePrev = () => {
 		if (this.props.relay.pendingVariables) return;
-		const { offset, LIMIT } = this.props.relay.variables;
-		this.props.relay.setVariables({
-			offset: offset - LIMIT,
+		this.setState({
+			offset: this.state.offset - LIMIT,
 		});
 	};
 
 	handleNext = () => {
 		if (this.props.relay.pendingVariables) return;
-		const { offset, LIMIT } = this.props.relay.variables;
-		this.props.relay.setVariables({
-			offset: offset + LIMIT,
+		this.setState({
+			offset: this.state.offset + LIMIT,
 		});
 	};
 
@@ -124,6 +126,8 @@ export default class ItemView extends React.Component {
 				<ItemList
 					style={styles.itemList}
 					items={this.props.viewer.items}
+					offset={this.state.offset}
+					limit={LIMIT}
 				/>
 			</Panel>
 		);

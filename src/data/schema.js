@@ -297,13 +297,10 @@ const GraphQLUser = new GraphQLObjectType({
 				status: { // default: no filtering by status
 					type: GraphQLStatusEnum,
 				},
-				offset: { // default: 0
-					type: GraphQLInt,
-				},
 				...connectionArgs,
 			},
-			resolve: (obj, { status, offset, ...args }) =>
-				connectionFromPromisedArray(getFilteredItems({ status }).then(a => a.slice(offset || 0)), args),
+			resolve: (obj, { status, ...args }) =>
+				connectionFromPromisedArray(getFilteredItems({ status }), args),
 		},
 		searchItems: {
 			type: ItemConnection,
