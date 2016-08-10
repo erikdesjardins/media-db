@@ -7,13 +7,10 @@ import { fillPanelBody } from '../styles/bootstrap';
 import { formatDate } from '../utils/format';
 
 @relay({
-	initialVariables: {
-		first: 2147483647,
-	},
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				history(first: $first) {
+				history(first: 2147483647) {
 					edges {
 						node {
 							url,
