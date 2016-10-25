@@ -8,13 +8,9 @@ export default class SelectBar extends React.PureComponent {
 			name: PropTypes.node, // eslint-disable-line react/no-unused-prop-types
 		})).isRequired,
 		selected: PropTypes.string,
-		onSelect: PropTypes.func,
+		onSelect: PropTypes.func.isRequired,
 		bsSize: Button.propTypes.bsSize,
 		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-	};
-
-	static defaultProps = {
-		onSelect: () => {},
 	};
 
 	isSelected(value) {
