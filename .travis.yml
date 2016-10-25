@@ -1,6 +1,5 @@
 language: node_js
-node_js: 5
-before_script: gem install scss_lint
+node_js: 6
 script:
   - npm test
   - npm run build
@@ -14,7 +13,7 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      node: 5
+      node: 6
   - provider: releases
     api_key:
       secure: FPa03/o+WBapHfFV3ZX9ShgQXyO5yHYcqH4S9a8wMbCNTz4M6+6RAf3ErsbDz5WlI11HzxCumVYsxxztaUCCWKJCNOgLOAkpLIQAPryq2X2wDfZDmCnWII2GNQj3FWequO8P57ZkXkkgZqqC6tGY00U6mIvNbIVm4QlY6wsDGd0izeR54z4OncDqOg09KTvHca1H/9K1MzachWhTbjtXEyaEJowV+GYvxb9cobPnowgtF42Iu5uz2ufLI5EfEeE8TyWuTXCKf+6THl2FvCKn4W/ss2H4F+lLgmb9uZs0kN2Adz3xCINCxlHbQXomqXKuAlG0gM1jTvuFmPjNES4Nr9FitqjXN9Ka0vaHjMc7iqUmjTUI3Znzn/2UrVF9KGEKJfeDUNvP8grz8puy62B7D/KzqHNNmLldpHB/2cWVcD2vCQlHwBhNBcr51olswvJe8EKByqPHZUiy4Jaoirdf/YJFJfWTacGg627sNFik3piBXEtIYT7wfdc9A652KBxXzAY6Gk0ddnDVVsNZ8g4dFzDUzkSfj4VAMKvrtFtbFEI2UhJ/VRW2Khm4jNlKZuvRSTqbWJgU9ZbZ8mAXnZI5ao0dUsafgBjUej27tp7XpTuRW6C1Ih7qDMYCdfg/voOFH2TZ8SK2btTR9YMIU+hHvBOiC3x2s8IQG8by7EZybog=
@@ -22,4 +21,4 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      node: 5
+      node: 6

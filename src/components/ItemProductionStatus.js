@@ -7,8 +7,6 @@ import relay from 'relay-decorator';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
-const FormControlStatic = FormControl.Static;
-
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -39,7 +37,7 @@ export default class ItemProductionStatus extends React.Component {
 						fields={['productionStatus']}
 					/>
 				</ControlLabel>
-				<FormControlStatic>
+				<FormControl.Static>
 					<SelectBar
 						bsSize="xsmall"
 						selected={this.props.item.productionStatus}
@@ -58,7 +56,7 @@ export default class ItemProductionStatus extends React.Component {
 							name: 'Cancelled',
 						}]}
 					/>
-				</FormControlStatic>
+				</FormControl.Static>
 			</FormGroup>
 		);
 	}

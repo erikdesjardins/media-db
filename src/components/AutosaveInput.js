@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 
-const FormControlFeedback = FormControl.Feedback;
-
 export default class AutosaveInput extends React.PureComponent {
 	static propTypes = {
 		type: FormControl.propTypes.type,
@@ -63,7 +61,7 @@ export default class AutosaveInput extends React.PureComponent {
 					onBlur={this.handleBlur}
 				/>
 				{this.props.hasFeedback &&
-					<FormControlFeedback/>
+					<FormControl.Feedback/>
 				}
 			</FormGroup>
 		);

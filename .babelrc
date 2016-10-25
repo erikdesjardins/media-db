@@ -1,22 +1,37 @@
 {
-	"presets": ["stage-0", "react"],
-	"plugins": [],
+	"presets": ["react"],
+	"plugins": [
+		"transform-decorators-legacy",
+		"transform-function-bind",
+		"transform-export-extensions",
+		"transform-class-properties",
+		["transform-object-rest-spread", { "useBuiltIns": true }],
+		"transform-async-generator-functions",
+		"syntax-trailing-function-commas",
+		"transform-async-to-generator",
+		"transform-exponentiation-operator",
+		"transform-es2015-modules-commonjs",
+		"transform-es2015-destructuring",
+		"transform-es2015-parameters"
+	],
 	"env": {
-		"node": {
-			"plugins": [
-				"transform-decorators-legacy",
-				"transform-es2015-modules-commonjs",
-				"transform-es2015-destructuring",
-				"transform-es2015-parameters"
-			]
-		},
-		"development": {
+		"dev": {
 			"plugins": [
 				"./babelRelayPlugin",
+
 				"transform-decorators-legacy",
+				"transform-function-bind",
+				"transform-export-extensions",
+				"transform-class-properties",
+				["transform-object-rest-spread", { "useBuiltIns": true }],
+				"transform-async-generator-functions",
+				"syntax-trailing-function-commas",
+				"transform-async-to-generator",
+				"transform-exponentiation-operator",
 				"transform-es2015-modules-commonjs",
 				"transform-es2015-destructuring",
 				"transform-es2015-parameters",
+
 				"transform-dead-code-elimination",
 				"transform-node-env-inline",
 				"lodash"
@@ -25,10 +40,20 @@
 		"production": {
 			"plugins": [
 				["./babelRelayPlugin", { "enforceSchema": true }],
+
 				"transform-decorators-legacy",
+				"transform-function-bind",
+				"transform-export-extensions",
+				"transform-class-properties",
+				["transform-object-rest-spread", { "useBuiltIns": true }],
+                "transform-async-generator-functions",
+                "syntax-trailing-function-commas",
+                "transform-async-to-generator",
+                "transform-exponentiation-operator",
                 "transform-es2015-modules-commonjs",
 				"transform-es2015-destructuring",
 				"transform-es2015-parameters",
+
                 "transform-dead-code-elimination",
                 "transform-node-env-inline",
                 "lodash",

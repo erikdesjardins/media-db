@@ -6,8 +6,6 @@ import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
 import { ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
-const FormControlStatic = FormControl.Static;
-
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -36,7 +34,7 @@ export default class ItemStatus extends React.Component {
 		return (
 			<FormGroup>
 				<ControlLabel>{'Status'}</ControlLabel>
-				<FormControlStatic>
+				<FormControl.Static>
 					<SelectBar
 						bsSize="xsmall"
 						selected={this.props.item.status}
@@ -58,7 +56,7 @@ export default class ItemStatus extends React.Component {
 							name: 'Rejected',
 						}]}
 					/>
-				</FormControlStatic>
+				</FormControl.Static>
 			</FormGroup>
 		);
 	}
