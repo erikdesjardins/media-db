@@ -19,7 +19,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "postbuild": "gulp zip",
     "deploy": "cross-env NODE_ENV=node babel-node ./deploy.js",
-    "test": "eslint . && scss-lint"
+    "test": "eslint . && sass-lint -v -q"
   },
   "dependencies": {
     "bootstrap": "3.3.7",
@@ -87,6 +87,7 @@
     "postcss-loader": "1.0.0",
     "prop-loader": "0.0.5",
     "rimraf": "2.5.4",
+    "sass-lint": "1.9.1",
     "sass-loader": "4.0.2",
     "spawn-loader": "0.1.0",
     "webpack": "1.13.2"

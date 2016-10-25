@@ -3,7 +3,6 @@
 ## Install
 
 	npm i
-	gem install scss_lint
 
 ## Build / Watch
 
