@@ -6,11 +6,6 @@ import packageName from 'prop?name!../../package.json';
 import icon from '../images/icon32.png';
 import { Button, Glyphicon, Navbar } from 'react-bootstrap';
 
-// *sigh*
-const NavbarBrand = Navbar.Brand;
-const NavbarForm = Navbar.Form;
-const NavbarHeader = Navbar.Header;
-
 const indexPath = 'index.html';
 
 @relay({
@@ -41,23 +36,23 @@ export default class PopupHeader extends React.Component {
 
 		return (
 			<Navbar staticTop>
-				<NavbarHeader>
-					<NavbarBrand>
+				<Navbar.Header>
+					<Navbar.Brand>
 						<a href={indexPath}>
 							<img style={styles.img} src={icon}/>
 							{packageName}
 						</a>
-					</NavbarBrand>
-				</NavbarHeader>
+					</Navbar.Brand>
+				</Navbar.Header>
 				{!this.props.viewer.itemForActiveTab &&
-					<NavbarForm pullRight>
+					<Navbar.Form pullRight>
 						<Button
 							disabled={!this.props.viewer.providerMatchesActiveTab}
 							onClick={this.handleAddItem}
 						>
 							<Glyphicon glyph="plus"/>
 						</Button>
-					</NavbarForm>
+					</Navbar.Form>
 				}
 			</Navbar>
 		);

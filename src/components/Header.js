@@ -5,11 +5,6 @@ import { FormControl, FormGroup, Nav, NavItem, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
-// *sigh*
-const NavbarBrand = Navbar.Brand;
-const NavbarForm = Navbar.Form;
-const NavbarHeader = Navbar.Header;
-
 export default class Header extends React.PureComponent {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
@@ -41,19 +36,19 @@ export default class Header extends React.PureComponent {
 
 		return (
 			<Navbar staticTop>
-				<NavbarHeader>
-					<NavbarBrand>
+				<Navbar.Header>
+					<Navbar.Brand>
 						<Link to="/items">
 							<img style={styles.img} src={icon}/>
 							{packageName}
 						</Link>
-					</NavbarBrand>
-				</NavbarHeader>
+					</Navbar.Brand>
+				</Navbar.Header>
 				<Nav>
 					<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
 					<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
 				</Nav>
-				<NavbarForm pullRight>
+				<Navbar.Form pullRight>
 					<form onSubmit={this.handleSubmitSearch}>
 						<FormGroup>
 							<FormControl
@@ -64,7 +59,7 @@ export default class Header extends React.PureComponent {
 							/>
 						</FormGroup>
 					</form>
-				</NavbarForm>
+				</Navbar.Form>
 			</Navbar>
 		);
 	}
