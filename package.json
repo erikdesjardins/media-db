@@ -9,15 +9,14 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "prefirst": "rimraf dist",
-    "first": "babel-node ./scripts/updateSchema.js",
-    "prestart": "npm run first",
+    "prestart": "rimraf dist",
     "start": "cross-env NODE_ENV=dev webpack --watch",
-    "preonce": "npm run first",
+    "preonce": "rimraf dist",
     "once": "cross-env NODE_ENV=dev webpack",
-    "prebuild": "npm run first",
+    "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack",
     "deploy": "babel-node ./deploy.js",
+    "print-schema": "babel-node ./scripts/printSchema.js",
     "test": "eslint . && sass-lint -v -q"
   },
   "dependencies": {
