@@ -9,10 +9,7 @@
 		"transform-async-generator-functions",
 		"syntax-trailing-function-commas",
 		"transform-async-to-generator",
-		"transform-exponentiation-operator",
-		"transform-es2015-modules-commonjs",
-		"transform-es2015-destructuring",
-		"transform-es2015-parameters"
+		"transform-es2015-modules-commonjs"
 	],
 	"env": {
 		"dev": {
@@ -27,10 +24,7 @@
 				"transform-async-generator-functions",
 				"syntax-trailing-function-commas",
 				"transform-async-to-generator",
-				"transform-exponentiation-operator",
 				"transform-es2015-modules-commonjs",
-				"transform-es2015-destructuring",
-				"transform-es2015-parameters",
 
 				"transform-dead-code-elimination",
 				"transform-node-env-inline",
@@ -49,10 +43,7 @@
                 "transform-async-generator-functions",
                 "syntax-trailing-function-commas",
                 "transform-async-to-generator",
-                "transform-exponentiation-operator",
                 "transform-es2015-modules-commonjs",
-				"transform-es2015-destructuring",
-				"transform-es2015-parameters",
 
                 "transform-dead-code-elimination",
                 "transform-node-env-inline",
