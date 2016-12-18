@@ -6,7 +6,7 @@ import relay from 'relay-decorator';
 	fragments: {
 		item: () => Relay.QL`
 			fragment on Item {
-				thumbnail
+				tinyThumbnail
 			}
 		`,
 	},
@@ -15,8 +15,8 @@ export default class ItemListThumbnail extends React.Component {
 	render() {
 		return (
 			<div className="CompactTable-item">
-				{this.props.item.thumbnail &&
-					<img className="CompactTable-thumbnail" src={this.props.item.thumbnail}/>
+				{this.props.item.tinyThumbnail &&
+					<img className="CompactTable-tinyThumbnail" src={this.props.item.tinyThumbnail}/>
 				}
 			</div>
 		);

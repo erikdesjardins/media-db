@@ -145,6 +145,7 @@ const GraphQLItemFieldUpdates = new GraphQLObjectType({
 	description: 'All fields that the provider may provide, and therefore may be updated',
 	fields: () => ({
 		thumbnail: { type: GraphQLString },
+		tinyThumbnail: { type: GraphQLString },
 		title: { type: GraphQLString },
 		creator: { type: GraphQLString },
 		genres: { type: GraphQLString },
@@ -159,6 +160,7 @@ const GraphQLItemFieldUpdatesInput = new GraphQLInputObjectType({
 	name: 'ItemFieldUpdatesInput',
 	fields: () => ({
 		thumbnail: { type: GraphQLString },
+		tinyThumbnail: { type: GraphQLString },
 		title: { type: GraphQLString },
 		creator: { type: GraphQLString },
 		genres: { type: GraphQLString },
@@ -180,6 +182,10 @@ const GraphQLItem = new GraphQLObjectType({
 		thumbnail: {
 			type: GraphQLString,
 			description: 'The item\'s thumbnail URL',
+		},
+		tinyThumbnail: {
+			type: GraphQLString,
+			description: 'The item\'s thumbnail URL, low resolution (>=20px height)',
 		},
 		title: {
 			type: new GraphQLNonNull(GraphQLString),
@@ -396,6 +402,7 @@ const GraphQLAddActiveTabItemMutation = mutationWithClientMutationId({
 		await addItem(localItemId, {
 			// defaults (may be overridden by the provider)
 			thumbnail: null,
+			tinyThumbnail: null,
 			title: '',
 			creator: '',
 			genres: '',
