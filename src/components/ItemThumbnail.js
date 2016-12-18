@@ -23,7 +23,7 @@ export default class ItemThumbnail extends React.Component {
 				}
 				<ItemRefreshButton
 					item={this.props.item}
-					fields={['thumbnail']}
+					fields={['thumbnail', 'tinyThumbnail']}
 				/>
 			</div>
 		);

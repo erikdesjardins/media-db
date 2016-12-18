@@ -14,6 +14,7 @@ import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 				id
 				fieldUpdates {
 					thumbnail
+					tinyThumbnail
 					title
 					creator
 					genres

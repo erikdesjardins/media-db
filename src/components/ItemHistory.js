@@ -15,6 +15,7 @@ import { formatDate } from '../utils/format';
 						node {
 							url
 							thumbnail
+							tinyThumbnail
 							title
 							creator
 							genres

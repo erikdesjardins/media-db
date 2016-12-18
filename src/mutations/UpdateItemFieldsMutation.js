@@ -18,6 +18,7 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 			fragment on UpdateItemFieldsPayload {
 				item {
 					thumbnail
+					tinyThumbnail
 					title
 					creator
 					genres
@@ -27,6 +28,7 @@ export default class UpdateItemFieldsMutation extends Relay.Mutation {
 					history
 					fieldUpdates {
 						thumbnail
+						tinyThumbnail
 						title
 						creator
 						genres
