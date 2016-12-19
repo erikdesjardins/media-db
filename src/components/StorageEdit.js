@@ -3,8 +3,9 @@ import React from 'react';
 import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import moment from 'moment';
+import numeral from 'numeral';
 import relay from 'relay-decorator';
-import { Button, ButtonToolbar, FormControl, FormGroup } from 'react-bootstrap';
+import { Button, ButtonToolbar, FormControl, FormGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 @relay({
 	fragments: {
@@ -103,12 +104,23 @@ export default class StorageEdit extends React.Component {
 						>
 							{'Upload'}
 						</Button>
-						<Button
-							disabled={this.isUpdating()}
-							onClick={this.handleDownload}
+						<OverlayTrigger
+							placement="right"
+							animation={false}
+							rootClose
+							overlay={
+								<Tooltip id="download-size">
+									{numeral(this.props.viewer.rawItems.length).format('0.0 b')}
+								</Tooltip>
+							}
 						>
-							{'Download'}
-						</Button>
+							<Button
+								disabled={this.isUpdating()}
+								onClick={this.handleDownload}
+							>
+								{'Download'}
+							</Button>
+						</OverlayTrigger>
 						<Button
 							style={styles.toggleTextareaButton}
 							onClick={this.handleToggleTextarea}
