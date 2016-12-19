@@ -51,7 +51,8 @@ export default class ItemRefreshButton extends React.Component {
 			},
 		};
 
-		return (this.isDisabled() ? null :
+		return (this.isDisabled() ?
+			null :
 			<OverlayTrigger
 				placement="right"
 				animation={false}
