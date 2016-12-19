@@ -25,6 +25,10 @@ export default class StorageEdit extends React.Component {
 		return this.state.value !== this.props.viewer.rawItems;
 	}
 
+	isUpdating() {
+		return this.props.relay.hasOptimisticUpdate(this.props.viewer);
+	}
+
 	handleChange = e => {
 		this.setState({ value: e.target.value });
 	};
@@ -63,7 +67,13 @@ export default class StorageEdit extends React.Component {
 					/>
 				</FormGroup>
 				<ButtonToolbar>
-					<Button bsStyle="primary" disabled={!this.isDirty()} onClick={this.handleSave}>{'Save'}</Button>
+					<Button
+						bsStyle={this.isUpdating() ? 'warning' : 'primary'}
+						disabled={this.isUpdating() || !this.isDirty()}
+						onClick={this.handleSave}
+					>
+						{'Save'}
+					</Button>
 					<Button onClick={this.handleDownload}>{'Download'}</Button>
 				</ButtonToolbar>
 			</CenteredColumn>
