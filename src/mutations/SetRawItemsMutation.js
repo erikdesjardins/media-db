@@ -16,9 +16,7 @@ export default class SetRawItemsMutation extends Relay.Mutation {
 	getFatQuery() {
 		return Relay.QL`
 			fragment on SetRawItemsPayload {
-				viewer {
-					rawItems
-				}
+				viewer
 			}
 		`;
 	}

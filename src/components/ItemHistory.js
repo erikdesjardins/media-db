@@ -93,6 +93,7 @@ export default class ItemHistory extends React.Component {
 					{diffs.map(({ description, date }, i) =>
 						// ensures React keys are unique
 						// this is fine because items can only be appended to history
+						// eslint-disable-next-line react/no-array-index-key
 						<tr key={date + i}>
 							<td>
 								<div className="CompactTable-item CompactTable-item--autowrap">

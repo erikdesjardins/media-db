@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs, global-require */
+/* eslint-disable import/no-commonjs, import/no-unassigned-import, global-require */
 
 function runWithNodeEnv(env, callback) {
 	const prevNodeEnv = process.env.NODE_ENV;
