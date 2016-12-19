@@ -7,7 +7,6 @@
 		"transform-class-properties",
 		["transform-object-rest-spread", { "useBuiltIns": true }],
 		"transform-async-generator-functions",
-		"syntax-trailing-function-commas",
 		"transform-async-to-generator",
 		"transform-es2015-modules-commonjs"
 	],
@@ -22,7 +21,6 @@
 				"transform-class-properties",
 				["transform-object-rest-spread", { "useBuiltIns": true }],
 				"transform-async-generator-functions",
-				"syntax-trailing-function-commas",
 				"transform-async-to-generator",
 				"transform-es2015-modules-commonjs",
 
@@ -41,7 +39,6 @@
 				"transform-class-properties",
 				["transform-object-rest-spread", { "useBuiltIns": true }],
                 "transform-async-generator-functions",
-                "syntax-trailing-function-commas",
                 "transform-async-to-generator",
                 "transform-es2015-modules-commonjs",
 
