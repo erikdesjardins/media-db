@@ -70,7 +70,7 @@ async function runProviders(url) {
 	);
 }
 
-const { nodeInterface, nodeField } = nodeDefinitions(
+const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
 	globalId => {
 		const { type, id } = fromGlobalId(globalId);
 		if (type === 'Item') {
@@ -359,6 +359,7 @@ const Query = new GraphQLObjectType({
 	name: 'Query',
 	fields: () => ({
 		node: nodeField,
+		nodes: nodesField,
 		viewer: {
 			type: GraphQLUser,
 			resolve: () => getViewer(),
