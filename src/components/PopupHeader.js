@@ -2,7 +2,7 @@ import AddActiveTabItemMutation from '../mutations/AddActiveTabItemMutation';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import packageName from 'prop?name!../../package.json';
+import packageName from 'prop-loader?name!../../package.json';
 import icon from '../images/icon32.png';
 import { Button, Glyphicon, Navbar } from 'react-bootstrap';
 

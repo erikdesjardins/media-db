@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 	"name": "media-db",
 	"short_name": "mdb",
-	"description": "{{prop?description!../package.json}}",
-	"version": "{{prop?version!../package.json}}",
+	"description": "{{prop-loader?description!../package.json}}",
+	"version": "{{prop-loader?version!../package.json}}",
 	"minimum_chrome_version": "55",
 	"permissions": [
 		"<all_urls>",
