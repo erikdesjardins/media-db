@@ -3,10 +3,8 @@
 	"plugins": [
 		"transform-decorators-legacy",
 		"transform-function-bind",
-		"transform-export-extensions",
 		"transform-class-properties",
 		["transform-object-rest-spread", { "useBuiltIns": true }],
-		"transform-async-generator-functions",
 		"transform-async-to-generator",
 		"transform-es2015-modules-commonjs"
 	],
@@ -17,10 +15,8 @@
 
 				"transform-decorators-legacy",
 				"transform-function-bind",
-				"transform-export-extensions",
 				"transform-class-properties",
 				["transform-object-rest-spread", { "useBuiltIns": true }],
-				"transform-async-generator-functions",
 				"transform-async-to-generator",
 				"transform-es2015-modules-commonjs",
 
@@ -35,16 +31,14 @@
 
 				"transform-decorators-legacy",
 				"transform-function-bind",
-				"transform-export-extensions",
 				"transform-class-properties",
 				["transform-object-rest-spread", { "useBuiltIns": true }],
-                "transform-async-generator-functions",
-                "transform-async-to-generator",
-                "transform-es2015-modules-commonjs",
+				"transform-async-to-generator",
+				"transform-es2015-modules-commonjs",
 
-                "transform-dead-code-elimination",
-                "transform-node-env-inline",
-                "lodash",
+				"transform-dead-code-elimination",
+				"transform-node-env-inline",
+				"lodash",
 
 				"transform-react-constant-elements",
 				"transform-react-inline-elements"
