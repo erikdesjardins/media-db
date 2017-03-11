@@ -3,9 +3,9 @@ import path from 'path';
 import deploy from 'chrome-extension-deploy';
 
 deploy({
-	clientId: process.env.CLIENT_ID,
-	clientSecret: process.env.CLIENT_SECRET,
-	refreshToken: process.env.REFRESH_TOKEN,
+	clientId: process.env.CHROME_CLIENT_ID,
+	clientSecret: process.env.CHROME_CLIENT_SECRET,
+	refreshToken: process.env.CHROME_REFRESH_TOKEN,
 	id: 'jhneopniogogjaodebilaefmllbffcmf',
 	zip: fs.readFileSync(path.join(__dirname, 'dist/media-db.zip')),
 }).then(() => {
