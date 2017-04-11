@@ -26,6 +26,7 @@
 	"extends": ["eslint:all", "plugin:react/all"],
 	"rules": {
 		"react/forbid-component-props": 0,
+		"react/forbid-foreign-prop-types": 0,
 		"react/jsx-filename-extension": 0,
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
