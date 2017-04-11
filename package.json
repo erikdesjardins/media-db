@@ -70,7 +70,7 @@
     "eslint-plugin-no-useless-assign": "1.0.2",
     "eslint-plugin-prefer-bind-operator": "0.0.4",
     "eslint-plugin-prefer-spread": "1.0.3",
-    "eslint-plugin-react": "6.10.3",
+    "eslint-plugin-react": "6.9.0",
     "eslint-plugin-sort-imports-es6": "0.0.3",
     "extricate-loader": "0.0.2",
     "file-loader": "0.10.0",
