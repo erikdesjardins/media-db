@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import BellOnBundlerErrorPlugin from 'bell-on-bundler-error-plugin';
 import InertEntryPlugin from 'inert-entry-webpack-plugin';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import ZipPlugin from 'zip-webpack-plugin';
 import { join } from 'path';
@@ -73,6 +74,7 @@ export default {
 	plugins: [
 		new InertEntryPlugin(),
 		new webpack.IgnorePlugin(/^\.\/locale\b/), // moment locales
+		new LodashModuleReplacementPlugin(),
 		(isProduction && new ZipPlugin({ filename: 'media-db.zip' })),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
