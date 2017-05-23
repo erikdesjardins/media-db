@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { diff as deepDiff } from 'deep-diff';
+import deepDiff from 'deep-diff';
 import { fillPanelBody } from '../styles/bootstrap';
 import { formatDate } from '../utils/format';
 
