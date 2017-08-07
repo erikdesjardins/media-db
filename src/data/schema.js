@@ -64,8 +64,8 @@ const runInfoCallback = _.memoize(
 
 async function runProviders(url) {
 	const providers = await getProviders();
-	return providers.reduce((promise, { infoCallback }) =>
-			promise.then(result => result || runInfoCallback(infoCallback, url)),
+	return providers.reduce(
+		(promise, { infoCallback }) => promise.then(result => result || runInfoCallback(infoCallback, url)),
 		Promise.resolve(false)
 	);
 }

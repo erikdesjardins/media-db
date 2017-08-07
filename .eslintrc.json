@@ -26,13 +26,13 @@
 	"extends": ["eslint:all", "plugin:react/all"],
 	"rules": {
 		"react/forbid-component-props": 0,
+		"react/forbid-foreign-prop-types": 0,
 		"react/jsx-filename-extension": 0,
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
 		"react/jsx-max-props-per-line": 0,
 		"react/jsx-no-bind": 0,
 		"react/jsx-sort-props": 0,
-		"react/jsx-space-before-closing": [2, "never"],
 		"react/jsx-tag-spacing": [2, { "closingSlash": "never", "beforeSelfClosing": "never", "afterOpening": "never" }],
 		"react/no-set-state": 0,
 		"react/prefer-stateless-function": 0,
@@ -65,6 +65,7 @@
 		"import/newline-after-import": 2,
 		"import/no-absolute-path": 2,
 		"import/no-amd": 2,
+		"import/no-anonymous-default-export": 0,
 		"import/no-commonjs": 2,
 		"import/no-deprecated": 2,
 		"import/no-duplicates": 2,
@@ -108,7 +109,9 @@
 		"no-use-before-define": [2, "nofunc"],
 		"no-magic-numbers": 0,
 
+		"array-bracket-newline": 0,
 		"array-callback-return": 0,
+		"array-element-newline": 0,
 		"arrow-parens": [2, "as-needed"],
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"callback-return": 0,
@@ -154,7 +157,11 @@
 		"sort-keys": 0,
 		"sort-vars": 0,
 		"sort-imports": 0, // see sort-imports-es6/sort-imports-es6
-		"space-before-function-paren": [2, "never"],
+		"space-before-function-paren": [2, {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
 		"strict": [2, "never"], // Babel inserts it for us
 		"valid-jsdoc": [2, { "requireParamDescription": false, "prefer": { "return": "returns" } }],
 		"vars-on-top": 0,
