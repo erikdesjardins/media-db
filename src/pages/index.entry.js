@@ -8,12 +8,18 @@ import Storage from '../containers/Storage';
 import Providers from '../containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
-import sendMessageNetworkLayer from '../network/sendMessageNetworkLayer';
+import schema from '../data/schema';
+import { graphql } from 'graphql';
+import { LocalNetworkLayer } from '../network/localNetworkLayer';
 import { IndexRedirect, Route, Router, applyRouterMiddleware, hashHistory } from 'react-router';
 import useRelay from 'react-router-relay';
 import { render } from 'react-dom';
 
-Relay.injectNetworkLayer(sendMessageNetworkLayer);
+// http://graphql.org/docs/api-reference-graphql/#graphql
+// https://github.com/relay-tools/relay-local-schema/blob/master/src/NetworkLayer.js
+Relay.injectNetworkLayer(
+	new LocalNetworkLayer((request, variables) => graphql(schema, request, null, null, variables))
+);
 
 render((
 	<Router
