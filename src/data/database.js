@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
 import { distinct, map, whereEquals, whereRegex, reverse } from '../utils/db';
@@ -42,7 +41,7 @@ export function getItems() {
 }
 
 export function getFilteredItems(filterMap) {
-	return _.toPairs(filterMap).reduce(
+	return Object.entries(filterMap).reduce(
 		(items, [key, value]) => (value ? items::whereEquals(key, value) : items),
 		getItems()
 	);

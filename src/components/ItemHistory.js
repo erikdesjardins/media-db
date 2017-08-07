@@ -52,10 +52,10 @@ export default class ItemHistory extends React.Component {
 				const diff = deepDiff(from, to, (path, key) => key === 'date' || String(key).startsWith('_'));
 
 				if (!diff) {
-					return {
+					return [{
 						description: 'no change',
 						date: to.date,
-					};
+					}];
 				}
 
 				return diff

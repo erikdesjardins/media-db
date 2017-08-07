@@ -59,7 +59,7 @@ export default class ItemRefreshButton extends React.Component {
 				rootClose
 				overlay={
 					<Tooltip id="field-updates">
-						{_.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields))).join(', ')}
+						{Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
 					</Tooltip>
 				}
 			>

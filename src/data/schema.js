@@ -515,7 +515,7 @@ const GraphQLUpdateItemFieldsMutation = mutationWithClientMutationId({
 	},
 	mutateAndGetPayload: async ({ id, fieldUpdates }) => {
 		const localItemId = fromGlobalId(id).id;
-		const patch = _.pickBy(fieldUpdates); // truthy
+		const patch = _.pickBy(fieldUpdates, x => x);
 		await updateItem(localItemId, patch);
 		return { localItemId };
 	},
