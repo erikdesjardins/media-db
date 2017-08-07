@@ -1,16 +1,17 @@
-import App from '../containers/App';
-import Items from '../containers/Items';
-import Search from '../containers/Search';
-import Sidebar from '../containers/Sidebar';
-import SidebarInfo from '../containers/SidebarInfo';
-import SidebarHistory from '../containers/SidebarHistory';
-import Storage from '../containers/Storage';
-import Providers from '../containers/Providers';
+import App from './containers/App';
+import Popup from './containers/Popup';
+import Items from './containers/Items';
+import Search from './containers/Search';
+import Sidebar from './containers/Sidebar';
+import SidebarInfo from './containers/SidebarInfo';
+import SidebarHistory from './containers/SidebarHistory';
+import Storage from './containers/Storage';
+import Providers from './containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
-import schema from '../data/schema';
+import schema from './data/schema';
 import { graphql } from 'graphql';
-import { LocalNetworkLayer } from '../network/localNetworkLayer';
+import { LocalNetworkLayer } from './network/localNetworkLayer';
 import { IndexRedirect, Route, Router, applyRouterMiddleware, hashHistory } from 'react-router';
 import useRelay from 'react-router-relay';
 import { render } from 'react-dom';
@@ -27,6 +28,10 @@ render((
 		render={applyRouterMiddleware(useRelay)}
 		environment={Relay.Store}
 	>
+		<Route
+			path="/popup" component={Popup}
+			queries={{ viewer: () => Relay.QL`query { viewer }` }}
+		/>
 		<Route path="/" component={App}>
 			<IndexRedirect to="items"/>
 			<Route

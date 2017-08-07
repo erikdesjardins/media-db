@@ -23,7 +23,6 @@
 			"19": "{{./images/icon19.png}}",
 			"38": "{{./images/icon38.png}}"
 		},
-		"default_popup": "{{./html/popup.html}}"
-	},
-	"index": "{{./html/index.html}}"
+		"default_popup": "{{./index.html}}#/popup"
+	}
 }
