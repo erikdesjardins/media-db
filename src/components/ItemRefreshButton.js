@@ -43,14 +43,14 @@ export default class ItemRefreshButton extends React.Component {
 		}));
 	};
 
-	render() {
-		const styles = {
-			refreshButton: {
-				marginTop: '-2px',
-				marginBottom: '-2px',
-			},
-		};
+	styles = {
+		refreshButton: {
+			marginTop: '-2px',
+			marginBottom: '-2px',
+		},
+	};
 
+	render() {
 		return (this.isDisabled() ?
 			null :
 			<OverlayTrigger
@@ -64,7 +64,7 @@ export default class ItemRefreshButton extends React.Component {
 				}
 			>
 				<Button
-					style={styles.refreshButton}
+					style={this.styles.refreshButton}
 					bsSize="xsmall"
 					disabled={this.isDisabled()}
 					onClick={this.handleClick}

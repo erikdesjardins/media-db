@@ -26,20 +26,20 @@ export default class PopupHeader extends React.Component {
 		}));
 	};
 
-	render() {
-		const styles = {
-			img: {
-				display: 'inline',
-				margin: '-6px 10px -6px 0',
-			},
-		};
+	styles = {
+		img: {
+			display: 'inline',
+			margin: '-6px 10px -6px 0',
+		},
+	};
 
+	render() {
 		return (
 			<Navbar staticTop>
 				<Navbar.Header>
 					<Navbar.Brand>
 						<a href={indexPath}>
-							<img style={styles.img} src={icon}/>
+							<img style={this.styles.img} src={icon}/>
 							{packageName}
 						</a>
 					</Navbar.Brand>

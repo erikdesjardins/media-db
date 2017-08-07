@@ -34,13 +34,13 @@ import { formatDate } from '../utils/format';
 	},
 })
 export default class ItemHistory extends React.Component {
-	render() {
-		const styles = {
-			historyTable: {
-				...fillPanelBody,
-			},
-		};
+	styles = {
+		historyTable: {
+			...fillPanelBody,
+		},
+	};
 
+	render() {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
 		const diffs = [
@@ -86,7 +86,7 @@ export default class ItemHistory extends React.Component {
 
 		return (
 			<table
-				style={styles.historyTable}
+				style={this.styles.historyTable}
 				className="CompactTable CompactTable--stripe"
 			>
 				<tbody>

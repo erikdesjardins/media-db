@@ -37,38 +37,35 @@ export default class Provider extends React.Component {
 		}));
 	};
 
-	render() {
-		const styles = {
-			panel: {
-				fontFamily: 'monospace',
-			},
-			input: {
-				fontFamily: 'monospace',
-				resize: 'vertical',
-				minHeight: '200px',
-				margin: '-15px -15px -30px -15px',
-				width: 'calc(100% + 30px)',
-				boxShadow: 'none',
-				border: 'none',
-			},
-			remove: {
-				float: 'right',
-				fontFamily: 'sans-serif',
-			},
-		};
+	styles = {
+		panel: {
+			fontFamily: 'monospace',
+		},
+		input: {
+			fontFamily: 'monospace',
+			resize: 'vertical',
+			minHeight: '200px',
+			margin: '-15px -15px -30px -15px',
+			width: 'calc(100% + 30px)',
+			boxShadow: 'none',
+			border: 'none',
+		},
+		remove: {
+			float: 'right',
+			fontFamily: 'sans-serif',
+		},
+	};
 
-		// IntelliJ can't deal with braces in strings in JSX... -.-
-		const prefix = 'function fetchInfo(url) {';
-		const suffix = '}';
+	render() {
 		return (
 			<div>
 				<Panel
-					style={styles.panel}
+					style={this.styles.panel}
 					header={
 						<div>
-							{prefix}
+							{'function fetchInfo(url) \u007B'}
 							<Button
-								style={styles.remove}
+								style={this.styles.remove}
 								bsStyle="danger"
 								bsSize="xsmall"
 								onClick={this.handleRemove}
@@ -77,10 +74,10 @@ export default class Provider extends React.Component {
 							</Button>
 						</div>
 					}
-					footer={suffix}
+					footer={'\u007D'}
 				>
 					<AutosaveInput
-						style={styles.input}
+						style={this.styles.input}
 						componentClass="textarea"
 						hasFeedback
 						defaultValue={this.props.provider.infoCallback}

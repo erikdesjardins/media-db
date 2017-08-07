@@ -1,15 +1,15 @@
 import React from 'react';
 
 export default class Footer extends React.PureComponent {
-	render() {
-		const styles = {
-			spacer: {
-				marginTop: '20px',
-			},
-		};
+	styles = {
+		spacer: {
+			marginTop: '20px',
+		},
+	};
 
+	render() {
 		return (
-			<div style={styles.spacer}/>
+			<div style={this.styles.spacer}/>
 		);
 	}
 }

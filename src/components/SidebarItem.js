@@ -12,22 +12,22 @@ export default class SidebarItem extends React.PureComponent {
 		return `${this.props.pathname.split('/').slice(0, -1).join('/')}/${path}`;
 	}
 
-	render() {
-		const styles = {
-			panel: {
-				overflow: 'hidden',
-			},
-			tabSelect: {
-				...panelHeaderButtonCenter,
-			},
-		};
+	styles = {
+		panel: {
+			overflow: 'hidden',
+		},
+		tabSelect: {
+			...panelHeaderButtonCenter,
+		},
+	};
 
+	render() {
 		return (
 			<Panel
-				style={styles.panel}
+				style={this.styles.panel}
 				header={
 					<ButtonGroup
-						style={styles.tabSelect}
+						style={this.styles.tabSelect}
 						bsSize="xsmall"
 					>
 						<LinkContainer to={this.relativePath('info')}>

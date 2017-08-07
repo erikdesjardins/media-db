@@ -26,20 +26,20 @@ export default class Header extends React.PureComponent {
 		this.context.router.push(`/search/${btoa(this.state.query)}/full`);
 	};
 
-	render() {
-		const styles = {
-			img: {
-				display: 'inline',
-				margin: '-6px 10px -6px 0',
-			},
-		};
+	styles = {
+		img: {
+			display: 'inline',
+			margin: '-6px 10px -6px 0',
+		},
+	};
 
+	render() {
 		return (
 			<Navbar staticTop>
 				<Navbar.Header>
 					<Navbar.Brand>
 						<Link to="/items">
-							<img style={styles.img} src={icon}/>
+							<img style={this.styles.img} src={icon}/>
 							{packageName}
 						</Link>
 					</Navbar.Brand>
