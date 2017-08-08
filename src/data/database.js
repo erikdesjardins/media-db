@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
-import { distinct, map, whereEquals, whereRegex, reverse } from '../utils/db';
+import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../utils/db';
 import { reduce, repeatWhile } from '../utils/generator';
 
 export class Item {}
@@ -37,7 +37,7 @@ export function getItemHistory(id) {
 }
 
 export function getItems() {
-	return db.media.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
+	return db.media.orderBy('date').toArray()::reverse()::distinct('id')::sortBy('statusDate');
 }
 
 export function getFilteredItems(filterMap) {
