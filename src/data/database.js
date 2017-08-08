@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
 import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../utils/db';
-import { reduce, repeatWhile } from '../utils/generator';
+import { repeatWhile } from '../utils/array';
 
 export class Item {}
 export class Provider {}
@@ -50,7 +50,7 @@ export function getFilteredItems(filterMap) {
 // field:regex field2:regex with spaces
 export function getQueriedItems(query) {
 	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
-	return repeatWhile(() => re.exec(query))::reduce(
+	return repeatWhile(() => re.exec(query)).reduce(
 		(items, [, key, regex]) => (regex ? items::whereRegex(key, regex) : items),
 		getItems()
 	);
