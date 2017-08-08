@@ -34,12 +34,10 @@ export default {
 						presets: ['react'],
 						plugins: [
 							[babelRelayPlugin, { enforceSchema: isProduction }],
-
 							'transform-decorators-legacy',
 							'transform-function-bind',
 							'transform-class-properties',
 							['transform-object-rest-spread', { useBuiltIns: true }],
-
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': isProduction ? 'production' : 'development',
@@ -110,8 +108,9 @@ export default {
 		new InertEntryPlugin(),
 		new webpack.IgnorePlugin(/^\.\/locale\b/), // moment locales
 		new LodashModuleReplacementPlugin(),
-		(isProduction && new ZipPlugin({ filename: 'media-db.zip' })),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
+
+		isProduction && new ZipPlugin({ filename: 'media-db.zip' }),
 	].filter(x => x),
 };
