@@ -48,6 +48,7 @@ export default {
 
 							isProduction && 'transform-react-constant-elements',
 							isProduction && 'transform-react-inline-elements',
+							isProduction && 'transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: !isProduction,
 						babelrc: false,
@@ -66,7 +67,9 @@ export default {
 							['transform-define', {
 								'process.env.NODE_ENV': isProduction ? 'production' : 'development',
 							}],
-						],
+
+							isProduction && 'transform-react-remove-prop-types',
+						].filter(x => x),
 						comments: false,
 						compact: true,
 						babelrc: false,
