@@ -6,6 +6,8 @@ import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import ZipPlugin from 'zip-webpack-plugin';
 import { join } from 'path';
 
+const babelRelayPlugin = require.resolve('./babelRelayPlugin');
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
@@ -26,7 +28,31 @@ export default {
 			test: /\.js$/,
 			exclude: join(__dirname, 'node_modules'),
 			use: [
-				{ loader: 'babel-loader' },
+				{
+					loader: 'babel-loader',
+					options: {
+						presets: ['react'],
+						plugins: [
+							[babelRelayPlugin, { enforceSchema: isProduction }],
+
+							'transform-decorators-legacy',
+							'transform-function-bind',
+							'transform-class-properties',
+							['transform-object-rest-spread', { useBuiltIns: true }],
+
+							'transform-dead-code-elimination',
+							['transform-define', {
+								'process.env.NODE_ENV': isProduction ? 'production' : 'development',
+							}],
+							'lodash',
+
+							isProduction && 'transform-react-constant-elements',
+							isProduction && 'transform-react-inline-elements',
+						].filter(x => x),
+						comments: !isProduction,
+						babelrc: false,
+					},
+				},
 			],
 		}, {
 			test: /\.js$/,
@@ -35,7 +61,13 @@ export default {
 				{
 					loader: 'babel-loader',
 					options: {
-						plugins: ['transform-dead-code-elimination', 'transform-node-env-inline'],
+						plugins: [
+							'transform-dead-code-elimination',
+							['transform-define', {
+								'process.env.NODE_ENV': isProduction ? 'production' : 'development',
+							}],
+						],
+						comments: false,
 						compact: true,
 						babelrc: false,
 					},

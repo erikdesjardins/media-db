@@ -1,5 +1,4 @@
 {
-	"presets": ["react"],
 	"plugins": [
 		"transform-decorators-legacy",
 		"transform-function-bind",
@@ -7,38 +6,5 @@
 		["transform-object-rest-spread", { "useBuiltIns": true }],
 
 		"transform-es2015-modules-commonjs"
-	],
-	"env": {
-		"dev": {
-			"plugins": [
-				"./babelRelayPlugin",
-
-				"transform-decorators-legacy",
-				"transform-function-bind",
-				"transform-class-properties",
-				["transform-object-rest-spread", { "useBuiltIns": true }],
-
-				"transform-dead-code-elimination",
-				"transform-node-env-inline",
-				"lodash"
-			]
-		},
-		"production": {
-			"plugins": [
-				["./babelRelayPlugin", { "enforceSchema": true }],
-
-				"transform-decorators-legacy",
-				"transform-function-bind",
-				"transform-class-properties",
-				["transform-object-rest-spread", { "useBuiltIns": true }],
-
-				"transform-dead-code-elimination",
-				"transform-node-env-inline",
-				"lodash",
-
-				"transform-react-constant-elements",
-				"transform-react-inline-elements"
-			]
-		}
-	}
+	]
 }
