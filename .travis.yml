@@ -1,8 +1,8 @@
 language: node_js
-node_js: 6
+node_js: 8
 script:
-  - npm test
-  - npm run build
+  - yarn test
+  - yarn run build
 branches:
   only:
     - master
@@ -19,11 +19,10 @@ env:
     - secure: qx9fDt4n7Ho21sNLYfQgOekol7CKMJOGNRyl87LVInT1lYOHdk7wXganuix6QBJX8dFPwryqlzlzwiy8R4Qj6kSw1oLa6aoQkzyi6sv9t9Yso45rAptwFymuyQWqhGbcrsFPRg3SKjrkWp0XC5TfNo+VMLQRsEHr/6uYHxxA03hsQtyZg8DnDO5aGMV9wA3Zfxx1UShVbXjkqATQPBhgUbv3pd3LXvz1mTh6w1udgrpYje42OOwgt84sbIuIQLRhPp5MapHz61yA4lpNakIdhlRjWmliO3rR/fsOvt2wT8pq7d7hXLSZ7mfxVz10TIwPHmpXFc3odIaf5H9d7CBU4YPS/Bu4bFkUhu603Ah/10fmI8WPqbmSoFNSXDIVT0N8Ge642myfcf1Rf5e+/Vj0HIvCZIAOtMLFey7yWF0oOgvKSmJDWPD1NVdX+1pr0ce2g97llRhnNzcrkQD3wPkgoAMw9ufjgUlp9zcqeoV6pFV2K+E9v13qSzjjmPDUob7GPAzaYyHRUc+DHL56d+tmWO8feX+97Evm8s1hOLYEy9OkWMON2ouWSfWXMr+bxcVDgJ6mywK4g+OP2Y45dPvULxvfl8h3xuURxlayWFde/1Wf5MEdsAb8rlDyiZ4XsthuWHczRfXpsWmGvUsdT/dlE6mPNTdCkK0N/R43BT62upI=
 deploy:
   - provider: script
-    script: npm run deploy
+    script: yarn run deploy
     skip_cleanup: true
     on:
       tags: true
-      node: 6
   - provider: releases
     api_key:
       secure: FPa03/o+WBapHfFV3ZX9ShgQXyO5yHYcqH4S9a8wMbCNTz4M6+6RAf3ErsbDz5WlI11HzxCumVYsxxztaUCCWKJCNOgLOAkpLIQAPryq2X2wDfZDmCnWII2GNQj3FWequO8P57ZkXkkgZqqC6tGY00U6mIvNbIVm4QlY6wsDGd0izeR54z4OncDqOg09KTvHca1H/9K1MzachWhTbjtXEyaEJowV+GYvxb9cobPnowgtF42Iu5uz2ufLI5EfEeE8TyWuTXCKf+6THl2FvCKn4W/ss2H4F+lLgmb9uZs0kN2Adz3xCINCxlHbQXomqXKuAlG0gM1jTvuFmPjNES4Nr9FitqjXN9Ka0vaHjMc7iqUmjTUI3Znzn/2UrVF9KGEKJfeDUNvP8grz8puy62B7D/KzqHNNmLldpHB/2cWVcD2vCQlHwBhNBcr51olswvJe8EKByqPHZUiy4Jaoirdf/YJFJfWTacGg627sNFik3piBXEtIYT7wfdc9A652KBxXzAY6Gk0ddnDVVsNZ8g4dFzDUzkSfj4VAMKvrtFtbFEI2UhJ/VRW2Khm4jNlKZuvRSTqbWJgU9ZbZ8mAXnZI5ao0dUsafgBjUej27tp7XpTuRW6C1Ih7qDMYCdfg/voOFH2TZ8SK2btTR9YMIU+hHvBOiC3x2s8IQG8by7EZybog=
@@ -31,4 +30,3 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      node: 6
