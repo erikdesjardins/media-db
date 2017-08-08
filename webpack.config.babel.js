@@ -17,7 +17,7 @@ export default {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
-	devtool: isProduction ? 'source-map' : 'cheap-source-map',
+	devtool: 'source-map',
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
