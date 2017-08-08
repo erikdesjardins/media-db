@@ -35,7 +35,7 @@ export default class Header extends React.PureComponent {
 
 	render() {
 		return (
-			<Navbar staticTop>
+			<Navbar staticTop collapseOnSelect>
 				<Navbar.Header>
 					<Navbar.Brand>
 						<Link to="/items">
@@ -43,23 +43,26 @@ export default class Header extends React.PureComponent {
 							{packageName}
 						</Link>
 					</Navbar.Brand>
+					<Navbar.Toggle/>
 				</Navbar.Header>
-				<Nav>
-					<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
-					<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
-				</Nav>
-				<Navbar.Form pullRight>
-					<form onSubmit={this.handleSubmitSearch}>
-						<FormGroup>
-							<FormControl
-								type="text"
-								placeholder="Search"
-								value={this.state.query}
-								onChange={this.handleChangeSearch}
-							/>
-						</FormGroup>
-					</form>
-				</Navbar.Form>
+				<Navbar.Collapse>
+					<Nav>
+						<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
+						<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
+					</Nav>
+					<Navbar.Form pullRight>
+						<form onSubmit={this.handleSubmitSearch}>
+							<FormGroup>
+								<FormControl
+									type="text"
+									placeholder="Search"
+									value={this.state.query}
+									onChange={this.handleChangeSearch}
+								/>
+							</FormGroup>
+						</form>
+					</Navbar.Form>
+				</Navbar.Collapse>
 			</Navbar>
 		);
 	}
