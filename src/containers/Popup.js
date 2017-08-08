@@ -1,14 +1,13 @@
-import PopupHeader from '../components/PopupHeader';
 import PopupInfo from '../components/PopupInfo';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
+import { Grid } from 'react-bootstrap';
 
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				${PopupHeader.getFragment('viewer')}
 				${PopupInfo.getFragment('viewer')}
 			}
 		`,
@@ -17,10 +16,9 @@ import relay from 'relay-decorator';
 export default class Popup extends React.Component {
 	render() {
 		return (
-			<div>
-				<PopupHeader viewer={this.props.viewer}/>
+			<Grid fluid>
 				<PopupInfo viewer={this.props.viewer}/>
-			</div>
+			</Grid>
 		);
 	}
 }

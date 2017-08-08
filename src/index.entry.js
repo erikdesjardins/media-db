@@ -28,12 +28,12 @@ render((
 		render={applyRouterMiddleware(useRelay)}
 		environment={Relay.Store}
 	>
-		<Route
-			path="/popup" component={Popup}
-			queries={{ viewer: () => Relay.QL`query { viewer }` }}
-		/>
 		<Route path="/" component={App}>
 			<IndexRedirect to="items"/>
+			<Route
+				path="popup" component={Popup}
+				queries={{ viewer: () => Relay.QL`query { viewer }` }}
+			/>
 			<Route
 				path="items" component={Items}
 				queries={{ viewer: () => Relay.QL`query { viewer }` }}
