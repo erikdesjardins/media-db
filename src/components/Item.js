@@ -7,7 +7,8 @@ import ItemListProductionStatus from './ItemListProductionStatus';
 import ItemListStatusDate from './ItemListStatusDate';
 import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 

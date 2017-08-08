@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import packageName from 'prop-loader?name!../../package.json';
 import icon from '../images/icon32.png';
 import { FormControl, FormGroup, Nav, NavItem, Navbar } from 'react-bootstrap';
