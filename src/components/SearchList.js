@@ -15,20 +15,20 @@ import { fillPanelBody } from '../styles/bootstrap';
 	},
 })
 export default class SearchList extends React.Component {
-	render() {
-		const styles = {
-			panel: {
-				overflow: 'hidden',
-			},
-			itemList: {
-				...fillPanelBody,
-			},
-		};
+	styles = {
+		panel: {
+			overflow: 'hidden',
+		},
+		itemList: {
+			...fillPanelBody,
+		},
+	};
 
+	render() {
 		return (
-			<Panel style={styles.panel}>
+			<Panel style={this.styles.panel}>
 				<ItemList
-					style={styles.itemList}
+					style={this.styles.itemList}
 					items={this.props.items}
 				/>
 			</Panel>

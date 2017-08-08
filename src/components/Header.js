@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import packageName from 'prop?name!../../package.json';
+import React from 'react';
+import PropTypes from 'prop-types';
+import packageName from 'prop-loader?name!../../package.json';
 import icon from '../images/icon32.png';
 import { FormControl, FormGroup, Nav, NavItem, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
@@ -26,40 +27,43 @@ export default class Header extends React.PureComponent {
 		this.context.router.push(`/search/${btoa(this.state.query)}/full`);
 	};
 
-	render() {
-		const styles = {
-			img: {
-				display: 'inline',
-				margin: '-6px 10px -6px 0',
-			},
-		};
+	styles = {
+		img: {
+			display: 'inline',
+			margin: '-6px 10px -6px 0',
+		},
+	};
 
+	render() {
 		return (
-			<Navbar staticTop>
+			<Navbar staticTop collapseOnSelect>
 				<Navbar.Header>
 					<Navbar.Brand>
 						<Link to="/items">
-							<img style={styles.img} src={icon}/>
+							<img style={this.styles.img} src={icon}/>
 							{packageName}
 						</Link>
 					</Navbar.Brand>
+					<Navbar.Toggle/>
 				</Navbar.Header>
-				<Nav>
-					<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
-					<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
-				</Nav>
-				<Navbar.Form pullRight>
-					<form onSubmit={this.handleSubmitSearch}>
-						<FormGroup>
-							<FormControl
-								type="text"
-								placeholder="Search"
-								value={this.state.query}
-								onChange={this.handleChangeSearch}
-							/>
-						</FormGroup>
-					</form>
-				</Navbar.Form>
+				<Navbar.Collapse>
+					<Nav>
+						<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
+						<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
+					</Nav>
+					<Navbar.Form pullRight>
+						<form onSubmit={this.handleSubmitSearch}>
+							<FormGroup>
+								<FormControl
+									type="text"
+									placeholder="Search"
+									value={this.state.query}
+									onChange={this.handleChangeSearch}
+								/>
+							</FormGroup>
+						</form>
+					</Navbar.Form>
+				</Navbar.Collapse>
 			</Navbar>
 		);
 	}

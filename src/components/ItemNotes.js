@@ -22,16 +22,16 @@ export default class ItemNotes extends React.Component {
 		}));
 	};
 
-	render() {
-		const styles = {
-			textarea: {
-				resize: 'vertical',
-			},
-		};
+	styles = {
+		textarea: {
+			resize: 'vertical',
+		},
+	};
 
+	render() {
 		return (
 			<AutosaveInput
-				style={styles.textarea}
+				style={this.styles.textarea}
 				componentClass="textarea"
 				label="Notes"
 				defaultValue={this.props.item.notes}

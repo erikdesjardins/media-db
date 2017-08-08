@@ -1,5 +1,6 @@
 import Item from './Item';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 

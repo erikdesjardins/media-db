@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { diff as deepDiff } from 'deep-diff';
+import deepDiff from 'deep-diff';
 import { fillPanelBody } from '../styles/bootstrap';
 import { formatDate } from '../utils/format';
 
@@ -34,13 +34,13 @@ import { formatDate } from '../utils/format';
 	},
 })
 export default class ItemHistory extends React.Component {
-	render() {
-		const styles = {
-			historyTable: {
-				...fillPanelBody,
-			},
-		};
+	styles = {
+		historyTable: {
+			...fillPanelBody,
+		},
+	};
 
+	render() {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
 		const diffs = [
@@ -52,10 +52,10 @@ export default class ItemHistory extends React.Component {
 				const diff = deepDiff(from, to, (path, key) => key === 'date' || String(key).startsWith('_'));
 
 				if (!diff) {
-					return {
+					return [{
 						description: 'no change',
 						date: to.date,
-					};
+					}];
 				}
 
 				return diff
@@ -86,7 +86,7 @@ export default class ItemHistory extends React.Component {
 
 		return (
 			<table
-				style={styles.historyTable}
+				style={this.styles.historyTable}
 				className="CompactTable CompactTable--stripe"
 			>
 				<tbody>

@@ -64,29 +64,29 @@ export default class ItemView extends React.Component {
 		});
 	};
 
-	render() {
-		const styles = {
-			statusSelect: {
-				...panelHeaderButtonCenter,
-			},
-			panel: {
-				overflow: 'hidden',
-			},
-			itemList: {
-				...fillPanelBody,
-			},
-			pageButtons: {
-				float: 'right',
-			},
-		};
+	styles = {
+		statusSelect: {
+			...panelHeaderButtonCenter,
+		},
+		panel: {
+			overflow: 'hidden',
+		},
+		itemList: {
+			...fillPanelBody,
+		},
+		pageButtons: {
+			float: 'right',
+		},
+	};
 
+	render() {
 		return (
 			<Panel
-				style={styles.panel}
+				style={this.styles.panel}
 				header={
 					<div>
 						<SelectBar
-							style={styles.statusSelect}
+							style={this.styles.statusSelect}
 							bsSize="xsmall"
 							selected={this.props.relay.variables.status}
 							onSelect={this.handleStatusChange}
@@ -108,7 +108,7 @@ export default class ItemView extends React.Component {
 							}]}
 						/>
 						<ButtonGroup
-							style={styles.pageButtons}
+							style={this.styles.pageButtons}
 							bsSize="xsmall"
 						>
 							<Button
@@ -128,7 +128,7 @@ export default class ItemView extends React.Component {
 				}
 			>
 				<ItemList
-					style={styles.itemList}
+					style={this.styles.itemList}
 					items={this.props.viewer.items}
 					offset={this.state.offset}
 					limit={LIMIT}

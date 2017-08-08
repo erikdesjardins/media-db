@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
@@ -43,14 +44,14 @@ export default class ItemRefreshButton extends React.Component {
 		}));
 	};
 
-	render() {
-		const styles = {
-			refreshButton: {
-				marginTop: '-2px',
-				marginBottom: '-2px',
-			},
-		};
+	styles = {
+		refreshButton: {
+			marginTop: '-2px',
+			marginBottom: '-2px',
+		},
+	};
 
+	render() {
 		return (this.isDisabled() ?
 			null :
 			<OverlayTrigger
@@ -59,12 +60,12 @@ export default class ItemRefreshButton extends React.Component {
 				rootClose
 				overlay={
 					<Tooltip id="field-updates">
-						{_.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields))).join(', ')}
+						{Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
 					</Tooltip>
 				}
 			>
 				<Button
-					style={styles.refreshButton}
+					style={this.styles.refreshButton}
 					bsSize="xsmall"
 					disabled={this.isDisabled()}
 					onClick={this.handleClick}

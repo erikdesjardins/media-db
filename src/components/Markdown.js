@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { markdown } from 'snudown-js';
 
 export default class Markdown extends React.PureComponent {

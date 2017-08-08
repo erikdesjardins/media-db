@@ -1,4 +1,3 @@
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 import React from 'react';
 
@@ -8,7 +7,6 @@ export default class App extends React.PureComponent {
 			<div>
 				<Header/>
 				{this.props.children}
-				<Footer/>
 			</div>
 		);
 	}

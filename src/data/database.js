@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
-import { distinct, map, whereEquals, whereRegex, reverse } from '../utils/db';
-import { reduce, repeatWhile } from '../utils/generator';
+import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../utils/db';
+import { repeatWhile } from '../utils/array';
 
 export class Item {}
 export class Provider {}
@@ -38,11 +37,11 @@ export function getItemHistory(id) {
 }
 
 export function getItems() {
-	return db.media.orderBy('date').reverse()::distinct('id').sortBy('statusDate')::reverse();
+	return db.media.orderBy('date').toArray()::reverse()::distinct('id')::sortBy('statusDate');
 }
 
 export function getFilteredItems(filterMap) {
-	return _.toPairs(filterMap).reduce(
+	return Object.entries(filterMap).reduce(
 		(items, [key, value]) => (value ? items::whereEquals(key, value) : items),
 		getItems()
 	);
@@ -51,7 +50,7 @@ export function getFilteredItems(filterMap) {
 // field:regex field2:regex with spaces
 export function getQueriedItems(query) {
 	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
-	return repeatWhile(() => re.exec(query))::reduce(
+	return repeatWhile(() => re.exec(query)).reduce(
 		(items, [, key, regex]) => (regex ? items::whereRegex(key, regex) : items),
 		getItems()
 	);

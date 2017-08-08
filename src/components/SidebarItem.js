@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, ButtonGroup, Panel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
@@ -12,22 +13,22 @@ export default class SidebarItem extends React.PureComponent {
 		return `${this.props.pathname.split('/').slice(0, -1).join('/')}/${path}`;
 	}
 
-	render() {
-		const styles = {
-			panel: {
-				overflow: 'hidden',
-			},
-			tabSelect: {
-				...panelHeaderButtonCenter,
-			},
-		};
+	styles = {
+		panel: {
+			overflow: 'hidden',
+		},
+		tabSelect: {
+			...panelHeaderButtonCenter,
+		},
+	};
 
+	render() {
 		return (
 			<Panel
-				style={styles.panel}
+				style={this.styles.panel}
 				header={
 					<ButtonGroup
-						style={styles.tabSelect}
+						style={this.styles.tabSelect}
 						bsSize="xsmall"
 					>
 						<LinkContainer to={this.relativePath('info')}>
