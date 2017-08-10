@@ -4,7 +4,7 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import deepDiff from 'deep-diff';
 import { fillPanelBody } from '../styles/bootstrap';
-import { formatDate } from '../utils/format';
+import { formatFullDate } from '../utils/formatDate';
 
 @relay({
 	fragments: {
@@ -102,7 +102,7 @@ export default class ItemHistory extends React.Component {
 							</td>
 							<td>
 								<div className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
-									<p>{formatDate(date)}</p>
+									<p>{formatFullDate(date)}</p>
 								</div>
 							</td>
 						</tr>
