@@ -31,7 +31,17 @@ export default {
 				{
 					loader: 'babel-loader',
 					options: {
-						presets: ['react'],
+						presets: [
+							'react',
+							isProduction && ['babili', {
+								booleans: false,
+								builtIns: false,
+								flipComparisons: false,
+								infinity: false,
+								simplify: false,
+								simplifyComparisons: false,
+							}],
+						].filter(x => x),
 						plugins: [
 							[babelRelayPlugin, { enforceSchema: isProduction }],
 							'transform-decorators-legacy',
@@ -49,6 +59,7 @@ export default {
 							isProduction && 'transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: !isProduction,
+						compact: isProduction,
 						babelrc: false,
 					},
 				},
@@ -56,10 +67,21 @@ export default {
 		}, {
 			test: /\.js$/,
 			include: join(__dirname, 'node_modules'),
+			exclude: /snudown-js/,
 			use: [
 				{
 					loader: 'babel-loader',
 					options: {
+						presets: [
+							isProduction && ['babili', {
+								booleans: false,
+								builtIns: false,
+								flipComparisons: false,
+								infinity: false,
+								simplify: false,
+								simplifyComparisons: false,
+							}],
+						].filter(x => x),
 						plugins: [
 							'transform-dead-code-elimination',
 							['transform-define', {
