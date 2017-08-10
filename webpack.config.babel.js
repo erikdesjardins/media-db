@@ -128,6 +128,7 @@ export default {
 	},
 	plugins: [
 		new InertEntryPlugin(),
+		new webpack.BannerPlugin({ banner: '"use strict";', raw: true }),
 		new webpack.IgnorePlugin(/^\.\/locale\b/), // moment locales
 		new LodashModuleReplacementPlugin(),
 		new BellOnBundlerErrorPlugin(),
