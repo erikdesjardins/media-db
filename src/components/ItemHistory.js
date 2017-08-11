@@ -1,39 +1,35 @@
 import _ from 'lodash-es';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import deepDiff from 'deep-diff';
 import { fillPanelBody } from '../styles/bootstrap';
 import { formatFullDate } from '../utils/formatDate';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				history(first: 2147483647) {
-					edges {
-						node {
-							url
-							thumbnail
-							tinyThumbnail
-							title
-							creator
-							genres
-							characters
-							notes
-							tags
-							length
-							status
-							productionStatus
-							date
-						}
-					}
+@fragmentContainer(graphql`
+	fragment ItemHistory_item on Item {
+		history(first: 2147483647) @connection(key: "Connection_history") {
+			edges {
+				node {
+					url
+					thumbnail
+					tinyThumbnail
+					title
+					creator
+					genres
+					characters
+					notes
+					tags
+					length
+					status
+					productionStatus
+					date
 				}
 			}
-		`,
-	},
-})
+		}
+	}
+`)
 class ItemHistory extends React.Component {
 	styles = {
 		historyTable: {

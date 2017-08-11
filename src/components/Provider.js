@@ -1,42 +1,36 @@
 import AutosaveInput from './AutosaveInput';
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
-import relay from 'relay-decorator';
 import Button from 'react-bootstrap/es/Button';
 import Panel from 'react-bootstrap/es/Panel';
 
 export default
-@relay({
-	fragments: {
-		provider: () => Relay.QL`
-			fragment on Provider {
-				infoCallback
-				${UpdateProviderMutation.getFragment('provider')}
-				${RemoveProviderMutation.getFragment('provider')}
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${RemoveProviderMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment Provider_provider on Provider {
+		infoCallback
+		...UpdateProviderMutation_provider @relay(mask: false)
+		...RemoveProviderMutation_provider @relay(mask: false)
+	}
+	fragment Provider_viewer on User {
+		...RemoveProviderMutation_viewer @relay(mask: false)
+	}
+`)
 class Provider extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new UpdateProviderMutation({
+		new UpdateProviderMutation({
 			provider: this.props.provider,
 			infoCallback: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	handleRemove = () => {
-		Relay.Store.commitUpdate(new RemoveProviderMutation({
+		new RemoveProviderMutation({
 			provider: this.props.provider,
 			viewer: this.props.viewer,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	styles = {

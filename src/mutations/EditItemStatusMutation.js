@@ -1,33 +1,36 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class EditItemStatusMutation extends Relay.Mutation {
-	static fragments = {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				id
-			}
-		`,
-	};
+export default class EditItemStatusMutation extends Mutation {
+	static fragments = graphql`
+		fragment EditItemStatusMutation_item on Item {
+			id
+			status
+		}
+		fragment EditItemStatusMutation_viewer on User {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { editItemStatus }`;
+	constructor({ item, viewer, status }) {
+		super();
+		this.item = item;
+		this.viewer = viewer;
+		this.status = status;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on EditItemStatusPayload {
-				item {
-					status
-					statusDate
-					history
-				}
-				viewer {
-					items
+	getMutation() {
+		return graphql`
+			mutation EditItemStatusMutation($input: EditItemStatusInput!) {
+				editItemStatus(input: $input) {
+					item {
+						status
+						statusDate
+					}
+					historyItemEdge { ...ItemEdge }
+					viewer {
+						items { ...ItemConnection }
+					}
 				}
 			}
 		`;
@@ -35,40 +38,21 @@ export default class EditItemStatusMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.item.id,
-			status: this.props.status,
+			id: this.item.id,
+			status: this.status,
 		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				item: this.props.item.id,
-				viewer: this.props.viewer.id,
-			},
-		}, {
 			type: 'RANGE_ADD',
-			parentName: 'item',
-			parentID: this.props.item.id,
-			connectionName: 'history',
 			edgeName: 'historyItemEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			parentID: this.item.id,
+			connectionName: 'history',
+			connectionInfo: [{
+				key: 'Item_history',
+				rangeBehaviour: 'append',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			item: {
-				id: this.props.item.id,
-				status: this.props.status,
-				statusDate: Date.now(),
-			},
-			viewer: {
-				id: this.props.viewer.id,
-			},
-		};
 	}
 }

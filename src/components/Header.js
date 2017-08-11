@@ -7,8 +7,7 @@ import FormGroup from 'react-bootstrap/es/FormGroup';
 import Nav from 'react-bootstrap/es/Nav';
 import NavItem from 'react-bootstrap/es/NavItem';
 import Navbar from 'react-bootstrap/es/Navbar';
-import { Link } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'found';
 
 export default class Header extends React.PureComponent {
 	static contextTypes = {
@@ -52,8 +51,12 @@ export default class Header extends React.PureComponent {
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav>
-						<LinkContainer to="/providers"><NavItem>{'Providers'}</NavItem></LinkContainer>
-						<LinkContainer to="/storage"><NavItem>{'Storage'}</NavItem></LinkContainer>
+						<Link to="/providers" Component={NavItem} activePropName="active">
+							{'Providers'}
+						</Link>
+						<Link to="/storage" Component={NavItem} activePropName="active">
+							{'Storage'}
+						</Link>
 					</Nav>
 					<Navbar.Form pullRight>
 						<form onSubmit={this.handleSubmitSearch}>

@@ -1,56 +1,70 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
 import * as statusTypes from '../constants/statusTypes';
+import Mutation from './Mutation';
 
-export default class AddActiveTabItemMutation extends Relay.Mutation {
-	static fragments = {
-		viewer: () => Relay.QL`
-			fragment on User {
-				id
-			}
-		`,
-	};
+export default class AddActiveTabItemMutation extends Mutation {
+	static fragments = graphql`
+		fragment AddActiveTabItemMutation_viewer on User {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { addActiveTabItem }`;
+	constructor({ viewer }) {
+		super();
+		this.viewer = viewer;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on AddActiveTabItemPayload {
-				itemEdge
-				viewer {
-					items
-					itemForActiveTab
+	getMutation() {
+		// https://github.com/4Catalyzer/found-relay/blob/master/examples/todomvc-modern/src/mutations/AddTodoMutation.js
+		return graphql`
+			mutation AddActiveTabItemMutation($input: AddActiveTabItemInput!) {
+				addActiveTabItem(input: $input) {
+					viewer {
+						itemForActiveTab {
+							...fields_Item_scalar
+							...fields_Item_history
+							...fields_Item_fieldUpdates
+						}
+					}
+					itemEdge {
+						node {
+							...fields_Item_scalar
+							...fields_Item_history
+							...fields_Item_fieldUpdates
+						}
+					}
 				}
 			}
 		`;
 	}
 
-	getVariables() {
-		return {};
-	}
-
 	getConfigs() {
 		return [{
 			type: 'RANGE_ADD',
-			parentName: 'viewer',
-			parentID: this.props.viewer.id,
-			connectionName: 'items',
 			edgeName: 'itemEdge',
-			rangeBehaviors: {
-				'': 'append',
-				[`status(${statusTypes.WAITING})`]: null,
-				[`status(${statusTypes.PENDING})`]: 'append',
-				[`status(${statusTypes.IN_PROGRESS})`]: null,
-				[`status(${statusTypes.COMPLETE})`]: null,
-				[`status(${statusTypes.REJECTED})`]: null,
-			},
-		}, {
-			// the `itemForActiveTab` field may (should) change
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				viewer: this.props.viewer.id,
-			},
+			parentID: this.viewer.id,
+			connectionName: 'items',
+			connectionInfo: [{
+				key: 'Connection_items',
+				filters: { status: statusTypes.WAITING },
+				rangeBehavior: 'ignore',
+			}, {
+				key: 'Connection_items',
+				filters: { status: statusTypes.PENDING },
+				rangeBehavior: 'append',
+			}, {
+				key: 'Connection_items',
+				filters: { status: statusTypes.IN_PROGRESS },
+				rangeBehavior: 'ignore',
+			}, {
+				key: 'Connection_items',
+				filters: { status: statusTypes.COMPLETE },
+				rangeBehavior: 'ignore',
+			}, {
+				key: 'Connection_items',
+				filters: { status: statusTypes.REJECTED },
+				rangeBehavior: 'ignore',
+			}],
 		}];
 	}
 }

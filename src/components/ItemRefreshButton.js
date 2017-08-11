@@ -1,37 +1,33 @@
 import _ from 'lodash-es';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
-import relay from 'relay-decorator';
 import Button from 'react-bootstrap/es/Button';
 import Glyphicon from 'react-bootstrap/es/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
 import Tooltip from 'react-bootstrap/es/Tooltip';
 
+// unfortunately we need to fetch all of the fields of `fieldUpdates` to make this generic
+// but that's okay, because it's not any more expensive
 export default
-@relay({
-	fragments: {
-		// unfortunately we need to fetch all of the fields of `fieldUpdates` to make this generic
-		// but that's okay, because it's not any more expensive
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-				fieldUpdates {
-					thumbnail
-					tinyThumbnail
-					title
-					creator
-					genres
-					characters
-					length
-					productionStatus
-				}
-				${UpdateItemFieldsMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemRefreshButton_item on Item {
+		id
+		fieldUpdates {
+			thumbnail
+			tinyThumbnail
+			title
+			creator
+			genres
+			characters
+			length
+			productionStatus
+		}
+		...UpdateItemFieldsMutation_item @relay(mask: false)
+	}
+`)
 class ItemRefreshButton extends React.Component {
 	static propTypes = {
 		fields: PropTypes.arrayOf(PropTypes.oneOf([
@@ -51,10 +47,10 @@ class ItemRefreshButton extends React.Component {
 	}
 
 	handleClick = () => {
-		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
+		new UpdateItemFieldsMutation({
 			item: this.props.item,
 			fieldUpdates: _.pick(this.props.item.fieldUpdates, this.props.fields),
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	styles = {

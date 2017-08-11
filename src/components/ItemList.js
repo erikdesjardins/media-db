@@ -1,24 +1,20 @@
 import Item from './Item';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		items: () => Relay.QL`
-			fragment on ItemConnection {
-				edges {
-					node {
-						id
-						${Item.getFragment('item')}
-					}
-				}
+@fragmentContainer(graphql`
+	fragment ItemList_items on ItemConnection {
+		edges {
+			node {
+				id
+				...Item_item
 			}
-		`,
-	},
-})
+		}
+	}
+`)
 class ItemList extends React.Component {
 	static propTypes = {
 		offset: PropTypes.number,

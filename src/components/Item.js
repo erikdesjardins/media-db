@@ -9,28 +9,24 @@ import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-				${ItemListThumbnail.getFragment('item')}
-				${ItemListTitle.getFragment('item')}
-				${ItemListCreator.getFragment('item')}
-				${ItemListGenres.getFragment('item')}
-				${ItemListCharacters.getFragment('item')}
-				${ItemListNotes.getFragment('item')}
-				${ItemListStatusDate.getFragment('item')}
-				${ItemListLength.getFragment('item')}
-				${ItemListProductionStatus.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment Item_item on Item {
+		id
+		...ItemListThumbnail_item
+		...ItemListTitle_item
+		...ItemListCreator_item
+		...ItemListGenres_item
+		...ItemListCharacters_item
+		...ItemListNotes_item
+		...ItemListStatusDate_item
+		...ItemListLength_item
+		...ItemListProductionStatus_item
+	}
+`)
 class Item extends React.Component {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,

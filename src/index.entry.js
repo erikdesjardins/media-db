@@ -1,73 +1,63 @@
-import App from './containers/App';
-import Popup from './containers/Popup';
-import Items from './containers/Items';
-import Search from './containers/Search';
-import Sidebar from './containers/Sidebar';
-import SidebarInfo from './containers/SidebarInfo';
-import SidebarHistory from './containers/SidebarHistory';
-import Storage from './containers/Storage';
-import Providers from './containers/Providers';
 import React from 'react';
-import Relay from 'react-relay';
-import schema from './data/schema';
+import { Environment, Network, QueryResponseCache, RecordSource, Store } from 'relay-runtime';
 import { graphql } from 'graphql/graphql';
-import { LocalNetworkLayer } from './network/localNetworkLayer';
-import { IndexRedirect, Route, Router, applyRouterMiddleware, hashHistory } from 'react-router';
-import useRelay from 'react-router-relay';
+import HashProtocol from 'farce/lib/HashProtocol';
+import queryMiddleware from 'farce/lib/queryMiddleware';
+import createFarceRouter from 'found/lib/createFarceRouter';
+import createRender from 'found/lib/createRender';
+import { Resolver } from 'found-relay';
 import { render } from 'react-dom';
+import schema from './data/schema';
+import { routeConfig } from './routes';
 
-// http://graphql.org/docs/api-reference-graphql/#graphql
-// https://github.com/relay-tools/relay-local-schema/blob/master/src/NetworkLayer.js
-Relay.injectNetworkLayer(
-	new LocalNetworkLayer((request, variables) => graphql(schema, request, null, null, variables))
+const cache = new QueryResponseCache({ size: Infinity, ttl: Infinity });
+
+const environment = new Environment({
+	network: Network.create((operation, variables, cacheConfig) => {
+		const isQuery = operation.operationKind === 'query';
+		const forceFetch = cacheConfig.force;
+
+		if (isQuery && !forceFetch) {
+			const cachedPayload = cache.get(operation.name, variables);
+			if (cachedPayload !== null) return cachedPayload;
+		}
+
+		return graphql(schema, operation.text, null, null, variables).then(payload => {
+			if (payload.errors) throw new Error(payload.errors);
+
+			if (isQuery) {
+				// query response, save to cache
+				cache.set(operation.name, variables, payload);
+			} else {
+				// non-query response (mutation), clear the cache
+				cache.clear();
+			}
+
+			return payload;
+		});
+	}),
+	store: new Store(new RecordSource()),
+});
+
+const Router = createFarceRouter({
+	historyProtocol: new HashProtocol(),
+	historyMiddlewares: [queryMiddleware],
+	routeConfig,
+	render: createRender({
+		renderError({ error }) {
+			return (
+				<div>
+					{error.status === 404 ?
+						'Not found' :
+						<span>{String(error)}</span>
+					}
+				</div>
+			);
+		},
+	}),
+});
+
+render(
+	<Router resolver={new Resolver(environment)}/>,
+	document.getElementById('app')
 );
-
-render((
-	<Router
-		history={hashHistory}
-		render={applyRouterMiddleware(useRelay)}
-		environment={Relay.Store}
-	>
-		<Route path="/" component={App}>
-			<IndexRedirect to="items"/>
-			<Route
-				path="popup" component={Popup}
-				queries={{ viewer: () => Relay.QL`query { viewer }` }}
-			/>
-			<Route
-				path="items" component={Items}
-				queries={{ viewer: () => Relay.QL`query { viewer }` }}
-			>
-				<Route path=":id" component={Sidebar}>
-					<IndexRedirect to="info"/>
-					<Route
-						path="info" component={SidebarInfo}
-						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
-						queries={{
-							item: () => Relay.QL`query { node(id: $id) }`,
-							viewer: () => Relay.QL`query { viewer }`,
-						}}
-					/>
-					<Route
-						path="history" component={SidebarHistory}
-						prepareParams={({ id }) => ({ id: decodeURIComponent(id) })}
-						queries={{ item: () => Relay.QL`query { node(id: $id) }` }}
-					/>
-				</Route>
-			</Route>
-			<Route
-				path="search/:query/:preview" component={Search}
-				prepareParams={({ query, preview }) => ({ query: atob(query), preview: preview === 'preview' })}
-				queries={{ viewer: () => Relay.QL`query { viewer }` }}
-			/>
-			<Route
-				path="providers" component={Providers}
-				queries={{ viewer: () => Relay.QL`query { viewer }` }}
-			/>
-			<Route
-				path="storage" component={Storage}
-				queries={{ viewer: () => Relay.QL`query { viewer }` }}
-			/>
-		</Route>
-	</Router>
-), document.getElementById('app'));

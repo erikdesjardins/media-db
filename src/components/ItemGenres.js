@@ -2,27 +2,23 @@ import AutosaveInput from './AutosaveInput';
 import EditItemGenresMutation from '../mutations/EditItemGenresMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				genres
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemGenresMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemGenres_item on Item {
+		genres
+		...ItemRefreshButton_item
+		...EditItemGenresMutation_item @relay(mask: false)
+	}
+`)
 class ItemGenres extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemGenresMutation({
+		new EditItemGenresMutation({
 			item: this.props.item,
 			genres: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

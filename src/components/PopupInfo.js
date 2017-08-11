@@ -1,32 +1,28 @@
 import AddActiveTabItemMutation from '../mutations/AddActiveTabItemMutation';
 import ItemInfo from '../components/ItemInfo';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import Button from 'react-bootstrap/es/Button';
 import FormGroup from 'react-bootstrap/es/FormGroup';
 import Glyphicon from 'react-bootstrap/es/Glyphicon';
 
 export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				providerMatchesActiveTab
-				itemForActiveTab {
-					${ItemInfo.getFragment('item')}
-				}
-				${ItemInfo.getFragment('viewer')}
-				${AddActiveTabItemMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment PopupInfo_viewer on User {
+		providerMatchesActiveTab
+		itemForActiveTab {
+			...ItemInfo_item
+		}
+		...ItemInfo_viewer
+		...AddActiveTabItemMutation_viewer @relay(mask: false)
+	}
+`)
 class PopupInfo extends React.Component {
 	handleAddItem = () => {
-		Relay.Store.commitUpdate(new AddActiveTabItemMutation({
+		new AddActiveTabItemMutation({
 			viewer: this.props.viewer,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

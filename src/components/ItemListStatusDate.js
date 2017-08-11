@@ -1,18 +1,14 @@
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import { formatFullDate } from '../utils/formatDate';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				statusDate
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListStatusDate_item on Item {
+		statusDate
+	}
+`)
 class ItemListStatusDate extends React.Component {
 	render() {
 		return (

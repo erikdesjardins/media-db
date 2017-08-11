@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/es/Button';
 import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
 import Panel from 'react-bootstrap/es/Panel';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'found';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 
 export default class SidebarItem extends React.PureComponent {
@@ -33,12 +33,12 @@ export default class SidebarItem extends React.PureComponent {
 							style={this.styles.tabSelect}
 							bsSize="xsmall"
 						>
-							<LinkContainer to={this.relativePath('info')}>
-								<Button>{'Info'}</Button>
-							</LinkContainer>
-							<LinkContainer to={this.relativePath('history')}>
-								<Button>{'History'}</Button>
-							</LinkContainer>
+							<Link to={this.relativePath('info')} Component={Button} activePropName="active">
+								{'Info'}
+							</Link>
+							<Link to={this.relativePath('history')} Component={Button} activePropName="active">
+								{'History'}
+							</Link>
 						</ButtonGroup>
 					</Panel.Title>
 				</Panel.Heading>

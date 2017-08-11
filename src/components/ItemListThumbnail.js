@@ -1,17 +1,13 @@
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				tinyThumbnail
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListThumbnail_item on Item {
+		tinyThumbnail
+	}
+`)
 class ItemListThumbnail extends React.Component {
 	render() {
 		return (

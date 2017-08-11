@@ -2,27 +2,23 @@ import AutosaveInput from './AutosaveInput';
 import EditItemCharactersMutation from '../mutations/EditItemCharactersMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				characters
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemCharactersMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemCharacters_item on Item {
+		characters
+		...ItemRefreshButton_item
+		...EditItemCharactersMutation_item @relay(mask: false)
+	}
+`)
 class ItemCharacters extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemCharactersMutation({
+		new EditItemCharactersMutation({
 			item: this.props.item,
 			characters: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

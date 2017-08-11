@@ -1,47 +1,27 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class SetRawItemsMutation extends Relay.Mutation {
-	static fragments = {
-		viewer: () => Relay.QL`
-			fragment on User {
-				id
-			}
-		`,
-	};
-
-	getMutation() {
-		return Relay.QL`mutation { setRawItems }`;
+export default class SetRawItemsMutation extends Mutation {
+	constructor({ rawItems }) {
+		super();
+		this.rawItems = rawItems;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on SetRawItemsPayload {
-				viewer
+	getMutation() {
+		return graphql`
+			mutation SetRawItemsMutation($input: SetRawItemsInput!) {
+				setRawItems(input: $input) {
+					viewer {
+						rawItems
+					}
+				}
 			}
 		`;
 	}
 
 	getVariables() {
 		return {
-			rawItems: this.props.rawItems,
-		};
-	}
-
-	getConfigs() {
-		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				viewer: this.props.viewer.id,
-			},
-		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			viewer: {
-				id: this.props.viewer.id,
-				rawItems: this.props.rawItems,
-			},
+			rawItems: this.rawItems,
 		};
 	}
 }

@@ -1,18 +1,14 @@
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import numeral from 'numeral';
-import relay from 'relay-decorator';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				length
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListLength_item on Item {
+		length
+	}
+`)
 class ItemListLength extends React.Component {
 	render() {
 		return (

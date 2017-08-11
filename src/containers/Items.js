@@ -1,21 +1,17 @@
 import ItemView from '../components/ItemView';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import Col from 'react-bootstrap/es/Col';
 import Grid from 'react-bootstrap/es/Grid';
 import Row from 'react-bootstrap/es/Row';
 
 export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				${ItemView.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment Items_viewer on User {
+		...ItemView_viewer
+	}
+`)
 class Items extends React.Component {
 	render() {
 		return (

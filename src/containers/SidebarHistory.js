@@ -1,18 +1,14 @@
 import ItemHistory from '../components/ItemHistory';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				${ItemHistory.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment SidebarHistory_item on Item {
+		...ItemHistory_item
+	}
+`)
 class SidebarHistory extends React.Component {
 	render() {
 		return (

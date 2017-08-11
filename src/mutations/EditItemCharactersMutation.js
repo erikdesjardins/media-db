@@ -1,26 +1,33 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class EditItemCharactersMutation extends Relay.Mutation {
-	static fragments = {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-			}
-		`,
-	};
+export default class EditItemCharactersMutation extends Mutation {
+	static fragments = graphql`
+		fragment EditItemCharactersMutation_item on Item {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { editItemCharacters }`;
+	constructor({ item, characters }) {
+		super();
+		this.item = item;
+		this.characters = characters;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on EditItemCharactersPayload {
-				item {
-					characters
-					history
-					fieldUpdates {
+	getMutation() {
+		return graphql`
+			mutation EditItemCharactersMutation($input: EditItemCharactersInput!) {
+				editItemCharacters(input: $input) {
+					item {
 						characters
+						fieldUpdates {
+							characters
+						}
+					}
+					historyItemEdge {
+						node {
+							...fields_Item_scalar
+						}
 					}
 				}
 			}
@@ -29,35 +36,21 @@ export default class EditItemCharactersMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.item.id,
-			characters: this.props.characters,
+			id: this.item.id,
+			characters: this.characters,
 		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				item: this.props.item.id,
-			},
-		}, {
 			type: 'RANGE_ADD',
-			parentName: 'item',
-			parentID: this.props.item.id,
-			connectionName: 'history',
 			edgeName: 'historyItemEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			parentID: this.item.id,
+			connectionName: 'history',
+			connectionInfo: [{
+				key: 'Connection_history',
+				rangeBehavior: 'append',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			item: {
-				id: this.props.item.id,
-				characters: this.props.characters,
-			},
-		};
 	}
 }

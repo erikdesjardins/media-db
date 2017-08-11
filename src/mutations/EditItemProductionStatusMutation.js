@@ -1,26 +1,33 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class EditItemProductionStatusMutation extends Relay.Mutation {
-	static fragments = {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-			}
-		`,
-	};
+export default class EditItemProductionStatusMutation extends Mutation {
+	static fragments = graphql`
+		fragment EditItemProductionStatusMutation_item on Item {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { editItemProductionStatus }`;
+	constructor({ item, productionStatus }) {
+		super();
+		this.item = item;
+		this.productionStatus = productionStatus;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on EditItemProductionStatusPayload {
-				item {
-					productionStatus
-					history
-					fieldUpdates {
+	getMutation() {
+		return graphql`
+			mutation EditItemProductionStatusMutation($input: EditItemProductionStatusInput!) {
+				editItemProductionStatus(input: $input) {
+					item {
 						productionStatus
+						fieldUpdates {
+							productionStatus
+						}
+					}
+					historyItemEdge {
+						node {
+							...fields_Item_scalar
+						}
 					}
 				}
 			}
@@ -29,35 +36,21 @@ export default class EditItemProductionStatusMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.item.id,
-			productionStatus: this.props.productionStatus,
+			id: this.item.id,
+			productionStatus: this.productionStatus,
 		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				item: this.props.item.id,
-			},
-		}, {
 			type: 'RANGE_ADD',
-			parentName: 'item',
-			parentID: this.props.item.id,
-			connectionName: 'history',
 			edgeName: 'historyItemEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			parentID: this.item.id,
+			connectionName: 'history',
+			connectionInfo: [{
+				key: 'Connection_history',
+				rangeBehavior: 'append',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			item: {
-				id: this.props.item.id,
-				productionStatus: this.props.productionStatus,
-			},
-		};
 	}
 }

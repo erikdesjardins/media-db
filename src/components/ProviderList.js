@@ -2,32 +2,30 @@ import AddProviderMutation from '../mutations/AddProviderMutation';
 import CenteredColumn from './CenteredColumn';
 import Provider from './Provider';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import Button from 'react-bootstrap/es/Button';
 
 export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				providers(first: 2147483647) {
-					edges {
-						node {
-							id
-							${Provider.getFragment('provider')}
-						}
-					}
+@fragmentContainer(graphql`
+	fragment ProviderList_viewer on User {
+		providers(first: 2147483647) @connection(key: "Connection_providers") {
+			edges {
+				node {
+					id
+					...Provider_provider
 				}
-				${Provider.getFragment('viewer')}
-				${AddProviderMutation.getFragment('viewer')}
 			}
-		`,
-	},
-})
+		}
+		...Provider_viewer
+		...AddProviderMutation_viewer @relay(mask: false)
+	}
+`)
 class ProviderList extends React.Component {
 	handleAddProvider = () => {
-		Relay.Store.commitUpdate(new AddProviderMutation({ viewer: this.props.viewer }));
+		new AddProviderMutation({
+			viewer: this.props.viewer,
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

@@ -7,8 +7,6 @@ import ZipPlugin from 'zip-webpack-plugin';
 import sass from 'sass';
 import { join } from 'path';
 
-const babelRelayPlugin = require.resolve('./babelRelayPlugin');
-
 export default ({ production, zip } = {}) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	output: {
@@ -42,7 +40,7 @@ export default ({ production, zip } = {}) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							[babelRelayPlugin, { enforceSchema: production }],
+							'relay',
 							'transform-decorators-legacy',
 							'transform-function-bind',
 							'transform-class-properties',
@@ -66,7 +64,7 @@ export default ({ production, zip } = {}) => ({
 				},
 			],
 		}, {
-			test: /\.js$/,
+			test: /\.m?js$/,
 			include: join(__dirname, 'node_modules'),
 			exclude: /snudown-js/,
 			use: [
@@ -84,6 +82,22 @@ export default ({ production, zip } = {}) => ({
 							}],
 						].filter(x => x),
 						plugins: [
+							// kill bare `process` identifier, which breaks webpack and is unnecessary
+							// https://github.com/graphql/graphql-js/pull/1174
+							({ types: t }) => ({
+								visitor: {
+									Identifier(path) {
+										if (
+											path.node.name === 'process' &&
+											!t.isMemberExpression(path.parentPath.node) &&
+											!path.scope.getBinding(path.node.name)
+										) {
+											path.replaceWith(t.nullLiteral());
+										}
+									},
+								},
+							}),
+
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': production ? 'production' : 'development',

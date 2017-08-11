@@ -8,33 +8,27 @@ import ItemTags from './ItemTags';
 import ItemThumbnail from './ItemThumbnail';
 import ItemTitleBlock from './ItemTitleBlock';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-				${ItemThumbnail.getFragment('item')}
-				${ItemTitleBlock.getFragment('item')}
-				${ItemStatus.getFragment('item')}
-				${ItemProductionStatus.getFragment('item')}
-				${ItemGenres.getFragment('item')}
-				${ItemCharacters.getFragment('item')}
-				${ItemLength.getFragment('item')}
-				${ItemNotes.getFragment('item')}
-				${ItemTags.getFragment('item')}
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${ItemStatus.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemInfo_item on Item {
+		id
+		...ItemThumbnail_item
+		...ItemTitleBlock_item
+		...ItemStatus_item
+		...ItemProductionStatus_item
+		...ItemGenres_item
+		...ItemCharacters_item
+		...ItemLength_item
+		...ItemNotes_item
+		...ItemTags_item
+	}
+	fragment ItemInfo_viewer on User {
+		...ItemStatus_viewer
+	}
+`)
 class ItemInfo extends React.Component {
 	render() {
 		const { item, viewer } = this.props;

@@ -1,23 +1,26 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class UpdateProviderMutation extends Relay.Mutation {
-	static fragments = {
-		provider: () => Relay.QL`
-			fragment on Provider {
-				id
-			}
-		`,
-	};
+export default class UpdateProviderMutation extends Mutation {
+	static fragments = graphql`
+		fragment UpdateProviderMutation_provider on Provider {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { updateProvider }`;
+	constructor({ provider, infoCallback }) {
+		super();
+		this.provider = provider;
+		this.infoCallback = infoCallback;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on UpdateProviderPayload {
-				provider {
-					infoCallback
+	getMutation() {
+		return graphql`
+			mutation UpdateProviderMutation($input: UpdateProviderInput!) {
+				updateProvider(input: $input) {
+					provider {
+						infoCallback
+					}
 				}
 			}
 		`;
@@ -25,26 +28,8 @@ export default class UpdateProviderMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.provider.id,
-			infoCallback: this.props.infoCallback,
-		};
-	}
-
-	getConfigs() {
-		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				provider: this.props.provider.id,
-			},
-		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			provider: {
-				id: this.props.provider.id,
-				infoCallback: this.props.infoCallback,
-			},
+			id: this.provider.id,
+			infoCallback: this.infoCallback,
 		};
 	}
 }

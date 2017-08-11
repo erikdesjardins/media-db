@@ -1,9 +1,9 @@
 import CenteredColumn from './CenteredColumn';
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import numeral from 'numeral';
-import relay from 'relay-decorator';
 import Button from 'react-bootstrap/es/Button';
 import ButtonToolbar from 'react-bootstrap/es/ButtonToolbar';
 import FormControl from 'react-bootstrap/es/FormControl';
@@ -13,20 +13,16 @@ import Tooltip from 'react-bootstrap/es/Tooltip';
 import { formatIsoDate } from '../utils/formatDate';
 
 export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				rawItems
-				${SetRawItemsMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment StorageEdit_viewer on User {
+		rawItems
+	}
+`)
 class StorageEdit extends React.Component {
 	state = {
 		value: this.props.viewer.rawItems,
 		showTextarea: false,
+		isUpdating: false,
 	};
 
 	componentWillReceiveProps(nextProps) {
@@ -42,8 +38,13 @@ class StorageEdit extends React.Component {
 		return this.state.value !== this.props.viewer.rawItems;
 	}
 
-	isUpdating() {
-		return this.props.relay.hasOptimisticUpdate(this.props.viewer);
+	runMutation(rawItems) {
+		this.setState({ isUpdating: true });
+		new SetRawItemsMutation({ rawItems })
+			.commit(this.props.relay.environment)
+			.then(() => {
+				this.setState({ isUpdating: false });
+			});
 	}
 
 	handleToggleTextarea = () => {
@@ -57,10 +58,7 @@ class StorageEdit extends React.Component {
 	};
 
 	handleSave = () => {
-		Relay.Store.commitUpdate(new SetRawItemsMutation({
-			rawItems: this.state.value,
-			viewer: this.props.viewer,
-		}));
+		this.runMutation(this.state.value);
 	};
 
 	handleUpload = () => {
@@ -70,10 +68,7 @@ class StorageEdit extends React.Component {
 		input.addEventListener('change', () => {
 			const reader = new FileReader();
 			reader.onload = () => {
-				Relay.Store.commitUpdate(new SetRawItemsMutation({
-					rawItems: reader.result,
-					viewer: this.props.viewer,
-				}));
+				this.runMutation(reader.result);
 			};
 			reader.readAsText(input.files[0]);
 		}, { once: true });
@@ -89,24 +84,25 @@ class StorageEdit extends React.Component {
 		a.click();
 	};
 
-	render() {
-		const styles = {
-			textarea: {
-				resize: 'vertical',
-				height: '500px',
-			},
-			toggleTextareaButton: {
-				float: 'right',
-			},
-		};
+	styles = {
+		textarea: {
+			resize: 'vertical',
+			height: '500px',
+			fontFamily: 'monospace',
+		},
+		toggleTextareaButton: {
+			float: 'right',
+		},
+	};
 
+	render() {
 		return (
 			<CenteredColumn>
 				<FormGroup>
 					<ButtonToolbar>
 						<Button
-							bsStyle={this.isUpdating() ? 'warning' : 'primary'}
-							disabled={this.isUpdating()}
+							bsStyle={this.state.isUpdating ? 'warning' : 'primary'}
+							disabled={this.state.isUpdating}
 							onClick={this.handleUpload}
 						>
 							{'Upload'}
@@ -122,14 +118,14 @@ class StorageEdit extends React.Component {
 							}
 						>
 							<Button
-								disabled={this.isUpdating()}
+								disabled={this.state.isUpdating}
 								onClick={this.handleDownload}
 							>
 								{'Download'}
 							</Button>
 						</OverlayTrigger>
 						<Button
-							style={styles.toggleTextareaButton}
+							style={this.styles.toggleTextareaButton}
 							onClick={this.handleToggleTextarea}
 						>
 							{this.state.showTextarea ? 'Hide Textarea' : 'Show Textarea'}
@@ -140,15 +136,15 @@ class StorageEdit extends React.Component {
 					<div>
 						<FormGroup>
 							<FormControl
-								style={styles.textarea}
+								style={this.styles.textarea}
 								componentClass="textarea"
 								value={this.state.value}
 								onChange={this.handleChange}
 							/>
 						</FormGroup>
 						<Button
-							bsStyle={this.isUpdating() ? 'warning' : 'primary'}
-							disabled={this.isUpdating() || !this.isDirty()}
+							bsStyle={this.state.isUpdating ? 'warning' : 'primary'}
+							disabled={this.state.isUpdating || !this.isDirty()}
 							onClick={this.handleSave}
 						>
 							{'Save'}

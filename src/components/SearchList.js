@@ -1,20 +1,16 @@
 import ItemList from './ItemList';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import Panel from 'react-bootstrap/es/Panel';
 import { fillPanelBody } from '../styles/bootstrap';
 
 export default
-@relay({
-	fragments: {
-		items: () => Relay.QL`
-			fragment on ItemConnection {
-				${ItemList.getFragment('items')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment SearchList_items on ItemConnection {
+		...ItemList_items
+	}
+`)
 class SearchList extends React.Component {
 	styles = {
 		panel: {

@@ -2,6 +2,7 @@
 	"parser": "babel-eslint",
 	"plugins": [
 		"react",
+		"relay",
 		"no-useless-assign",
 		"consistent-return-legacy",
 		"prefer-bind-operator",
@@ -46,6 +47,11 @@
 		"react/require-default-props": 0,
 		"react/require-optimization": 0,
 		"react/sort-prop-types": 0,
+
+		"relay/graphql-syntax": 2,
+		"relay/compat-uses-vars": 0,
+		"relay/graphql-naming": 2,
+		"relay/generated-flow-types": 0,
 
 		"no-useless-assign/no-useless-assign": 2,
 
@@ -113,6 +119,7 @@
 		"no-tabs": 0,
 		"no-ternary": 0,
 		"no-underscore-dangle": 0,
+		"no-unused-expressions": [2, { "allowTaggedTemplates": true }],
 		"no-use-before-define": [2, "nofunc"],
 		"no-magic-numbers": 0,
 

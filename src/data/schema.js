@@ -542,10 +542,6 @@ const GraphQLAddProviderMutation = mutationWithClientMutationId({
 				};
 			},
 		},
-		viewer: {
-			type: GraphQLUser,
-			resolve: () => getViewer(),
-		},
 	},
 	mutateAndGetPayload: async () => {
 		const localProviderId = randomId();
@@ -582,10 +578,6 @@ const GraphQLRemoveProviderMutation = mutationWithClientMutationId({
 		deletedProviderId: {
 			type: GraphQLID,
 			resolve: ({ id }) => id,
-		},
-		viewer: {
-			type: GraphQLUser,
-			resolve: () => getViewer(),
 		},
 	},
 	mutateAndGetPayload: async ({ id }) => {

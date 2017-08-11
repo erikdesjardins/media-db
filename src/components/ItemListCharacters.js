@@ -1,18 +1,14 @@
 import Markdown from './Markdown';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				characters
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListCharacters_item on Item {
+		characters
+	}
+`)
 class ItemListCharacters extends React.Component {
 	render() {
 		return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import Glyphicon from 'react-bootstrap/es/Glyphicon';
 
@@ -24,15 +24,11 @@ const props = {
 };
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				productionStatus
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListProductionStatus_item on Item {
+		productionStatus
+	}
+`)
 class ItemListProductionStatus extends React.Component {
 	render() {
 		return (

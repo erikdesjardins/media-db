@@ -1,20 +1,16 @@
 import Markdown from './Markdown';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				url
-				title
-				tags
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemListTitle_item on Item {
+		url
+		title
+		tags
+	}
+`)
 class ItemListTitle extends React.Component {
 	render() {
 		return (

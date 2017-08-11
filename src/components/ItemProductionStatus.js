@@ -1,32 +1,28 @@
 import EditItemProductionStatusMutation from '../mutations/EditItemProductionStatusMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import SelectBar from './SelectBar';
-import relay from 'relay-decorator';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import FormGroup from 'react-bootstrap/es/FormGroup';
 import FormControl from 'react-bootstrap/es/FormControl';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				productionStatus
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemProductionStatusMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemProductionStatus_item on Item {
+		productionStatus
+		...ItemRefreshButton_item
+		...EditItemProductionStatusMutation_item @relay(mask: false)
+	}
+`)
 class ItemProductionStatus extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemProductionStatusMutation({
+		new EditItemProductionStatusMutation({
 			item: this.props.item,
 			productionStatus: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

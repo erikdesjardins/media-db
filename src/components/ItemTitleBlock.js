@@ -1,21 +1,17 @@
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				url
-				title
-				creator
-				${ItemRefreshButton.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemTitleBlock_item on Item {
+		url
+		title
+		creator
+		...ItemRefreshButton_item
+	}
+`)
 class ItemTitleBlock extends React.Component {
 	render() {
 		const { item } = this.props;

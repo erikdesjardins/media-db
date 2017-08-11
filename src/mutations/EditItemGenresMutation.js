@@ -1,26 +1,33 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class EditItemGenresMutation extends Relay.Mutation {
-	static fragments = {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-			}
-		`,
-	};
+export default class EditItemGenresMutation extends Mutation {
+	static fragments = graphql`
+		fragment EditItemGenresMutation_item on Item {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { editItemGenres }`;
+	constructor({ item, genres }) {
+		super();
+		this.item = item;
+		this.genres = genres;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on EditItemGenresPayload {
-				item {
-					genres
-					history
-					fieldUpdates {
+	getMutation() {
+		return graphql`
+			mutation EditItemGenresMutation($input: EditItemGenresInput!) {
+				editItemGenres(input: $input) {
+					item {
 						genres
+						fieldUpdates {
+							genres
+						}
+					}
+					historyItemEdge {
+						node {
+							...fields_Item_scalar
+						}
 					}
 				}
 			}
@@ -29,35 +36,21 @@ export default class EditItemGenresMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.item.id,
-			genres: this.props.genres,
+			id: this.item.id,
+			genres: this.genres,
 		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'FIELDS_CHANGE',
-			fieldIDs: {
-				item: this.props.item.id,
-			},
-		}, {
 			type: 'RANGE_ADD',
-			parentName: 'item',
-			parentID: this.props.item.id,
-			connectionName: 'history',
 			edgeName: 'historyItemEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			parentID: this.item.id,
+			connectionName: 'history',
+			connectionInfo: [{
+				key: 'Connection_history',
+				rangeBehavior: 'append',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			item: {
-				id: this.props.item.id,
-				genres: this.props.genres,
-			},
-		};
 	}
 }

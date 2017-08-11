@@ -1,26 +1,22 @@
 import AutosaveInput from './AutosaveInput';
 import EditItemTagsMutation from '../mutations/EditItemTagsMutation';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				tags
-				${EditItemTagsMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemTags_item on Item {
+		tags
+		...EditItemTagsMutation_item @relay(mask: false)
+	}
+`)
 class ItemTags extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemTagsMutation({
+		new EditItemTagsMutation({
 			item: this.props.item,
 			tags: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

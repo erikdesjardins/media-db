@@ -1,56 +1,42 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class AddProviderMutation extends Relay.Mutation {
-	static fragments = {
-		viewer: () => Relay.QL`
-			fragment on User {
-				id
-			}
-		`,
-	};
+export default class AddProviderMutation extends Mutation {
+	static fragments = graphql`
+		fragment AddProviderMutation_viewer on User {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { addProvider }`;
+	constructor({ viewer }) {
+		super();
+		this.viewer = viewer;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on AddProviderPayload {
-				providerEdge
-				viewer {
-					providers
+	getMutation() {
+		return graphql`
+			mutation AddProviderMutation($input: AddProviderInput!) {
+				addProvider(input: $input) {
+					providerEdge {
+						node {
+							...fields_Provider
+						}
+					}
 				}
 			}
 		`;
 	}
 
-	getVariables() {
-		return {};
-	}
-
 	getConfigs() {
 		return [{
 			type: 'RANGE_ADD',
-			parentName: 'viewer',
-			parentID: this.props.viewer.id,
-			connectionName: 'providers',
 			edgeName: 'providerEdge',
-			rangeBehaviors: {
-				'': 'append',
-			},
+			parentID: this.viewer.id,
+			connectionName: 'providers',
+			connectionInfo: [{
+				key: 'Connection_providers',
+				rangeBehavior: 'append',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			providerEdge: {
-				node: {
-					infoCallback: '',
-				},
-			},
-			viewer: {
-				id: this.props.viewer.id,
-			},
-		};
 	}
 }

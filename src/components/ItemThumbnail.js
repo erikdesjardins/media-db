@@ -1,20 +1,16 @@
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import Thumbnail from 'react-bootstrap/es/Thumbnail';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				thumbnail
-				${ItemRefreshButton.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemThumbnail_item on Item {
+		thumbnail
+		...ItemRefreshButton_item
+	}
+`)
 class ItemThumbnail extends React.Component {
 	render() {
 		return (

@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql/type/definition';
-import { INT } from 'graphql/language/kinds';
+import { Kind } from 'graphql/language/kinds';
 
 function coerceLong(value) {
 	const num = Number(value);
@@ -16,7 +16,7 @@ export const GraphQLLong = new GraphQLScalarType({
 	serialize: coerceLong,
 	parseValue: coerceLong,
 	parseLiteral(ast) {
-		if (ast.kind === INT) {
+		if (ast.kind === Kind.INT) {
 			return coerceLong(ast.value);
 		}
 		return null;

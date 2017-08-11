@@ -1,29 +1,27 @@
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import Mutation from './Mutation';
 
-export default class RemoveProviderMutation extends Relay.Mutation {
-	static fragments = {
-		provider: () => Relay.QL`
-			fragment on Provider {
-				id
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				id
-			}
-		`,
-	};
+export default class RemoveProviderMutation extends Mutation {
+	static fragments = graphql`
+		fragment RemoveProviderMutation_provider on Provider {
+			id
+		}
+		fragment RemoveProviderMutation_viewer on User {
+			id
+		}
+	`;
 
-	getMutation() {
-		return Relay.QL`mutation { removeProvider }`;
+	constructor({ provider, viewer }) {
+		super();
+		this.provider = provider;
+		this.viewer = viewer;
 	}
 
-	getFatQuery() {
-		return Relay.QL`
-			fragment on RemoveProviderPayload {
-				deletedProviderId
-				viewer {
-					providers
+	getMutation() {
+		return graphql`
+			mutation RemoveProviderMutation($input: RemoveProviderInput!) {
+				removeProvider(input: $input) {
+					deletedProviderId
 				}
 			}
 		`;
@@ -31,26 +29,19 @@ export default class RemoveProviderMutation extends Relay.Mutation {
 
 	getVariables() {
 		return {
-			id: this.props.provider.id,
+			id: this.provider.id,
 		};
 	}
 
 	getConfigs() {
 		return [{
-			type: 'NODE_DELETE',
-			parentName: 'viewer',
-			parentID: this.props.viewer.id,
-			connectionName: 'providers',
+			type: 'RANGE_DELETE',
 			deletedIDFieldName: 'deletedProviderId',
+			parentID: this.viewer.id,
+			pathToConnection: ['viewer', 'providers'],
+			connectionKeys: [{
+				key: 'Connection_providers',
+			}],
 		}];
-	}
-
-	getOptimisticResponse() {
-		return {
-			deletedProviderId: this.props.provider.id,
-			viewer: {
-				id: this.props.viewer.id,
-			},
-		};
 	}
 }

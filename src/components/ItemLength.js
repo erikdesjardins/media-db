@@ -2,27 +2,23 @@ import AutosaveInput from './AutosaveInput';
 import EditItemLengthMutation from '../mutations/EditItemLengthMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				length
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemLengthMutation.getFragment('item')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemLength_item on Item {
+		length
+		...ItemRefreshButton_item
+		...EditItemLengthMutation_item @relay(mask: false)
+	}
+`)
 class ItemLength extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemLengthMutation({
+		new EditItemLengthMutation({
 			item: this.props.item,
 			length: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {

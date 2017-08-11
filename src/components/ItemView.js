@@ -1,8 +1,8 @@
 import ItemList from './ItemList';
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { refetchContainer } from '../utils/relay';
 import SelectBar from './SelectBar';
-import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
 import Button from 'react-bootstrap/es/Button';
 import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
@@ -13,47 +13,47 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 const LIMIT = 25;
 
 export default
-@relay({
-	initialVariables: {
-		status: statusTypes.IN_PROGRESS,
-	},
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				items(status: $status, first: 2147483647) {
-					edges
-					${ItemList.getFragment('items')}
+@refetchContainer(graphql`
+	fragment ItemView_viewer on User @argumentDefinitions(
+		status: { type: Status, defaultValue: IN_PROGRESS }
+	) {
+		items(status: $status, first: 2147483647) {
+			edges {
+				node {
+					id
 				}
 			}
-		`,
-	},
-})
+			...ItemList_items
+		}
+	}
+`, graphql`
+	query ItemViewRefetchQuery($status: Status) {
+		viewer {
+			...ItemView_viewer @arguments(status: $status)
+		}
+	}
+`)
 class ItemView extends React.Component {
 	state = {
+		status: statusTypes.IN_PROGRESS,
 		offset: 0,
 	};
 
 	handleStatusChange = status => {
-		this.props.relay.setVariables({
-			status,
-		});
-		this.setState({
-			offset: 0,
+		this.props.relay.refetch({ status }, null, () => {
+			this.setState({
+				status,
+				offset: 0,
+			});
 		});
 	};
 
 	hasPrev() {
-		return (
-			!this.props.relay.pendingVariables &&
-			this.state.offset > 0
-		);
+		return this.state.offset > 0;
 	}
 
 	hasNext() {
-		return (
-			!this.props.relay.pendingVariables &&
-			this.state.offset + LIMIT < this.props.viewer.items.edges.length
-		);
+		return this.state.offset + LIMIT < this.props.viewer.items.edges.length;
 	}
 
 	handlePrev = () => {
@@ -91,7 +91,7 @@ class ItemView extends React.Component {
 						<SelectBar
 							style={this.styles.statusSelect}
 							bsSize="xsmall"
-							selected={this.props.relay.variables.status}
+							selected={this.state.status}
 							onSelect={this.handleStatusChange}
 							options={[{
 								value: statusTypes.WAITING,

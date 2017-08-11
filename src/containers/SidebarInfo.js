@@ -1,23 +1,17 @@
 import ItemInfo from '../components/ItemInfo';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				${ItemInfo.getFragment('item')}
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${ItemInfo.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment SidebarInfo_item on Item {
+		...ItemInfo_item
+	}
+	fragment SidebarInfo_viewer on User {
+		...ItemInfo_viewer
+	}
+`)
 class SidebarInfo extends React.Component {
 	render() {
 		return (

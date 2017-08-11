@@ -1,36 +1,30 @@
 import EditItemStatusMutation from '../mutations/EditItemStatusMutation';
 import React from 'react';
-import Relay from 'react-relay';
+import { graphql } from 'react-relay';
+import { fragmentContainer } from '../utils/relay';
 import SelectBar from './SelectBar';
-import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
 import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import FormControl from 'react-bootstrap/es/FormControl';
 import FormGroup from 'react-bootstrap/es/FormGroup';
 
 export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				status
-				${EditItemStatusMutation.getFragment('item')}
-			}
-		`,
-		viewer: () => Relay.QL`
-			fragment on User {
-				${EditItemStatusMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
+@fragmentContainer(graphql`
+	fragment ItemStatus_item on Item {
+		status
+		...EditItemStatusMutation_item @relay(mask: false)
+	}
+	fragment ItemStatus_viewer on User {
+		...EditItemStatusMutation_viewer @relay(mask: false)
+	}
+`)
 class ItemStatus extends React.Component {
 	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemStatusMutation({
+		new EditItemStatusMutation({
 			item: this.props.item,
 			viewer: this.props.viewer,
 			status: value,
-		}));
+		}).commit(this.props.relay.environment);
 	};
 
 	render() {
