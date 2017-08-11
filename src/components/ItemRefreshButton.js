@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
-import { Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import Glyphicon from 'react-bootstrap/es/Glyphicon';
+import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
+import Tooltip from 'react-bootstrap/es/Tooltip';
 
 @relay({
 	fragments: {

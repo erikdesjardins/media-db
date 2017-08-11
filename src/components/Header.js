@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import packageName from 'prop-loader?name!../../package.json';
 import icon from '../images/icon32.png';
-import { FormControl, FormGroup, Nav, NavItem, Navbar } from 'react-bootstrap';
+import FormControl from 'react-bootstrap/es/FormControl';
+import FormGroup from 'react-bootstrap/es/FormGroup';
+import Nav from 'react-bootstrap/es/Nav';
+import NavItem from 'react-bootstrap/es/NavItem';
+import Navbar from 'react-bootstrap/es/Navbar';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 

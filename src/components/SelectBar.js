@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
 
 export default class SelectBar extends React.PureComponent {
 	static propTypes = {

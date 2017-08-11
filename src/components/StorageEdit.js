@@ -5,7 +5,12 @@ import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import moment from 'moment';
 import numeral from 'numeral';
 import relay from 'relay-decorator';
-import { Button, ButtonToolbar, FormControl, FormGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import ButtonToolbar from 'react-bootstrap/es/ButtonToolbar';
+import FormControl from 'react-bootstrap/es/FormControl';
+import FormGroup from 'react-bootstrap/es/FormGroup';
+import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
+import Tooltip from 'react-bootstrap/es/Tooltip';
 
 @relay({
 	fragments: {

@@ -4,7 +4,8 @@ import Relay from 'react-relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
-import { Button, Panel } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import Panel from 'react-bootstrap/es/Panel';
 
 @relay({
 	fragments: {

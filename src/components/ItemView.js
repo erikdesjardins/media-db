@@ -4,7 +4,10 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { Button, ButtonGroup, Glyphicon, Panel } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
+import Glyphicon from 'react-bootstrap/es/Glyphicon';
+import Panel from 'react-bootstrap/es/Panel';
 import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 
 const LIMIT = 25;

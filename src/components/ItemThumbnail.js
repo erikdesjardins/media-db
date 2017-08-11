@@ -2,7 +2,7 @@ import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Thumbnail } from 'react-bootstrap';
+import Thumbnail from 'react-bootstrap/es/Thumbnail';
 
 @relay({
 	fragments: {

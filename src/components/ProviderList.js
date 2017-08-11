@@ -4,7 +4,7 @@ import Provider from './Provider';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
 
 @relay({
 	fragments: {

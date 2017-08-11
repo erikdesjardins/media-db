@@ -1,5 +1,7 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/es/Col';
+import Grid from 'react-bootstrap/es/Grid';
+import Row from 'react-bootstrap/es/Row';
 
 export default class CenteredColumn extends React.PureComponent {
 	render() {
