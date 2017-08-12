@@ -2,7 +2,7 @@ import ItemList from './ItemList';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Panel } from 'react-bootstrap';
+import Panel from 'react-bootstrap/es/Panel';
 import { fillPanelBody } from '../styles/bootstrap';
 
 @relay({

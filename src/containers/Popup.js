@@ -2,7 +2,7 @@ import PopupInfo from '../components/PopupInfo';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Grid } from 'react-bootstrap';
+import Grid from 'react-bootstrap/es/Grid';
 
 @relay({
 	fragments: {

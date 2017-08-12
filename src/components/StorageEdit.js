@@ -2,10 +2,15 @@ import CenteredColumn from './CenteredColumn';
 import React from 'react';
 import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
-import moment from 'moment';
 import numeral from 'numeral';
 import relay from 'relay-decorator';
-import { Button, ButtonToolbar, FormControl, FormGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import ButtonToolbar from 'react-bootstrap/es/ButtonToolbar';
+import FormControl from 'react-bootstrap/es/FormControl';
+import FormGroup from 'react-bootstrap/es/FormGroup';
+import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
+import Tooltip from 'react-bootstrap/es/Tooltip';
+import { formatIsoDate } from '../utils/formatDate';
 
 @relay({
 	fragments: {
@@ -78,7 +83,8 @@ export default class StorageEdit extends React.Component {
 		const blob = new Blob([this.props.viewer.rawItems], { type: 'application/json' });
 		const a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);
-		a.download = `mediadb-backup-${moment().format('YYYY-MM-DD-X')}.json`;
+		const now = Date.now();
+		a.download = `mediadb-backup-${formatIsoDate(now)}-${now}.json`;
 		a.click();
 	};
 

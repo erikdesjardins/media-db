@@ -3,7 +3,9 @@ import ItemInfo from '../components/ItemInfo';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import { Button, FormGroup, Glyphicon } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import FormGroup from 'react-bootstrap/es/FormGroup';
+import Glyphicon from 'react-bootstrap/es/Glyphicon';
 
 @relay({
 	fragments: {

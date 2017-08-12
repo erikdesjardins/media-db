@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+import ControlLabel from 'react-bootstrap/es/ControlLabel';
+import FormGroup from 'react-bootstrap/es/FormGroup';
+import FormControl from 'react-bootstrap/es/FormControl';
 
 export default class AutosaveInput extends React.PureComponent {
 	static propTypes = {

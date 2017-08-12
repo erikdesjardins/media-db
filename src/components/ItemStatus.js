@@ -4,7 +4,9 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import { ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
+import ControlLabel from 'react-bootstrap/es/ControlLabel';
+import FormControl from 'react-bootstrap/es/FormControl';
+import FormGroup from 'react-bootstrap/es/FormGroup';
 
 @relay({
 	fragments: {

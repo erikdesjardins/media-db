@@ -2,7 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
-import { Glyphicon } from 'react-bootstrap';
+import Glyphicon from 'react-bootstrap/es/Glyphicon';
 
 const props = {
 	[productionStatusTypes.INCOMPLETE]: {

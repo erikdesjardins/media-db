@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, ButtonGroup, Panel } from 'react-bootstrap';
+import Button from 'react-bootstrap/es/Button';
+import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
+import Panel from 'react-bootstrap/es/Panel';
 import { LinkContainer } from 'react-router-bootstrap';
 import { panelHeaderButtonCenter } from '../styles/bootstrap';
 

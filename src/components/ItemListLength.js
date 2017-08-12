@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
+import numeral from 'numeral';
 import relay from 'relay-decorator';
-import { formatNumber } from '../utils/format';
 
 @relay({
 	fragments: {
@@ -16,7 +16,7 @@ export default class ItemListLength extends React.Component {
 	render() {
 		return (
 			<span className="CompactTable-item">
-				{formatNumber(this.props.item.length)}
+				{numeral(this.props.item.length).format('0a')}
 			</span>
 		);
 	}

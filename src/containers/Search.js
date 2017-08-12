@@ -2,7 +2,9 @@ import React from 'react';
 import Relay from 'react-relay';
 import SearchList from '../components/SearchList';
 import relay from 'relay-decorator';
-import { Col, Grid, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/es/Col';
+import Grid from 'react-bootstrap/es/Grid';
+import Row from 'react-bootstrap/es/Row';
 
 @relay({
 	initialVariables: {
