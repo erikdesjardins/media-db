@@ -46,6 +46,7 @@ export default (env = {}) => ({
 							'transform-function-bind',
 							'transform-class-properties',
 							['transform-object-rest-spread', { useBuiltIns: true }],
+							'transform-flow-strip-types',
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': env.production ? 'production' : 'development',
