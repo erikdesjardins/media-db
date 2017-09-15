@@ -164,7 +164,6 @@
 			"named": "never",
 			"asyncArrow": "always"
 		}],
-		"spaced-comment": [2, "always", { "markers": [":", "::"] }],
 		"strict": [2, "never"], // Babel inserts it for us
 		"valid-jsdoc": [2, { "requireParamDescription": false, "prefer": { "return": "returns" } }],
 		"vars-on-top": 0,

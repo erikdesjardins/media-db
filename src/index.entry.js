@@ -10,7 +10,7 @@ import Providers from './containers/Providers';
 import React from 'react';
 import Relay from 'react-relay';
 import schema from './data/schema';
-import { graphql } from 'graphql';
+import { graphql } from 'graphql/graphql';
 import { LocalNetworkLayer } from './network/localNetworkLayer';
 import { IndexRedirect, Route, Router, applyRouterMiddleware, hashHistory } from 'react-router';
 import useRelay from 'react-router-relay';

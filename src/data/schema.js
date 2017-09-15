@@ -5,16 +5,22 @@ import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
 
 import {
-	GraphQLBoolean,
+	GraphQLSchema,
+} from 'graphql/type/schema';
+
+import {
 	GraphQLEnumType,
-	GraphQLID,
 	GraphQLInputObjectType,
-	GraphQLInt,
 	GraphQLNonNull,
 	GraphQLObjectType,
-	GraphQLSchema,
+} from 'graphql/type/definition';
+
+import {
+	GraphQLBoolean,
+	GraphQLID,
+	GraphQLInt,
 	GraphQLString,
-} from 'graphql';
+} from 'graphql/type/scalars';
 
 import {
 	GraphQLLong,

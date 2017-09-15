@@ -1,4 +1,4 @@
-export function formatIsoDate(date /*: number */) {
+export function formatIsoDate(date: number) {
 	const parsed = new Date(date);
 	const year = parsed.getFullYear(); // 2017
 	const month = parsed.getMonth(); // 0-11
@@ -16,7 +16,7 @@ function pmod(x, n) {
 	return ((x % n) + n) % n;
 }
 
-export function formatFullDate(date /*: number */) {
+export function formatFullDate(date: number) {
 	const parsed = new Date(date);
 	const hour = parsed.getHours(); // 0-23
 	const minute = parsed.getMinutes(); // 0-59

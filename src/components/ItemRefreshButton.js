@@ -33,7 +33,16 @@ import Tooltip from 'react-bootstrap/es/Tooltip';
 })
 export default class ItemRefreshButton extends React.Component {
 	static propTypes = {
-		fields: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+		fields: PropTypes.arrayOf(PropTypes.oneOf([
+			'thumbnail',
+			'tinyThumbnail',
+			'title',
+			'creator',
+			'genres',
+			'characters',
+			'length',
+			'productionStatus',
+		]).isRequired).isRequired,
 	};
 
 	isDisabled() {

@@ -6,8 +6,8 @@ import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
 export default class SelectBar extends React.PureComponent {
 	static propTypes = {
 		options: PropTypes.arrayOf(PropTypes.shape({
-			value: PropTypes.any.isRequired, // eslint-disable-line react/no-unused-prop-types
-			name: PropTypes.node, // eslint-disable-line react/no-unused-prop-types
+			value: PropTypes.any.isRequired,
+			name: PropTypes.node,
 		})).isRequired,
 		selected: PropTypes.string,
 		onSelect: PropTypes.func.isRequired,
