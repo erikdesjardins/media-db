@@ -14,6 +14,10 @@ export class LocalNetworkLayer {
 		);
 
 		if (errors) {
+			for (const error of errors) {
+				console.error(error.originalError); // eslint-disable-line no-console
+			}
+
 			request.reject(new Error(
 				`Failed to execute ${requestType} \`${request.getDebugName()}\` for ` +
 				`the following reasons:\n\n${formatRequestErrors(request, errors)}` +
