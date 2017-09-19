@@ -8,6 +8,9 @@ switch (process.argv[2]) {
 	case 'json':
 		graphql(schema, introspectionQuery).then(result => {
 			process.stdout.write(JSON.stringify(result));
+		}, err => {
+			process.exitCode = 1;
+			console.error(err); // eslint-disable-line no-console
 		});
 		break;
 	default:

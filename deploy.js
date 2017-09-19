@@ -11,6 +11,6 @@ deploy({
 }).then(() => {
 	console.log('Deploy complete!'); // eslint-disable-line no-console
 }, err => {
+	process.exitCode = 1;
 	console.error(err); // eslint-disable-line no-console
-	process.exit(1);
 });
