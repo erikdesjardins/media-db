@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 export function whereEquals(key, val) {
 	return this.then(arr => arr.filter(({ [key]: v }) => v === val));

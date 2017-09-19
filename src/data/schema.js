@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import deepEqual from 'only-shallow';
 
 import * as productionStatusTypes from '../constants/productionStatusTypes';
