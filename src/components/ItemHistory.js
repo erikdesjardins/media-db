@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';

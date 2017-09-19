@@ -1,6 +1,6 @@
 {
   "name": "media-db",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "",
   "private": true,
   "repository": {
@@ -9,15 +9,15 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "gen-graphql": "mkdirp dist && node -r babel-core/register graphql.js json > dist/schema.json",
+    "gen-graphql": "mkdirp dist && node -r babel-register graphql.js json > dist/schema.json",
     "prestart": "rimraf dist && yarn run gen-graphql",
     "start": "webpack --watch",
     "preonce": "rimraf dist && yarn run gen-graphql",
     "once": "webpack",
     "prebuild": "rimraf dist && yarn run gen-graphql",
     "build": "webpack --env.production",
-    "deploy": "node -r babel-core/register ./deploy.js",
-    "print-schema": "mkdirp dist && node -r babel-core/register graphql.js graphql > dist/schema.graphql",
+    "deploy": "node -r babel-register ./deploy.js",
+    "print-schema": "mkdirp dist && node -r babel-register graphql.js graphql > dist/schema.graphql",
     "test": "eslint . && sass-lint -v -q"
   },
   "dependencies": {
@@ -26,7 +26,7 @@
     "dexie": "1.5.1",
     "graphql": "0.10.5",
     "graphql-relay": "0.5.2",
-    "lodash": "4.17.4",
+    "lodash-es": "4.17.4",
     "numeral": "2.0.6",
     "only-shallow": "1.2.0",
     "prop-types": "15.5.10",
@@ -60,6 +60,7 @@
     "babel-plugin-transform-react-remove-prop-types": "0.4.8",
     "babel-preset-babili": "0.1.4",
     "babel-preset-react": "6.24.1",
+    "babel-register": "6.26.0",
     "babel-relay-plugin": "0.11.0",
     "bell-on-bundler-error-plugin": "2.0.0",
     "chrome-extension-deploy": "3.0.0",
