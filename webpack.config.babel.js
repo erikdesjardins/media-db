@@ -129,7 +129,9 @@ export default (env = {}) => ({
 		new InertEntryPlugin(),
 		new webpack.BannerPlugin({ banner: '"use strict";', raw: true }),
 		new webpack.optimize.ModuleConcatenationPlugin(),
-		new LodashModuleReplacementPlugin(),
+		new LodashModuleReplacementPlugin({
+			flattening: true, // chaos theory
+		}),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
 
