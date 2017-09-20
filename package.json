@@ -89,8 +89,8 @@
     "rimraf": "2.6.2",
     "sass-lint": "1.11.1",
     "sass-loader": "6.0.6",
-    "spawn-loader": "3.0.1",
-    "webpack": "3.5.6",
+    "spawn-loader": "4.0.0",
+    "webpack": "3.6.0",
     "zip-webpack-plugin": "2.0.0"
   }
 }

@@ -4593,9 +4593,9 @@ source-map@^0.4.2:
   dependencies:
     amdefine ">=0.0.4"
 
-spawn-loader@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/spawn-loader/-/spawn-loader-3.0.1.tgz#b6233bf6c012be6e631c35152d0e280d89d8b61b"
+spawn-loader@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/spawn-loader/-/spawn-loader-4.0.0.tgz#c6a1a953bb30086aca2dbb11a75e531019d59063"
   dependencies:
     file-loader "^0.11.2"
     loader-utils "^1.1.0"
@@ -5069,9 +5069,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@3.5.6:
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.6.tgz#a492fb6c1ed7f573816f90e00c8fbb5a20cc5c36"
+webpack@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.6.0.tgz#a89a929fbee205d35a4fa2cc487be9cbec8898bc"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
