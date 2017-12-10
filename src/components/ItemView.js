@@ -56,15 +56,15 @@ export default class ItemView extends React.Component {
 	}
 
 	handlePrev = () => {
-		this.setState({
-			offset: this.state.offset - LIMIT,
-		});
+		this.setState(({ offset }) => ({
+			offset: offset - LIMIT,
+		}));
 	};
 
 	handleNext = () => {
-		this.setState({
-			offset: this.state.offset + LIMIT,
-		});
+		this.setState(({ offset }) => ({
+			offset: offset + LIMIT,
+		}));
 	};
 
 	styles = {

@@ -3,9 +3,6 @@
  * All rights reserved.
  */
 
-/*
- * Formats an error response from GraphQL server request.
- */
 export default function formatRequestErrors(request, errors) {
 	const CONTEXT_BEFORE = 20;
 	const CONTEXT_LENGTH = 60;
