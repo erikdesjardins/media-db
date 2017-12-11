@@ -1489,9 +1489,9 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-dexie@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/dexie/-/dexie-1.5.1.tgz#ac3ad5a0ebaf7e6e42760db58710418d4a756624"
+dexie@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/dexie/-/dexie-2.0.1.tgz#a6dc4e607461c4da5f934621917a2a8939a18e97"
 
 diffie-hellman@^5.0.0:
   version "5.0.2"
