@@ -58,8 +58,8 @@ export function getQueriedItems(query) {
 
 export function addItem(id, item) {
 	const now = Date.now();
-	return db.transaction('rw', db.media, function* trans() {
-		if (yield getItem(id)) {
+	return db.transaction('rw', db.media, async () => {
+		if (await getItem(id)) {
 			throw new Error(`Tried to add item with in-use id: ${id}`);
 		}
 		db.media.add({
@@ -72,10 +72,8 @@ export function addItem(id, item) {
 }
 
 export function updateItem(id, patch) {
-	// using a generator here instead of async because Dexie wants you to polyfill their Promise impl
-	// and I'm not convinced that Babel's transformed async functions will use it
-	return db.transaction('rw', db.media, function* trans() {
-		const existing = yield getItem(id);
+	return db.transaction('rw', db.media, async () => {
+		const existing = await getItem(id);
 		if (!existing) {
 			throw new Error(`Tried to update non-extant item with id: ${id}`);
 		}

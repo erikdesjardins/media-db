@@ -50,6 +50,7 @@ export default (env = {}) => ({
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': env.production ? 'production' : 'development',
+								'typeof window': 'object',
 							}],
 							'lodash',
 
@@ -85,6 +86,7 @@ export default (env = {}) => ({
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': env.production ? 'production' : 'development',
+								'typeof window': 'object',
 							}],
 
 							env.production && 'transform-react-remove-prop-types',

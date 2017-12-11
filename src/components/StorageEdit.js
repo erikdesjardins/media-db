@@ -46,9 +46,9 @@ export default class StorageEdit extends React.Component {
 	}
 
 	handleToggleTextarea = () => {
-		this.setState({
-			showTextarea: !this.state.showTextarea,
-		});
+		this.setState(({ showTextarea }) => ({
+			showTextarea: !showTextarea,
+		}));
 	};
 
 	handleChange = e => {
