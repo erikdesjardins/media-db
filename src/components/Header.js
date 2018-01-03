@@ -61,6 +61,7 @@ export default class Header extends React.PureComponent {
 								<FormControl
 									type="text"
 									placeholder="Search"
+									autoFocus
 									value={this.state.query}
 									onChange={this.handleChangeSearch}
 								/>
