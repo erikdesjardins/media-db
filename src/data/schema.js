@@ -473,9 +473,15 @@ const GraphQLEditItemProductionStatusMutation = editItemMutation(
 
 const GraphQLEditItemStatusMutation = editItemMutation(
 	'EditItemStatus', 'status', new GraphQLNonNull(GraphQLStatusEnum), {
-		viewer: {
-			type: GraphQLUser,
-			resolve: () => getViewer(),
+		itemEdge: {
+			type: GraphQLItemEdge,
+			resolve: async ({ localItemId }) => {
+				const item = await getItem(localItemId);
+				return {
+					cursor: offsetToCursor(-1),
+					node: item,
+				};
+			},
 		},
 	}
 );
