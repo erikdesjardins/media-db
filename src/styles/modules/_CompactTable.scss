@@ -56,9 +56,9 @@ $CompactTable-border: #e5e3da;
 	}
 
 	&--align {
-		// custom alignments for the main item table
 		td,
 		th {
+			// custom alignments for the main item table
 			&:nth-of-type(1),
 			&:nth-of-type(3),
 			&:nth-of-type(4),
@@ -67,6 +67,11 @@ $CompactTable-border: #e5e3da;
 			&:nth-of-type(8),
 			&:nth-of-type(9) {
 				text-align: center;
+			}
+
+			// fixed width for thumbnail column to avoid resizing as images load
+			&:nth-of-type(1) {
+				min-width: 70px;
 			}
 		}
 	}
@@ -130,6 +135,7 @@ $CompactTable-border: #e5e3da;
 	}
 
 	&-tinyThumbnail {
+		max-width: 52px; // + 18px padding = 70px width (per --align above)
 		max-height: 20px;
 		margin-top: -8px;
 		margin-bottom: -6px;
