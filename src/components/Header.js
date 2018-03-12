@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import packageName from 'prop-loader?name!../../package.json';
+import { name as packageName } from '../../package.json';
 import icon from '../images/icon32.png';
 import FormControl from 'react-bootstrap/es/FormControl';
 import FormGroup from 'react-bootstrap/es/FormGroup';

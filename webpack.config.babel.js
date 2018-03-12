@@ -8,14 +8,14 @@ import { join } from 'path';
 
 const babelRelayPlugin = require.resolve('./babelRelayPlugin');
 
-export default (env = {}) => ({
+export default ({ production, zip } = {}) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
-	bail: env.production,
 	output: {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
-	devtool: env.production ? 'source-map' : 'cheap-source-map',
+	performance: false,
+	devtool: production ? 'source-map' : 'cheap-source-map',
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
@@ -31,7 +31,7 @@ export default (env = {}) => ({
 					options: {
 						presets: [
 							'react',
-							env.production && ['babili', {
+							production && ['babili', {
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
@@ -41,7 +41,7 @@ export default (env = {}) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							[babelRelayPlugin, { enforceSchema: env.production }],
+							[babelRelayPlugin, { enforceSchema: production }],
 							'transform-decorators-legacy',
 							'transform-function-bind',
 							'transform-class-properties',
@@ -49,17 +49,17 @@ export default (env = {}) => ({
 							'transform-flow-strip-types',
 							'transform-dead-code-elimination',
 							['transform-define', {
-								'process.env.NODE_ENV': env.production ? 'production' : 'development',
+								'process.env.NODE_ENV': production ? 'production' : 'development',
 								'typeof window': 'object',
 							}],
 							'lodash',
 
-							env.production && 'transform-react-constant-elements',
-							env.production && 'transform-react-inline-elements',
-							env.production && 'transform-react-remove-prop-types',
+							production && 'transform-react-constant-elements',
+							production && 'transform-react-inline-elements',
+							production && 'transform-react-remove-prop-types',
 						].filter(x => x),
-						comments: !env.production,
-						compact: env.production,
+						comments: !production,
+						compact: production,
 						babelrc: false,
 					},
 				},
@@ -73,7 +73,7 @@ export default (env = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							env.production && ['babili', {
+							production && ['babili', {
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
@@ -85,14 +85,14 @@ export default (env = {}) => ({
 						plugins: [
 							'transform-dead-code-elimination',
 							['transform-define', {
-								'process.env.NODE_ENV': env.production ? 'production' : 'development',
+								'process.env.NODE_ENV': production ? 'production' : 'development',
 								'typeof window': 'object',
 							}],
 
-							env.production && 'transform-react-remove-prop-types',
+							production && 'transform-react-remove-prop-types',
 						].filter(x => x),
-						comments: !env.production,
-						compact: env.production,
+						comments: !production,
+						compact: production,
 						babelrc: false,
 					},
 				},
@@ -127,9 +127,11 @@ export default (env = {}) => ({
 			],
 		}],
 	},
+	optimization: {
+		minimize: false,
+	},
 	plugins: [
 		new InertEntryPlugin(),
-		new webpack.BannerPlugin({ banner: '"use strict";', raw: true }),
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new LodashModuleReplacementPlugin({
 			flattening: true, // chaos theory
@@ -137,6 +139,6 @@ export default (env = {}) => ({
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
 
-		env.production && new ZipPlugin({ filename: 'media-db.zip' }),
+		zip && new ZipPlugin({ filename: 'media-db.zip' }),
 	].filter(x => x),
 });
