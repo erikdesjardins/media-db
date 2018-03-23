@@ -27,10 +27,12 @@ export default class SearchList extends React.Component {
 	render() {
 		return (
 			<Panel style={this.styles.panel}>
-				<ItemList
-					style={this.styles.itemList}
-					items={this.props.items}
-				/>
+				<Panel.Body>
+					<ItemList
+						style={this.styles.itemList}
+						items={this.props.items}
+					/>
+				</Panel.Body>
 			</Panel>
 		);
 	}
