@@ -26,23 +26,25 @@ export default class SidebarItem extends React.PureComponent {
 
 	render() {
 		return (
-			<Panel
-				style={this.styles.panel}
-				header={
-					<ButtonGroup
-						style={this.styles.tabSelect}
-						bsSize="xsmall"
-					>
-						<LinkContainer to={this.relativePath('info')}>
-							<Button>{'Info'}</Button>
-						</LinkContainer>
-						<LinkContainer to={this.relativePath('history')}>
-							<Button>{'History'}</Button>
-						</LinkContainer>
-					</ButtonGroup>
-				}
-			>
-				{this.props.children}
+			<Panel style={this.styles.panel}>
+				<Panel.Heading>
+					<Panel.Title>
+						<ButtonGroup
+							style={this.styles.tabSelect}
+							bsSize="xsmall"
+						>
+							<LinkContainer to={this.relativePath('info')}>
+								<Button>{'Info'}</Button>
+							</LinkContainer>
+							<LinkContainer to={this.relativePath('history')}>
+								<Button>{'History'}</Button>
+							</LinkContainer>
+						</ButtonGroup>
+					</Panel.Title>
+				</Panel.Heading>
+				<Panel.Body>
+					{this.props.children}
+				</Panel.Body>
 			</Panel>
 		);
 	}

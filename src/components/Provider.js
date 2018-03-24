@@ -60,10 +60,9 @@ export default class Provider extends React.Component {
 	render() {
 		return (
 			<div>
-				<Panel
-					style={this.styles.panel}
-					header={
-						<div>
+				<Panel style={this.styles.panel}>
+					<Panel.Heading>
+						<Panel.Title>
 							{'function fetchInfo(url) \u007B'}
 							<Button
 								style={this.styles.remove}
@@ -73,17 +72,20 @@ export default class Provider extends React.Component {
 							>
 								{'Remove'}
 							</Button>
-						</div>
-					}
-					footer={'\u007D'}
-				>
-					<AutosaveInput
-						style={this.styles.input}
-						componentClass="textarea"
-						hasFeedback
-						defaultValue={this.props.provider.infoCallback}
-						onSave={this.handleSave}
-					/>
+						</Panel.Title>
+					</Panel.Heading>
+					<Panel.Body>
+						<AutosaveInput
+							style={this.styles.input}
+							componentClass="textarea"
+							hasFeedback
+							defaultValue={this.props.provider.infoCallback}
+							onSave={this.handleSave}
+						/>
+					</Panel.Body>
+					<Panel.Footer>
+						{'\u007D'}
+					</Panel.Footer>
 				</Panel>
 			</div>
 		);

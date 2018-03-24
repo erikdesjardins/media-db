@@ -84,10 +84,9 @@ export default class ItemView extends React.Component {
 
 	render() {
 		return (
-			<Panel
-				style={this.styles.panel}
-				header={
-					<div>
+			<Panel style={this.styles.panel}>
+				<Panel.Heading>
+					<Panel.Title>
 						<SelectBar
 							style={this.styles.statusSelect}
 							bsSize="xsmall"
@@ -127,15 +126,16 @@ export default class ItemView extends React.Component {
 								<Glyphicon glyph="chevron-right"/>
 							</Button>
 						</ButtonGroup>
-					</div>
-				}
-			>
-				<ItemList
-					style={this.styles.itemList}
-					items={this.props.viewer.items}
-					offset={this.state.offset}
-					limit={LIMIT}
-				/>
+					</Panel.Title>
+				</Panel.Heading>
+				<Panel.Body>
+					<ItemList
+						style={this.styles.itemList}
+						items={this.props.viewer.items}
+						offset={this.state.offset}
+						limit={LIMIT}
+					/>
+				</Panel.Body>
 			</Panel>
 		);
 	}
