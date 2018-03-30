@@ -15,7 +15,7 @@
     "preonce": "rimraf dist && yarn run gen-graphql",
     "once": "webpack --mode development",
     "prebuild": "rimraf dist && yarn run gen-graphql",
-    "build": "webpack --mode production --env.production --env.zip",
+    "build": "cross-env NODE_ENV=production webpack --mode production --env.production --env.zip",
     "deploy": "node -r babel-register ./deploy.js",
     "print-schema": "mkdirp dist && node -r babel-register graphql.js graphql > dist/schema.graphql",
     "test": "eslint . && sass-lint -v -q"
@@ -64,6 +64,7 @@
     "babel-relay-plugin": "0.11.0",
     "bell-on-bundler-error-plugin": "2.0.0",
     "chrome-extension-deploy": "3.0.0",
+    "cross-env": "5.1.4",
     "css-loader": "0.28.11",
     "eslint": "4.18.2",
     "eslint-import-resolver-webpack": "0.9.0",
