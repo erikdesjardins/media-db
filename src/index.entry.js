@@ -1,5 +1,5 @@
 import React from 'react';
-import { Environment, Network, QueryResponseCache, RecordSource, Store } from 'relay-runtime';
+import { Environment, Network, Observable, RecordSource, Store } from 'relay-runtime';
 import { graphql } from 'graphql/graphql';
 import HashProtocol from 'farce/lib/HashProtocol';
 import queryMiddleware from 'farce/lib/queryMiddleware';
@@ -10,32 +10,40 @@ import { render } from 'react-dom';
 import schema from './data/schema';
 import { routeConfig } from './routes';
 
-const cache = new QueryResponseCache({ size: Infinity, ttl: Infinity });
-
-const environment = new Environment({
-	network: Network.create((operation, variables, cacheConfig) => {
-		const isQuery = operation.operationKind === 'query';
-		const forceFetch = cacheConfig.force;
-
+// Relay Classic emulation: retain everything, and always lookup from the store
+// https://github.com/facebook/relay/blob/c78e2b696bd1363563a8c58c60373c17c8b931a3/packages/relay-runtime/store/RelayModernEnvironment.js#L175-L191
+class CachingEnvironment extends Environment {
+	execute({ operation, cacheConfig, updater }) {
+		// check if request could be satisfied from the store
+		const isQuery = operation.node.operationKind === 'query';
+		const forceFetch = cacheConfig && cacheConfig.force;
 		if (isQuery && !forceFetch) {
-			const cachedPayload = cache.get(operation.name, variables);
-			if (cachedPayload !== null) return cachedPayload;
-		}
-
-		return graphql(schema, operation.text, null, null, variables).then(payload => {
-			if (payload.errors) throw new Error(payload.errors);
-
-			if (isQuery) {
-				// query response, save to cache
-				cache.set(operation.name, variables, payload);
-			} else {
-				// non-query response (mutation), clear the cache
-				cache.clear();
+			// https://github.com/facebook/relay/blob/61d1f9e5dfddcb77e92a4292c448f1790cbd0209/packages/react-relay/modern/ReactRelayQueryFetcher.js#L48
+			// https://github.com/facebook/relay/blob/256b7a77e9f8b9d360282580c9a316c5f079ee13/packages/react-relay/modern/ReactRelayQueryRenderer.js#L255-L266
+			if (this.check(operation.root)) {
+				const stored = this.lookup(operation.fragment);
+				return Observable.from(stored);
 			}
+			// retain the result of this operation
+			// todo this still retains too much (raw storage editing doesn't cause invalidation) -
+			// todo   the idea was to manually invalidate all fields
+			// todo   on viewer in the SetRawItemsMutation updater.
+			// todo   this may still be possible, i.e. by removing all items from the store
+			this.retain(operation.root);
+		}
+		// fall back to the native network implementation
+		console.log(operation);
+		return super.execute({ operation, cacheConfig, updater });
+	}
+}
 
+const environment = new CachingEnvironment({
+	network: Network.create((request, variables) =>
+		graphql(schema, request.text, null, null, variables).then(payload => {
+			if (payload.errors) throw new Error(payload.errors);
 			return payload;
-		});
-	}),
+		}),
+	),
 	store: new Store(new RecordSource()),
 });
 

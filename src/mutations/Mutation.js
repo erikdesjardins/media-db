@@ -14,6 +14,7 @@ export default class Mutation {
 					},
 				},
 				configs: this.getConfigs(),
+				updater: this.getUpdater(),
 				onCompleted: resolve,
 				onError: reject,
 			});
@@ -30,5 +31,9 @@ export default class Mutation {
 
 	getConfigs() {
 		return [];
+	}
+
+	getUpdater() {
+		return null;
 	}
 }
