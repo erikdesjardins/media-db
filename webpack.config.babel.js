@@ -4,6 +4,7 @@ import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import ZipPlugin from 'zip-webpack-plugin';
+import sass from 'sass';
 import { join } from 'path';
 
 const babelRelayPlugin = require.resolve('./babelRelayPlugin');
@@ -104,7 +105,7 @@ export default ({ production, zip } = {}) => ({
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
 				{ loader: 'css-loader' },
 				{ loader: 'postcss-loader' },
-				{ loader: 'sass-loader' },
+				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
 			test: /\.css$/,
