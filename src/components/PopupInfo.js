@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/es/Button';
 import FormGroup from 'react-bootstrap/es/FormGroup';
 import Glyphicon from 'react-bootstrap/es/Glyphicon';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -21,7 +22,7 @@ import Glyphicon from 'react-bootstrap/es/Glyphicon';
 		`,
 	},
 })
-export default class PopupInfo extends React.Component {
+class PopupInfo extends React.Component {
 	handleAddItem = () => {
 		Relay.Store.commitUpdate(new AddActiveTabItemMutation({
 			viewer: this.props.viewer,

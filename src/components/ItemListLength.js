@@ -3,6 +3,7 @@ import Relay from 'react-relay';
 import numeral from 'numeral';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -12,7 +13,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemListLength extends React.Component {
+class ItemListLength extends React.Component {
 	render() {
 		return (
 			<span className="CompactTable-item">

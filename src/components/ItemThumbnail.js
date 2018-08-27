@@ -4,6 +4,7 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import Thumbnail from 'react-bootstrap/es/Thumbnail';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -14,7 +15,7 @@ import Thumbnail from 'react-bootstrap/es/Thumbnail';
 		`,
 	},
 })
-export default class ItemThumbnail extends React.Component {
+class ItemThumbnail extends React.Component {
 	render() {
 		return (
 			<div>

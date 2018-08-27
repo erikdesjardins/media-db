@@ -3,6 +3,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -15,7 +16,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemTitleBlock extends React.Component {
+class ItemTitleBlock extends React.Component {
 	render() {
 		const { item } = this.props;
 		return (

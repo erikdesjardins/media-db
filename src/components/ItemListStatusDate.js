@@ -3,6 +3,7 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import { formatFullDate } from '../utils/formatDate';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -12,7 +13,7 @@ import { formatFullDate } from '../utils/formatDate';
 		`,
 	},
 })
-export default class ItemListStatusDate extends React.Component {
+class ItemListStatusDate extends React.Component {
 	render() {
 		return (
 			<span className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">

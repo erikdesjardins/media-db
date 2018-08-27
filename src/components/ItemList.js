@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		items: () => Relay.QL`
@@ -18,7 +19,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemList extends React.Component {
+class ItemList extends React.Component {
 	static propTypes = {
 		offset: PropTypes.number,
 		limit: PropTypes.number,

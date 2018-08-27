@@ -12,6 +12,7 @@ import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
 
 const LIMIT = 25;
 
+export default
 @relay({
 	initialVariables: {
 		status: statusTypes.IN_PROGRESS,
@@ -27,7 +28,7 @@ const LIMIT = 25;
 		`,
 	},
 })
-export default class ItemView extends React.Component {
+class ItemView extends React.Component {
 	state = {
 		offset: 0,
 	};

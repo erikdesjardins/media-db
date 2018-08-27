@@ -6,6 +6,7 @@ import deepDiff from 'deep-diff';
 import { fillPanelBody } from '../styles/bootstrap';
 import { formatFullDate } from '../utils/formatDate';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -33,7 +34,7 @@ import { formatFullDate } from '../utils/formatDate';
 		`,
 	},
 })
-export default class ItemHistory extends React.Component {
+class ItemHistory extends React.Component {
 	styles = {
 		historyTable: {
 			...fillPanelBody,

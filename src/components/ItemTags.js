@@ -4,6 +4,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -14,7 +15,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemTags extends React.Component {
+class ItemTags extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new EditItemTagsMutation({
 			item: this.props.item,

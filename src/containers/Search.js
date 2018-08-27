@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/es/Col';
 import Grid from 'react-bootstrap/es/Grid';
 import Row from 'react-bootstrap/es/Row';
 
+export default
 @relay({
 	initialVariables: {
 		query: '',
@@ -26,7 +27,7 @@ import Row from 'react-bootstrap/es/Row';
 		`,
 	},
 })
-export default class Search extends React.Component {
+class Search extends React.Component {
 	render() {
 		return (
 			<Grid fluid>

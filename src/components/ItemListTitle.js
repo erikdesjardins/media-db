@@ -3,6 +3,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -14,7 +15,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class ItemListTitle extends React.Component {
+class ItemListTitle extends React.Component {
 	render() {
 		return (
 			<div className="CompactTable-item CompactTable-item--nowrap CompactTable-item--truncate">

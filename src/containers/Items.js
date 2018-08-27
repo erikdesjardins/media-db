@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/es/Col';
 import Grid from 'react-bootstrap/es/Grid';
 import Row from 'react-bootstrap/es/Row';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -15,7 +16,7 @@ import Row from 'react-bootstrap/es/Row';
 		`,
 	},
 })
-export default class Items extends React.Component {
+class Items extends React.Component {
 	render() {
 		return (
 			<Grid fluid>

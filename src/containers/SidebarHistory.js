@@ -3,6 +3,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -12,7 +13,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class SidebarHistory extends React.Component {
+class SidebarHistory extends React.Component {
 	render() {
 		return (
 			<ItemHistory item={this.props.item}/>

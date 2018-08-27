@@ -23,6 +23,7 @@ const props = {
 	},
 };
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -32,7 +33,7 @@ const props = {
 		`,
 	},
 })
-export default class ItemListProductionStatus extends React.Component {
+class ItemListProductionStatus extends React.Component {
 	render() {
 		return (
 			<div className="CompactTable-item">

@@ -4,6 +4,7 @@ import StorageEdit from '../components/StorageEdit';
 import relay from 'relay-decorator';
 import Grid from 'react-bootstrap/es/Grid';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -13,7 +14,7 @@ import Grid from 'react-bootstrap/es/Grid';
 		`,
 	},
 })
-export default class Storage extends React.Component {
+class Storage extends React.Component {
 	render() {
 		return (
 			<Grid fluid>

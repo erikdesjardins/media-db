@@ -6,6 +6,7 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import Button from 'react-bootstrap/es/Button';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -24,7 +25,7 @@ import Button from 'react-bootstrap/es/Button';
 		`,
 	},
 })
-export default class ProviderList extends React.Component {
+class ProviderList extends React.Component {
 	handleAddProvider = () => {
 		Relay.Store.commitUpdate(new AddProviderMutation({ viewer: this.props.viewer }));
 	};
