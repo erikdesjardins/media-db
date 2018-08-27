@@ -4,6 +4,7 @@ import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import Grid from 'react-bootstrap/es/Grid';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -13,7 +14,7 @@ import Grid from 'react-bootstrap/es/Grid';
 		`,
 	},
 })
-export default class Providers extends React.Component {
+class Providers extends React.Component {
 	render() {
 		return (
 			<Grid fluid>

@@ -9,6 +9,7 @@ import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import FormGroup from 'react-bootstrap/es/FormGroup';
 import FormControl from 'react-bootstrap/es/FormControl';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -20,7 +21,7 @@ import FormControl from 'react-bootstrap/es/FormControl';
 		`,
 	},
 })
-export default class ItemProductionStatus extends React.Component {
+class ItemProductionStatus extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new EditItemProductionStatusMutation({
 			item: this.props.item,

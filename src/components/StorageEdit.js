@@ -12,6 +12,7 @@ import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
 import Tooltip from 'react-bootstrap/es/Tooltip';
 import { formatIsoDate } from '../utils/formatDate';
 
+export default
 @relay({
 	fragments: {
 		viewer: () => Relay.QL`
@@ -22,7 +23,7 @@ import { formatIsoDate } from '../utils/formatDate';
 		`,
 	},
 })
-export default class StorageEdit extends React.Component {
+class StorageEdit extends React.Component {
 	state = {
 		value: this.props.viewer.rawItems,
 		showTextarea: false,

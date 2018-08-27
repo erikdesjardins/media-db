@@ -5,6 +5,7 @@ import relay from 'relay-decorator';
 import Panel from 'react-bootstrap/es/Panel';
 import { fillPanelBody } from '../styles/bootstrap';
 
+export default
 @relay({
 	fragments: {
 		items: () => Relay.QL`
@@ -14,7 +15,7 @@ import { fillPanelBody } from '../styles/bootstrap';
 		`,
 	},
 })
-export default class SearchList extends React.Component {
+class SearchList extends React.Component {
 	styles = {
 		panel: {
 			overflow: 'hidden',

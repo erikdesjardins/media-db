@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 
+export default
 @relay({
 	fragments: {
 		item: () => Relay.QL`
@@ -30,7 +31,7 @@ import relay from 'relay-decorator';
 		`,
 	},
 })
-export default class Item extends React.Component {
+class Item extends React.Component {
 	static contextTypes = {
 		router: PropTypes.object.isRequired,
 	};

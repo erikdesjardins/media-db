@@ -9,6 +9,7 @@ import Glyphicon from 'react-bootstrap/es/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
 import Tooltip from 'react-bootstrap/es/Tooltip';
 
+export default
 @relay({
 	fragments: {
 		// unfortunately we need to fetch all of the fields of `fieldUpdates` to make this generic
@@ -31,7 +32,7 @@ import Tooltip from 'react-bootstrap/es/Tooltip';
 		`,
 	},
 })
-export default class ItemRefreshButton extends React.Component {
+class ItemRefreshButton extends React.Component {
 	static propTypes = {
 		fields: PropTypes.arrayOf(PropTypes.oneOf([
 			'thumbnail',

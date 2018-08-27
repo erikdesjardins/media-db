@@ -7,6 +7,7 @@ import relay from 'relay-decorator';
 import Button from 'react-bootstrap/es/Button';
 import Panel from 'react-bootstrap/es/Panel';
 
+export default
 @relay({
 	fragments: {
 		provider: () => Relay.QL`
@@ -23,7 +24,7 @@ import Panel from 'react-bootstrap/es/Panel';
 		`,
 	},
 })
-export default class Provider extends React.Component {
+class Provider extends React.Component {
 	handleSave = value => {
 		Relay.Store.commitUpdate(new UpdateProviderMutation({
 			provider: this.props.provider,
