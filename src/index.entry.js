@@ -10,6 +10,9 @@ import { render } from 'react-dom';
 import schema from './data/schema';
 import { routeConfig } from './routes';
 
+// todo relay 8 may allow invalidation of records https://github.com/facebook/relay/issues/1995#issuecomment-575137157
+// todo  but I'm not sure if that helps
+
 // Relay Classic emulation: retain everything, and always lookup from the store
 // https://github.com/facebook/relay/blob/c78e2b696bd1363563a8c58c60373c17c8b931a3/packages/relay-runtime/store/RelayModernEnvironment.js#L175-L191
 class CachingEnvironment extends Environment {
