@@ -2,10 +2,7 @@
 	"parser": "babel-eslint",
 	"plugins": [
 		"react",
-		"no-useless-assign",
 		"consistent-return-legacy",
-		"prefer-bind-operator",
-		"prefer-spread",
 		"sort-imports-es6",
 		"filenames",
 		"import"
@@ -47,13 +44,7 @@
 		"react/require-optimization": 0,
 		"react/sort-prop-types": 0,
 
-		"no-useless-assign/no-useless-assign": 2,
-
 		"consistent-return-legacy/consistent-return": 2,
-
-		"prefer-bind-operator/prefer-bind-operator": 2,
-
-		"prefer-spread/prefer-object-spread": 2,
 
 		//"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
