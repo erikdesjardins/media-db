@@ -43,9 +43,9 @@ export default ({ production, zip } = {}) => ({
 						].filter(x => x),
 						plugins: [
 							[babelRelayPlugin, { enforceSchema: production }],
+							'babel-plugin-syntax-object-rest-spread',
 							'transform-decorators-legacy',
 							'transform-class-properties',
-							['transform-object-rest-spread', { useBuiltIns: true }],
 							'transform-flow-strip-types',
 							'transform-dead-code-elimination',
 							['transform-define', {
