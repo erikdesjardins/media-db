@@ -70,10 +70,13 @@ const runInfoCallback = _.memoize(
 
 async function runProviders(url) {
 	const providers = await getProviders();
-	return providers.reduce(
-		(promise, { infoCallback }) => promise.then(result => result || runInfoCallback(infoCallback, url)),
-		Promise.resolve(false)
-	);
+	for (const { infoCallback } of providers) {
+		const result = await runInfoCallback(infoCallback, url); // eslint-disable-line no-await-in-loop
+		if (result) {
+			return result;
+		}
+	}
+	return false;
 }
 
 const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
