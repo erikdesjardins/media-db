@@ -46,7 +46,6 @@ export default ({ production, zip } = {}) => ({
 							'babel-plugin-syntax-object-rest-spread',
 							'transform-decorators-legacy',
 							'transform-class-properties',
-							'transform-flow-strip-types',
 							'transform-dead-code-elimination',
 							['transform-define', {
 								'process.env.NODE_ENV': production ? 'production' : 'development',

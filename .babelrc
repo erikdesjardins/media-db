@@ -3,7 +3,6 @@
 		"babel-plugin-syntax-object-rest-spread",
 		"transform-decorators-legacy",
 		"transform-class-properties",
-		"transform-flow-strip-types",
 
 		"transform-es2015-modules-commonjs"
 	]
