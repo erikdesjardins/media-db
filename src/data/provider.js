@@ -1,4 +1,5 @@
 import _ from 'lodash-es';
+// import { requestPermissionForUrl } from '../api/permissions';
 
 const UrlType = {
 	json: 'json',
@@ -38,6 +39,9 @@ export async function runProvider(provider, url) {
 
 	const fetching = Object.entries(fetchUrls).map(async ([prop, { type, urlTemplate }]) => {
 		const urlToFetch = substitutePlaceholders(urlTemplate, matches);
+		// Disabled because Chrome Web Store review is obnoxious when you request host permissions.
+		// Needs the following in the manifest: "host_permissions": ["https://*/*"],
+		// await requestPermissionForUrl(urlToFetch);
 		const res = await fetch(urlToFetch);
 		if (!res.ok) {
 			throw new Error(`Failed request to '${urlToFetch}': ${res.status}`);
