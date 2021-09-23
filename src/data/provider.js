@@ -10,6 +10,7 @@ const Path = {
 	select: 'select',
 	map: 'map',
 	replace: 'replace',
+	lowercase: 'lowercase',
 	relativeUrl: 'relativeUrl',
 };
 
@@ -107,6 +108,9 @@ function traversePath(value, path, matches) {
 			const [regex, to] /*: [string, string] */ = arg;
 			const from = new RegExp(regex, 'i');
 			return value && value.replace(from, to);
+		}
+		case Path.lowercase: {
+			return value && value.toLowerCase();
 		}
 		case Path.relativeUrl: {
 			const baseUrlTemplate /*: string */ = arg;
