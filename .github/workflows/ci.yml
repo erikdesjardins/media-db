@@ -28,7 +28,7 @@ jobs:
         files: dist/media-db.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: node deploy.js
+    - run: yarn deploy
       if: startsWith(github.ref, 'refs/tags/')
       env:
         CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
