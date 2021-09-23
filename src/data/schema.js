@@ -62,16 +62,26 @@ import {
 	updateItem,
 	updateProvider,
 } from './database';
+import { runProvider } from './provider';
 
-const runInfoCallback = _.memoize(
-	(infoCallback, url) => new Function('url', infoCallback)(url), // eslint-disable-line no-new-func
-	(infoCallback, url) => `${url}###${infoCallback}`,
+const runProviderMemoized = _.memoize(
+	async (provider, url) => {
+		try {
+			const result = await runProvider(provider, url);
+			console.info('Provider returned:', result); // eslint-disable-line no-console
+			return result;
+		} catch (e) {
+			console.error('Provider errored:', e); // eslint-disable-line no-console
+			return false;
+		}
+	},
+	(provider, url) => JSON.stringify({ provider, url }),
 );
 
 async function runProviders(url) {
 	const providers = await getProviders();
-	for (const { infoCallback } of providers) {
-		const result = await runInfoCallback(infoCallback, url); // eslint-disable-line no-await-in-loop
+	for (const provider of providers) {
+		const result = await runProviderMemoized(provider, url); // eslint-disable-line no-await-in-loop
 		if (result) {
 			return result;
 		}

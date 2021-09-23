@@ -136,6 +136,7 @@ export default ({ production, zip } = {}) => ({
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new LodashModuleReplacementPlugin({
 			flattening: true, // chaos theory
+			paths: true,
 		}),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),

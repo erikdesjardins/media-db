@@ -64,7 +64,7 @@ class Provider extends React.Component {
 				<Panel style={this.styles.panel}>
 					<Panel.Heading>
 						<Panel.Title>
-							{'function fetchInfo(url) \u007B'}
+							{'{ urlRegex, idTemplate, fetchUrls, properties }'}
 							<Button
 								style={this.styles.remove}
 								bsStyle="danger"
@@ -84,9 +84,6 @@ class Provider extends React.Component {
 							onSave={this.handleSave}
 						/>
 					</Panel.Body>
-					<Panel.Footer>
-						{'\u007D'}
-					</Panel.Footer>
 				</Panel>
 			</div>
 		);
