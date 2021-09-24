@@ -2,6 +2,7 @@ import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
 import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../utils/db';
 import { repeatWhile } from '../utils/array';
+import { pipe } from '../utils/function';
 
 export class Item {}
 export class Provider {}
@@ -30,19 +31,22 @@ export function getItem(id) {
 }
 
 export function getItemHistory(id) {
-	return _getItemHistory(id).toArray()::map((item, i) => ({
-		...item,
-		id: `${item.id}-history${i}`,
-	}));
+	return pipe(
+		_getItemHistory(id).toArray(),
+		map((item, i) => ({
+			...item,
+			id: `${item.id}-history${i}`,
+		}))
+	);
 }
 
 export function getItems() {
-	return db.media.orderBy('date').toArray()::reverse()::distinct('id')::sortBy('statusDate');
+	return pipe(db.media.orderBy('date').toArray(), reverse(), distinct('id'), sortBy('statusDate'));
 }
 
 export function getFilteredItems(filterMap) {
 	return Object.entries(filterMap).reduce(
-		(items, [key, value]) => (value ? items::whereEquals(key, value) : items),
+		(items, [key, value]) => (value ? pipe(items, whereEquals(key, value)) : items),
 		getItems()
 	);
 }
@@ -51,7 +55,7 @@ export function getFilteredItems(filterMap) {
 export function getQueriedItems(query) {
 	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
 	return repeatWhile(() => re.exec(query)).reduce(
-		(items, [, key, regex]) => (regex ? items::whereRegex(key, regex) : items),
+		(items, [, key, regex]) => (regex ? pipe(items, whereRegex(key, regex)) : items),
 		getItems()
 	);
 }

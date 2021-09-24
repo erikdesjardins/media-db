@@ -1,11 +1,9 @@
 {
 	"plugins": [
-		"transform-decorators-legacy",
-		"transform-function-bind",
-		"transform-class-properties",
-		["transform-object-rest-spread", { "useBuiltIns": true }],
-		"transform-flow-strip-types",
+		"babel-plugin-syntax-object-rest-spread",
+		"babel-plugin-transform-decorators-legacy",
+		"babel-plugin-transform-class-properties",
 
-		"transform-es2015-modules-commonjs"
+		"babel-plugin-transform-es2015-modules-commonjs"
 	]
 }

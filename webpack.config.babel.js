@@ -31,8 +31,8 @@ export default ({ production, zip } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							'react',
-							production && ['babili', {
+							'babel-preset-react',
+							production && ['babel-preset-babili', {
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
@@ -43,21 +43,21 @@ export default ({ production, zip } = {}) => ({
 						].filter(x => x),
 						plugins: [
 							[babelRelayPlugin, { enforceSchema: production }],
-							'transform-decorators-legacy',
-							'transform-function-bind',
-							'transform-class-properties',
-							['transform-object-rest-spread', { useBuiltIns: true }],
-							'transform-flow-strip-types',
-							'transform-dead-code-elimination',
-							['transform-define', {
+
+							'babel-plugin-syntax-object-rest-spread',
+							'babel-plugin-transform-decorators-legacy',
+							'babel-plugin-transform-class-properties',
+
+							'babel-plugin-transform-dead-code-elimination',
+							['babel-plugin-transform-define', {
 								'process.env.NODE_ENV': production ? 'production' : 'development',
 								'typeof window': 'object',
 							}],
-							'lodash',
+							'babel-plugin-lodash',
 
-							production && 'transform-react-constant-elements',
-							production && 'transform-react-inline-elements',
-							production && 'transform-react-remove-prop-types',
+							production && 'babel-plugin-transform-react-constant-elements',
+							production && 'babel-plugin-transform-react-inline-elements',
+							production && 'babel-plugin-transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: !production,
 						compact: production,
@@ -136,6 +136,7 @@ export default ({ production, zip } = {}) => ({
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new LodashModuleReplacementPlugin({
 			flattening: true, // chaos theory
+			paths: true,
 		}),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
