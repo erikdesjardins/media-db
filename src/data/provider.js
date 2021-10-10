@@ -26,7 +26,7 @@ export async function runProvider(provider, url) {
 	} = /*: {
 		urlRegex: string,
 		idTemplate: string,
-		fetchUrls: { [Root]: { type: UrlType, urlTemplate: string } },
+		fetchUrls: { [Root]: { type: UrlType, urlTemplate: string, headers?: { [string]: string } } },
 		properties: { [string]: [Root, ...{ [Path]: object }] },
 	} */ JSON.parse(infoCallback);
 
@@ -37,12 +37,12 @@ export async function runProvider(provider, url) {
 
 	const id = substitutePlaceholders(idTemplate, matches);
 
-	const fetching = Object.entries(fetchUrls).map(async ([prop, { type, urlTemplate }]) => {
+	const fetching = Object.entries(fetchUrls).map(async ([prop, { type, urlTemplate, headers }]) => {
 		const urlToFetch = substitutePlaceholders(urlTemplate, matches);
 		// Disabled because Chrome Web Store review is obnoxious when you request host permissions.
 		// Needs the following in the manifest: "host_permissions": ["https://*/*"],
 		// await requestPermissionForUrl(urlToFetch);
-		const res = await fetch(urlToFetch);
+		const res = await fetch(urlToFetch, { headers });
 		if (!res.ok) {
 			throw new Error(`Failed request to '${urlToFetch}': ${res.status}`);
 		}
