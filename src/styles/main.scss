@@ -1,7 +1,27 @@
+@import 'components/AutosaveInput';
+@import 'components/CenteredColumn';
+@import 'components/Header';
+@import 'components/ItemRefreshButton';
+@import 'components/ItemThumbnail';
+@import 'components/ItemView';
+@import 'components/LinkButton';
+@import 'components/Provider';
+@import 'components/SelectBar';
+@import 'components/StorageEdit';
+@import 'containers/Items';
 @import 'modules/CompactTable';
 @import 'modules/ItemTags';
+@import 'modules/Utils';
+
+* { // sass-lint:disable-line no-universal-selectors
+	box-sizing: border-box;
+}
 
 body {
 	min-width: 400px;
-	margin: 0;
+}
+
+fieldset {
+	min-width: auto;
+	overflow-x: hidden;
 }

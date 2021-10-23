@@ -1,16 +1,10 @@
-import CenteredColumn from './CenteredColumn';
 import React from 'react';
 import Relay from 'react-relay';
 import SetRawItemsMutation from '../mutations/SetRawItemsMutation';
 import numeral from 'numeral';
 import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import ButtonToolbar from 'react-bootstrap/es/ButtonToolbar';
-import FormControl from 'react-bootstrap/es/FormControl';
-import FormGroup from 'react-bootstrap/es/FormGroup';
-import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
-import Tooltip from 'react-bootstrap/es/Tooltip';
 import { formatIsoDate } from '../utils/formatDate';
+import LinkButton from './LinkButton';
 
 export default
 @relay({
@@ -90,72 +84,47 @@ class StorageEdit extends React.Component {
 	};
 
 	render() {
-		const styles = {
-			textarea: {
-				resize: 'vertical',
-				height: '500px',
-			},
-			toggleTextareaButton: {
-				float: 'right',
-			},
-		};
-
 		return (
-			<CenteredColumn>
-				<FormGroup>
-					<ButtonToolbar>
-						<Button
-							bsStyle={this.isUpdating() ? 'warning' : 'primary'}
+			<fieldset className="StorageEdit">
+				<legend>
+					<LinkButton
+						disabled={this.isUpdating()}
+						onClick={this.handleUpload}
+					>
+						{'Upload'}
+					</LinkButton>
+					{' '}
+					<LinkButton
+						title={numeral(this.props.viewer.rawItems.length).format('0.0 b')}
+						disabled={this.isUpdating()}
+						onClick={this.handleDownload}
+					>
+						{'Download'}
+					</LinkButton>
+					{' '}
+					<LinkButton
+						onClick={this.handleToggleTextarea}
+					>
+						{this.state.showTextarea ? 'Hide Textarea' : 'Show Textarea'}
+					</LinkButton>
+					{' '}
+					{this.state.showTextarea && this.isDirty() &&
+						<LinkButton
 							disabled={this.isUpdating()}
-							onClick={this.handleUpload}
-						>
-							{'Upload'}
-						</Button>
-						<OverlayTrigger
-							placement="right"
-							animation={false}
-							rootClose
-							overlay={
-								<Tooltip id="download-size">
-									{numeral(this.props.viewer.rawItems.length).format('0.0 b')}
-								</Tooltip>
-							}
-						>
-							<Button
-								disabled={this.isUpdating()}
-								onClick={this.handleDownload}
-							>
-								{'Download'}
-							</Button>
-						</OverlayTrigger>
-						<Button
-							style={styles.toggleTextareaButton}
-							onClick={this.handleToggleTextarea}
-						>
-							{this.state.showTextarea ? 'Hide Textarea' : 'Show Textarea'}
-						</Button>
-					</ButtonToolbar>
-				</FormGroup>
-				{this.state.showTextarea &&
-					<div>
-						<FormGroup>
-							<FormControl
-								style={styles.textarea}
-								componentClass="textarea"
-								value={this.state.value}
-								onChange={this.handleChange}
-							/>
-						</FormGroup>
-						<Button
-							bsStyle={this.isUpdating() ? 'warning' : 'primary'}
-							disabled={this.isUpdating() || !this.isDirty()}
 							onClick={this.handleSave}
 						>
 							{'Save'}
-						</Button>
-					</div>
+						</LinkButton>
+					}
+				</legend>
+				{this.state.showTextarea &&
+					<textarea
+						className="StorageEdit-textarea"
+						value={this.state.value}
+						onChange={this.handleChange}
+					/>
 				}
-			</CenteredColumn>
+			</fieldset>
 		);
 	}
 }

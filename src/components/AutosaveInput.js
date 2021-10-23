@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ControlLabel from 'react-bootstrap/es/ControlLabel';
-import FormGroup from 'react-bootstrap/es/FormGroup';
-import FormControl from 'react-bootstrap/es/FormControl';
+import classNames from 'classnames';
 
 export default class AutosaveInput extends React.PureComponent {
 	static propTypes = {
-		type: FormControl.propTypes.type,
-		componentClass: FormControl.propTypes.componentClass,
-		label: PropTypes.node,
-		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-		hasFeedback: PropTypes.bool,
+		type: PropTypes.string,
+		className: PropTypes.string,
 		defaultValue: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.number,
@@ -47,26 +42,23 @@ export default class AutosaveInput extends React.PureComponent {
 	};
 
 	render() {
-		return (
-			<FormGroup
-				bsSize="small"
-				validationState={this.isDirty() ? 'warning' : null}
-			>
-				{this.props.label &&
-					<ControlLabel>{this.props.label}</ControlLabel>
-				}
-				<FormControl
-					type={this.props.type}
-					componentClass={this.props.componentClass}
-					style={this.props.style}
-					value={this.state.value}
-					onChange={this.handleChange}
-					onBlur={this.handleBlur}
-				/>
-				{this.props.hasFeedback &&
-					<FormControl.Feedback/>
-				}
-			</FormGroup>
+		const class_ = classNames('AutosaveInput', { 'AutosaveInput--dirty': this.isDirty() }, this.props.className);
+
+		return this.props.type === 'textarea' ? (
+			<textarea
+				className={class_}
+				value={this.state.value}
+				onChange={this.handleChange}
+				onBlur={this.handleBlur}
+			/>
+		) : (
+			<input
+				type={this.props.type}
+				className={class_}
+				value={this.state.value}
+				onChange={this.handleChange}
+				onBlur={this.handleBlur}
+			/>
 		);
 	}
 }

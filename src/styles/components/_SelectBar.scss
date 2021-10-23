@@ -1,0 +1,9 @@
+.SelectBar {
+	&-button {
+		border: 1px solid transparent;
+
+		&--active {
+			border: 1px solid;
+		}
+	}
+}

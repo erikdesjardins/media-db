@@ -3,7 +3,6 @@ import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
 import deepDiff from 'deep-diff';
-import { fillPanelBody } from '../styles/bootstrap';
 import { formatFullDate } from '../utils/formatDate';
 
 export default
@@ -35,12 +34,6 @@ export default
 	},
 })
 class ItemHistory extends React.Component {
-	styles = {
-		historyTable: {
-			...fillPanelBody,
-		},
-	};
-
 	render() {
 		const history = this.props.item.history.edges.map(edge => edge.node);
 
@@ -86,10 +79,7 @@ class ItemHistory extends React.Component {
 		];
 
 		return (
-			<table
-				style={this.styles.historyTable}
-				className="CompactTable CompactTable--stripe"
-			>
+			<table className="CompactTable CompactTable--stripe">
 				<tbody>
 					{diffs.map(({ description, date }, i) =>
 						// ensures React keys are unique
@@ -97,7 +87,7 @@ class ItemHistory extends React.Component {
 						// eslint-disable-next-line react/no-array-index-key
 						<tr key={date + i}>
 							<td>
-								<div className="CompactTable-item CompactTable-item--autowrap">
+								<div className="CompactTable-item CompactTable-item--autowrap CompactTable-item--small">
 									<p>{description}</p>
 								</div>
 							</td>

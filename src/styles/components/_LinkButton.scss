@@ -1,0 +1,13 @@
+$LinkButton-color: #00e;
+
+.LinkButton {
+	color: $LinkButton-color;
+
+	&:visited {
+		color: $LinkButton-color;
+	}
+
+	&:not([href]) {
+		cursor: default;
+	}
+}

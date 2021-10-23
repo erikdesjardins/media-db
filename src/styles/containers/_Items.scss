@@ -1,0 +1,39 @@
+@import '../breakpoints';
+
+.Items {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+
+	&-list {
+		@include breakpoint(xs) {
+			width: percentage(12/12);
+		}
+		@include breakpoint(sm) {
+			width: percentage(12/12);
+		}
+		@include breakpoint(md) {
+			width: percentage(8/12);
+		}
+		@include breakpoint(lg) {
+			width: percentage(9/12);
+		}
+	}
+
+	&-info {
+		@include breakpoint(xs) {
+			width: percentage(12/12);
+		}
+		@include breakpoint(sm) {
+			width: percentage(8/12);
+			margin-left: percentage(2/12);
+		}
+		@include breakpoint(md) {
+			width: percentage(4/12);
+			margin-left: percentage(0/12);
+		}
+		@include breakpoint(lg) {
+			width: percentage(3/12);
+		}
+	}
+}

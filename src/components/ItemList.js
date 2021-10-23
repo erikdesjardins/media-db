@@ -23,7 +23,6 @@ class ItemList extends React.Component {
 	static propTypes = {
 		offset: PropTypes.number,
 		limit: PropTypes.number,
-		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 	};
 
 	static defaultProps = {
@@ -32,13 +31,10 @@ class ItemList extends React.Component {
 	};
 
 	render() {
-		const { items, offset, limit, style } = this.props;
+		const { items, offset, limit } = this.props;
 
 		return (
-			<table
-				style={style}
-				className="CompactTable CompactTable--stripe CompactTable--hover CompactTable--align"
-			>
+			<table className="CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
 				<thead>
 					<tr>
 						<th>{''}</th>

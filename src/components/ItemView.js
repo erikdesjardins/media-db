@@ -4,11 +4,7 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import Button from 'react-bootstrap/es/Button';
-import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
-import Panel from 'react-bootstrap/es/Panel';
-import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
+import LinkButton from './LinkButton';
 
 const LIMIT = 25;
 
@@ -68,76 +64,52 @@ class ItemView extends React.Component {
 		}));
 	};
 
-	styles = {
-		statusSelect: {
-			...panelHeaderButtonCenter,
-		},
-		panel: {
-			overflow: 'hidden',
-		},
-		itemList: {
-			...fillPanelBody,
-		},
-		pageButtons: {
-			float: 'right',
-		},
-	};
-
 	render() {
 		return (
-			<Panel style={this.styles.panel}>
-				<Panel.Heading>
-					<Panel.Title>
-						<SelectBar
-							style={this.styles.statusSelect}
-							bsSize="xsmall"
-							selected={this.props.relay.variables.status}
-							onSelect={this.handleStatusChange}
-							options={[{
-								value: statusTypes.WAITING,
-								name: 'Waiting',
-							}, {
-								value: statusTypes.PENDING,
-								name: 'Pending',
-							}, {
-								value: statusTypes.IN_PROGRESS,
-								name: 'In Progress',
-							}, {
-								value: statusTypes.COMPLETE,
-								name: 'Complete',
-							}, {
-								value: statusTypes.REJECTED,
-								name: 'Rejected',
-							}]}
-						/>
-						<ButtonGroup
-							style={this.styles.pageButtons}
-							bsSize="xsmall"
-						>
-							<Button
-								disabled={!this.hasPrev()}
-								onClick={this.handlePrev}
-							>
-								<Glyphicon glyph="chevron-left"/>
-							</Button>
-							<Button
-								disabled={!this.hasNext()}
-								onClick={this.handleNext}
-							>
-								<Glyphicon glyph="chevron-right"/>
-							</Button>
-						</ButtonGroup>
-					</Panel.Title>
-				</Panel.Heading>
-				<Panel.Body>
-					<ItemList
-						style={this.styles.itemList}
-						items={this.props.viewer.items}
-						offset={this.state.offset}
-						limit={LIMIT}
+			<fieldset className="ItemView">
+				<legend className="ItemView-legend">
+					<SelectBar
+						selected={this.props.relay.variables.status}
+						onSelect={this.handleStatusChange}
+						options={[{
+							value: statusTypes.WAITING,
+							name: 'Waiting',
+						}, {
+							value: statusTypes.PENDING,
+							name: 'Pending',
+						}, {
+							value: statusTypes.IN_PROGRESS,
+							name: 'In Progress',
+						}, {
+							value: statusTypes.COMPLETE,
+							name: 'Complete',
+						}, {
+							value: statusTypes.REJECTED,
+							name: 'Rejected',
+						}]}
 					/>
-				</Panel.Body>
-			</Panel>
+				</legend>
+				<div className="ItemView-nextPrev">
+					<LinkButton
+						disabled={!this.hasPrev()}
+						onClick={this.handlePrev}
+					>
+						{'<--'}
+					</LinkButton>
+					{' '}
+					<LinkButton
+						disabled={!this.hasNext()}
+						onClick={this.handleNext}
+					>
+						{'-->'}
+					</LinkButton>
+				</div>
+				<ItemList
+					items={this.props.viewer.items}
+					offset={this.state.offset}
+					limit={LIMIT}
+				/>
+			</fieldset>
 		);
 	}
 }

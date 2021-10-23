@@ -27,21 +27,21 @@ class ItemCharacters extends React.Component {
 
 	render() {
 		return (
-			<AutosaveInput
-				type="text"
-				label={
-					<div>
-						{'Characters'}
-						{' '}
-						<ItemRefreshButton
-							item={this.props.item}
-							fields={['characters']}
-						/>
-					</div>
-				}
-				defaultValue={this.props.item.characters}
-				onSave={this.handleSave}
-			/>
+			<div>
+				<label>
+					{'Characters'}
+					{' '}
+					<ItemRefreshButton
+						item={this.props.item}
+						fields={['characters']}
+					/>
+				</label>
+				<AutosaveInput
+					type="text"
+					defaultValue={this.props.item.characters}
+					onSave={this.handleSave}
+				/>
+			</div>
 		);
 	}
 }

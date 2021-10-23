@@ -3,9 +3,7 @@ import ItemInfo from '../components/ItemInfo';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import FormGroup from 'react-bootstrap/es/FormGroup';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
+import LinkButton from './LinkButton';
 
 export default
 @relay({
@@ -35,14 +33,14 @@ class PopupInfo extends React.Component {
 				item={this.props.viewer.itemForActiveTab}
 				viewer={this.props.viewer}
 			/> :
-			<FormGroup>
-				<Button
+			<form>
+				<LinkButton
 					disabled={!this.props.viewer.providerMatchesActiveTab}
 					onClick={this.handleAddItem}
 				>
-					<Glyphicon glyph="plus"/>
-				</Button>
-			</FormGroup>
+					{'Add'}
+				</LinkButton>
+			</form>
 		);
 	}
 }

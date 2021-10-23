@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/es/Button';
-import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
+import LinkButton from './LinkButton';
+import classNames from 'classnames';
 
 export default class SelectBar extends React.PureComponent {
 	static propTypes = {
@@ -11,8 +11,6 @@ export default class SelectBar extends React.PureComponent {
 		})).isRequired,
 		selected: PropTypes.string,
 		onSelect: PropTypes.func.isRequired,
-		bsSize: Button.propTypes.bsSize,
-		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 	};
 
 	isSelected(value) {
@@ -25,17 +23,17 @@ export default class SelectBar extends React.PureComponent {
 
 	render() {
 		return (
-			<ButtonGroup bsSize={this.props.bsSize} style={this.props.style}>
+			<div className="SelectBar">
 				{this.props.options.map(({ value, name }) =>
-					<Button
+					<LinkButton
 						key={value}
-						active={this.isSelected(value)}
+						className={classNames('SelectBar-button', { 'SelectBar-button--active': this.isSelected(value) })}
 						onClick={() => this.handleClick(value)}
 					>
 						{name || value}
-					</Button>
+					</LinkButton>
 				)}
-			</ButtonGroup>
+			</div>
 		);
 	}
 }

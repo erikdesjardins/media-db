@@ -27,21 +27,21 @@ class ItemLength extends React.Component {
 
 	render() {
 		return (
-			<AutosaveInput
-				type="number"
-				label={
-					<div>
-						{'Length'}
-						{' '}
-						<ItemRefreshButton
-							item={this.props.item}
-							fields={['length']}
-						/>
-					</div>
-				}
-				defaultValue={this.props.item.length}
-				onSave={this.handleSave}
-			/>
+			<div>
+				<label>
+					{'Length'}
+					{' '}
+					<ItemRefreshButton
+						item={this.props.item}
+						fields={['length']}
+					/>
+				</label>
+				<AutosaveInput
+					type="number"
+					defaultValue={this.props.item.length}
+					onSave={this.handleSave}
+				/>
+			</div>
 		);
 	}
 }

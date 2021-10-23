@@ -1,0 +1,11 @@
+$Autosave-dirty: #f7a616;
+
+.AutosaveInput {
+	display: block;
+	width: 100%;
+	resize: vertical;
+
+	&--dirty {
+		outline-color: $Autosave-dirty;
+	}
+}

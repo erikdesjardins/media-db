@@ -4,9 +4,6 @@ import Relay from 'react-relay';
 import SelectBar from './SelectBar';
 import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import ControlLabel from 'react-bootstrap/es/ControlLabel';
-import FormControl from 'react-bootstrap/es/FormControl';
-import FormGroup from 'react-bootstrap/es/FormGroup';
 
 export default
 @relay({
@@ -35,9 +32,11 @@ class ItemStatus extends React.Component {
 
 	render() {
 		return (
-			<FormGroup>
-				<ControlLabel>{'Status'}</ControlLabel>
-				<FormControl.Static>
+			<div>
+				<label>
+					{'Status'}
+				</label>
+				<div>
 					<SelectBar
 						bsSize="xsmall"
 						selected={this.props.item.status}
@@ -59,8 +58,8 @@ class ItemStatus extends React.Component {
 							name: 'Rejected',
 						}]}
 					/>
-				</FormControl.Static>
-			</FormGroup>
+				</div>
+			</div>
 		);
 	}
 }

@@ -1,10 +1,9 @@
 import AddProviderMutation from '../mutations/AddProviderMutation';
-import CenteredColumn from './CenteredColumn';
 import Provider from './Provider';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
+import LinkButton from './LinkButton';
 
 export default
 @relay({
@@ -32,7 +31,12 @@ class ProviderList extends React.Component {
 
 	render() {
 		return (
-			<CenteredColumn>
+			<fieldset className="ProviderList">
+				<legend>
+					<LinkButton onClick={this.handleAddProvider}>
+						{'Add Provider'}
+					</LinkButton>
+				</legend>
 				{this.props.viewer.providers.edges.map(edge =>
 					<Provider
 						key={edge.node.id}
@@ -40,10 +44,7 @@ class ProviderList extends React.Component {
 						viewer={this.props.viewer}
 					/>
 				)}
-				<Button bsStyle="primary" onClick={this.handleAddProvider}>
-					{'Add Provider'}
-				</Button>
-			</CenteredColumn>
+			</fieldset>
 		);
 	}
 }

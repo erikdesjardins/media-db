@@ -4,8 +4,7 @@ import Relay from 'react-relay';
 import RemoveProviderMutation from '../mutations/RemoveProviderMutation';
 import UpdateProviderMutation from '../mutations/UpdateProviderMutation';
 import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import Panel from 'react-bootstrap/es/Panel';
+import LinkButton from './LinkButton';
 
 export default
 @relay({
@@ -39,53 +38,24 @@ class Provider extends React.Component {
 		}));
 	};
 
-	styles = {
-		panel: {
-			fontFamily: 'monospace',
-		},
-		input: {
-			fontFamily: 'monospace',
-			resize: 'vertical',
-			minHeight: '200px',
-			margin: '-15px -15px -30px -15px',
-			width: 'calc(100% + 30px)',
-			boxShadow: 'none',
-			border: 'none',
-		},
-		remove: {
-			float: 'right',
-			fontFamily: 'sans-serif',
-		},
-	};
-
 	render() {
 		return (
-			<div>
-				<Panel style={this.styles.panel}>
-					<Panel.Heading>
-						<Panel.Title>
-							{'{ urlRegex, idTemplate, fetchUrls, properties }'}
-							<Button
-								style={this.styles.remove}
-								bsStyle="danger"
-								bsSize="xsmall"
-								onClick={this.handleRemove}
-							>
-								{'Remove'}
-							</Button>
-						</Panel.Title>
-					</Panel.Heading>
-					<Panel.Body>
-						<AutosaveInput
-							style={this.styles.input}
-							componentClass="textarea"
-							hasFeedback
-							defaultValue={this.props.provider.infoCallback}
-							onSave={this.handleSave}
-						/>
-					</Panel.Body>
-				</Panel>
-			</div>
+			<fieldset className="Provider">
+				<legend className="Provider-legend">
+					<LinkButton
+						className="Provider-removeButton"
+						onClick={this.handleRemove}
+					>
+						{'Remove'}
+					</LinkButton>
+				</legend>
+				<AutosaveInput
+					className="Provider-textarea"
+					type="textarea"
+					defaultValue={this.props.provider.infoCallback}
+					onSave={this.handleSave}
+				/>
+			</fieldset>
 		);
 	}
 }

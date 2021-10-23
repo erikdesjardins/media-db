@@ -23,21 +23,18 @@ class ItemNotes extends React.Component {
 		}));
 	};
 
-	styles = {
-		textarea: {
-			resize: 'vertical',
-		},
-	};
-
 	render() {
 		return (
-			<AutosaveInput
-				style={this.styles.textarea}
-				componentClass="textarea"
-				label="Notes"
-				defaultValue={this.props.item.notes}
-				onSave={this.handleSave}
-			/>
+			<div>
+				<label>
+					{'Notes'}
+				</label>
+				<AutosaveInput
+					type="textarea"
+					defaultValue={this.props.item.notes}
+					onSave={this.handleSave}
+				/>
+			</div>
 		);
 	}
 }

@@ -27,21 +27,21 @@ class ItemGenres extends React.Component {
 
 	render() {
 		return (
-			<AutosaveInput
-				type="text"
-				label={
-					<div>
-						{'Genres'}
-						{' '}
-						<ItemRefreshButton
-							item={this.props.item}
-							fields={['genres']}
-						/>
-					</div>
-				}
-				defaultValue={this.props.item.genres}
-				onSave={this.handleSave}
-			/>
+			<div>
+				<label>
+					{'Genres'}
+					{' '}
+					<ItemRefreshButton
+						item={this.props.item}
+						fields={['genres']}
+					/>
+				</label>
+				<AutosaveInput
+					type="text"
+					defaultValue={this.props.item.genres}
+					onSave={this.handleSave}
+				/>
+			</div>
 		);
 	}
 }

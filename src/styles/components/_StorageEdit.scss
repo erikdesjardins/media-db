@@ -1,0 +1,9 @@
+.StorageEdit {
+	&-textarea {
+		width: 100%;
+		min-height: 500px;
+		border: none;
+		outline: none;
+		resize: vertical;
+	}
+}

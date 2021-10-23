@@ -1,8 +1,8 @@
+import CenteredColumn from '../components/CenteredColumn';
 import ProviderList from '../components/ProviderList';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import Grid from 'react-bootstrap/es/Grid';
 
 export default
 @relay({
@@ -17,9 +17,9 @@ export default
 class Providers extends React.Component {
 	render() {
 		return (
-			<Grid fluid>
+			<CenteredColumn>
 				<ProviderList viewer={this.props.viewer}/>
-			</Grid>
+			</CenteredColumn>
 		);
 	}
 }

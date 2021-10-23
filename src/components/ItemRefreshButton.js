@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 import Relay from 'react-relay';
 import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
 import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
-import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
-import Tooltip from 'react-bootstrap/es/Tooltip';
+import LinkButton from './LinkButton';
 
 export default
 @relay({
@@ -57,35 +54,20 @@ class ItemRefreshButton extends React.Component {
 		}));
 	};
 
-	styles = {
-		refreshButton: {
-			marginTop: '-2px',
-			marginBottom: '-2px',
-		},
-	};
-
 	render() {
-		return (this.isDisabled() ?
-			null :
-			<OverlayTrigger
-				placement="right"
-				animation={false}
-				rootClose
-				overlay={
-					<Tooltip id="field-updates">
-						{Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
-					</Tooltip>
-				}
+		if (this.isDisabled()) {
+			return null;
+		}
+
+		return (
+			<LinkButton
+				href="#"
+				title={Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
+				className="ItemRefreshButton"
+				onClick={this.handleClick}
 			>
-				<Button
-					style={this.styles.refreshButton}
-					bsSize="xsmall"
-					disabled={this.isDisabled()}
-					onClick={this.handleClick}
-				>
-					<Glyphicon glyph="refresh"/>
-				</Button>
-			</OverlayTrigger>
+				{'🔄'}
+			</LinkButton>
 		);
 	}
 }

@@ -25,12 +25,16 @@ class ItemTags extends React.Component {
 
 	render() {
 		return (
-			<AutosaveInput
-				type="text"
-				label="Tags"
-				defaultValue={this.props.item.tags}
-				onSave={this.handleSave}
-			/>
+			<div>
+				<label>
+					{'Tags'}
+				</label>
+				<AutosaveInput
+					type="text"
+					defaultValue={this.props.item.tags}
+					onSave={this.handleSave}
+				/>
+			</div>
 		);
 	}
 }

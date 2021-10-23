@@ -1,0 +1,23 @@
+@import '../breakpoints';
+
+.CenteredColumn {
+	width: 100%;
+
+	&-content {
+		@include breakpoint(xs) {
+			width: percentage(12/12);
+		}
+		@include breakpoint(sm) {
+			width: percentage(10/12);
+			margin-left: percentage(1/12);
+		}
+		@include breakpoint(md) {
+			width: percentage(8/12);
+			margin-left: percentage(2/12);
+		}
+		@include breakpoint(lg) {
+			width: percentage(6/12);
+			margin-left: percentage(3/12);
+		}
+	}
+}

@@ -2,7 +2,6 @@ import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
 import Relay from 'react-relay';
 import relay from 'relay-decorator';
-import Thumbnail from 'react-bootstrap/es/Thumbnail';
 
 export default
 @relay({
@@ -18,9 +17,9 @@ export default
 class ItemThumbnail extends React.Component {
 	render() {
 		return (
-			<div>
+			<div className="ItemThumbnail">
 				{this.props.item.thumbnail &&
-					<Thumbnail src={this.props.item.thumbnail}/>
+					<img className="ItemThumbnail-img" src={this.props.item.thumbnail}/>
 				}
 				<ItemRefreshButton
 					item={this.props.item}
