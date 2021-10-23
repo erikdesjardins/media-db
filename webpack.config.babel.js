@@ -104,7 +104,6 @@ export default ({ production, zip } = {}) => ({
 				{ loader: 'file-loader', options: { name: '[name].css' } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
 				{ loader: 'css-loader' },
-				{ loader: 'postcss-loader' },
 				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
