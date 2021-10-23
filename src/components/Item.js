@@ -43,7 +43,7 @@ class Item extends React.Component {
 	render() {
 		const { item } = this.props;
 		return (
-			<tr onClick={this.handleClick}>
+			<tr className="Item" onClick={this.handleClick}>
 				<td><ItemListThumbnail item={item}/></td>
 				<td><ItemListTitle item={item}/></td>
 				<td><ItemListCreator item={item}/></td>

@@ -39,7 +39,7 @@ class ItemInfo extends React.Component {
 	render() {
 		const { item, viewer } = this.props;
 		return (
-			<div key={item.id}>
+			<div key={item.id} className="ItemInfo">
 				<ItemThumbnail item={item}/>
 				<ItemTitleBlock item={item}/>
 				<ItemStatus item={item} viewer={viewer}/>

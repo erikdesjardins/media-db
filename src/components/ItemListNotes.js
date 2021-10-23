@@ -16,7 +16,7 @@ export default
 class ItemListNotes extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item CompactTable-item--autowrap CompactTable-item--small">
+			<div className="ItemListNotes CompactTable-item CompactTable-item--autowrap CompactTable-item--small">
 				<Markdown source={this.props.item.notes}/>
 			</div>
 		);

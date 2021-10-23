@@ -79,7 +79,7 @@ class ItemHistory extends React.Component {
 		];
 
 		return (
-			<table className="CompactTable CompactTable--stripe">
+			<table className="ItemHistory CompactTable CompactTable--stripe">
 				<tbody>
 					{diffs.map(({ description, date }, i) =>
 						// ensures React keys are unique

@@ -17,7 +17,7 @@ export default
 class Storage extends React.Component {
 	render() {
 		return (
-			<CenteredColumn>
+			<CenteredColumn className="Storage">
 				<StorageEdit viewer={this.props.viewer}/>
 			</CenteredColumn>
 		);

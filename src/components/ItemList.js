@@ -34,7 +34,7 @@ class ItemList extends React.Component {
 		const { items, offset, limit } = this.props;
 
 		return (
-			<table className="CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
+			<table className="ItemList CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
 				<thead>
 					<tr>
 						<th>{''}</th>

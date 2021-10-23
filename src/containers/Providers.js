@@ -17,7 +17,7 @@ export default
 class Providers extends React.Component {
 	render() {
 		return (
-			<CenteredColumn>
+			<CenteredColumn className="Providers">
 				<ProviderList viewer={this.props.viewer}/>
 			</CenteredColumn>
 		);

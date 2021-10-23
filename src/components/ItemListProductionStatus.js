@@ -23,7 +23,7 @@ export default
 class ItemListProductionStatus extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item">
+			<div className="ItemListProductionStatus CompactTable-item">
 				{statusIcons[this.props.item.productionStatus]}
 			</div>
 		);

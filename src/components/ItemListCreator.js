@@ -16,7 +16,7 @@ export default
 class ItemListCreator extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item CompactTable-item--nowrap">
+			<div className="ItemListCreator CompactTable-item CompactTable-item--nowrap">
 				<Markdown source={this.props.item.creator}/>
 			</div>
 		);

@@ -27,7 +27,7 @@ class ItemGenres extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="ItemGenres">
 				<label>
 					{'Genres'}
 					{' '}

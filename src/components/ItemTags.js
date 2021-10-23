@@ -25,7 +25,7 @@ class ItemTags extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="ItemTags">
 				<label>
 					{'Tags'}
 				</label>

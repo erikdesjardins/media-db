@@ -16,7 +16,7 @@ export default
 class ItemListCharacters extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item CompactTable-item--small CompactTable-item--nowrap">
+			<div className="ItemListCharacters CompactTable-item CompactTable-item--small CompactTable-item--nowrap">
 				<Markdown source={this.props.item.characters}/>
 			</div>
 		);

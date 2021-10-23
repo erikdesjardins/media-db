@@ -15,7 +15,7 @@ export default
 class ItemListThumbnail extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item">
+			<div className="ItemListThumbnail CompactTable-item">
 				{this.props.item.tinyThumbnail &&
 					<img className="CompactTable-tinyThumbnail" src={this.props.item.tinyThumbnail}/>
 				}

@@ -16,7 +16,7 @@ export default
 class ItemListLength extends React.Component {
 	render() {
 		return (
-			<span className="CompactTable-item">
+			<span className="ItemListLength CompactTable-item">
 				{numeral(this.props.item.length).format('0a')}
 			</span>
 		);

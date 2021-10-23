@@ -61,9 +61,9 @@ class ItemRefreshButton extends React.Component {
 
 		return (
 			<LinkButton
+				className="ItemRefreshButton"
 				href="#"
 				title={Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
-				className="ItemRefreshButton"
 				onClick={this.handleClick}
 			>
 				{'🔄'}

@@ -20,7 +20,7 @@ class ItemTitleBlock extends React.Component {
 	render() {
 		const { item } = this.props;
 		return (
-			<h3>
+			<h3 className="ItemTitleBlock">
 				<a href={item.url}>{item.title}</a>
 				<small>
 					{' by '}{item.creator}

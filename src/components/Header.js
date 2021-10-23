@@ -27,8 +27,8 @@ export default class Header extends React.PureComponent {
 
 	render() {
 		return (
-			<CenteredColumn>
-				<header className="Header">
+			<CenteredColumn className="Header">
+				<header className="Header-header">
 					<nav>
 						<Link to="/items"><img className="Header-img" src={icon}/></Link>
 						{' '}

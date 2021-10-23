@@ -16,7 +16,7 @@ export default
 class ItemListStatusDate extends React.Component {
 	render() {
 		return (
-			<span className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
+			<span className="ItemListStatusDate CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
 				{formatFullDate(this.props.item.statusDate)}
 			</span>
 		);

@@ -12,9 +12,9 @@ export default class LinkButton extends React.PureComponent {
 	render() {
 		return (
 			<a
+				className={classNames('LinkButton', this.props.className)}
 				href={this.props.disabled ? null : '#'}
 				title={this.props.title}
-				className={classNames('LinkButton', this.props.className)}
 				onClick={this.handleClick}
 			>
 				{this.props.children}

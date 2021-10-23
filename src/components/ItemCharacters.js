@@ -27,7 +27,7 @@ class ItemCharacters extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="ItemCharacters">
 				<label>
 					{'Characters'}
 					{' '}

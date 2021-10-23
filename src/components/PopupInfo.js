@@ -28,19 +28,23 @@ class PopupInfo extends React.Component {
 	};
 
 	render() {
-		return (this.props.viewer.itemForActiveTab ?
-			<ItemInfo
-				item={this.props.viewer.itemForActiveTab}
-				viewer={this.props.viewer}
-			/> :
-			<form>
-				<LinkButton
-					disabled={!this.props.viewer.providerMatchesActiveTab}
-					onClick={this.handleAddItem}
-				>
-					{'Add'}
-				</LinkButton>
-			</form>
+		return (
+			<div className="PopupInfo">
+				{this.props.viewer.itemForActiveTab ?
+					<ItemInfo
+						item={this.props.viewer.itemForActiveTab}
+						viewer={this.props.viewer}
+					/> :
+					<form>
+						<LinkButton
+							disabled={!this.props.viewer.providerMatchesActiveTab}
+							onClick={this.handleAddItem}
+						>
+							{'Add'}
+						</LinkButton>
+					</form>
+				}
+			</div>
 		);
 	}
 }

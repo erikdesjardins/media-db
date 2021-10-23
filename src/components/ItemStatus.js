@@ -32,7 +32,7 @@ class ItemStatus extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="ItemStatus">
 				<label>
 					{'Status'}
 				</label>

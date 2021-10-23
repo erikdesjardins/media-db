@@ -11,8 +11,8 @@ export default class Markdown extends React.PureComponent {
 
 	render() {
 		return (isMarkdown.test(this.props.source) ?
-			<div dangerouslySetInnerHTML={{ __html: markdown(this.props.source) }}/> : // eslint-disable-line react/no-danger
-			<div><p>{this.props.source}</p></div>
+			<div className="Markdown" dangerouslySetInnerHTML={{ __html: markdown(this.props.source) }}/> : // eslint-disable-line react/no-danger
+			<div className="Markdown"><p>{this.props.source}</p></div>
 		);
 	}
 }

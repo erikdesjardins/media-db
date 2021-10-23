@@ -27,7 +27,7 @@ class ItemLength extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="ItemLength">
 				<label>
 					{'Length'}
 					{' '}

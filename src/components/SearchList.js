@@ -16,7 +16,7 @@ export default
 class SearchList extends React.Component {
 	render() {
 		return (
-			<fieldset>
+			<fieldset className="SearchList">
 				<ItemList items={this.props.items}/>
 			</fieldset>
 		);

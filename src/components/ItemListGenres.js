@@ -16,7 +16,7 @@ export default
 class ItemListGenres extends React.Component {
 	render() {
 		return (
-			<div className="CompactTable-item CompactTable-item--small CompactTable-item--nowrap">
+			<div className="ItemListGenres CompactTable-item CompactTable-item--small CompactTable-item--nowrap">
 				<Markdown source={this.props.item.genres}/>
 			</div>
 		);
