@@ -8,8 +8,8 @@ export default class SidebarItem extends React.PureComponent {
 
 	render() {
 		return (
-			<fieldset>
-				<legend>
+			<fieldset className="SidebarItem">
+				<legend className="SidebarItem-legend">
 					<Link to={this.relativePath('info')}>
 						{'Info'}
 					</Link>
