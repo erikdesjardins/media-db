@@ -4,8 +4,10 @@ $Autosave-dirty: #f7a616;
 	display: block;
 	width: 100%;
 	resize: vertical;
+	font-family: sans-serif;
 
 	&--dirty {
+		border-color: $Autosave-dirty;
 		outline-color: $Autosave-dirty;
 	}
 }

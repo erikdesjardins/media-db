@@ -1,23 +1,14 @@
 .Provider {
-	&-legend {
-		text-align: right;
-	}
+	position: relative;
 
 	&-removeButton {
-		font-family: sans-serif;
+		position: absolute;
+		right: 20px;
 	}
 
 	&-textarea {
-		min-height: 200px;
-		border: none;
-		outline: none;
+		min-height: 400px;
+		overflow-y: scroll;
 		font-family: monospace;
-
-		// make it fit exactly inside fieldset
-		// font-size: 12px;
-		// padding: 0;
-		// margin-left: -0.75em;
-		// width: calc(100% + 2 * 0.75em);
-		// margin-bottom: calc(-0.625em - 2px - 1px /* why? */);
 	}
 }

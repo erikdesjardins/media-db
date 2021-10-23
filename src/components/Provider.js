@@ -40,22 +40,20 @@ class Provider extends React.Component {
 
 	render() {
 		return (
-			<fieldset className="Provider">
-				<legend className="Provider-legend">
-					<LinkButton
-						className="Provider-removeButton"
-						onClick={this.handleRemove}
-					>
-						{'Remove'}
-					</LinkButton>
-				</legend>
+			<div className="Provider">
+				<LinkButton
+					className="Provider-removeButton"
+					onClick={this.handleRemove}
+				>
+					{'Remove'}
+				</LinkButton>
 				<AutosaveInput
 					className="Provider-textarea"
 					type="textarea"
 					defaultValue={this.props.provider.infoCallback}
 					onSave={this.handleSave}
 				/>
-			</fieldset>
+			</div>
 		);
 	}
 }
