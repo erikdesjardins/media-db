@@ -8,37 +8,15 @@ import ItemListStatusDate from './ItemListStatusDate';
 import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
 import React from 'react';
-import PropTypes from 'prop-types';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
 
-export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-				${ItemListThumbnail.getFragment('item')}
-				${ItemListTitle.getFragment('item')}
-				${ItemListCreator.getFragment('item')}
-				${ItemListGenres.getFragment('item')}
-				${ItemListCharacters.getFragment('item')}
-				${ItemListNotes.getFragment('item')}
-				${ItemListStatusDate.getFragment('item')}
-				${ItemListLength.getFragment('item')}
-				${ItemListProductionStatus.getFragment('item')}
-			}
-		`,
-	},
-})
-class Item extends React.Component {
-	static contextTypes = {
-		router: PropTypes.object.isRequired,
-	};
+export default class Item extends React.Component {
+	constructor(...args) {
+		super(...args);
 
-	handleClick = () => {
-		this.context.router.push(`/items/${encodeURIComponent(this.props.item.id)}/info`);
-	};
+		this.handleClick = () => {
+			this.context.router.push(`/items/${btoa(this.props.item.id)}/info`);
+		};
+	}
 
 	render() {
 		const { item } = this.props;
@@ -57,3 +35,7 @@ class Item extends React.Component {
 		);
 	}
 }
+
+Item.contextTypes = {
+	router: () => {},
+};

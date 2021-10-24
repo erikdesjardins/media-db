@@ -1,29 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import icon from '../images/icon32.png';
 import { Link } from 'react-router';
 import CenteredColumn from './CenteredColumn';
 
-export default class Header extends React.PureComponent {
-	static contextTypes = {
-		router: PropTypes.object.isRequired,
-	};
+export default class Header extends React.Component {
+	constructor(...args) {
+		super(...args);
 
-	state = {
-		query: '',
-	};
+		this.state = {
+			query: '',
+		};
 
-	handleChangeSearch = e => {
-		this.setState({
-			query: e.target.value,
-		});
-		this.context.router.push(`/search/${btoa(e.target.value)}/preview`);
-	};
+		this.handleChangeSearch = e => {
+			this.setState({
+				query: e.target.value,
+			});
+			this.context.router.push(`/search/${btoa(e.target.value)}/preview`);
+		};
 
-	handleSubmitSearch = e => {
-		e.preventDefault();
-		this.context.router.push(`/search/${btoa(this.state.query)}/full`);
-	};
+		this.handleSubmitSearch = e => {
+			e.preventDefault();
+			this.context.router.push(`/search/${btoa(this.state.query)}/full`);
+		};
+	}
 
 	render() {
 		return (
@@ -53,3 +52,7 @@ export default class Header extends React.PureComponent {
 		);
 	}
 }
+
+Header.contextTypes = {
+	router: () => {},
+};

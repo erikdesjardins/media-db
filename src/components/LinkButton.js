@@ -1,24 +1,22 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default class LinkButton extends React.PureComponent {
-	handleClick = e => {
+export default React.memo(function LinkButton({ className, title, disabled, onClick, children }) {
+	const handleClick = e => {
 		e.preventDefault();
-		if (!this.props.disabled) {
-			this.props.onClick();
+		if (!disabled) {
+			onClick();
 		}
 	};
 
-	render() {
-		return (
-			<a
-				className={classNames('LinkButton', this.props.className)}
-				href={this.props.disabled ? null : '#'}
-				title={this.props.title}
-				onClick={this.handleClick}
-			>
-				{this.props.children}
-			</a>
-		);
-	}
-}
+	return (
+		<a
+			className={classNames('LinkButton', className)}
+			href={disabled ? null : '#'}
+			title={title}
+			onClick={handleClick}
+		>
+			{children}
+		</a>
+	);
+});

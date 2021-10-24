@@ -1,25 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export default class SidebarItem extends React.PureComponent {
-	relativePath(path) {
-		return `${this.props.pathname.split('/').slice(0, -1).join('/')}/${path}`;
-	}
+export default function SidebarItem({ pathname, children }) {
+	const basePath = pathname.split('/').slice(0, -1).join('/');
 
-	render() {
-		return (
-			<fieldset className="SidebarItem">
-				<legend className="SidebarItem-legend">
-					<Link to={this.relativePath('info')}>
-						{'Info'}
-					</Link>
-					{' '}
-					<Link to={this.relativePath('history')}>
-						{'History'}
-					</Link>
-				</legend>
-				{this.props.children}
-			</fieldset>
-		);
-	}
+	return (
+		<fieldset className="SidebarItem">
+			<legend className="SidebarItem-legend">
+				<Link to={`${basePath}/info`}>
+					{'Info'}
+				</Link>
+				{' '}
+				<Link to={`${basePath}/history`}>
+					{'History'}
+				</Link>
+			</legend>
+			{children}
+		</fieldset>
+	);
 }

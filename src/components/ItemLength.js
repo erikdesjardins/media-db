@@ -1,47 +1,30 @@
 import AutosaveInput from './AutosaveInput';
-import EditItemLengthMutation from '../mutations/EditItemLengthMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { useMutationUpdateItem } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				length
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemLengthMutation.getFragment('item')}
-			}
-		`,
-	},
-})
-class ItemLength extends React.Component {
-	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemLengthMutation({
-			item: this.props.item,
-			length: value,
-		}));
+export default function ItemLength({ item }) {
+	const mutation = useMutationUpdateItem(item.id);
+
+	const handleSave = value => {
+		mutation.mutate({ length: value });
 	};
 
-	render() {
-		return (
-			<div className="ItemLength">
-				<label>
-					{'Length'}
-					{' '}
-					<ItemRefreshButton
-						item={this.props.item}
-						fields={['length']}
-					/>
-				</label>
-				<AutosaveInput
-					type="number"
-					defaultValue={this.props.item.length}
-					onSave={this.handleSave}
+	return (
+		<div className="ItemLength">
+			<label>
+				{'Length'}
+				{' '}
+				<ItemRefreshButton
+					item={item}
+					fields={['length']}
 				/>
-			</div>
-		);
-	}
+			</label>
+			<AutosaveInput
+				type="number"
+				defaultValue={item.length}
+				onSave={handleSave}
+			/>
+		</div>
+	);
 }

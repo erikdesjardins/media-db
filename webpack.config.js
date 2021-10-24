@@ -1,15 +1,14 @@
-import webpack from 'webpack';
-import BellOnBundlerErrorPlugin from 'bell-on-bundler-error-plugin';
-import InertEntryPlugin from 'inert-entry-webpack-plugin';
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
-import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
-import ZipPlugin from 'zip-webpack-plugin';
-import sass from 'sass';
-import { join } from 'path';
+/* eslint-disable import/no-commonjs */
+const webpack = require('webpack');
+const BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
+const InertEntryPlugin = require('inert-entry-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
+const sass = require('sass');
+const { join } = require('path');
 
-const babelRelayPlugin = require.resolve('./babelRelayPlugin');
-
-export default ({ production, zip } = {}) => ({
+module.exports = ({ production, zip } = {}) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
@@ -42,11 +41,7 @@ export default ({ production, zip } = {}) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							[babelRelayPlugin, { enforceSchema: production }],
-
 							'babel-plugin-syntax-object-rest-spread',
-							'babel-plugin-transform-decorators-legacy',
-							'babel-plugin-transform-class-properties',
 
 							'babel-plugin-transform-dead-code-elimination',
 							['babel-plugin-transform-define', {
@@ -57,7 +52,6 @@ export default ({ production, zip } = {}) => ({
 
 							production && 'babel-plugin-transform-react-constant-elements',
 							production && 'babel-plugin-transform-react-inline-elements',
-							production && 'babel-plugin-transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: !production,
 						compact: production,

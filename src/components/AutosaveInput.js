@@ -1,64 +1,47 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 
-export default class AutosaveInput extends React.PureComponent {
-	static propTypes = {
-		type: PropTypes.string,
-		className: PropTypes.string,
-		defaultValue: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number,
-		]).isRequired,
-		onSave: PropTypes.func.isRequired,
-	};
+export default React.memo(function AutosaveInput({ type, className, defaultValue, onSave }) {
+	// eslint-disable-next-line prefer-const
+	let [value, setValue] = useState(defaultValue);
 
-	state = {
-		value: this.props.defaultValue,
-	};
-
-	componentWillReceiveProps(nextProps) {
-		// if the component is clean and the default value is changed,
-		// `value` should follow `defaultValue` to avoid dirtying the component
-		if (!this.isDirty() && nextProps.defaultValue !== this.props.defaultValue) {
-			this.setState({
-				value: nextProps.defaultValue,
-			});
-		}
+	// if the component is clean and the default value is changed,
+	// `value` should follow `defaultValue` to avoid dirtying the component
+	const previousDefaultValue = useRef(defaultValue);
+	if (value === previousDefaultValue.current && defaultValue !== previousDefaultValue.current) {
+		setValue(defaultValue);
+		value = defaultValue;
 	}
+	previousDefaultValue.current = defaultValue;
 
-	isDirty() {
-		return String(this.state.value) !== String(this.props.defaultValue);
-	}
+	const isDirty = String(value) !== String(defaultValue);
 
-	handleBlur = () => {
-		if (this.isDirty()) {
-			this.props.onSave(this.state.value);
+	const handleBlur = () => {
+		if (isDirty) {
+			onSave(value);
 		}
 	};
 
-	handleChange = e => {
-		this.setState({ value: e.target.value });
+	const handleChange = e => {
+		setValue(e.target.value);
 	};
 
-	render() {
-		const class_ = classNames('AutosaveInput', { 'AutosaveInput--dirty': this.isDirty() }, this.props.className);
+	const class_ = classNames('AutosaveInput', { 'AutosaveInput--dirty': isDirty }, className);
 
-		return this.props.type === 'textarea' ? (
-			<textarea
-				className={class_}
-				value={this.state.value}
-				onChange={this.handleChange}
-				onBlur={this.handleBlur}
-			/>
-		) : (
-			<input
-				type={this.props.type}
-				className={class_}
-				value={this.state.value}
-				onChange={this.handleChange}
-				onBlur={this.handleBlur}
-			/>
-		);
-	}
-}
+	return type === 'textarea' ? (
+		<textarea
+			className={class_}
+			value={value}
+			onChange={handleChange}
+			onBlur={handleBlur}
+		/>
+	) : (
+		<input
+			type={type}
+			className={class_}
+			value={value}
+			onChange={handleChange}
+			onBlur={handleBlur}
+		/>
+	);
+});

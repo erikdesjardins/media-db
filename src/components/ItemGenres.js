@@ -1,47 +1,30 @@
 import AutosaveInput from './AutosaveInput';
-import EditItemGenresMutation from '../mutations/EditItemGenresMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { useMutationUpdateItem } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				genres
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemGenresMutation.getFragment('item')}
-			}
-		`,
-	},
-})
-class ItemGenres extends React.Component {
-	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemGenresMutation({
-			item: this.props.item,
-			genres: value,
-		}));
+export default function ItemGenres({ item }) {
+	const mutation = useMutationUpdateItem(item.id);
+
+	const handleSave = value => {
+		mutation.mutate({ genres: value });
 	};
 
-	render() {
-		return (
-			<div className="ItemGenres">
-				<label>
-					{'Genres'}
-					{' '}
-					<ItemRefreshButton
-						item={this.props.item}
-						fields={['genres']}
-					/>
-				</label>
-				<AutosaveInput
-					type="text"
-					defaultValue={this.props.item.genres}
-					onSave={this.handleSave}
+	return (
+		<div className="ItemGenres">
+			<label>
+				{'Genres'}
+				{' '}
+				<ItemRefreshButton
+					item={item}
+					fields={['genres']}
 				/>
-			</div>
-		);
-	}
+			</label>
+			<AutosaveInput
+				type="text"
+				defaultValue={item.genres}
+				onSave={handleSave}
+			/>
+		</div>
+	);
 }

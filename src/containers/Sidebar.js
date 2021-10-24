@@ -1,12 +1,10 @@
 import React from 'react';
 import SidebarItem from '../components/SidebarItem';
 
-export default class Sidebar extends React.PureComponent {
-	render() {
-		return (
-			<SidebarItem pathname={this.props.location.pathname}>
-				{this.props.children}
-			</SidebarItem>
-		);
-	}
+export default function Sidebar({ location, children }) {
+	return (
+		<SidebarItem pathname={location.pathname}>
+			{children}
+		</SidebarItem>
+	);
 }

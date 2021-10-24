@@ -1,33 +1,20 @@
 import React from 'react';
-import Relay from 'react-relay';
 import SearchList from '../components/SearchList';
-import relay from 'relay-decorator';
+import { useQueryItemsSearch } from '../data/queries';
 
-export default
-@relay({
-	initialVariables: {
-		query: '',
-		preview: true,
-		limit: 25,
-	},
-	prepareVariables: ({ query, preview }) => ({
-		query,
-		limit: preview ? 25 : 2147483647,
-	}),
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				searchItems(query: $query, first: $limit) {
-					${SearchList.getFragment('items')}
-				}
-			}
-		`,
-	},
-})
-class Search extends React.Component {
-	render() {
-		return (
-			<SearchList items={this.props.viewer.searchItems}/>
-		);
+export default function Search({ params }) {
+	const query = atob(params.query);
+	const preview = params.preview === 'preview';
+
+	const limit = preview ? 25 : 2147483647;
+
+	const { isLoading, data: items } = useQueryItemsSearch(query, { keepPreviousData: true });
+
+	if (isLoading) {
+		return null;
 	}
+
+	return (
+		<SearchList items={items.slice(0, limit)}/>
+	);
 }

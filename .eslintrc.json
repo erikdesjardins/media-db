@@ -120,7 +120,7 @@
 		"consistent-this": [2, "this"], // do not alias `this`, use arrow functions
 		"curly": [2, "multi-line"],
 		"dot-location": [2, "property"],
-		"func-style": [2, "declaration"],
+		"func-style": 0,
 		"function-paren-newline": 0,
 		"generator-star-spacing": [2, { "before": false, "after": true }],
 		"id-length": 0,
@@ -149,6 +149,7 @@
 		"operator-assignment": [2, "always"],
 		"operator-linebreak": [2, "after"],
 		"padded-blocks": [2, "never"],
+		"prefer-arrow-callback": 0,
 		"prefer-reflect": [2, { "exceptions": ["getOwnPropertyNames"] }],
 		"quote-props": [2, "as-needed"],
 		"quotes": [2, "single"],
