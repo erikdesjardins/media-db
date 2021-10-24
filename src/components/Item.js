@@ -8,13 +8,10 @@ import ItemListStatusDate from './ItemListStatusDate';
 import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
-export default function Item({ item }) {
-	const history = useHistory();
-
+export default function Item({ item, onClickItem }) {
 	const handleClick = () => {
-		history.push(`/items/${btoa(item.id)}/info`);
+		onClickItem(item);
 	};
 
 	return (

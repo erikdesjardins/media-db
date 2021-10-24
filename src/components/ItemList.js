@@ -1,7 +1,7 @@
 import Item from './Item';
 import React from 'react';
 
-export default function ItemList({ items }) {
+export default function ItemList({ items, onClickItem }) {
 	return (
 		<table className="ItemList CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
 			<thead>
@@ -22,6 +22,7 @@ export default function ItemList({ items }) {
 					<Item
 						key={item.id}
 						item={item}
+						onClickItem={onClickItem}
 					/>
 				))}
 			</tbody>

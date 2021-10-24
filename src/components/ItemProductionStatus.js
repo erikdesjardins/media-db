@@ -22,7 +22,6 @@ export default function ItemProductionStatus({ item }) {
 				/>
 			</label>
 			<SelectBar
-				bsSize="xsmall"
 				selected={item.productionStatus}
 				onSelect={handleSave}
 				options={[{

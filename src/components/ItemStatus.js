@@ -17,7 +17,6 @@ export default function ItemStatus({ item }) {
 			</label>
 			<div>
 				<SelectBar
-					bsSize="xsmall"
 					selected={item.status}
 					onSelect={handleSave}
 					options={[{

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import icon from '../images/icon32.png';
 import { Link, useHistory } from 'react-router-dom';
-import CenteredColumn from './CenteredColumn';
+import CenteredColumn from '../components/CenteredColumn';
 
 export default function Header() {
 	const [query, setQuery] = useState('');

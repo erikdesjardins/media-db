@@ -1,21 +1,30 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import SidebarInfo from './SidebarInfo';
+import SidebarHistory from './SidebarHistory';
+import SelectBar from './SelectBar';
 
-export default function SidebarItem({ children }) {
-	const params = useParams();
+export default function SidebarItem({ itemId }) {
+	const [showInfo, setShowInfo] = useState(true);
 
 	return (
 		<fieldset className="SidebarItem">
 			<legend className="SidebarItem-legend">
-				<Link to={`/items/${params.id}/info`}>
-					{'Info'}
-				</Link>
-				{' '}
-				<Link to={`/items/${params.id}/history`}>
-					{'History'}
-				</Link>
+				<SelectBar
+					selected={showInfo}
+					onSelect={setShowInfo}
+					options={[{
+						value: true,
+						name: 'Info',
+					}, {
+						value: false,
+						name: 'History',
+					}]}
+				/>
 			</legend>
-			{children}
+			{showInfo ?
+				<SidebarInfo itemId={itemId}/> :
+				<SidebarHistory itemId={itemId}/>
+			}
 		</fieldset>
 	);
 }

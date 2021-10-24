@@ -6,7 +6,7 @@ import LinkButton from './LinkButton';
 import { useQueryItemsFilter } from '../data/queries';
 import { ROW_LIMIT } from '../constants/table';
 
-export default function ItemView() {
+export default function ItemView({ onClickItem }) {
 	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);
 	const [offset, setOffset] = useState(0);
 
@@ -60,7 +60,7 @@ export default function ItemView() {
 					{'-->'}
 				</LinkButton>
 			</div>
-			<ItemList items={items.slice(offset, offset + ROW_LIMIT)}/>
+			<ItemList items={items.slice(offset, offset + ROW_LIMIT)} onClickItem={onClickItem}/>
 		</fieldset>
 	);
 }
