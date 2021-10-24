@@ -7,6 +7,8 @@ export default function Sidebar() {
 	const id = atob(params.id);
 
 	return (
-		<SidebarItem itemId={id}/>
+		<div className="Sidebar">
+			<SidebarItem itemId={id}/>
+		</div>
 	);
 }
