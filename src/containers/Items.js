@@ -14,7 +14,7 @@ export default function Items({ children }) {
 			<div className="Items-list">
 				<ItemView onClickItem={handleClickItem}/>
 			</div>
-			<div className="Items-info">
+			<div className="Items-sidebar">
 				{children}
 			</div>
 		</div>

@@ -1,17 +1,17 @@
 @use 'sass:math';
 @import '../breakpoints';
 
-.Items {
+.Search {
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
 
 	&-list {
 		@include breakpoint(xs) {
-			width: percentage(math.div(12, 12));
+			width: percentage(math.div(6, 12));
 		}
 		@include breakpoint(sm) {
-			width: percentage(math.div(12, 12));
+			width: percentage(math.div(7, 12));
 		}
 		@include breakpoint(md) {
 			width: percentage(math.div(8, 12));
@@ -23,15 +23,13 @@
 
 	&-sidebar {
 		@include breakpoint(xs) {
-			width: percentage(math.div(12, 12));
+			width: percentage(math.div(6, 12));
 		}
 		@include breakpoint(sm) {
-			width: percentage(math.div(8, 12));
-			margin-left: percentage(math.div(2, 12));
+			width: percentage(math.div(5, 12));
 		}
 		@include breakpoint(md) {
 			width: percentage(math.div(4, 12));
-			margin-left: percentage(math.div(0, 12));
 		}
 		@include breakpoint(lg) {
 			width: percentage(math.div(3, 12));

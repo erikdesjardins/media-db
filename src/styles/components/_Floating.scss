@@ -1,0 +1,64 @@
+.Floating {
+	$borderColor: #000;
+	$borderWidth: 1.5px;
+	$borderRadius: 2px;
+
+	$triangleHeight: 4px;
+	$triangleHalfWidth: $triangleHeight;
+
+	$background: #fff;
+	$padding: 2px;
+
+	&-overlay {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+	&-triangle {
+		position: absolute;
+		top: 100%;
+		left: calc(50% - #{$triangleHalfWidth});
+		border-top: solid $triangleHeight transparent;
+		border-right: solid $triangleHalfWidth transparent;
+		border-bottom: solid $triangleHeight transparent;
+		border-left: solid $triangleHalfWidth transparent;
+
+		&--top {
+			border-top: none;
+			border-bottom-color: $borderColor;
+		}
+
+		&--bottom {
+			border-bottom: none;
+			border-top-color: $borderColor;
+		}
+	}
+
+	&-content {
+		position: absolute;
+		padding: $padding;
+		border: $borderWidth solid $borderColor;
+		border-radius: $borderRadius;
+		background: $background;
+		z-index: 1;
+
+		&--top {
+			top: calc(100% + #{$triangleHeight});
+		}
+
+		&--right {
+			right: 0;
+		}
+
+		&--bottom {
+			bottom: calc(100% + #{$triangleHeight});
+		}
+
+		&--left {
+			left: 0;
+		}
+	}
+}

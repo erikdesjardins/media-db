@@ -1,30 +1,59 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import icon from '../images/icon32.png';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';
+import SearchList from '../components/SearchList';
+import Floating from '../components/Floating';
 
 export default function Header() {
-	const match = useRouteMatch('/search/:query');
-	const queryFromUrl = match && atob(match.params.query);
+	const searchMatch = useRouteMatch('/search/:query');
+	const queryFromUrl = searchMatch && atob(searchMatch.params.query);
+	const isSearch = !!searchMatch;
 
 	// eslint-disable-next-line prefer-const
 	let [query, setQuery] = useState(queryFromUrl || '');
+	const [showPreview, setShowPreview] = useState(false);
 
-	if (queryFromUrl && queryFromUrl !== query) {
+	// if url changes, update query to match
+	const previousQueryFromUrl = useRef(queryFromUrl);
+	if (queryFromUrl && queryFromUrl !== previousQueryFromUrl.current && queryFromUrl !== query) {
 		setQuery(queryFromUrl);
 		query = queryFromUrl;
 	}
+	previousQueryFromUrl.current = queryFromUrl;
+
+	// don't show the preview if the search page already has the same results
+	const searchPageIsSameAsPreview = query === queryFromUrl;
 
 	const history = useHistory();
 
+	const handleFocusSearch = () => {
+		if (query) {
+			setShowPreview(true);
+		}
+	};
+
 	const handleChangeSearch = e => {
 		setQuery(e.target.value);
-		history.push(`/search/${btoa(e.target.value)}/preview`);
+		setShowPreview(true);
+	};
+
+	const handleBlurPreview = () => {
+		setShowPreview(false);
+	};
+
+	const handleClickItem = item => {
+		if (isSearch) {
+			history.push(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
+		} else {
+			history.push(`/items/${btoa(item.id)}`);
+		}
 	};
 
 	const handleSubmitSearch = e => {
 		e.preventDefault();
-		history.push(`/search/${btoa(query)}/full`);
+		setShowPreview(false);
+		history.push(`/search/${btoa(query)}`);
 	};
 
 	return (
@@ -40,14 +69,20 @@ export default function Header() {
 					<Link to="/storage">{'Storage'}</Link>
 				</nav>
 				<div className="Utils-flexSpacer"/>
-				<form onSubmit={handleSubmitSearch}>
+				<form className="Header-form" onSubmit={handleSubmitSearch}>
 					<input
 						type="text"
 						placeholder="Search"
 						autoFocus
 						value={query}
+						onFocus={handleFocusSearch}
 						onChange={handleChangeSearch}
 					/>
+					{showPreview && !searchPageIsSameAsPreview &&
+						<Floating top right onBlur={handleBlurPreview}>
+							<SearchList query={query} preview onClickItem={handleClickItem}/>
+						</Floating>
+					}
 				</form>
 			</header>
 		</CenteredColumn>

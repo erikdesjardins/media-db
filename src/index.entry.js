@@ -27,8 +27,12 @@ ReactDOM.render((
 						</Route>
 					</Items>
 				</Route>
-				<Route path="/search/:query/:preview">
-					<Search/>
+				<Route path="/search/:query">
+					<Search>
+						<Route path="/search/:query/:id">
+							<Sidebar/>
+						</Route>
+					</Search>
 				</Route>
 				<Route path="/providers">
 					<Providers/>

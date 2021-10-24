@@ -3,7 +3,7 @@ import React from 'react';
 import { ROW_LIMIT } from '../constants/table';
 import { useQueryItemsSearch } from '../data/queries';
 
-export default function SearchList({ query, preview, onClickItem }) {
+export default function SearchList({ query, preview = false, onClickItem }) {
 	const { isLoading, data: items } = useQueryItemsSearch(query, { keepPreviousData: true });
 
 	if (isLoading) {

@@ -1,5 +1,6 @@
 @import 'components/AutosaveInput';
 @import 'components/CenteredColumn';
+@import 'components/Floating';
 @import 'components/Header';
 @import 'components/ItemRefreshButton';
 @import 'components/ItemThumbnail';
@@ -12,6 +13,7 @@
 @import 'components/SidebarItem';
 @import 'components/StorageEdit';
 @import 'containers/Items';
+@import 'containers/Search';
 @import 'modules/CompactTable';
 @import 'modules/ItemTags';
 @import 'modules/Utils';
@@ -26,5 +28,6 @@ body {
 
 fieldset {
 	min-width: auto;
+	margin: 0 2px 2px 2px;
 	overflow-x: hidden;
 }
