@@ -5,7 +5,7 @@ import classNames from 'classnames';
 export default React.memo(function SelectBar({ options, selected, onSelect }) {
 	return (
 		<div className="SelectBar">
-			{options.map(({ value, name }) =>
+			{options.map(({ value, name }) => (
 				<LinkButton
 					key={value}
 					className={classNames('SelectBar-button', { 'SelectBar-button--active': value === selected })}
@@ -13,7 +13,7 @@ export default React.memo(function SelectBar({ options, selected, onSelect }) {
 				>
 					{name || value}
 				</LinkButton>
-			)}
+			))}
 		</div>
 	);
 });

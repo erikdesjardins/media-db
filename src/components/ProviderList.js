@@ -23,12 +23,12 @@ export default function ProviderList() {
 					{'Add Provider'}
 				</LinkButton>
 			</legend>
-			{providers.map(provider =>
+			{providers.map(provider => (
 				<Provider
 					key={provider.id}
 					provider={provider}
 				/>
-			)}
+			))}
 		</fieldset>
 	);
 }

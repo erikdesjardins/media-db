@@ -93,7 +93,7 @@ export function getItemHistory(id) {
 		map((item, i) => ({
 			...item,
 			id: `${item.id}-history${i}`,
-		}))
+		})),
 	);
 }
 
@@ -104,7 +104,7 @@ export function getItems() {
 export function getFilteredItems(filterMap) {
 	return Object.entries(filterMap).reduce(
 		(items, [key, value]) => (value ? pipe(items, whereEquals(key, value)) : items),
-		getItems()
+		getItems(),
 	);
 }
 
@@ -113,7 +113,7 @@ export function getQueriedItems(query) {
 	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
 	return repeatWhile(() => re.exec(query)).reduce(
 		(items, [, key, regex]) => (regex ? pipe(items, whereRegex(key, regex)) : items),
-		getItems()
+		getItems(),
 	);
 }
 

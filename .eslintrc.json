@@ -1,5 +1,11 @@
 {
-	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
 	"plugins": [
 		"react",
 		"consistent-return-legacy",
@@ -8,6 +14,9 @@
 		"import"
 	],
 	"settings": {
+		"react": {
+			"version": "detect"
+		},
 		"import/ignore": [
 			"node_modules",
 			"\\.(json|png|html|scss)$"
@@ -26,11 +35,13 @@
 		"react/forbid-component-props": 0,
 		"react/forbid-foreign-prop-types": 0,
 		"react/jsx-curly-brace-presence": [2, { "props": "never", "children": "ignore" }],
+		"react/jsx-curly-newline": 0,
 		"react/jsx-filename-extension": 0,
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
 		"react/jsx-max-depth": 0,
 		"react/jsx-max-props-per-line": 0,
+		"react/jsx-newline": [2, { "prevent": true }],
 		"react/jsx-no-bind": 0,
 		"react/jsx-one-expression-per-line": 0,
 		"react/jsx-sort-props": 0,
@@ -121,6 +132,7 @@
 		"curly": [2, "multi-line"],
 		"dot-location": [2, "property"],
 		"func-style": 0,
+		"function-call-argument-newline": [2, "consistent"],
 		"function-paren-newline": 0,
 		"generator-star-spacing": [2, { "before": false, "after": true }],
 		"id-length": 0,
@@ -129,9 +141,11 @@
 		"init-declarations": 0,
 		"line-comment-position": 0,
 		"lines-around-comment": [2, { "allowBlockStart": true }],
+		"max-classes-per-file": 0,
 		"max-depth": 0,
 		"max-len": 0,
 		"max-lines": 0,
+		"max-lines-per-function": 0,
 		"max-nested-callbacks": [2, 5],
 		"max-params": 0,
 		"max-statements": 0,
@@ -150,12 +164,14 @@
 		"operator-linebreak": [2, "after"],
 		"padded-blocks": [2, "never"],
 		"prefer-arrow-callback": 0,
+		"prefer-named-capture-group": 0,
 		"prefer-reflect": [2, { "exceptions": ["getOwnPropertyNames"] }],
 		"quote-props": [2, "as-needed"],
 		"quotes": [2, "single"],
 		"id-match": 0,
 		"id-blacklist": 0,
 		"require-jsdoc": 0,
+		"require-unicode-regexp": 0,
 		"sort-keys": 0,
 		"sort-vars": 0,
 		"sort-imports": 0, // see sort-imports-es6/sort-imports-es6

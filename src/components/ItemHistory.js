@@ -48,7 +48,7 @@ export default function ItemHistory({ history }) {
 	return (
 		<table className="ItemHistory CompactTable CompactTable--stripe">
 			<tbody>
-				{diffs.map(({ description, date }, i) =>
+				{diffs.map(({ description, date }, i) => (
 					// ensures React keys are unique
 					// this is fine because items can only be appended to history
 					// eslint-disable-next-line react/no-array-index-key
@@ -64,7 +64,7 @@ export default function ItemHistory({ history }) {
 							</div>
 						</td>
 					</tr>
-				)}
+				))}
 			</tbody>
 		</table>
 	);

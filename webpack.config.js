@@ -1,5 +1,4 @@
 /* eslint-disable import/no-commonjs */
-const webpack = require('webpack');
 const BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
@@ -8,14 +7,14 @@ const ZipPlugin = require('zip-webpack-plugin');
 const sass = require('sass');
 const { join } = require('path');
 
-module.exports = ({ production, zip } = {}) => ({
+module.exports = (env, { mode }) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
 	performance: false,
-	devtool: production ? 'source-map' : 'cheap-source-map',
+	devtool: mode === 'production' ? 'source-map' : 'cheap-source-map',
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
@@ -30,31 +29,29 @@ module.exports = ({ production, zip } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							'babel-preset-react',
-							production && ['babel-preset-babili', {
+							['@babel/preset-react', {
+								runtime: 'automatic',
+							}],
+							mode === 'production' && ['babel-preset-minify', {
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
-								infinity: false,
-								simplify: false,
-								simplifyComparisons: false,
+								mangle: false,
 							}],
 						].filter(x => x),
 						plugins: [
-							'babel-plugin-syntax-object-rest-spread',
-
 							'babel-plugin-transform-dead-code-elimination',
 							['babel-plugin-transform-define', {
-								'process.env.NODE_ENV': production ? 'production' : 'development',
+								'process.env.NODE_ENV': mode,
 								'typeof window': 'object',
 							}],
 							'babel-plugin-lodash',
 
-							production && 'babel-plugin-transform-react-constant-elements',
-							production && 'babel-plugin-transform-react-inline-elements',
+							mode === 'production' && '@babel/plugin-transform-react-constant-elements',
+							mode === 'production' && '@babel/plugin-transform-react-inline-elements',
 						].filter(x => x),
-						comments: !production,
-						compact: production,
+						comments: false,
+						compact: mode === 'production',
 						babelrc: false,
 					},
 				},
@@ -68,7 +65,7 @@ module.exports = ({ production, zip } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						presets: [
-							production && ['babili', {
+							mode === 'production' && ['babel-preset-minify', {
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
@@ -78,16 +75,16 @@ module.exports = ({ production, zip } = {}) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							'transform-dead-code-elimination',
-							['transform-define', {
-								'process.env.NODE_ENV': production ? 'production' : 'development',
+							'babel-plugin-transform-dead-code-elimination',
+							['babel-plugin-transform-define', {
+								'process.env.NODE_ENV': mode,
 								'typeof window': 'object',
 							}],
 
-							production && 'transform-react-remove-prop-types',
+							mode === 'production' && 'babel-plugin-transform-react-remove-prop-types',
 						].filter(x => x),
-						comments: !production,
-						compact: production,
+						comments: false,
+						compact: mode === 'production',
 						babelrc: false,
 					},
 				},
@@ -95,29 +92,29 @@ module.exports = ({ production, zip } = {}) => ({
 		}, {
 			test: /\.scss$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].css' } },
+				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
-				{ loader: 'css-loader' },
+				{ loader: 'css-loader', options: { esModule: false } },
 				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
 			test: /\.css$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].css' } },
+				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
-				{ loader: 'css-loader' },
+				{ loader: 'css-loader', options: { esModule: false } },
 			],
 		}, {
 			test: /\.html$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
-				{ loader: 'extricate-loader' },
-				{ loader: 'html-loader', options: { attrs: ['link:href', 'script:src'] } },
+				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
+				{ loader: 'extricate-loader', options: { resolve: '/html-loader/.+\\.js$' } },
+				{ loader: 'html-loader' },
 			],
 		}, {
 			test: /\.(png|svg|woff2?|ttf|eot)$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
+				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
 			],
 		}],
 	},
@@ -126,7 +123,6 @@ module.exports = ({ production, zip } = {}) => ({
 	},
 	plugins: [
 		new InertEntryPlugin(),
-		new webpack.optimize.ModuleConcatenationPlugin(),
 		new LodashModuleReplacementPlugin({
 			flattening: true, // chaos theory
 			paths: true,
@@ -134,6 +130,6 @@ module.exports = ({ production, zip } = {}) => ({
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
 
-		zip && new ZipPlugin({ filename: 'media-db.zip' }),
+		mode === 'production' && new ZipPlugin({ filename: 'media-db.zip' }),
 	].filter(x => x),
 });

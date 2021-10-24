@@ -18,12 +18,12 @@ export default function ItemList({ items }) {
 				</tr>
 			</thead>
 			<tbody>
-				{items.map(item =>
+				{items.map(item => (
 					<Item
 						key={item.id}
 						item={item}
 					/>
-				)}
+				))}
 			</tbody>
 		</table>
 	);
