@@ -7,7 +7,7 @@ export default function ItemLength({ item }) {
 	const mutation = useMutationUpdateItem(item.id);
 
 	const handleSave = value => {
-		mutation.mutate({ length: value });
+		mutation.mutate({ length: Number(value) });
 	};
 
 	return (
