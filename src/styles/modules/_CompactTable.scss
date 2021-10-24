@@ -29,7 +29,7 @@ $CompactTable-border: #e5e3da;
 		border-bottom-width: 0;
 
 		font-size: 1em;
-		line-height: 1.4285714285714286em;
+		line-height: 1.5em;
 
 		&:first-of-type {
 			border-left-width: 0;
@@ -82,11 +82,10 @@ $CompactTable-border: #e5e3da;
 		user-select: none;
 
 		&--autowrap {
-			$height: 1.5em;
 			$width: 25%;
 
 			&:not(:hover) {
-				max-height: $height;
+				max-height: 1.75em;
 				overflow: hidden;
 				word-break: break-all;
 
@@ -97,7 +96,7 @@ $CompactTable-border: #e5e3da;
 						position: absolute;
 						top: 0;
 						right: 0;
-						bottom: $height;
+						bottom: 1.8em;
 						left: calc(100% - #{$width});
 						background: fade-in($CompactTable-base);
 						content: '';
