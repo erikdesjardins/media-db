@@ -1,9 +1,9 @@
 import React from 'react';
 import SidebarItem from '../components/SidebarItem';
 
-export default function Sidebar({ location, children }) {
+export default function Sidebar({ children }) {
 	return (
-		<SidebarItem pathname={location.pathname}>
+		<SidebarItem>
 			{children}
 		</SidebarItem>
 	);

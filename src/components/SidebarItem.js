@@ -1,17 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router-dom';
 
-export default function SidebarItem({ pathname, children }) {
-	const basePath = pathname.split('/').slice(0, -1).join('/');
+export default function SidebarItem({ children }) {
+	const params = useParams();
 
 	return (
 		<fieldset className="SidebarItem">
 			<legend className="SidebarItem-legend">
-				<Link to={`${basePath}/info`}>
+				<Link to={`/items/${params.id}/info`}>
 					{'Info'}
 				</Link>
 				{' '}
-				<Link to={`${basePath}/history`}>
+				<Link to={`/items/${params.id}/history`}>
 					{'History'}
 				</Link>
 			</legend>
