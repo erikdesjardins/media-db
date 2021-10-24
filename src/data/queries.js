@@ -20,7 +20,7 @@ import {
 	updateItem,
 	updateProvider,
 } from './database';
-import { runProvider } from './provider';
+import { runProvider, runProviderForId } from './provider';
 
 export const queryClient = new QueryClient({
 	defaultOptions: {
@@ -59,8 +59,21 @@ export function useQueryItemsSearch(query, options = {}) {
 	return useQuery([q.ITEMS, 'query', query], () => getQueriedItems(query), options);
 }
 
+export function useQueryIdFromProvider(url, options = {}) {
+	return useQuery([q.FROM_PROVIDER, url, 'id'], async () => {
+		const providers = await getProviders();
+		for (const provider of providers) {
+			const result = runProviderForId(provider, url);
+			if (result) {
+				return result;
+			}
+		}
+		return null;
+	}, options);
+}
+
 export function useQueryItemFromProvider(url, options = {}) {
-	return useQuery([q.ITEM_FROM_PROVIDER, url], async () => {
+	return useQuery([q.FROM_PROVIDER, url, 'item'], async () => {
 		const providers = await getProviders();
 		for (const provider of providers) {
 			try {
@@ -73,7 +86,7 @@ export function useQueryItemFromProvider(url, options = {}) {
 				console.error('Provider errored:', e); // eslint-disable-line no-console
 			}
 		}
-		return false;
+		return null;
 	}, options);
 }
 
@@ -139,7 +152,7 @@ export function useMutationAddProvider() {
 		await addProvider(id);
 	}, {
 		onSuccess: () => {
-			queryClient.invalidateQueries([q.ITEM_FROM_PROVIDER]);
+			queryClient.invalidateQueries([q.FROM_PROVIDER]);
 			queryClient.invalidateQueries([q.PROVIDERS]);
 			queryClient.invalidateQueries([q.RAW_DATA]);
 		},
@@ -151,7 +164,7 @@ export function useMutationUpdateProvider(id) {
 		await updateProvider(id, patch);
 	}, {
 		onSuccess: () => {
-			queryClient.invalidateQueries([q.ITEM_FROM_PROVIDER]);
+			queryClient.invalidateQueries([q.FROM_PROVIDER]);
 			queryClient.invalidateQueries([q.PROVIDER, id]);
 			queryClient.invalidateQueries([q.PROVIDERS]);
 			queryClient.invalidateQueries([q.RAW_DATA]);
@@ -164,7 +177,7 @@ export function useMutationRemoveProvider(id) {
 		await removeProvider(id);
 	}, {
 		onSuccess: () => {
-			queryClient.invalidateQueries([q.ITEM_FROM_PROVIDER]);
+			queryClient.invalidateQueries([q.FROM_PROVIDER]);
 			queryClient.invalidateQueries([q.PROVIDER, id]);
 			queryClient.invalidateQueries([q.PROVIDERS]);
 			queryClient.invalidateQueries([q.RAW_DATA]);
@@ -179,7 +192,7 @@ export function useMutationSetRawData() {
 		onSuccess: () => {
 			queryClient.invalidateQueries([q.ITEM]);
 			queryClient.invalidateQueries([q.ITEMS]);
-			queryClient.invalidateQueries([q.ITEM_FROM_PROVIDER]);
+			queryClient.invalidateQueries([q.FROM_PROVIDER]);
 			queryClient.invalidateQueries([q.PROVIDER]);
 			queryClient.invalidateQueries([q.PROVIDERS]);
 			queryClient.invalidateQueries([q.RAW_DATA]);
