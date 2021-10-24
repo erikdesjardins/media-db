@@ -8,8 +8,6 @@ export default function Search() {
 	const query = atob(params.query);
 	const preview = params.preview === 'preview';
 
-	const limit = preview ? 25 : 2147483647;
-
 	const { isLoading, data: items } = useQueryItemsSearch(query, { keepPreviousData: true });
 
 	if (isLoading) {
@@ -17,6 +15,6 @@ export default function Search() {
 	}
 
 	return (
-		<SearchList items={items.slice(0, limit)}/>
+		<SearchList items={items} preview={preview}/>
 	);
 }

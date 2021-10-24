@@ -4,8 +4,7 @@ import SelectBar from './SelectBar';
 import * as statusTypes from '../constants/statusTypes';
 import LinkButton from './LinkButton';
 import { useQueryItemsFilter } from '../data/queries';
-
-const LIMIT = 25;
+import { ROW_LIMIT } from '../constants/table';
 
 export default function ItemView() {
 	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);
@@ -23,10 +22,10 @@ export default function ItemView() {
 	};
 
 	const hasPrev = !isFetching && offset > 0;
-	const hasNext = !isFetching && offset + LIMIT < items.length;
+	const hasNext = !isFetching && offset + ROW_LIMIT < items.length;
 
-	const handlePrev = () => setOffset(offset => offset - LIMIT);
-	const handleNext = () => setOffset(offset => offset + LIMIT);
+	const handlePrev = () => setOffset(offset => offset - ROW_LIMIT);
+	const handleNext = () => setOffset(offset => offset + ROW_LIMIT);
 
 	return (
 		<fieldset className="ItemView">
@@ -61,7 +60,7 @@ export default function ItemView() {
 					{'-->'}
 				</LinkButton>
 			</div>
-			<ItemList items={items.slice(offset, offset + LIMIT)}/>
+			<ItemList items={items.slice(offset, offset + ROW_LIMIT)}/>
 		</fieldset>
 	);
 }
