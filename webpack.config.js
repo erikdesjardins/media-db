@@ -48,7 +48,6 @@ module.exports = (env, { mode }) => ({
 							'babel-plugin-lodash',
 
 							mode === 'production' && '@babel/plugin-transform-react-constant-elements',
-							mode === 'production' && '@babel/plugin-transform-react-inline-elements',
 						].filter(x => x),
 						comments: false,
 						compact: mode === 'production',
