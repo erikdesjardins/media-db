@@ -28,7 +28,7 @@ export default function Header() {
 	const history = useHistory();
 
 	const handleFocusSearch = () => {
-		if (query) {
+		if (query && !searchPageIsSameAsPreview) {
 			setShowPreview(true);
 		}
 	};
