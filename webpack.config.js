@@ -40,7 +40,6 @@ module.exports = (env, { mode }) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							'babel-plugin-transform-dead-code-elimination',
 							['babel-plugin-transform-define', {
 								'process.env.NODE_ENV': mode,
 								'typeof window': 'object',
@@ -74,7 +73,6 @@ module.exports = (env, { mode }) => ({
 							}],
 						].filter(x => x),
 						plugins: [
-							'babel-plugin-transform-dead-code-elimination',
 							['babel-plugin-transform-define', {
 								'process.env.NODE_ENV': mode,
 								'typeof window': 'object',
