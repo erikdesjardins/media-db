@@ -3,8 +3,8 @@ $Autosave-dirty: #f7a616;
 .AutosaveInput {
 	display: block;
 	width: 100%;
-	resize: vertical;
 	font-family: sans-serif;
+	resize: vertical;
 
 	&--dirty {
 		border-color: $Autosave-dirty;
