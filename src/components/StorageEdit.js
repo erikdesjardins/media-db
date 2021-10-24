@@ -89,6 +89,9 @@ export default function StorageEdit() {
 						disabled={isFetching}
 						onClick={handleSave}
 					>
+						{setRawDataMutation.isError &&
+							<span title={setRawDataMutation.error.message}>{'❌'}</span>
+						}
 						{'Save'}
 					</LinkButton>
 				}

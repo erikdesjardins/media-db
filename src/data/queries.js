@@ -14,9 +14,9 @@ import {
 	getProvider,
 	getProviders,
 	getQueriedItems,
-	getRawItems,
+	getRawData,
 	removeProvider,
-	setRawItems,
+	setRawData,
 	updateItem,
 	updateProvider,
 } from './database';
@@ -99,7 +99,7 @@ export function useQueryProviders(options = {}) {
 }
 
 export function useQueryRawData(options = {}) {
-	return useQuery([q.RAW_DATA], async () => JSON.stringify(await getRawItems()), options);
+	return useQuery([q.RAW_DATA], async () => JSON.stringify(await getRawData()), options);
 }
 
 // Mutations
@@ -186,8 +186,8 @@ export function useMutationRemoveProvider(id) {
 }
 
 export function useMutationSetRawData() {
-	return useMutation(async rawItems => {
-		await setRawItems(JSON.parse(rawItems));
+	return useMutation(async rawData => {
+		await setRawData(JSON.parse(rawData));
 	}, {
 		onSuccess: () => {
 			queryClient.invalidateQueries([q.ITEM]);

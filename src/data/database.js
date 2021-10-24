@@ -157,17 +157,6 @@ export function updateItem(id, patch) {
 	});
 }
 
-export function getRawItems() {
-	return db.media.toArray();
-}
-
-export function setRawItems(items) {
-	return db.transaction('rw', db.media, () => {
-		db.media.clear();
-		db.media.bulkAdd(items);
-	});
-}
-
 // db.provider (Provider)
 
 function validateProvider(provider) {
@@ -226,4 +215,51 @@ export function updateProvider(id, patch) {
 
 export function removeProvider(id) {
 	return db.provider.delete(id);
+}
+
+// Bulk imports/exports
+
+export function getRawData() {
+	return db.transaction('r', [db.media, db.provider], async () => {
+		const media = await db.media.toArray();
+		const provider = await db.provider.toArray();
+		const backup = {
+			version: 1,
+			tables: {
+				media,
+				provider,
+			},
+		};
+		return backup;
+	});
+}
+
+export async function setRawData(backup) {
+	let media, provider;
+	if (Array.isArray(backup)) {
+		// Version 0: no version flag, toplevel array of media, no providers
+		media = backup;
+	} else if ('version' in backup) {
+		switch (backup.version) {
+			case 1:
+				// Version 1: media + provider
+				({ tables: { media, provider } } = backup);
+				break;
+			default:
+				throw new Error(`Invalid backup version: ${backup.version}`);
+		}
+	} else {
+		throw new Error('Unrecognised backup format');
+	}
+
+	await db.transaction('rw', [db.media, db.provider], () => {
+		if (media) {
+			db.media.clear();
+			db.media.bulkAdd(media);
+		}
+		if (provider) {
+			db.provider.clear();
+			db.provider.bulkAdd(provider);
+		}
+	});
 }
