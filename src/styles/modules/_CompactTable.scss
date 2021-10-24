@@ -1,12 +1,12 @@
 @import '../functions';
 
-$CompactTable-base: #fff;
-$CompactTable-stripe: #eee;
-$CompactTable-hover: #ddd;
-$CompactTable-border: #e5e3da;
-
 .CompactTable {
 	$root: &;
+
+	$base: #fff;
+	$stripe: #eee;
+	$hover: #ddd;
+	$border: #e5e3da;
 
 	width: 100%;
 	font-size: 13px;
@@ -17,14 +17,14 @@ $CompactTable-border: #e5e3da;
 	}
 
 	tr {
-		background-color: $CompactTable-base;
+		background-color: $base;
 	}
 
 	td,
 	th {
 		padding: 4px 9px;
 
-		border: 1px solid $CompactTable-border;
+		border: 1px solid $border;
 		border-top-width: 0;
 		border-bottom-width: 0;
 
@@ -46,13 +46,13 @@ $CompactTable-border: #e5e3da;
 
 	&--stripe {
 		tbody tr:nth-of-type(odd) {
-			background-color: $CompactTable-stripe;
+			background-color: $stripe;
 		}
 	}
 
 	&--hover {
 		tbody tr:hover {
-			background-color: $CompactTable-hover;
+			background-color: $hover;
 		}
 	}
 
@@ -98,16 +98,16 @@ $CompactTable-border: #e5e3da;
 						right: 0;
 						bottom: 1.8em;
 						left: calc(100% - #{$width});
-						background: fade-in($CompactTable-base);
+						background: fade-in($base);
 						content: '';
 						pointer-events: none;
 
 						#{$root}--stripe tr:nth-of-type(odd) & {
-							background: fade-in($CompactTable-stripe);
+							background: fade-in($stripe);
 						}
 
 						#{$root}--hover tr:hover & {
-							background: fade-in($CompactTable-hover);
+							background: fade-in($hover);
 						}
 					}
 				}

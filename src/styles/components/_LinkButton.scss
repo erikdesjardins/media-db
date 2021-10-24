@@ -1,10 +1,10 @@
-$LinkButton-color: #00e;
-
 .LinkButton {
-	color: $LinkButton-color;
+	$color: #00e;
+
+	color: $color;
 
 	&:visited {
-		color: $LinkButton-color;
+		color: $color;
 	}
 
 	&:not([href]) {
