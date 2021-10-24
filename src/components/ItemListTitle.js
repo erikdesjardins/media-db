@@ -4,9 +4,12 @@ import React from 'react';
 export default function ItemListTitle({ item }) {
 	return (
 		<div className="ItemListTitle CompactTable-item CompactTable-item--nowrap CompactTable-item--truncate">
-			<Markdown
-				source={`[${item.title}](${item.url} "${item.title}")${item.tags}`}
-			/>
+			<div>
+				<p>
+					<a href={item.url} title={item.title}>{item.title}</a>
+					{item.tags ? <Markdown source={item.tags} inline/> : null}
+				</p>
+			</div>
 		</div>
 	);
 }
