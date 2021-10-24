@@ -9,7 +9,7 @@ import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
 import React from 'react';
 
-export default function Item({ item, onClickItem }) {
+export default React.memo(function Item({ item, onClickItem }) {
 	const handleClick = () => {
 		onClickItem(item);
 	};
@@ -27,4 +27,4 @@ export default function Item({ item, onClickItem }) {
 			<td><ItemListProductionStatus item={item}/></td>
 		</tr>
 	);
-}
+});

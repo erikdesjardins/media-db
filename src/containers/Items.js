@@ -1,13 +1,13 @@
 import ItemView from '../components/ItemView';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function Items({ children }) {
 	const history = useHistory();
 
-	const handleClickItem = item => {
+	const handleClickItem = useCallback(item => {
 		history.push(`/items/${btoa(item.id)}`);
-	};
+	}, [history]);
 
 	return (
 		<div className="Items">

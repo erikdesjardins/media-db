@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';
@@ -42,13 +42,13 @@ export default function Header() {
 		setShowPreview(false);
 	};
 
-	const handleClickItem = item => {
+	const handleClickItem = useCallback(item => {
 		if (isSearch) {
 			history.push(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
 		} else {
 			history.push(`/items/${btoa(item.id)}`);
 		}
-	};
+	}, [history, isSearch, queryFromUrl]);
 
 	const handleSubmitSearch = e => {
 		e.preventDefault();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import SearchList from '../components/SearchList';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -8,9 +8,9 @@ export default function Search({ children }) {
 
 	const history = useHistory();
 
-	const handleClickItem = item => {
-		history.push(`/search/${params.query}/${btoa(item.id)}`);
-	};
+	const handleClickItem = useCallback(item => {
+		history.push(`/search/${btoa(query)}/${btoa(item.id)}`);
+	}, [history, query]);
 
 	return (
 		<div className="Search">

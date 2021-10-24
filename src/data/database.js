@@ -6,9 +6,6 @@ import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../util
 import { repeatWhile } from '../utils/array';
 import { pipe } from '../utils/function';
 
-export class Item {}
-export class Provider {}
-
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
@@ -17,9 +14,6 @@ db.version(1).stores({
 });
 
 db.open();
-
-db.media.mapToClass(Item);
-db.provider.mapToClass(Provider);
 
 // db.media (Item)
 
