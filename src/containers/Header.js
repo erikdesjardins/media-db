@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import icon from '../images/icon32.png';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';
 
 export default function Header() {
-	const [query, setQuery] = useState('');
+	const match = useRouteMatch('/search/:query');
+	const queryFromUrl = match && atob(match.params.query);
+
+	// eslint-disable-next-line prefer-const
+	let [query, setQuery] = useState(queryFromUrl || '');
+
+	if (queryFromUrl && queryFromUrl !== query) {
+		setQuery(queryFromUrl);
+		query = queryFromUrl;
+	}
 
 	const history = useHistory();
 
