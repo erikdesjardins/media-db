@@ -1,9 +1,7 @@
-.ItemView {
-	&-legend {
-		text-align: center;
-	}
+@import '../theme';
 
-	&-nextPrev {
+.ItemView {
+	&-controls {
 		text-align: center;
 	}
 }

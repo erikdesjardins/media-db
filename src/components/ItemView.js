@@ -5,6 +5,7 @@ import * as statusTypes from '../constants/statusTypes';
 import LinkButton from './LinkButton';
 import { useQueryItemsFilter } from '../data/queries';
 import { ROW_LIMIT } from '../constants/table';
+import { roundDownToMultiple } from '../utils/math';
 
 export default function ItemView({ onClickItem }) {
 	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);
@@ -26,10 +27,12 @@ export default function ItemView({ onClickItem }) {
 
 	const handlePrev = () => setOffset(offset => offset - ROW_LIMIT);
 	const handleNext = () => setOffset(offset => offset + ROW_LIMIT);
+	const handleFirst = () => setOffset(0);
+	const handleLast = () => setOffset(roundDownToMultiple(items.length - 1, ROW_LIMIT));
 
 	return (
 		<fieldset className="ItemView Utils-fieldset--noPadding">
-			<legend className="ItemView-legend">
+			<legend className="ItemView-controls">
 				<SelectBar
 					selected={status}
 					onSelect={handleStatusChange}
@@ -50,16 +53,25 @@ export default function ItemView({ onClickItem }) {
 						name: 'Rejected',
 					}]}
 				/>
+				{' | '}
+				<span>
+					<LinkButton disabled={!hasPrev} onClick={handleFirst}>
+						{'First'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasPrev} onClick={handlePrev}>
+						{'<<<'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasNext} onClick={handleNext}>
+						{'>>>'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasNext} onClick={handleLast}>
+						{'Last'}
+					</LinkButton>
+				</span>
 			</legend>
-			<div className="ItemView-nextPrev">
-				<LinkButton disabled={!hasPrev} onClick={handlePrev}>
-					{'<<<'}
-				</LinkButton>
-				{' '}
-				<LinkButton disabled={!hasNext} onClick={handleNext}>
-					{'>>>'}
-				</LinkButton>
-			</div>
 			<ItemList items={items.slice(offset, offset + ROW_LIMIT)} onClickItem={onClickItem}/>
 		</fieldset>
 	);

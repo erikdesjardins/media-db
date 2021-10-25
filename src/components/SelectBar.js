@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 export default React.memo(function SelectBar({ options, selected, onSelect }) {
 	return (
-		<div className="SelectBar">
+		<span className="SelectBar">
 			{options.map(({ value, name }) => [
 				' ',
 				<LinkButton
@@ -15,6 +15,6 @@ export default React.memo(function SelectBar({ options, selected, onSelect }) {
 					{name || value}
 				</LinkButton>,
 			]).flat().slice(1)}
-		</div>
+		</span>
 	);
 });

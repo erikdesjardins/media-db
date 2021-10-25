@@ -1,3 +1,5 @@
+import { pmod } from './math';
+
 export function formatIsoDate(date /*: number */) {
 	const parsed = new Date(date);
 	const year = parsed.getFullYear(); // 2017
@@ -10,10 +12,6 @@ export function formatIsoDate(date /*: number */) {
 	}-${
 		day.toString().padStart(2, '0')
 	}`;
-}
-
-function pmod(x, n) {
-	return ((x % n) + n) % n;
 }
 
 export function formatFullDate(date /*: number */) {

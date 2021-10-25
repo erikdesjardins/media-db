@@ -2,11 +2,10 @@
 
 .SelectBar {
 	&-button {
-		border: $Theme-borderWidth solid transparent;
 		border-radius: $Theme-borderRadius--small;
 
 		&--active {
-			border: $Theme-borderWidth solid;
+			outline: $Theme-borderWidth solid;
 		}
 	}
 }
