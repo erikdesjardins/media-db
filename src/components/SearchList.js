@@ -15,17 +15,12 @@ export default function SearchList({ query, preview = false, onClickItem }) {
 	return (
 		<fieldset className="SearchList Utils-fieldset--noPadding">
 			<legend className="SearchList-legend">
-				{items.length}
-				{' '}
-				{'Results'}
+				{'Viewing'}
+				{' '}{Math.min(items.length, limit)}{' '}
+				{'results'}
 				{preview &&
 					<>
-						{' '}
-						{'('}
-						{Math.min(items.length, limit)}
-						{' '}
-						{'Shown'}
-						{')'}
+						{' '}{'('}{items.length}{' '}{'total'}{')'}
 					</>
 				}
 			</legend>
