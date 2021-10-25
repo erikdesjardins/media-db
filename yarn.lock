@@ -4022,11 +4022,6 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-only-shallow@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/only-shallow/-/only-shallow-1.2.0.tgz#71cecedba9324bc0518aef10ec080d3249dc2465"
-  integrity sha1-cc7O26kyS8BRiu8Q7AgNMkncJGU=
-
 optionator@^0.8.1:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.3.tgz#84fa1d036fe9d3c7e21d99884b601167ec8fb495"

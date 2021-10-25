@@ -1,10 +1,10 @@
 import Dexie from 'dexie';
-import deepEqual from 'only-shallow';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
 import { distinct, map, whereEquals, whereRegex, reverse, orderBy } from '../utils/db';
 import { repeatWhile } from '../utils/array';
 import { pipe } from '../utils/function';
+import { structuralEq } from '../utils/object';
 
 const db = new Dexie('MediaDB');
 
@@ -141,7 +141,7 @@ export function updateItem(id, patch) {
 			throw new Error(`Tried to change url of item to: ${patch.url}`);
 		}
 		const updated = { ...existing, ...patch };
-		if (deepEqual(existing, updated)) {
+		if (structuralEq(existing, updated)) {
 			// nothing changed, don't create a new version
 			return;
 		}
