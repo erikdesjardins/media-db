@@ -15,7 +15,7 @@
     "once": "webpack --mode development",
     "prebuild": "rimraf dist",
     "build": "webpack --mode production",
-    "deploy": "node -r babel-register ./deploy.js",
+    "deploy": "node ./deploy.js",
     "test": "eslint . && sass-lint -v -q"
   },
   "dependencies": {
