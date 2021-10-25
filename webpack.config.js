@@ -47,7 +47,7 @@ module.exports = (env, { mode }) => ({
 
 							mode === 'production' && '@babel/plugin-transform-react-constant-elements',
 						].filter(x => x),
-						comments: false,
+						comments: mode !== 'production',
 						compact: mode === 'production',
 						babelrc: false,
 					},
@@ -78,7 +78,7 @@ module.exports = (env, { mode }) => ({
 							mode === 'production' && 'babel-plugin-transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: false,
-						compact: mode === 'production',
+						compact: true,
 						babelrc: false,
 					},
 				},
