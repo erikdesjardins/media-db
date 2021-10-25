@@ -29,6 +29,7 @@ export const queryClient = new QueryClient({
 			staleTime: Infinity, // never consider query results stale
 			retry: false, // retries don't help any of our (local) requests
 			refetchOnReconnect: false, // we don't perform any uncacheable network requests
+			refetchOnWindowFocus: false, // we don't perform any uncacheable network requests
 		},
 	},
 });
@@ -76,14 +77,10 @@ export function useQueryItemFromProvider(url, options = {}) {
 	return useQuery([q.FROM_PROVIDER, url, 'item'], async () => {
 		const providers = await getProviders();
 		for (const provider of providers) {
-			try {
-				const result = await runProvider(provider, url); // eslint-disable-line no-await-in-loop
-				if (result) {
-					console.info('Provider returned:', result); // eslint-disable-line no-console
-					return result;
-				}
-			} catch (e) {
-				console.error('Provider errored:', e); // eslint-disable-line no-console
+			const result = await runProvider(provider, url); // eslint-disable-line no-await-in-loop
+			if (result) {
+				console.info('Provider returned:', result); // eslint-disable-line no-console
+				return result;
 			}
 		}
 		return null;

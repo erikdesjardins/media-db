@@ -12,7 +12,7 @@ export default function ItemRefreshButton({ item, fields, showLoadingIcon = true
 	if (isError) {
 		return (
 			<span className="ItemRefreshButton" title={error.message}>
-				{'❌'}
+				{showLoadingIcon ? '❌' : null}
 			</span>
 		);
 	}
