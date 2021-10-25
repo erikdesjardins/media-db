@@ -1,7 +1,7 @@
 import _ from 'lodash-es';
 import React from 'react';
 import deepDiff from 'deep-diff';
-import { formatFullDate } from '../utils/formatDate';
+import FullDate from './FullDate';
 
 export default function ItemHistory({ history }) {
 	const diffs = [
@@ -61,7 +61,7 @@ export default function ItemHistory({ history }) {
 						</td>
 						<td>
 							<div className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
-								<p>{formatFullDate(date)}</p>
+								<p><FullDate date={date}/></p>
 							</div>
 						</td>
 					</tr>
