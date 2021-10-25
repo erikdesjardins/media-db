@@ -27,6 +27,7 @@
 		border-right: solid $triangleHalfWidth transparent;
 		border-bottom: solid $triangleHeight transparent;
 		border-left: solid $triangleHalfWidth transparent;
+		z-index: 1;
 
 		&--top {
 			border-top: none;
@@ -36,6 +37,28 @@
 		&--bottom {
 			border-bottom: none;
 			border-top-color: $borderColor;
+		}
+
+		// overlay another triangle to make an outline
+		&::after {
+			position: absolute;
+			top: $borderWidth;
+			left: -$triangleHalfWidth;
+			border-top: solid $triangleHeight transparent;
+			border-right: solid $triangleHalfWidth transparent;
+			border-bottom: solid $triangleHeight transparent;
+			border-left: solid $triangleHalfWidth transparent;
+			content: '';
+		}
+
+		&--top::after {
+			border-top: none;
+			border-bottom-color: $background;
+		}
+
+		&--bottom::after {
+			border-bottom: none;
+			border-top-color: $background;
 		}
 	}
 

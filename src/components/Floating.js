@@ -14,10 +14,10 @@ export default function Floating({ top, right, bottom, left, onBlur, children })
 	return (
 		<div className="Floating">
 			<div className="Floating-overlay" onClick={onBlur}/>
-			<div className={triangleClass}/>
 			<div className={contentClass}>
 				{children}
 			</div>
+			<div className={triangleClass}/>
 		</div>
 	);
 }
