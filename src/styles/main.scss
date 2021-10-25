@@ -34,6 +34,7 @@ body {
 	background: $Theme-background;
 	font-family: $Theme-fontFamily;
 	font-size: $Theme-fontSize;
+	line-height: $Theme-lineHeight;
 }
 
 fieldset {
@@ -53,6 +54,7 @@ textarea {
 	border-radius: $Theme-borderRadius--small;
 	font-family: $Theme-fontFamily;
 	font-size: $Theme-fontSize;
+	line-height: $Theme-lineHeight;
 
 	&:focus {
 		outline: $Theme-borderWidth solid $Theme-borderColor;
