@@ -11,9 +11,9 @@ export default function ItemTags({ item }) {
 
 	return (
 		<div className="ItemTags">
-			<label>
+			<h3>
 				{'Tags'}
-			</label>
+			</h3>
 			<AutosaveInput
 				type="text"
 				defaultValue={item.tags}

@@ -12,14 +12,14 @@ export default function ItemCharacters({ item }) {
 
 	return (
 		<div className="ItemCharacters">
-			<label>
+			<h3>
 				{'Characters'}
 				{' '}
 				<ItemRefreshButton
 					item={item}
 					fields={['characters']}
 				/>
-			</label>
+			</h3>
 			<AutosaveInput
 				type="text"
 				defaultValue={item.characters}

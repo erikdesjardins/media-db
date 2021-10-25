@@ -3,6 +3,8 @@ import React from 'react';
 
 export default function Popup() {
 	return (
-		<PopupInfo/>
+		<div className="Popup">
+			<PopupInfo/>
+		</div>
 	);
 }

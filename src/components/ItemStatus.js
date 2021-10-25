@@ -12,9 +12,9 @@ export default function ItemStatus({ item }) {
 
 	return (
 		<div className="ItemStatus">
-			<label>
+			<h3>
 				{'Status'}
-			</label>
+			</h3>
 			<div>
 				<SelectBar
 					selected={item.status}

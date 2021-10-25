@@ -13,7 +13,7 @@ export default function SearchList({ query, preview = false, onClickItem }) {
 	const limit = preview ? ROW_LIMIT : 2147483647;
 
 	return (
-		<fieldset className="SearchList">
+		<fieldset className="SearchList Utils-fieldset--noPadding">
 			<legend className="SearchList-legend">
 				{items.length}
 				{' '}

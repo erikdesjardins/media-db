@@ -28,7 +28,7 @@ export default function ItemView({ onClickItem }) {
 	const handleNext = () => setOffset(offset => offset + ROW_LIMIT);
 
 	return (
-		<fieldset className="ItemView">
+		<fieldset className="ItemView Utils-fieldset--noPadding">
 			<legend className="ItemView-legend">
 				<SelectBar
 					selected={status}
@@ -53,11 +53,11 @@ export default function ItemView({ onClickItem }) {
 			</legend>
 			<div className="ItemView-nextPrev">
 				<LinkButton disabled={!hasPrev} onClick={handlePrev}>
-					{'<--'}
+					{'<<<'}
 				</LinkButton>
 				{' '}
 				<LinkButton disabled={!hasNext} onClick={handleNext}>
-					{'-->'}
+					{'>>>'}
 				</LinkButton>
 			</div>
 			<ItemList items={items.slice(offset, offset + ROW_LIMIT)} onClickItem={onClickItem}/>

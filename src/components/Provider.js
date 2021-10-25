@@ -25,6 +25,7 @@ export default function Provider({ provider }) {
 			<AutosaveInput
 				className="Provider-textarea"
 				type="textarea"
+				rows={16}
 				defaultValue={provider.infoCallback}
 				onSave={handleSave}
 			/>

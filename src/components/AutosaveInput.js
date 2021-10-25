@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 
-export default React.memo(function AutosaveInput({ type, className, defaultValue, onSave }) {
+export default React.memo(function AutosaveInput({ type, rows, className, defaultValue, onSave }) {
 	// eslint-disable-next-line prefer-const
 	let [value, setValue] = useState(defaultValue);
 
@@ -31,6 +31,7 @@ export default React.memo(function AutosaveInput({ type, className, defaultValue
 	return type === 'textarea' ? (
 		<textarea
 			className={class_}
+			rows={rows}
 			value={value}
 			onChange={handleChange}
 			onBlur={handleBlur}

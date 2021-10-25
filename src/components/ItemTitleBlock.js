@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function ItemTitleBlock({ item }) {
 	return (
-		<h3 className="ItemTitleBlock">
+		<h2 className="ItemTitleBlock">
 			<a href={item.url}>{item.title}</a>
 			<small>
 				{' by '}{item.creator}
@@ -14,6 +14,6 @@ export default function ItemTitleBlock({ item }) {
 					showLoadingIcon={false}
 				/>
 			</small>
-		</h3>
+		</h2>
 	);
 }

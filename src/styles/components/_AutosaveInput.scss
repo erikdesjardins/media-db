@@ -1,13 +1,13 @@
-.AutosaveInput {
-	$dirty: #f7a616;
+@import '../theme';
 
+.AutosaveInput {
 	display: block;
 	width: 100%;
-	font-family: sans-serif;
+	font-family: $Theme-fontFamily;
 	resize: vertical;
 
 	&--dirty {
-		border-color: $dirty;
-		outline-color: $dirty;
+		border-color: $Theme-warning;
+		outline-color: $Theme-warning;
 	}
 }

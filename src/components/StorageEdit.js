@@ -99,6 +99,7 @@ export default function StorageEdit() {
 			{showTextarea &&
 				<textarea
 					className="StorageEdit-textarea"
+					rows={32}
 					value={value}
 					onChange={handleChange}
 				/>

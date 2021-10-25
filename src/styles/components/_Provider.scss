@@ -1,13 +1,19 @@
+@import '../theme';
+
 .Provider {
 	position: relative;
 
+	&:not(:first-of-type) {
+		margin-top: $Theme-spacing--medium;
+	}
+
 	&-removeButton {
 		position: absolute;
-		right: 20px;
+		top: $Theme-spacing--small;
+		right: #{$Theme-spacing--small + $Theme-scrollbarWidth};
 	}
 
 	&-textarea {
-		min-height: 400px;
 		font-family: monospace;
 		overflow-y: scroll;
 	}

@@ -11,11 +11,12 @@ export default function ItemNotes({ item }) {
 
 	return (
 		<div className="ItemNotes">
-			<label>
+			<h3>
 				{'Notes'}
-			</label>
+			</h3>
 			<AutosaveInput
 				type="textarea"
+				rows={4}
 				defaultValue={item.notes}
 				onSave={handleSave}
 			/>

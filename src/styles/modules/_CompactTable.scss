@@ -1,15 +1,23 @@
 @import '../functions';
+@import '../theme';
 
 .CompactTable {
 	$root: &;
 
-	$base: #fff;
-	$stripe: #eee;
-	$hover: #ddd;
-	$border: #e5e3da;
+	$fontSize: $Theme-fontSize--larger;
+
+	$base: $Theme-background;
+	$stripe: $Theme-background--grey;
+	$hover: $Theme-background--highlight;
+	$border: $Theme-borderColor--light;
+
+	$cellPaddingY: 4px;
+	$cellPaddingX: 9px;
+
+	$thumbnailCellWidth: 70px;
 
 	width: 100%;
-	font-size: 13px;
+	font-size: $fontSize;
 	border-collapse: collapse;
 
 	p {
@@ -22,26 +30,19 @@
 
 	td,
 	th {
-		padding: 4px 9px;
-
-		border: 1px solid $border;
-		border-top-width: 0;
-		border-bottom-width: 0;
-
-		font-size: 1em;
+		padding: $cellPaddingY $cellPaddingX;
+		border: none;
 		line-height: 1.4em;
+	}
 
-		&:first-of-type {
-			border-left-width: 0;
-		}
-
-		&:last-of-type {
-			border-right-width: 0;
+	td {
+		&:not(:first-of-type) {
+			border-left: $Theme-borderWidth solid $border;
 		}
 	}
 
 	th {
-		border-bottom-width: 2px;
+		border-bottom: $Theme-borderWidth solid $border;
 	}
 
 	&--stripe {
@@ -70,9 +71,14 @@
 				text-align: center;
 			}
 
+			&:nth-of-type(2),
+			&:nth-of-type(6) {
+				text-align: left;
+			}
+
 			// fixed width for thumbnail column to avoid resizing as images load
 			&:nth-of-type(1) {
-				min-width: 70px;
+				min-width: $thumbnailCellWidth;
 			}
 		}
 	}
@@ -135,7 +141,7 @@
 	}
 
 	&-tinyThumbnail {
-		max-width: 52px; // + 18px padding = 70px width (per --align above)
+		max-width: #{$thumbnailCellWidth - 2 * $cellPaddingX};
 		max-height: 20px;
 		margin-top: -8px;
 		margin-bottom: -6px;

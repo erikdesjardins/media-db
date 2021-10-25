@@ -1,0 +1,37 @@
+// Toplevel config (unlikely to be used elsewhere)
+
+$Theme-fontFamily: Arial, sans-serif;
+$Theme-fontSize: 12px;
+$Theme-fontSize--larger: 13px;
+
+$Theme-minBodyWidth: 400px;
+
+$Theme-scrollbarWidth: 20px;
+
+// Colors
+
+$Theme-background: #fff;
+$Theme-background--grey: #eee;
+$Theme-background--highlight: #ddd;
+
+$Theme-borderColor: #777;
+$Theme-borderColor--light: #e5e3da;
+
+$Theme-link: #00e;
+
+$Theme-error: #bc3131;
+$Theme-warning: #f7a616;
+$Theme-indeterminate: #bd7b40;
+$Theme-okay: #63bd40;
+
+// Border sizes
+
+$Theme-borderWidth: 1px;
+
+$Theme-borderRadius--small: 2px;
+$Theme-borderRadius--medium: 4px;
+
+// Margin/padding sizes
+
+$Theme-spacing--small: 5px;
+$Theme-spacing--medium: 10px;

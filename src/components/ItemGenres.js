@@ -12,14 +12,14 @@ export default function ItemGenres({ item }) {
 
 	return (
 		<div className="ItemGenres">
-			<label>
+			<h3>
 				{'Genres'}
 				{' '}
 				<ItemRefreshButton
 					item={item}
 					fields={['genres']}
 				/>
-			</label>
+			</h3>
 			<AutosaveInput
 				type="text"
 				defaultValue={item.genres}

@@ -1,4 +1,9 @@
+@import '../theme';
+
 .Header {
+	padding: $Theme-spacing--small;
+	background: $Theme-background--grey;
+
 	&-header {
 		display: flex;
 		align-items: center;

@@ -1,9 +1,12 @@
+@import '../theme';
+
 .SelectBar {
 	&-button {
-		border: 1px solid transparent;
+		border: $Theme-borderWidth solid transparent;
+		border-radius: $Theme-borderRadius--small;
 
 		&--active {
-			border: 1px solid;
+			border: $Theme-borderWidth solid;
 		}
 	}
 }

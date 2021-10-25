@@ -1,5 +1,6 @@
 @use 'sass:math';
 @import '../breakpoints';
+@import '../theme';
 
 .Items {
 	display: flex;
@@ -7,6 +8,8 @@
 	width: 100%;
 
 	&-list {
+		padding: $Theme-spacing--medium;
+
 		@include breakpoint(xs) {
 			width: percentage(math.div(12, 12));
 		}
@@ -22,6 +25,8 @@
 	}
 
 	&-sidebar {
+		padding: $Theme-spacing--medium;
+
 		@include breakpoint(xs) {
 			width: percentage(math.div(12, 12));
 		}

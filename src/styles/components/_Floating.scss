@@ -1,13 +1,15 @@
-.Floating {
-	$borderColor: #000;
-	$borderWidth: 1.5px;
-	$borderRadius: 2px;
+@import '../theme';
 
-	$triangleHeight: 4px;
+.Floating {
+	$borderColor: $Theme-borderColor;
+	$borderWidth: $Theme-borderWidth;
+	$borderRadius: $Theme-borderRadius--medium;
+
+	$triangleHeight: $Theme-spacing--small;
 	$triangleHalfWidth: $triangleHeight;
 
-	$background: #fff;
-	$padding: 2px;
+	$background: $Theme-background;
+	$padding: $Theme-spacing--small;
 
 	&-overlay {
 		position: fixed;

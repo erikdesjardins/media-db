@@ -4,6 +4,7 @@
 @import 'components/Header';
 @import 'components/ItemRefreshButton';
 @import 'components/ItemThumbnail';
+@import 'components/ItemTitleBlock';
 @import 'components/ItemView';
 @import 'components/LinkButton';
 @import 'components/PopupInfo';
@@ -13,23 +14,68 @@
 @import 'components/SidebarItem';
 @import 'components/StorageEdit';
 @import 'containers/Items';
+@import 'containers/Popup';
+@import 'containers/Providers';
 @import 'containers/Search';
 @import 'containers/Sidebar';
+@import 'containers/Storage';
 @import 'modules/CompactTable';
 @import 'modules/ItemTags';
 @import 'modules/Utils';
+@import 'theme';
 
 * { // sass-lint:disable-line no-universal-selectors
 	box-sizing: border-box;
 }
 
 body {
-	min-width: 400px;
-	font-family: Arial, sans-serif;
+	min-width: $Theme-minBodyWidth;
+	margin: 0;
+	background: $Theme-background;
+	font-family: $Theme-fontFamily;
+	font-size: $Theme-fontSize;
 }
 
 fieldset {
 	min-width: auto;
-	margin: 0 2px 2px 2px;
+	margin: 0;
+	padding: $Theme-spacing--medium;
+	border: $Theme-borderWidth solid $Theme-borderColor;
+	border-radius: $Theme-borderRadius--medium;
+	background: $Theme-background;
 	overflow-x: hidden;
+}
+
+input,
+textarea {
+	padding: $Theme-spacing--small;
+	border: $Theme-borderWidth solid $Theme-borderColor;
+	border-radius: $Theme-borderRadius--small;
+	font-family: $Theme-fontFamily;
+	font-size: $Theme-fontSize;
+
+	&:focus {
+		outline: $Theme-borderWidth solid $Theme-borderColor;
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin-top: $Theme-spacing--medium;
+	margin-bottom: $Theme-spacing--small;
+}
+
+a {
+	color: $Theme-link;
+
+	&:visited {
+		color: $Theme-link;
+	}
+}
+
+img {
+	border-radius: $Theme-borderRadius--small;
 }

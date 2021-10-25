@@ -12,14 +12,14 @@ export default function ItemLength({ item }) {
 
 	return (
 		<div className="ItemLength">
-			<label>
+			<h3>
 				{'Length'}
 				{' '}
 				<ItemRefreshButton
 					item={item}
 					fields={['length']}
 				/>
-			</label>
+			</h3>
 			<AutosaveInput
 				type="number"
 				defaultValue={item.length}

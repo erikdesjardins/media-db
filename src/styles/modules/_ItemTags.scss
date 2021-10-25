@@ -1,9 +1,15 @@
+@import '../theme';
+
 a[href='#info'] {
 	float: right;
 	color: inherit;
 	font-size: x-small;
 	text-decoration: none;
 	cursor: default;
+
+	&:visited {
+		color: inherit;
+	}
 
 	&:not(:last-of-type)::before {
 		content: ', ';

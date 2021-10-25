@@ -13,14 +13,14 @@ export default function ItemProductionStatus({ item }) {
 
 	return (
 		<div className="ItemProductionStatus">
-			<label>
+			<h3>
 				{'Production Status'}
 				{' '}
 				<ItemRefreshButton
 					item={item}
 					fields={['productionStatus']}
 				/>
-			</label>
+			</h3>
 			<SelectBar
 				selected={item.productionStatus}
 				onSelect={handleSave}

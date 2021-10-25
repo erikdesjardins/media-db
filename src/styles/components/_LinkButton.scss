@@ -1,12 +1,4 @@
 .LinkButton {
-	$color: #00e;
-
-	color: $color;
-
-	&:visited {
-		color: $color;
-	}
-
 	&:not([href]) {
 		cursor: default;
 	}
