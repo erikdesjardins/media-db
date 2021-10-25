@@ -1,0 +1,11 @@
+@import '../theme';
+
+.SelectBar {
+	&-button {
+		border-radius: $Theme-borderRadius--small;
+
+		&--active {
+			outline: $Theme-borderWidth solid;
+		}
+	}
+}

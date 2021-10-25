@@ -1,0 +1,13 @@
+@import '../theme';
+
+.AutosaveInput {
+	display: block;
+	width: 100%;
+	font-family: $Theme-fontFamily;
+	resize: vertical;
+
+	&--dirty {
+		border-color: $Theme-warning;
+		outline-color: $Theme-warning;
+	}
+}

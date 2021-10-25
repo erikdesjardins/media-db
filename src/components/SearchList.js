@@ -1,40 +1,30 @@
 import ItemList from './ItemList';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
-import Panel from 'react-bootstrap/es/Panel';
-import { fillPanelBody } from '../styles/bootstrap';
+import { ROW_LIMIT } from '../constants/table';
+import { useQueryItemsSearch } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		items: () => Relay.QL`
-			fragment on ItemConnection {
-				${ItemList.getFragment('items')}
-			}
-		`,
-	},
-})
-class SearchList extends React.Component {
-	styles = {
-		panel: {
-			overflow: 'hidden',
-		},
-		itemList: {
-			...fillPanelBody,
-		},
-	};
+export default function SearchList({ query, preview = false, onClickItem }) {
+	const { isLoading, data: items } = useQueryItemsSearch(query, { keepPreviousData: true });
 
-	render() {
-		return (
-			<Panel style={this.styles.panel}>
-				<Panel.Body>
-					<ItemList
-						style={this.styles.itemList}
-						items={this.props.items}
-					/>
-				</Panel.Body>
-			</Panel>
-		);
+	if (isLoading) {
+		return null;
 	}
+
+	const limit = preview ? ROW_LIMIT : 2147483647;
+
+	return (
+		<fieldset className="SearchList Utils-fieldset--noPadding">
+			<legend className="SearchList-legend">
+				{'Viewing'}
+				{' '}{Math.min(items.length, limit)}{' '}
+				{'results'}
+				{preview &&
+					<>
+						{' '}{'('}{items.length}{' '}{'total'}{')'}
+					</>
+				}
+			</legend>
+			<ItemList items={items.slice(0, limit)} onClickItem={onClickItem}/>
+		</fieldset>
+	);
 }

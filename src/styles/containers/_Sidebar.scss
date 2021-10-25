@@ -1,0 +1,6 @@
+@import '../theme';
+
+.Sidebar {
+	position: sticky;
+	top: $Theme-spacing--medium;
+}

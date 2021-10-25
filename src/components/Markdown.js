@@ -1,18 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { markdown } from 'snudown-js';
 
 const isMarkdown = /[*_~^[&#]/;
 
-export default class Markdown extends React.PureComponent {
-	static propTypes = {
-		source: PropTypes.string.isRequired,
-	};
-
-	render() {
-		return (isMarkdown.test(this.props.source) ?
-			<div dangerouslySetInnerHTML={{ __html: markdown(this.props.source) }}/> : // eslint-disable-line react/no-danger
-			<div><p>{this.props.source}</p></div>
+export default React.memo(function Markdown({ source, inline = false }) {
+	if (!isMarkdown.test(source)) {
+		return (inline ?
+			<span className="Markdown">{source}</span> :
+			<div className="Markdown"><p>{source}</p></div>
 		);
 	}
-}
+
+	/* eslint-disable react/no-danger */
+	return (inline ?
+		<span className="Markdown" dangerouslySetInnerHTML={{ __html: markdown(source).slice('<p>'.length, -'</p>\n'.length) }}/> :
+		<div className="Markdown" dangerouslySetInnerHTML={{ __html: markdown(source) }}/>
+	);
+});

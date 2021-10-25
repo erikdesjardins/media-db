@@ -15,20 +15,42 @@ const Path = {
 	relativeUrl: 'relativeUrl',
 };
 
-export async function runProvider(provider, url) {
+function parseOptions(provider) {
 	const { infoCallback } = provider;
 
-	const {
-		urlRegex,
-		idTemplate,
-		fetchUrls,
-		properties,
-	} = /*: {
+	const options = /*: {
 		urlRegex: string,
 		idTemplate: string,
 		fetchUrls: { [Root]: { type: UrlType, urlTemplate: string, headers?: { [string]: string } } },
 		properties: { [string]: [Root, ...{ [Path]: object }] },
 	} */ JSON.parse(infoCallback);
+
+	return options;
+}
+
+export function runProviderForId(provider, url) {
+	const {
+		urlRegex,
+		idTemplate,
+	} = parseOptions(provider);
+
+	const matches = new RegExp(urlRegex, 'i').exec(url);
+	if (!matches) {
+		return false;
+	}
+
+	const id = substitutePlaceholders(idTemplate, matches);
+
+	return id;
+}
+
+export async function runProvider(provider, url) {
+	const {
+		urlRegex,
+		idTemplate,
+		fetchUrls,
+		properties,
+	} = parseOptions(provider);
 
 	const matches = new RegExp(urlRegex, 'i').exec(url);
 	if (!matches) {

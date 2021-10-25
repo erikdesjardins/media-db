@@ -1,72 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ControlLabel from 'react-bootstrap/es/ControlLabel';
-import FormGroup from 'react-bootstrap/es/FormGroup';
-import FormControl from 'react-bootstrap/es/FormControl';
+import React, { useRef, useState } from 'react';
+import classNames from 'classnames';
 
-export default class AutosaveInput extends React.PureComponent {
-	static propTypes = {
-		type: FormControl.propTypes.type,
-		componentClass: FormControl.propTypes.componentClass,
-		label: PropTypes.node,
-		style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-		hasFeedback: PropTypes.bool,
-		defaultValue: PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number,
-		]).isRequired,
-		onSave: PropTypes.func.isRequired,
-	};
+export default React.memo(function AutosaveInput({ type, rows, className, defaultValue, onSave }) {
+	// eslint-disable-next-line prefer-const
+	let [value, setValue] = useState(defaultValue);
 
-	state = {
-		value: this.props.defaultValue,
-	};
-
-	componentWillReceiveProps(nextProps) {
-		// if the component is clean and the default value is changed,
-		// `value` should follow `defaultValue` to avoid dirtying the component
-		if (!this.isDirty() && nextProps.defaultValue !== this.props.defaultValue) {
-			this.setState({
-				value: nextProps.defaultValue,
-			});
-		}
+	// if the component is clean and the default value is changed,
+	// `value` should follow `defaultValue` to avoid dirtying the component
+	const previousDefaultValue = useRef(defaultValue);
+	if (value === previousDefaultValue.current && defaultValue !== previousDefaultValue.current) {
+		setValue(defaultValue);
+		value = defaultValue;
 	}
+	previousDefaultValue.current = defaultValue;
 
-	isDirty() {
-		return String(this.state.value) !== String(this.props.defaultValue);
-	}
+	const isDirty = String(value) !== String(defaultValue);
 
-	handleBlur = () => {
-		if (this.isDirty()) {
-			this.props.onSave(this.state.value);
+	const handleBlur = () => {
+		if (isDirty) {
+			onSave(value);
 		}
 	};
 
-	handleChange = e => {
-		this.setState({ value: e.target.value });
+	const handleChange = e => {
+		setValue(e.target.value);
 	};
 
-	render() {
-		return (
-			<FormGroup
-				bsSize="small"
-				validationState={this.isDirty() ? 'warning' : null}
-			>
-				{this.props.label &&
-					<ControlLabel>{this.props.label}</ControlLabel>
-				}
-				<FormControl
-					type={this.props.type}
-					componentClass={this.props.componentClass}
-					style={this.props.style}
-					value={this.state.value}
-					onChange={this.handleChange}
-					onBlur={this.handleBlur}
-				/>
-				{this.props.hasFeedback &&
-					<FormControl.Feedback/>
-				}
-			</FormGroup>
-		);
-	}
-}
+	const class_ = classNames('AutosaveInput', { 'AutosaveInput--dirty': isDirty }, className);
+
+	return type === 'textarea' ? (
+		<textarea
+			className={class_}
+			rows={rows}
+			value={value}
+			onChange={handleChange}
+			onBlur={handleBlur}
+		/>
+	) : (
+		<input
+			type={type}
+			className={class_}
+			value={value}
+			onChange={handleChange}
+			onBlur={handleBlur}
+		/>
+	);
+});

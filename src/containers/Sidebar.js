@@ -1,19 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import SidebarItem from '../components/SidebarItem';
+import { useParams } from 'react-router-dom';
 
-export default class Sidebar extends React.PureComponent {
-	static propTypes = {
-		location: PropTypes.shape({
-			pathname: SidebarItem.propTypes.pathname,
-		}).isRequired,
-	};
+export default function Sidebar() {
+	const params = useParams();
+	const id = atob(params.id);
 
-	render() {
-		return (
-			<SidebarItem pathname={this.props.location.pathname}>
-				{this.props.children}
-			</SidebarItem>
-		);
-	}
+	return (
+		<div className="Sidebar">
+			<SidebarItem itemId={id}/>
+		</div>
+	);
 }

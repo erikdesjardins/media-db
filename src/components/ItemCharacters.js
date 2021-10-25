@@ -1,47 +1,30 @@
 import AutosaveInput from './AutosaveInput';
-import EditItemCharactersMutation from '../mutations/EditItemCharactersMutation';
 import ItemRefreshButton from './ItemRefreshButton';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
+import { useMutationUpdateItem } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		item: () => Relay.QL`
-			fragment on Item {
-				characters
-				${ItemRefreshButton.getFragment('item')}
-				${EditItemCharactersMutation.getFragment('item')}
-			}
-		`,
-	},
-})
-class ItemCharacters extends React.Component {
-	handleSave = value => {
-		Relay.Store.commitUpdate(new EditItemCharactersMutation({
-			item: this.props.item,
-			characters: value,
-		}));
+export default function ItemCharacters({ item }) {
+	const mutation = useMutationUpdateItem(item.id);
+
+	const handleSave = value => {
+		mutation.mutate({ characters: value });
 	};
 
-	render() {
-		return (
+	return (
+		<div className="ItemCharacters">
+			<h3>
+				{'Characters'}
+				{' '}
+				<ItemRefreshButton
+					item={item}
+					fields={['characters']}
+				/>
+			</h3>
 			<AutosaveInput
 				type="text"
-				label={
-					<div>
-						{'Characters'}
-						{' '}
-						<ItemRefreshButton
-							item={this.props.item}
-							fields={['characters']}
-						/>
-					</div>
-				}
-				defaultValue={this.props.item.characters}
-				onSave={this.handleSave}
+				defaultValue={item.characters}
+				onSave={handleSave}
 			/>
-		);
-	}
+		</div>
+	);
 }

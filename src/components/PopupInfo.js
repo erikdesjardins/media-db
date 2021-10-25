@@ -1,48 +1,49 @@
-import AddActiveTabItemMutation from '../mutations/AddActiveTabItemMutation';
 import ItemInfo from '../components/ItemInfo';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import FormGroup from 'react-bootstrap/es/FormGroup';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
+import LinkButton from './LinkButton';
+import {
+	useMutationAddItem,
+	useQueryActiveTab,
+	useQueryIdFromProvider,
+	useQueryItem,
+	useQueryItemFromProvider,
+} from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				providerMatchesActiveTab
-				itemForActiveTab {
-					${ItemInfo.getFragment('item')}
-				}
-				${ItemInfo.getFragment('viewer')}
-				${AddActiveTabItemMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
-class PopupInfo extends React.Component {
-	handleAddItem = () => {
-		Relay.Store.commitUpdate(new AddActiveTabItemMutation({
-			viewer: this.props.viewer,
-		}));
+export default function PopupInfo() {
+	// Get URL of active tab...
+	const { isLoading: isLoadingActiveTab, data: activeTab } = useQueryActiveTab();
+
+	// ...then check if any provider matches...
+	const { isLoading: isLoadingProviderId, data: providerId } = useQueryIdFromProvider(activeTab && activeTab.url, { enabled: !!activeTab });
+	// ...and start loading the provider info, in case it's needed...
+	const { data: providerItem } = useQueryItemFromProvider(activeTab && activeTab.url, { enabled: !!activeTab });
+
+	// ...and at the same time, try to load an existing item, if there is one.
+	const { isLoading: isLoadingExistingItem, data: item } = useQueryItem(providerId, { enabled: !!providerId });
+
+	const addItemMutation = useMutationAddItem(activeTab && activeTab.url);
+
+	if (isLoadingActiveTab || isLoadingProviderId || isLoadingExistingItem) {
+		return null;
+	}
+
+	const handleAddItem = () => {
+		addItemMutation.mutate(providerItem);
 	};
 
-	render() {
-		return (this.props.viewer.itemForActiveTab ?
-			<ItemInfo
-				item={this.props.viewer.itemForActiveTab}
-				viewer={this.props.viewer}
-			/> :
-			<FormGroup>
-				<Button
-					disabled={!this.props.viewer.providerMatchesActiveTab}
-					onClick={this.handleAddItem}
-				>
-					<Glyphicon glyph="plus"/>
-				</Button>
-			</FormGroup>
-		);
-	}
+	return (
+		<div className="PopupInfo">
+			{item ?
+				<ItemInfo item={item}/> :
+				<form className="PopupInfo-addForm">
+					<LinkButton
+						disabled={!providerItem}
+						onClick={handleAddItem}
+					>
+						{'Add'}
+					</LinkButton>
+				</form>
+			}
+		</div>
+	);
 }

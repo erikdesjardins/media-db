@@ -1,42 +1,25 @@
-import React from 'react';
-import Relay from 'react-relay';
+import React, { useCallback } from 'react';
 import SearchList from '../components/SearchList';
-import relay from 'relay-decorator';
-import Col from 'react-bootstrap/es/Col';
-import Grid from 'react-bootstrap/es/Grid';
-import Row from 'react-bootstrap/es/Row';
+import { useHistory, useParams } from 'react-router-dom';
 
-export default
-@relay({
-	initialVariables: {
-		query: '',
-		preview: true,
-		limit: 25,
-	},
-	prepareVariables: ({ query, preview }) => ({
-		query,
-		limit: preview ? 25 : 2147483647,
-	}),
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				searchItems(query: $query, first: $limit) {
-					${SearchList.getFragment('items')}
-				}
-			}
-		`,
-	},
-})
-class Search extends React.Component {
-	render() {
-		return (
-			<Grid fluid>
-				<Row>
-					<Col xs={12}>
-						<SearchList items={this.props.viewer.searchItems}/>
-					</Col>
-				</Row>
-			</Grid>
-		);
-	}
+export default function Search({ children }) {
+	const params = useParams();
+	const query = atob(params.query);
+
+	const history = useHistory();
+
+	const handleClickItem = useCallback(item => {
+		history.push(`/search/${btoa(query)}/${btoa(item.id)}`);
+	}, [history, query]);
+
+	return (
+		<div className="Search">
+			<div className="Search-list">
+				<SearchList query={query} onClickItem={handleClickItem}/>
+			</div>
+			<div className="Search-sidebar">
+				{children}
+			</div>
+		</div>
+	);
 }

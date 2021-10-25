@@ -1,49 +1,34 @@
-import AddProviderMutation from '../mutations/AddProviderMutation';
-import CenteredColumn from './CenteredColumn';
 import Provider from './Provider';
 import React from 'react';
-import Relay from 'react-relay';
-import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
+import LinkButton from './LinkButton';
+import { useMutationAddProvider, useQueryProviders } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				providers(first: 2147483647) {
-					edges {
-						node {
-							id
-							${Provider.getFragment('provider')}
-						}
-					}
-				}
-				${Provider.getFragment('viewer')}
-				${AddProviderMutation.getFragment('viewer')}
-			}
-		`,
-	},
-})
-class ProviderList extends React.Component {
-	handleAddProvider = () => {
-		Relay.Store.commitUpdate(new AddProviderMutation({ viewer: this.props.viewer }));
+export default function ProviderList() {
+	const { isLoading, data: providers } = useQueryProviders();
+
+	const mutation = useMutationAddProvider();
+
+	if (isLoading) {
+		return null;
+	}
+
+	const handleAddProvider = () => {
+		mutation.mutate();
 	};
 
-	render() {
-		return (
-			<CenteredColumn>
-				{this.props.viewer.providers.edges.map(edge =>
-					<Provider
-						key={edge.node.id}
-						provider={edge.node}
-						viewer={this.props.viewer}
-					/>
-				)}
-				<Button bsStyle="primary" onClick={this.handleAddProvider}>
+	return (
+		<fieldset className="ProviderList">
+			<legend>
+				<LinkButton onClick={handleAddProvider}>
 					{'Add Provider'}
-				</Button>
-			</CenteredColumn>
-		);
-	}
+				</LinkButton>
+			</legend>
+			{providers.map(provider => (
+				<Provider
+					key={provider.id}
+					provider={provider}
+				/>
+			))}
+		</fieldset>
+	);
 }

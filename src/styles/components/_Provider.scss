@@ -1,0 +1,20 @@
+@import '../theme';
+
+.Provider {
+	position: relative;
+
+	&:not(:first-of-type) {
+		margin-top: $Theme-spacing--medium;
+	}
+
+	&-removeButton {
+		position: absolute;
+		top: $Theme-spacing--small;
+		right: #{$Theme-spacing--small + $Theme-scrollbarWidth};
+	}
+
+	&-textarea {
+		font-family: monospace;
+		overflow-y: scroll;
+	}
+}

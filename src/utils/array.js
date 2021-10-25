@@ -6,3 +6,15 @@ export function repeatWhile(callback) {
 	}
 	return arr;
 }
+
+export function intersperse(items, f) {
+	const arr = [];
+	// eslint-disable-next-line no-restricted-syntax
+	for (let i = 0; i < items.length; ++i) {
+		arr.push(items[i]);
+		if (i > 0) {
+			arr.push(f());
+		}
+	}
+	return arr;
+}

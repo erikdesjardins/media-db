@@ -1,143 +1,78 @@
 import ItemList from './ItemList';
-import React from 'react';
-import Relay from 'react-relay';
+import React, { useState } from 'react';
 import SelectBar from './SelectBar';
-import relay from 'relay-decorator';
 import * as statusTypes from '../constants/statusTypes';
-import Button from 'react-bootstrap/es/Button';
-import ButtonGroup from 'react-bootstrap/es/ButtonGroup';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
-import Panel from 'react-bootstrap/es/Panel';
-import { fillPanelBody, panelHeaderButtonCenter } from '../styles/bootstrap';
+import LinkButton from './LinkButton';
+import { useQueryItemsFilter } from '../data/queries';
+import { ROW_LIMIT } from '../constants/table';
+import { roundDownToMultiple } from '../utils/math';
 
-const LIMIT = 25;
+export default function ItemView({ onClickItem }) {
+	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);
+	const [offset, setOffset] = useState(0);
 
-export default
-@relay({
-	initialVariables: {
-		status: statusTypes.IN_PROGRESS,
-	},
-	fragments: {
-		viewer: () => Relay.QL`
-			fragment on User {
-				items(status: $status, first: 2147483647) {
-					edges
-					${ItemList.getFragment('items')}
-				}
-			}
-		`,
-	},
-})
-class ItemView extends React.Component {
-	state = {
-		offset: 0,
-	};
+	const { isLoading, isFetching, data: items } = useQueryItemsFilter({ status }, { keepPreviousData: true });
 
-	handleStatusChange = status => {
-		this.props.relay.setVariables({
-			status,
-		});
-		this.setState({
-			offset: 0,
-		});
-	};
-
-	hasPrev() {
-		return (
-			!this.props.relay.pendingVariables &&
-			this.state.offset > 0
-		);
+	if (isLoading) {
+		return null;
 	}
 
-	hasNext() {
-		return (
-			!this.props.relay.pendingVariables &&
-			this.state.offset + LIMIT < this.props.viewer.items.edges.length
-		);
-	}
-
-	handlePrev = () => {
-		this.setState(({ offset }) => ({
-			offset: offset - LIMIT,
-		}));
+	const handleStatusChange = status => {
+		setStatus(status);
+		setOffset(0);
 	};
 
-	handleNext = () => {
-		this.setState(({ offset }) => ({
-			offset: offset + LIMIT,
-		}));
-	};
+	const hasPrev = !isFetching && offset > 0;
+	const hasNext = !isFetching && offset + ROW_LIMIT < items.length;
 
-	styles = {
-		statusSelect: {
-			...panelHeaderButtonCenter,
-		},
-		panel: {
-			overflow: 'hidden',
-		},
-		itemList: {
-			...fillPanelBody,
-		},
-		pageButtons: {
-			float: 'right',
-		},
-	};
+	const handlePrev = () => setOffset(offset => offset - ROW_LIMIT);
+	const handleNext = () => setOffset(offset => offset + ROW_LIMIT);
+	const handleFirst = () => setOffset(0);
+	const handleLast = () => setOffset(roundDownToMultiple(items.length - 1, ROW_LIMIT));
 
-	render() {
-		return (
-			<Panel style={this.styles.panel}>
-				<Panel.Heading>
-					<Panel.Title>
-						<SelectBar
-							style={this.styles.statusSelect}
-							bsSize="xsmall"
-							selected={this.props.relay.variables.status}
-							onSelect={this.handleStatusChange}
-							options={[{
-								value: statusTypes.WAITING,
-								name: 'Waiting',
-							}, {
-								value: statusTypes.PENDING,
-								name: 'Pending',
-							}, {
-								value: statusTypes.IN_PROGRESS,
-								name: 'In Progress',
-							}, {
-								value: statusTypes.COMPLETE,
-								name: 'Complete',
-							}, {
-								value: statusTypes.REJECTED,
-								name: 'Rejected',
-							}]}
-						/>
-						<ButtonGroup
-							style={this.styles.pageButtons}
-							bsSize="xsmall"
-						>
-							<Button
-								disabled={!this.hasPrev()}
-								onClick={this.handlePrev}
-							>
-								<Glyphicon glyph="chevron-left"/>
-							</Button>
-							<Button
-								disabled={!this.hasNext()}
-								onClick={this.handleNext}
-							>
-								<Glyphicon glyph="chevron-right"/>
-							</Button>
-						</ButtonGroup>
-					</Panel.Title>
-				</Panel.Heading>
-				<Panel.Body>
-					<ItemList
-						style={this.styles.itemList}
-						items={this.props.viewer.items}
-						offset={this.state.offset}
-						limit={LIMIT}
-					/>
-				</Panel.Body>
-			</Panel>
-		);
-	}
+	return (
+		<fieldset className="ItemView Utils-fieldset--noPadding">
+			<legend className="ItemView-controls">
+				<SelectBar
+					selected={status}
+					onSelect={handleStatusChange}
+					options={[{
+						value: statusTypes.WAITING,
+						name: 'Waiting',
+					}, {
+						value: statusTypes.PENDING,
+						name: 'Pending',
+					}, {
+						value: statusTypes.IN_PROGRESS,
+						name: 'In Progress',
+					}, {
+						value: statusTypes.COMPLETE,
+						name: 'Complete',
+					}, {
+						value: statusTypes.REJECTED,
+						name: 'Rejected',
+					}]}
+				/>
+				{' | '}
+				<span>
+					<LinkButton disabled={!hasPrev} onClick={handleFirst}>
+						{'First'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasPrev} onClick={handlePrev}>
+						{'<<<'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasNext} onClick={handleNext}>
+						{'>>>'}
+					</LinkButton>
+					{' '}
+					<LinkButton disabled={!hasNext} onClick={handleLast}>
+						{'Last'}
+					</LinkButton>
+				</span>
+			</legend>
+			<ItemList items={items.slice(offset, offset + ROW_LIMIT)} onClickItem={onClickItem}/>
+		</fieldset>
+	);
 }

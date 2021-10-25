@@ -1,6 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import deploy from 'chrome-extension-deploy';
+/* eslint-disable import/no-commonjs */
+const fs = require('fs');
+const path = require('path');
+const deploy = require('chrome-extension-deploy');
 
 deploy({
 	clientId: process.env.CHROME_CLIENT_ID,

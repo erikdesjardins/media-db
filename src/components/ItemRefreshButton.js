@@ -1,91 +1,48 @@
 import _ from 'lodash-es';
+import deepEqual from 'only-shallow';
 import React from 'react';
-import PropTypes from 'prop-types';
-import Relay from 'react-relay';
-import UpdateItemFieldsMutation from '../mutations/UpdateItemFieldsMutation';
-import relay from 'relay-decorator';
-import Button from 'react-bootstrap/es/Button';
-import Glyphicon from 'react-bootstrap/es/Glyphicon';
-import OverlayTrigger from 'react-bootstrap/es/OverlayTrigger';
-import Tooltip from 'react-bootstrap/es/Tooltip';
+import LinkButton from './LinkButton';
+import { useMutationUpdateItem, useQueryItemFromProvider } from '../data/queries';
 
-export default
-@relay({
-	fragments: {
-		// unfortunately we need to fetch all of the fields of `fieldUpdates` to make this generic
-		// but that's okay, because it's not any more expensive
-		item: () => Relay.QL`
-			fragment on Item {
-				id
-				fieldUpdates {
-					thumbnail
-					tinyThumbnail
-					title
-					creator
-					genres
-					characters
-					length
-					productionStatus
-				}
-				${UpdateItemFieldsMutation.getFragment('item')}
-			}
-		`,
-	},
-})
-class ItemRefreshButton extends React.Component {
-	static propTypes = {
-		fields: PropTypes.arrayOf(PropTypes.oneOf([
-			'thumbnail',
-			'tinyThumbnail',
-			'title',
-			'creator',
-			'genres',
-			'characters',
-			'length',
-			'productionStatus',
-		]).isRequired).isRequired,
-	};
+export default function ItemRefreshButton({ item, fields, showLoadingIcon = true }) {
+	const { isLoading, isError, error, data: itemFromProvider } = useQueryItemFromProvider(item.url);
 
-	isDisabled() {
-		return this.props.fields.every(field => !this.props.item.fieldUpdates[field]);
-	}
+	const mutation = useMutationUpdateItem(item.id);
 
-	handleClick = () => {
-		Relay.Store.commitUpdate(new UpdateItemFieldsMutation({
-			item: this.props.item,
-			fieldUpdates: _.pick(this.props.item.fieldUpdates, this.props.fields),
-		}));
-	};
-
-	styles = {
-		refreshButton: {
-			marginTop: '-2px',
-			marginBottom: '-2px',
-		},
-	};
-
-	render() {
-		return (this.isDisabled() ?
-			null :
-			<OverlayTrigger
-				placement="right"
-				animation={false}
-				rootClose
-				overlay={
-					<Tooltip id="field-updates">
-						{Object.values(_.pickBy(_.pick(this.props.item.fieldUpdates, this.props.fields), x => x)).join(', ')}
-					</Tooltip>
-				}
-			>
-				<Button
-					style={this.styles.refreshButton}
-					bsSize="xsmall"
-					disabled={this.isDisabled()}
-					onClick={this.handleClick}
-				>
-					<Glyphicon glyph="refresh"/>
-				</Button>
-			</OverlayTrigger>
+	if (isError) {
+		return (
+			<span className="ItemRefreshButton" title={error.message}>
+				{showLoadingIcon ? '❌' : null}
+			</span>
 		);
 	}
+	if (isLoading) {
+		return (
+			<span className="ItemRefreshButton">
+				{showLoadingIcon ? '…' : null}
+			</span>
+		);
+	}
+
+	const relevantFieldsFromProvider = _.pick(itemFromProvider, fields);
+	const anyFieldsChanged = Object.entries(relevantFieldsFromProvider).some(([key, value]) => !deepEqual(value, item[key]));
+
+	if (!anyFieldsChanged) {
+		return null;
+	}
+
+	const handleClick = () => {
+		mutation.mutate(relevantFieldsFromProvider);
+	};
+
+	return (
+		<LinkButton
+			className="ItemRefreshButton"
+			href="#"
+			title={Object.values(relevantFieldsFromProvider).join(', ')}
+			onClick={handleClick}
+		>
+			{'🔄'}
+		</LinkButton>
+	);
 }

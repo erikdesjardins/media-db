@@ -1,57 +1,59 @@
 @import '../functions';
-
-$CompactTable-base: #fff;
-$CompactTable-stripe: #eee;
-$CompactTable-hover: #ddd;
-$CompactTable-border: #e5e3da;
+@import '../theme';
 
 .CompactTable {
 	$root: &;
 
+	$fontSize: $Theme-fontSize--larger;
+
+	$base: $Theme-background;
+	$stripe: $Theme-background--grey;
+	$hover: $Theme-background--highlight;
+	$border: $Theme-borderColor--light;
+
+	$cellPaddingY: 4px;
+	$cellPaddingX: 9px;
+
+	$thumbnailCellWidth: 70px;
+
 	width: 100%;
-	font-size: 13px;
+	font-size: $fontSize;
+	border-collapse: collapse;
 
 	p {
 		margin: 0;
 	}
 
 	tr {
-		background-color: $CompactTable-base;
+		background-color: $base;
 	}
 
 	td,
 	th {
-		padding: 4px 9px;
+		padding: $cellPaddingY $cellPaddingX;
+		border: none;
+		line-height: 1.4em;
+	}
 
-		border: 1px solid $CompactTable-border;
-		border-top-width: 0;
-		border-bottom-width: 0;
-
-		font-size: 1em;
-		line-height: 1.4285714285714286em;
-
-		&:first-of-type {
-			border-left-width: 0;
-		}
-
-		&:last-of-type {
-			border-right-width: 0;
+	td {
+		&:not(:first-of-type) {
+			border-left: $Theme-borderWidth solid $border;
 		}
 	}
 
 	th {
-		border-bottom-width: 2px;
+		border-bottom: $Theme-borderWidth solid $border;
 	}
 
 	&--stripe {
 		tbody tr:nth-of-type(odd) {
-			background-color: $CompactTable-stripe;
+			background-color: $stripe;
 		}
 	}
 
 	&--hover {
 		tbody tr:hover {
-			background-color: $CompactTable-hover;
+			background-color: $hover;
 		}
 	}
 
@@ -69,9 +71,14 @@ $CompactTable-border: #e5e3da;
 				text-align: center;
 			}
 
+			&:nth-of-type(2),
+			&:nth-of-type(6) {
+				text-align: left;
+			}
+
 			// fixed width for thumbnail column to avoid resizing as images load
 			&:nth-of-type(1) {
-				min-width: 70px;
+				min-width: $thumbnailCellWidth;
 			}
 		}
 	}
@@ -81,11 +88,10 @@ $CompactTable-border: #e5e3da;
 		user-select: none;
 
 		&--autowrap {
-			$height: 1.6em;
 			$width: 25%;
 
 			&:not(:hover) {
-				max-height: $height;
+				max-height: 1.75em;
 				overflow: hidden;
 				word-break: break-all;
 
@@ -96,18 +102,18 @@ $CompactTable-border: #e5e3da;
 						position: absolute;
 						top: 0;
 						right: 0;
-						bottom: $height;
+						bottom: 1.8em;
 						left: calc(100% - #{$width});
-						background: fade-in($CompactTable-base);
+						background: fade-in($base);
 						content: '';
 						pointer-events: none;
 
 						#{$root}--stripe tr:nth-of-type(odd) & {
-							background: fade-in($CompactTable-stripe);
+							background: fade-in($stripe);
 						}
 
 						#{$root}--hover tr:hover & {
-							background: fade-in($CompactTable-hover);
+							background: fade-in($hover);
 						}
 					}
 				}
@@ -135,7 +141,7 @@ $CompactTable-border: #e5e3da;
 	}
 
 	&-tinyThumbnail {
-		max-width: 52px; // + 18px padding = 70px width (per --align above)
+		max-width: #{$thumbnailCellWidth - 2 * $cellPaddingX};
 		max-height: 20px;
 		margin-top: -8px;
 		margin-bottom: -6px;

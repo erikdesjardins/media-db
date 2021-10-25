@@ -1,0 +1,43 @@
+@use 'sass:math';
+@import '../breakpoints';
+@import '../theme';
+
+.Search {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+
+	&-list {
+		padding: $Theme-spacing--medium;
+
+		@include breakpoint(xs) {
+			width: percentage(math.div(6, 12));
+		}
+		@include breakpoint(sm) {
+			width: percentage(math.div(7, 12));
+		}
+		@include breakpoint(md) {
+			width: percentage(math.div(8, 12));
+		}
+		@include breakpoint(lg) {
+			width: percentage(math.div(9, 12));
+		}
+	}
+
+	&-sidebar {
+		padding: $Theme-spacing--medium;
+
+		@include breakpoint(xs) {
+			width: percentage(math.div(6, 12));
+		}
+		@include breakpoint(sm) {
+			width: percentage(math.div(5, 12));
+		}
+		@include breakpoint(md) {
+			width: percentage(math.div(4, 12));
+		}
+		@include breakpoint(lg) {
+			width: percentage(math.div(3, 12));
+		}
+	}
+}

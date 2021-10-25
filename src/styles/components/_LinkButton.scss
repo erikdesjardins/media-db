@@ -1,0 +1,5 @@
+.LinkButton {
+	&:not([href]) {
+		cursor: default;
+	}
+}
