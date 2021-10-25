@@ -1,4 +1,3 @@
-import _ from 'lodash-es';
 import deepEqual from 'only-shallow';
 import React from 'react';
 import LinkButton from './LinkButton';
@@ -24,22 +23,22 @@ export default function ItemRefreshButton({ item, fields, showLoadingIcon = true
 		);
 	}
 
-	const relevantFieldsFromProvider = _.pick(itemFromProvider, fields);
-	const anyFieldsChanged = Object.entries(relevantFieldsFromProvider).some(([key, value]) => !deepEqual(value, item[key]));
+	const relevantEntriesFromProvider = Object.entries(itemFromProvider).filter(([key]) => fields.includes(key));
+	const anyChanges = relevantEntriesFromProvider.some(([key, value]) => !deepEqual(value, item[key]));
 
-	if (!anyFieldsChanged) {
+	if (!anyChanges) {
 		return null;
 	}
 
 	const handleClick = () => {
-		mutation.mutate(relevantFieldsFromProvider);
+		mutation.mutate(Object.fromEntries(relevantEntriesFromProvider));
 	};
 
 	return (
 		<LinkButton
 			className="ItemRefreshButton"
 			href="#"
-			title={Object.values(relevantFieldsFromProvider).join(', ')}
+			title={relevantEntriesFromProvider.map(([, value]) => value).join(', ')}
 			onClick={handleClick}
 		>
 			{'🔄'}

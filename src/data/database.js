@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 import deepEqual from 'only-shallow';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
-import { distinct, map, whereEquals, whereRegex, reverse, sortBy } from '../utils/db';
+import { distinct, map, whereEquals, whereRegex, reverse, orderBy } from '../utils/db';
 import { repeatWhile } from '../utils/array';
 import { pipe } from '../utils/function';
 
@@ -92,7 +92,7 @@ export function getItemHistory(id) {
 }
 
 export function getItems() {
-	return pipe(db.media.orderBy('date').toArray(), reverse(), distinct('id'), sortBy('statusDate'));
+	return pipe(db.media.orderBy('date').toArray(), reverse(), distinct('id'), orderBy('statusDate'));
 }
 
 export function getFilteredItems(filterMap) {

@@ -1,7 +1,7 @@
-import _ from 'lodash-es';
 import React from 'react';
 import deepDiff from 'deep-diff';
 import FullDate from './FullDate';
+import { zipWith } from '../utils/array';
 
 export default function ItemHistory({ history }) {
 	const diffs = [
@@ -10,7 +10,7 @@ export default function ItemHistory({ history }) {
 			description: 'created',
 			date: history[0].date,
 		},
-		..._.zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
+		...zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
 			const ignoreFields = ['id', 'statusDate', 'date'];
 			const diff = deepDiff(from, to, (path, key) => ignoreFields.includes(key));
 
