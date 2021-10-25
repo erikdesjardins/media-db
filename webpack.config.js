@@ -35,6 +35,7 @@ module.exports = (env, { mode }) => ({
 							mode === 'production' && ['babel-preset-minify', {
 								booleans: false,
 								builtIns: false,
+								deadcode: false,
 								flipComparisons: false,
 								mangle: false,
 							}],
@@ -67,9 +68,7 @@ module.exports = (env, { mode }) => ({
 								booleans: false,
 								builtIns: false,
 								flipComparisons: false,
-								infinity: false,
-								simplify: false,
-								simplifyComparisons: false,
+								mangle: false,
 							}],
 						].filter(x => x),
 						plugins: [
