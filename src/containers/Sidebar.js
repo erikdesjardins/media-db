@@ -1,4 +1,3 @@
-import React from 'react';
 import SidebarItem from '../components/SidebarItem';
 import { useParams } from 'react-router-dom';
 

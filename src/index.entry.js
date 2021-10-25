@@ -6,7 +6,6 @@ import Sidebar from './containers/Sidebar';
 import Storage from './containers/Storage';
 import Providers from './containers/Providers';
 import { queryClient } from './data/queries';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, HashRouter, Switch } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';

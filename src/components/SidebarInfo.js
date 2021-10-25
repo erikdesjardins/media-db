@@ -1,5 +1,4 @@
 import ItemInfo from './ItemInfo';
-import React from 'react';
 import { useQueryItem } from '../data/queries';
 
 export default function SidebarInfo({ itemId: id }) {

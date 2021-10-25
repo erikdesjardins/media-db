@@ -1,4 +1,3 @@
-import React from 'react';
 import deepDiff from 'deep-diff';
 import FullDate from './FullDate';
 import { zipWith } from '../utils/array';

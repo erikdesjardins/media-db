@@ -1,4 +1,3 @@
-import React from 'react';
 import FullDate from './FullDate';
 
 export default function ItemListStatusDate({ item }) {

@@ -1,5 +1,4 @@
 import deepEqual from 'only-shallow';
-import React from 'react';
 import LinkButton from './LinkButton';
 import { useMutationUpdateItem, useQueryItemFromProvider } from '../data/queries';
 

@@ -1,5 +1,4 @@
 import AutosaveInput from './AutosaveInput';
-import React from 'react';
 import { useMutationUpdateItem } from '../data/queries';
 
 export default function ItemNotes({ item }) {

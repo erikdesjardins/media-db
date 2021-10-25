@@ -1,5 +1,5 @@
 import ItemView from '../components/ItemView';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function Items({ children }) {

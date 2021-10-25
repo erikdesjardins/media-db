@@ -1,5 +1,4 @@
 import Provider from './Provider';
-import React from 'react';
 import LinkButton from './LinkButton';
 import { useMutationAddProvider, useQueryProviders } from '../data/queries';
 

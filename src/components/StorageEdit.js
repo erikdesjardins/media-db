@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import numeral from 'numeral';
 import { formatIsoDate } from '../utils/date';
 import LinkButton from './LinkButton';

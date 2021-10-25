@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';

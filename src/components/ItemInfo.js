@@ -7,7 +7,6 @@ import ItemStatus from './ItemStatus';
 import ItemTags from './ItemTags';
 import ItemThumbnail from './ItemThumbnail';
 import ItemTitleBlock from './ItemTitleBlock';
-import React from 'react';
 
 export default function ItemInfo({ item }) {
 	return (
