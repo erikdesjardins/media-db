@@ -13,7 +13,7 @@ module.exports = (env, { mode }) => ({
 		filename: 'manifest.json',
 	},
 	performance: false,
-	devtool: mode === 'production' ? 'source-map' : 'inline-cheap-source-map',
+	devtool: mode === 'production' ? false : 'inline-cheap-source-map',
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
