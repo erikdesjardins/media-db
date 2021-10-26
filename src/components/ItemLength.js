@@ -1,6 +1,5 @@
 import AutosaveInput from './AutosaveInput';
 import ItemRefreshButton from './ItemRefreshButton';
-import React from 'react';
 import { useMutationUpdateItem } from '../data/queries';
 
 export default function ItemLength({ item }) {

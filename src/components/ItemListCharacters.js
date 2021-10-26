@@ -1,5 +1,4 @@
 import Markdown from './Markdown';
-import React from 'react';
 
 export default function ItemListCharacters({ item }) {
 	return (

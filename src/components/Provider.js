@@ -1,5 +1,4 @@
 import AutosaveInput from './AutosaveInput';
-import React from 'react';
 import LinkButton from './LinkButton';
 import { useMutationRemoveProvider, useMutationUpdateProvider } from '../data/queries';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import SelectBar from './SelectBar';
 import * as statusTypes from '../constants/statusTypes';
 import { useMutationUpdateItem } from '../data/queries';

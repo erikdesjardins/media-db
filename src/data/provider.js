@@ -1,5 +1,5 @@
-import _ from 'lodash-es';
 // import { requestPermissionForUrl } from '../api/permissions';
+import { property } from '../utils/object';
 
 const UrlType = {
 	json: 'json',
@@ -120,7 +120,7 @@ function traversePath(value, path, matches) {
 	switch (type) {
 		case Path.props: {
 			const props /*: string[] */ = arg;
-			return _.property(props)(value);
+			return property(value, props);
 		}
 		case Path.select: {
 			const selector /*: string */ = arg;

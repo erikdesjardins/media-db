@@ -1,7 +1,6 @@
 /* eslint-disable import/no-commonjs */
 const BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 const InertEntryPlugin = require('inert-entry-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const sass = require('sass');
@@ -45,11 +44,10 @@ module.exports = (env, { mode }) => ({
 								'process.env.NODE_ENV': mode,
 								'typeof window': 'object',
 							}],
-							'babel-plugin-lodash',
 
 							mode === 'production' && '@babel/plugin-transform-react-constant-elements',
 						].filter(x => x),
-						comments: false,
+						comments: mode !== 'production',
 						compact: mode === 'production',
 						babelrc: false,
 					},
@@ -80,7 +78,7 @@ module.exports = (env, { mode }) => ({
 							mode === 'production' && 'babel-plugin-transform-react-remove-prop-types',
 						].filter(x => x),
 						comments: false,
-						compact: mode === 'production',
+						compact: true,
 						babelrc: false,
 					},
 				},
@@ -119,10 +117,6 @@ module.exports = (env, { mode }) => ({
 	},
 	plugins: [
 		new InertEntryPlugin(),
-		new LodashModuleReplacementPlugin({
-			flattening: true, // chaos theory
-			paths: true,
-		}),
 		new BellOnBundlerErrorPlugin(),
 		new NyanProgressPlugin(),
 

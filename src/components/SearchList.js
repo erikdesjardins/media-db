@@ -1,5 +1,4 @@
 import ItemList from './ItemList';
-import React from 'react';
 import { ROW_LIMIT } from '../constants/table';
 import { useQueryItemsSearch } from '../data/queries';
 

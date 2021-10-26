@@ -1,5 +1,5 @@
 import ItemList from './ItemList';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SelectBar from './SelectBar';
 import * as statusTypes from '../constants/statusTypes';
 import LinkButton from './LinkButton';

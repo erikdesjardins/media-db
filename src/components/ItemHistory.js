@@ -1,19 +1,21 @@
-import _ from 'lodash-es';
-import React from 'react';
 import deepDiff from 'deep-diff';
-import { formatFullDate } from '../utils/formatDate';
+import FullDate from './FullDate';
+import { zipWith } from '../utils/array';
 
 export default function ItemHistory({ history }) {
 	const diffs = [
 		{
+			id: history[0].id,
 			description: 'created',
 			date: history[0].date,
 		},
-		..._.flatten(_.zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
-			const diff = deepDiff(from, to, (path, key) => key === 'date' || String(key).startsWith('_'));
+		...zipWith(history.slice(0, -1), history.slice(1), (from, to) => {
+			const ignoreFields = ['id', 'statusDate', 'date'];
+			const diff = deepDiff(from, to, (path, key) => ignoreFields.includes(key));
 
 			if (!diff) {
 				return [{
+					id: to.id,
 					description: 'no change',
 					date: to.date,
 				}];
@@ -28,31 +30,29 @@ export default function ItemHistory({ history }) {
 					}
 					switch (kind) {
 						case 'N':
-							return `added ${prefix}: ${rhs}`;
+							return [path, `added ${prefix}: ${rhs}`];
 						case 'D':
-							return `removed ${prefix}: ${lhs}`;
+							return [path, `removed ${prefix}: ${lhs}`];
 						case 'E':
-							return `changed ${prefix}: ${lhs} → ${rhs}`;
+							return [path, `changed ${prefix}: ${lhs} → ${rhs}`];
 						case 'A':
 						default:
-							return 'pls no';
+							return [path, 'pls no'];
 					}
 				})
-				.map(description => ({
+				.map(([path, description]) => ({
+					id: `${to.id}-${path.join('-')}`,
 					description,
 					date: to.date,
 				}));
-		})),
+		}).flat(),
 	];
 
 	return (
 		<table className="ItemHistory CompactTable CompactTable--stripe">
 			<tbody>
-				{diffs.map(({ description, date }, i) => (
-					// ensures React keys are unique
-					// this is fine because items can only be appended to history
-					// eslint-disable-next-line react/no-array-index-key
-					<tr key={date + i}>
+				{diffs.map(({ id, description, date }) => (
+					<tr key={id}>
 						<td>
 							<div className="CompactTable-item CompactTable-item--autowrap CompactTable-item--small">
 								<p>{description}</p>
@@ -60,7 +60,7 @@ export default function ItemHistory({ history }) {
 						</td>
 						<td>
 							<div className="CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
-								<p>{formatFullDate(date)}</p>
+								<p><FullDate date={date}/></p>
 							</div>
 						</td>
 					</tr>

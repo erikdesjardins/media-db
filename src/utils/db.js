@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import { sortBy } from './array';
 
 export function randomId(length = 16) {
 	let id = '';
@@ -23,8 +23,8 @@ export function reverse() {
 	return promise => promise.then(arr => arr.reverse());
 }
 
-export function sortBy(key) {
-	return promise => promise.then(arr => _.sortBy(arr, ({ [key]: v }) => v));
+export function orderBy(key) {
+	return promise => promise.then(arr => sortBy(arr, ({ [key]: v }) => v));
 }
 
 export function distinct(key) {

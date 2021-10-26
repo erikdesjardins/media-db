@@ -1,10 +1,9 @@
-import React from 'react';
-import { formatFullDate } from '../utils/formatDate';
+import FullDate from './FullDate';
 
 export default function ItemListStatusDate({ item }) {
 	return (
-		<span className="ItemListStatusDate CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
-			{formatFullDate(item.statusDate)}
-		</span>
+		<div className="ItemListStatusDate CompactTable-item CompactTable-item--nowrap CompactTable-item--small">
+			<FullDate date={item.statusDate}/>
+		</div>
 	);
 }

@@ -1,5 +1,4 @@
 import ItemRefreshButton from './ItemRefreshButton';
-import React from 'react';
 
 export default function ItemThumbnail({ item }) {
 	return (

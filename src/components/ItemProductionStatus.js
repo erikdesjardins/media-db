@@ -1,5 +1,4 @@
 import ItemRefreshButton from './ItemRefreshButton';
-import React from 'react';
 import SelectBar from './SelectBar';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import { useMutationUpdateItem } from '../data/queries';

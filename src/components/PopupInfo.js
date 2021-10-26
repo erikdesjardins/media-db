@@ -1,5 +1,4 @@
 import ItemInfo from '../components/ItemInfo';
-import React from 'react';
 import LinkButton from './LinkButton';
 import {
 	useMutationAddItem,
