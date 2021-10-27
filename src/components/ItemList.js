@@ -2,7 +2,7 @@ import Item from './Item';
 
 export default function ItemList({ items, onClickItem }) {
 	return (
-		<table className="ItemList CompactTable CompactTable--stripe CompactTable--hover CompactTable--align">
+		<table className="ItemList CompactTable CompactTable--stripe CompactTable--hover CompactTable--alignColumnsForItemList">
 			<thead>
 				<tr>
 					<th>{''}</th>

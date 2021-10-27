@@ -7,17 +7,17 @@ export default function ItemRefreshButton({ item, fields, showLoadingIcon = true
 
 	const mutation = useMutationUpdateItem(item.id);
 
-	if (isError) {
-		return (
-			<span className="ItemRefreshButton" title={error.message}>
-				{showLoadingIcon ? '❌' : null}
-			</span>
-		);
-	}
 	if (isLoading) {
 		return (
 			<span className="ItemRefreshButton">
 				{showLoadingIcon ? '…' : null}
+			</span>
+		);
+	}
+	if (isError) {
+		return (
+			<span className="ItemRefreshButton" title={error.message}>
+				{showLoadingIcon ? '❌' : null}
 			</span>
 		);
 	}
