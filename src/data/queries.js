@@ -123,8 +123,10 @@ export function useMutationAddItem(url) {
 			tags: '',
 		};
 		await addItem(info.id, item);
+		return item;
 	}, {
-		onSuccess: () => {
+		onSuccess: item => {
+			queryClient.invalidateQueries([q.ITEM, item.id]);
 			queryClient.invalidateQueries([q.ITEMS]);
 			queryClient.invalidateQueries([q.RAW_DATA]);
 		},
