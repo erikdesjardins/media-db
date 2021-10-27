@@ -57,23 +57,30 @@
 		}
 	}
 
-	&--align {
+	&--alignColumnsForItemList {
 		td,
 		th {
-			// custom alignments for the main item table
-			&:nth-of-type(1),
-			&:nth-of-type(3),
-			&:nth-of-type(4),
-			&:nth-of-type(5),
-			&:nth-of-type(7),
-			&:nth-of-type(8),
-			&:nth-of-type(9) {
+			&:nth-of-type(1), // thumbnail
+			&:nth-of-type(3), // creator
+			&:nth-of-type(4), // genres
+			&:nth-of-type(5), // characters
+			&:nth-of-type(9) { // production status
 				text-align: center;
 			}
 
-			&:nth-of-type(2),
-			&:nth-of-type(6) {
+			&:nth-of-type(2), // title + tags
+			&:nth-of-type(6), // notes
+			&:nth-of-type(7) { // date
 				text-align: left;
+			}
+
+			&:nth-of-type(8) { // length
+				text-align: right;
+			}
+
+			// make notes column take up all extra space
+			&:nth-of-type(6) {
+				width: 100%;
 			}
 
 			// fixed width for thumbnail column to avoid resizing as images load
@@ -88,8 +95,6 @@
 		user-select: none;
 
 		&--autowrap {
-			$width: 25%;
-
 			&:not(:hover) {
 				max-height: 1.75em;
 				overflow: hidden;
@@ -103,7 +108,7 @@
 						top: 0;
 						right: 0;
 						bottom: 1.8em;
-						left: calc(100% - #{$width});
+						left: calc(100% - 25%);
 						background: fade-in($base);
 						content: '';
 						pointer-events: none;
@@ -121,9 +126,7 @@
 		}
 
 		&--truncate {
-			$width: 350px;
-
-			max-width: $width;
+			max-width: 350px;
 
 			p {
 				text-overflow: ellipsis;
