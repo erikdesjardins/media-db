@@ -22,22 +22,26 @@ export default function ItemRefreshButton({ item, fields, showLoadingIcon = true
 		);
 	}
 
-	const relevantEntriesFromProvider = Object.entries(itemFromProvider).filter(([key]) => fields.includes(key));
-	const anyChanges = relevantEntriesFromProvider.some(([key, value]) => !structuralEq(value, item[key]));
+	if (!itemFromProvider) {
+		return null;
+	}
 
-	if (!anyChanges) {
+	const changedEntriesFromProvider = Object.entries(itemFromProvider)
+		.filter(([key, value]) => fields.includes(key) && !structuralEq(value, item[key]));
+
+	if (changedEntriesFromProvider.length === 0) {
 		return null;
 	}
 
 	const handleClick = () => {
-		mutation.mutate(Object.fromEntries(relevantEntriesFromProvider));
+		mutation.mutate(Object.fromEntries(changedEntriesFromProvider));
 	};
 
 	return (
 		<LinkButton
 			className="ItemRefreshButton"
 			href="#"
-			title={relevantEntriesFromProvider.map(([, value]) => value).join(', ')}
+			title={changedEntriesFromProvider.map(([, value]) => value).join(', ')}
 			onClick={handleClick}
 		>
 			{'🔄'}
