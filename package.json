@@ -1,6 +1,6 @@
 {
   "name": "media-db",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "",
   "private": true,
   "repository": {
@@ -15,7 +15,6 @@
     "once": "webpack --mode development",
     "prebuild": "rimraf dist",
     "build": "webpack --mode production",
-    "deploy": "node ./deploy.js",
     "test": "eslint . && sass-lint -v -q"
   },
   "dependencies": {
