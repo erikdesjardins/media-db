@@ -1,7 +1,7 @@
 import React from 'react';
 import { markdown } from 'snudown-js';
 
-const isMarkdown = /[*_~^[&#]/;
+const isMarkdown = /[*_~^[&#\n]/;
 
 export default React.memo(function Markdown({ source, inline = false }) {
 	if (!isMarkdown.test(source)) {
