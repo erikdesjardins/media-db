@@ -43,7 +43,7 @@ fieldset {
 	border: $Theme-borderWidth solid $Theme-borderColor;
 	border-radius: $Theme-borderRadius--medium;
 	background: $Theme-background;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 input,
