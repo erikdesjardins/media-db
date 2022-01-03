@@ -1,1 +1,1 @@
-export const ROW_LIMIT = 25;
+export const ROW_LIMIT = 32;
