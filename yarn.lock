@@ -4441,10 +4441,10 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-query@3.28.0:
-  version "3.28.0"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.28.0.tgz#1bfe12944860b2b773680054de37f19438f59d1d"
-  integrity sha512-OeX+nRqs7Zi0MvvtaKxKWE4N966UGtqSVuedOsz8cJh9eW195fgtYZ9nW3hZjIPPmeDY1PkArLUiV4wZvNRDPw==
+react-query@3.34.7:
+  version "3.34.7"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.34.7.tgz#e3d71318f510ea354794cd188b351bb57f577cb9"
+  integrity sha512-Q8+H2DgpoZdGUpwW2Z9WAbSrIE+yOdZiCUokHjlniOOmlcsfqNLgvHF5i7rtuCmlw3hv5OAhtpS7e97/DvgpWw==
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"
@@ -4926,10 +4926,10 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snudown-js@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/snudown-js/-/snudown-js-3.2.1.tgz#d73397e7a1a588881e875999c340504c9e525d57"
-  integrity sha512-0WJcKVRGHCE5z5dfQA+jz/YeltXZk4nAuahHW1zQ+q//GgIOJ6cy7q7++APnUMSknHUNP1UOEl1fl74nUH3ojw==
+snudown-js@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/snudown-js/-/snudown-js-3.2.2.tgz#83a250f9ea9a2b5ec7949cc5bca8ab2f154798b4"
+  integrity sha512-Zvm0KbxJ+F8YIOMq70bGT+q0M5Vp9mnEUb1+uTQQgekdRXXPOJgM908WKGU36Wi2Gz9jTsZ0ZrGGxkUfb6t5RQ==
   dependencies:
     esm "^3.0.28"
 
