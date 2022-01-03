@@ -1,13 +1,13 @@
 import ItemView from '../components/ItemView';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
-export default function Items({ children }) {
-	const history = useHistory();
+export default function Items() {
+	const navigate = useNavigate();
 
 	const handleClickItem = useCallback(item => {
-		history.push(`/items/${btoa(item.id)}`);
-	}, [history]);
+		navigate(`/items/${btoa(item.id)}`);
+	}, [navigate]);
 
 	return (
 		<div className="Items">
@@ -15,7 +15,7 @@ export default function Items({ children }) {
 				<ItemView onClickItem={handleClickItem}/>
 			</div>
 			<div className="Items-sidebar">
-				{children}
+				<Outlet/>
 			</div>
 		</div>
 	);

@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
 import SearchList from '../components/SearchList';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useNavigate, Outlet } from 'react-router-dom';
 
-export default function Search({ children }) {
+export default function Search() {
 	const params = useParams();
 	const query = atob(params.query);
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const handleClickItem = useCallback(item => {
-		history.push(`/search/${btoa(query)}/${btoa(item.id)}`);
-	}, [history, query]);
+		navigate(`/search/${btoa(query)}/${btoa(item.id)}`);
+	}, [navigate, query]);
 
 	return (
 		<div className="Search">
@@ -18,7 +18,7 @@ export default function Search({ children }) {
 				<SearchList query={query} onClickItem={handleClickItem}/>
 			</div>
 			<div className="Search-sidebar">
-				{children}
+				<Outlet/>
 			</div>
 		</div>
 	);

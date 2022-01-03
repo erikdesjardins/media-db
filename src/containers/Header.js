@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { Link, useNavigate, useMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';
 import SearchList from '../components/SearchList';
 import Floating from '../components/Floating';
 
 export default function Header() {
-	const searchMatch = useRouteMatch('/search/:query');
+	const searchMatch = useMatch('/search/:query/*');
 	const queryFromUrl = searchMatch && atob(searchMatch.params.query);
 	const isSearch = !!searchMatch;
 
@@ -25,7 +25,7 @@ export default function Header() {
 	// don't show the preview if the search page already has the same results
 	const searchPageIsSameAsPreview = query === queryFromUrl;
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const handleFocusSearch = () => {
 		if (query && !searchPageIsSameAsPreview) {
@@ -44,16 +44,16 @@ export default function Header() {
 
 	const handleClickItem = useCallback(item => {
 		if (isSearch) {
-			history.push(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
+			navigate(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
 		} else {
-			history.push(`/items/${btoa(item.id)}`);
+			navigate(`/items/${btoa(item.id)}`);
 		}
-	}, [history, isSearch, queryFromUrl]);
+	}, [navigate, isSearch, queryFromUrl]);
 
 	const handleSubmitSearch = e => {
 		e.preventDefault();
 		setShowPreview(false);
-		history.push(`/search/${btoa(query)}`);
+		navigate(`/search/${btoa(query)}`);
 	};
 
 	return (
