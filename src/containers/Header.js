@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
+import classNames from 'classnames';
 import { Link, useNavigate, useMatch } from 'react-router-dom';
 import CenteredColumn from '../components/CenteredColumn';
 import SearchList from '../components/SearchList';
@@ -12,7 +13,7 @@ export default function Header() {
 
 	// eslint-disable-next-line prefer-const
 	let [query, setQuery] = useState(queryFromUrl || '');
-	const [showPreview, setShowPreview] = useState(false);
+	const [showPreviewState, setShowPreview] = useState(false);
 
 	// if url changes, update query to match
 	const previousQueryFromUrl = useRef(queryFromUrl);
@@ -22,13 +23,10 @@ export default function Header() {
 	}
 	previousQueryFromUrl.current = queryFromUrl;
 
-	// don't show the preview if the search page already has the same results
-	const searchPageIsSameAsPreview = query === queryFromUrl;
-
 	const navigate = useNavigate();
 
 	const handleFocusSearch = () => {
-		if (query && !searchPageIsSameAsPreview) {
+		if (query) {
 			setShowPreview(true);
 		}
 	};
@@ -56,6 +54,9 @@ export default function Header() {
 		navigate(`/search/${btoa(query)}`);
 	};
 
+	// don't show the preview if the search page already has the same results
+	const showPreview = showPreviewState && query !== queryFromUrl;
+
 	return (
 		<CenteredColumn className="Header">
 			<header className="Header-header">
@@ -72,13 +73,14 @@ export default function Header() {
 				<form className="Header-form" onSubmit={handleSubmitSearch}>
 					<input
 						type="text"
+						className={classNames({ 'Floating-externalElement--showAboveOverlay': showPreview })}
 						placeholder="Search"
 						autoFocus
 						value={query}
 						onFocus={handleFocusSearch}
 						onChange={handleChangeSearch}
 					/>
-					{showPreview && !searchPageIsSameAsPreview &&
+					{showPreview &&
 						<Floating top right onBlur={handleBlurPreview}>
 							<SearchList query={query} preview onClickItem={handleClickItem}/>
 						</Floating>
