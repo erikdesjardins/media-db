@@ -19,7 +19,7 @@ export default function ProviderList() {
 		<fieldset className="ProviderList">
 			<legend>
 				<LinkButton onClick={handleAddProvider}>
-					{'Add Provider'}
+					{'Add new provider'}
 				</LinkButton>
 			</legend>
 			{providers.map(provider => (
