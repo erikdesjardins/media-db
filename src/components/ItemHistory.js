@@ -1,6 +1,6 @@
-import FullDate from './FullDate';
 import { Fragment } from 'react';
 import { diffsFromItemHistory } from '../data/history';
+import FullDate from './FullDate';
 
 export default function ItemHistory({ history, onClickItemHistory }) {
 	const diffs = diffsFromItemHistory(history);

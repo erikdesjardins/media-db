@@ -1,6 +1,6 @@
-import SelectBar from './SelectBar';
 import * as statusTypes from '../constants/statusTypes';
 import { useMutationUpdateItem } from '../data/queries';
+import SelectBar from './SelectBar';
 
 export default function ItemStatus({ item }) {
 	const mutation = useMutationUpdateItem(item.id);

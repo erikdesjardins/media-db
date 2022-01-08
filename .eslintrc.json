@@ -10,7 +10,6 @@
 		"eslint-plugin-react",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-consistent-return-legacy",
-		"eslint-plugin-sort-imports-es6",
 		"eslint-plugin-filenames",
 		"eslint-plugin-import"
 	],
@@ -61,8 +60,6 @@
 
 		"consistent-return-legacy/consistent-return": 2,
 
-		//"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
-
 		"filenames/match-regex": 0,
 		"filenames/match-exported": 2,
 		"filenames/no-index": 0,
@@ -94,7 +91,11 @@
 		"import/no-restricted-paths": 0,
 		"import/no-unassigned-import": 2,
 		"import/no-unresolved": 2,
-		"import/order": 0,
+		"import/order": [2, {
+			"groups": ["builtin", "external", "parent", "sibling", "index"],
+			"newlines-between": "never",
+			"alphabetize": { "order": "asc", "caseInsensitive": false }
+		}],
 		"import/prefer-default-export": 0,
 		"import/unambiguous": 0,
 
@@ -178,7 +179,7 @@
 		"require-unicode-regexp": 0,
 		"sort-keys": 0,
 		"sort-vars": 0,
-		"sort-imports": 0, // see sort-imports-es6/sort-imports-es6
+		"sort-imports": [2, { "ignoreDeclarationSort": true }], // only sort within `import { a, b, c }`; declarations are handled by import/order above
 		"space-before-function-paren": [2, {
 			"anonymous": "never",
 			"named": "never",

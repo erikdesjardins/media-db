@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
+import React, { useRef, useState } from 'react';
 
 export default React.memo(function AutosaveInput({ type, rows, className, defaultValue, onSave }) {
 	// eslint-disable-next-line prefer-const

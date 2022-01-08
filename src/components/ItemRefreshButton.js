@@ -1,6 +1,6 @@
-import LinkButton from './LinkButton';
 import { useMutationUpdateItem, useQueryItemFromProvider } from '../data/queries';
 import { structuralEq } from '../utils/object';
+import LinkButton from './LinkButton';
 
 export default function ItemRefreshButton({ item, fields, showLoadingIcon = true }) {
 	const { isLoading, isError, error, data: itemFromProvider } = useQueryItemFromProvider(item.url);

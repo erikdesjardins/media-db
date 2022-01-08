@@ -1,5 +1,4 @@
 import ItemInfo from '../components/ItemInfo';
-import LinkButton from './LinkButton';
 import {
 	useMutationAddItem,
 	useQueryActiveTab,
@@ -7,6 +6,7 @@ import {
 	useQueryItem,
 	useQueryItemFromProvider,
 } from '../data/queries';
+import LinkButton from './LinkButton';
 
 export default function PopupInfo() {
 	// Get URL of active tab...

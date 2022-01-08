@@ -1,9 +1,9 @@
-import { useCallback, useRef, useState } from 'react';
-import icon from '../images/icon32.png';
 import classNames from 'classnames';
-import { Link, useNavigate, useMatch } from 'react-router-dom';
-import SearchList from '../components/SearchList';
+import { useCallback, useRef, useState } from 'react';
+import { Link, useMatch, useNavigate } from 'react-router-dom';
 import Floating from '../components/Floating';
+import SearchList from '../components/SearchList';
+import icon from '../images/icon32.png';
 
 export default function Header() {
 	const searchMatch = useMatch('/search/:query/*');

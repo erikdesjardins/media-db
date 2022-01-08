@@ -1,10 +1,10 @@
-/* eslint-disable import/no-commonjs */
+/* eslint-disable import/no-commonjs, import/order */
+const { join } = require('path');
 const BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const sass = require('sass');
-const { join } = require('path');
 
 module.exports = (env, { mode }) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',

@@ -1,20 +1,20 @@
-import { useMutation, useQuery, QueryClient } from 'react-query';
+import { QueryClient, useMutation, useQuery } from 'react-query';
 import { activeTab } from '../api/tabs';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
-import * as statusTypes from '../constants/statusTypes';
 import * as q from '../constants/queryTypes';
-import { randomId } from '../utils/db';
+import * as statusTypes from '../constants/statusTypes';
+import { randomId } from '../utils/string';
 import {
 	addItem,
 	addProvider,
-	getFilteredItems,
 	getItem,
 	getItemHistory,
 	getItemHistoryAt,
 	getItems,
+	getItemsFiltered,
+	getItemsQueried,
 	getProvider,
 	getProviders,
-	getQueriedItems,
 	getRawData,
 	removeProvider,
 	setRawData,
@@ -30,7 +30,7 @@ export const queryClient = new QueryClient({
 			staleTime: Infinity, // never consider query results stale
 			retry: false, // retries don't help any of our (local) requests
 			refetchOnReconnect: false, // we don't perform any uncacheable network requests
-			refetchOnWindowFocus: false, // we don't perform any uncacheable network requests
+			refetchOnWindowFocus: 'always', // ensure consistency when using multiple tabs
 		},
 	},
 });
@@ -38,7 +38,10 @@ export const queryClient = new QueryClient({
 // Queries
 
 export function useQueryActiveTab(options = {}) {
-	return useQuery([q.ACTIVE_TAB], () => activeTab(), options);
+	return useQuery([q.ACTIVE_TAB], () => activeTab(), {
+		refetchOnWindowFocus: false, // we only have permission to get active tab during initial open, can't refetch
+		...options,
+	});
 }
 
 export function useQueryItem(id, options = {}) {
@@ -58,11 +61,11 @@ export function useQueryItems(options = {}) {
 }
 
 export function useQueryItemsFilter(filters, options = {}) {
-	return useQuery([q.ITEMS, 'filters', filters], () => getFilteredItems(filters), options);
+	return useQuery([q.ITEMS, 'filters', filters], () => getItemsFiltered(filters), options);
 }
 
 export function useQueryItemsSearch(query, options = {}) {
-	return useQuery([q.ITEMS, 'query', query], () => getQueriedItems(query), options);
+	return useQuery([q.ITEMS, 'query', query], () => getItemsQueried(query), options);
 }
 
 export function useQueryIdFromProvider(url, options = {}) {

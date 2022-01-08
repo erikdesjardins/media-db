@@ -1,3 +1,4 @@
+import React from 'react';
 import ItemListCharacters from './ItemListCharacters';
 import ItemListCreator from './ItemListCreator';
 import ItemListGenres from './ItemListGenres';
@@ -7,7 +8,6 @@ import ItemListProductionStatus from './ItemListProductionStatus';
 import ItemListStatusDate from './ItemListStatusDate';
 import ItemListThumbnail from './ItemListThumbnail';
 import ItemListTitle from './ItemListTitle';
-import React from 'react';
 
 export default React.memo(function Item({ item, onClickItem }) {
 	const handleClick = () => {

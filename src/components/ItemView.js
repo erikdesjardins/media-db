@@ -1,11 +1,11 @@
-import ItemList from './ItemList';
 import { useState } from 'react';
-import SelectBar from './SelectBar';
 import * as statusTypes from '../constants/statusTypes';
-import LinkButton from './LinkButton';
-import { useQueryItemsFilter } from '../data/queries';
 import { ROW_LIMIT } from '../constants/table';
+import { useQueryItemsFilter } from '../data/queries';
 import { roundDownToMultiple } from '../utils/math';
+import ItemList from './ItemList';
+import LinkButton from './LinkButton';
+import SelectBar from './SelectBar';
 
 export default function ItemView({ onClickItem }) {
 	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);

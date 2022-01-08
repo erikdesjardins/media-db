@@ -1,5 +1,5 @@
-import { formatFullDate } from '../utils/date';
 import React from 'react';
+import { formatFullDate } from '../utils/date';
 
 export default React.memo(function FullDate({ date }) {
 	const seconds = new Date(date).getSeconds();

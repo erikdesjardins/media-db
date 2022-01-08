@@ -1,6 +1,6 @@
+import { useMutationRemoveProvider, useMutationUpdateProvider } from '../data/queries';
 import AutosaveInput from './AutosaveInput';
 import LinkButton from './LinkButton';
-import { useMutationRemoveProvider, useMutationUpdateProvider } from '../data/queries';
 
 export default function Provider({ provider }) {
 	const updateMutation = useMutationUpdateProvider(provider.id);

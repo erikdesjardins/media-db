@@ -1,5 +1,5 @@
-import AutosaveInput from './AutosaveInput';
 import { useMutationUpdateItem } from '../data/queries';
+import AutosaveInput from './AutosaveInput';
 
 export default function ItemTags({ item }) {
 	const mutation = useMutationUpdateItem(item.id);

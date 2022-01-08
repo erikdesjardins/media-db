@@ -1,6 +1,6 @@
-import ItemList from './ItemList';
 import { ROW_LIMIT } from '../constants/table';
 import { useQueryItemsSearch } from '../data/queries';
+import ItemList from './ItemList';
 
 export default function SearchList({ query, preview = false, onClickItem }) {
 	const { isLoading, isError, error, data: items } = useQueryItemsSearch(query, { keepPreviousData: true });
