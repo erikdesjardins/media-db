@@ -1,10 +1,9 @@
-import CenteredColumn from '../components/CenteredColumn';
 import StorageEdit from '../components/StorageEdit';
 
 export default function Storage() {
 	return (
-		<CenteredColumn className="Storage">
+		<div className="Storage">
 			<StorageEdit/>
-		</CenteredColumn>
+		</div>
 	);
 }

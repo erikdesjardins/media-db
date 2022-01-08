@@ -1,0 +1,14 @@
+@import '../theme';
+
+.ProviderTest {
+	&-url {
+		display: block;
+		width: 100%;
+	}
+
+	&-output {
+		&--stale {
+			opacity: $Theme-stale;
+		}
+	}
+}

@@ -1,18 +1,18 @@
 import { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-import CenteredColumn from '../components/CenteredColumn';
+import classNames from 'classnames';
+import { Link, useNavigate, useMatch } from 'react-router-dom';
 import SearchList from '../components/SearchList';
 import Floating from '../components/Floating';
 
 export default function Header() {
-	const searchMatch = useRouteMatch('/search/:query');
+	const searchMatch = useMatch('/search/:query/*');
 	const queryFromUrl = searchMatch && atob(searchMatch.params.query);
 	const isSearch = !!searchMatch;
 
 	// eslint-disable-next-line prefer-const
 	let [query, setQuery] = useState(queryFromUrl || '');
-	const [showPreview, setShowPreview] = useState(false);
+	const [showPreviewState, setShowPreview] = useState(false);
 
 	// if url changes, update query to match
 	const previousQueryFromUrl = useRef(queryFromUrl);
@@ -22,13 +22,10 @@ export default function Header() {
 	}
 	previousQueryFromUrl.current = queryFromUrl;
 
-	// don't show the preview if the search page already has the same results
-	const searchPageIsSameAsPreview = query === queryFromUrl;
-
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const handleFocusSearch = () => {
-		if (query && !searchPageIsSameAsPreview) {
+		if (query) {
 			setShowPreview(true);
 		}
 	};
@@ -44,23 +41,26 @@ export default function Header() {
 
 	const handleClickItem = useCallback(item => {
 		if (isSearch) {
-			history.push(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
+			navigate(`/search/${btoa(queryFromUrl)}/${btoa(item.id)}`);
 		} else {
-			history.push(`/items/${btoa(item.id)}`);
+			navigate(`/items/${btoa(item.id)}`);
 		}
-	}, [history, isSearch, queryFromUrl]);
+	}, [navigate, isSearch, queryFromUrl]);
 
 	const handleSubmitSearch = e => {
 		e.preventDefault();
 		setShowPreview(false);
-		history.push(`/search/${btoa(query)}`);
+		navigate(`/search/${btoa(query)}`);
 	};
 
+	// don't show the preview if the search page already has the same results
+	const showPreview = showPreviewState && query !== queryFromUrl;
+
 	return (
-		<CenteredColumn className="Header">
+		<div className="Header">
 			<header className="Header-header">
 				<nav>
-					<Link to="/items"><img className="Header-img" src={icon}/></Link>
+					<Link to="#"><img className="Header-img" src={icon}/></Link>
 					{' '}
 					<Link to="/items">{'Home'}</Link>
 					{' '}
@@ -72,19 +72,20 @@ export default function Header() {
 				<form className="Header-form" onSubmit={handleSubmitSearch}>
 					<input
 						type="text"
+						className={classNames({ 'Floating-externalElement--showAboveOverlay': showPreview })}
 						placeholder="Search"
 						autoFocus
 						value={query}
 						onFocus={handleFocusSearch}
 						onChange={handleChangeSearch}
 					/>
-					{showPreview && !searchPageIsSameAsPreview &&
+					{showPreview &&
 						<Floating top right onBlur={handleBlurPreview}>
 							<SearchList query={query} preview onClickItem={handleClickItem}/>
 						</Floating>
 					}
 				</form>
 			</header>
-		</CenteredColumn>
+		</div>
 	);
 }

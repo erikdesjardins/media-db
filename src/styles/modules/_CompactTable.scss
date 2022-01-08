@@ -90,6 +90,22 @@
 		}
 	}
 
+	&--alignColumnsForHistoryList {
+		td,
+		th {
+			&:nth-of-type(1), // changes
+			&:nth-of-type(2), // date
+			&:nth-of-type(3) { // selected indicator
+				text-align: left;
+			}
+
+			// make changes column take up all extra space
+			&:nth-of-type(1) {
+				width: 100%;
+			}
+		}
+	}
+
 	&-item {
 		cursor: default;
 		user-select: none;

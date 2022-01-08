@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import numeral from 'numeral';
+import classNames from 'classnames';
 import { formatIsoDate } from '../utils/date';
 import LinkButton from './LinkButton';
 import { useMutationSetRawData, useQueryRawData } from '../data/queries';
@@ -66,12 +67,19 @@ export default function StorageEdit() {
 		<fieldset className="StorageEdit">
 			<legend>
 				<LinkButton
+					className={classNames('StorageEdit-showTextarea', { 'StorageEdit-showTextarea--active': showTextarea })}
+					onClick={handleToggleTextarea}
+				>
+					{'Edit raw storage'}
+				</LinkButton>
+				{' | '}
+				<LinkButton
 					disabled={isFetching}
 					onClick={handleUpload}
 				>
 					{'Upload'}
 				</LinkButton>
-				{' '}
+				{' | '}
 				<LinkButton
 					title={numeral(rawData.length).format('0.0 b')}
 					disabled={isFetching}
@@ -79,21 +87,19 @@ export default function StorageEdit() {
 				>
 					{'Download'}
 				</LinkButton>
-				{' '}
-				<LinkButton onClick={handleToggleTextarea}>
-					{showTextarea ? 'Hide Textarea' : 'Show Textarea'}
-				</LinkButton>
-				{' '}
 				{showTextarea && isDirty &&
-					<LinkButton
-						disabled={isFetching}
-						onClick={handleSave}
-					>
-						{setRawDataMutation.isError &&
-							<span title={setRawDataMutation.error.message}>{'❌'}</span>
-						}
-						{'Save'}
-					</LinkButton>
+					<>
+						{' | '}
+						<LinkButton
+							disabled={isFetching}
+							onClick={handleSave}
+						>
+							{setRawDataMutation.isError &&
+								<span title={setRawDataMutation.error.message}>{'❌'}</span>
+							}
+							{'Save'}
+						</LinkButton>
+					</>
 				}
 			</legend>
 			{showTextarea &&

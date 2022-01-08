@@ -2,7 +2,7 @@
 @import '../breakpoints';
 @import '../theme';
 
-.Providers {
+.History {
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
@@ -20,12 +20,11 @@
 			width: percentage(math.div(6, 12));
 		}
 		@include breakpoint(lg) {
-			width: percentage(math.div(5, 12));
-			margin-left: percentage(math.div(1, 12));
+			width: percentage(math.div(6, 12));
 		}
 	}
 
-	&-test {
+	&-raw {
 		padding: $Theme-spacing--medium;
 
 		@include breakpoint(xs) {
@@ -38,7 +37,7 @@
 			width: percentage(math.div(6, 12));
 		}
 		@include breakpoint(lg) {
-			width: percentage(math.div(5, 12));
+			width: percentage(math.div(6, 12));
 		}
 	}
 }

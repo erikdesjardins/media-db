@@ -1,3 +1,10 @@
+export function last(xs) {
+	if (xs.length === 0) {
+		throw new Error('last: expected nonempty array');
+	}
+	return xs[xs.length - 1];
+}
+
 export function repeatWhile(callback) {
 	const arr = [];
 	let x;
