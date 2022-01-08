@@ -53,3 +53,15 @@ export function sortBy(xs, f) {
 	});
 	return arr;
 }
+
+export function distinctBy(xs, f) {
+	const seen = new Set();
+	return xs.filter(x => {
+		const key = f(x);
+		if (seen.has(key)) {
+			return false;
+		}
+		seen.add(key);
+		return true;
+	});
+}

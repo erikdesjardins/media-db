@@ -3,18 +3,18 @@ import { activeTab } from '../api/tabs';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as q from '../constants/queryTypes';
 import * as statusTypes from '../constants/statusTypes';
-import { randomId } from '../utils/db';
+import { randomId } from '../utils/string';
 import {
 	addItem,
 	addProvider,
-	getFilteredItems,
 	getItem,
 	getItemHistory,
 	getItemHistoryAt,
 	getItems,
+	getItemsFiltered,
+	getItemsQueried,
 	getProvider,
 	getProviders,
-	getQueriedItems,
 	getRawData,
 	removeProvider,
 	setRawData,
@@ -61,11 +61,11 @@ export function useQueryItems(options = {}) {
 }
 
 export function useQueryItemsFilter(filters, options = {}) {
-	return useQuery([q.ITEMS, 'filters', filters], () => getFilteredItems(filters), options);
+	return useQuery([q.ITEMS, 'filters', filters], () => getItemsFiltered(filters), options);
 }
 
 export function useQueryItemsSearch(query, options = {}) {
-	return useQuery([q.ITEMS, 'query', query], () => getQueriedItems(query), options);
+	return useQuery([q.ITEMS, 'query', query], () => getItemsQueried(query), options);
 }
 
 export function useQueryIdFromProvider(url, options = {}) {

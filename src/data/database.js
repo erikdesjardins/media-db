@@ -1,19 +1,39 @@
-import Dexie from 'dexie';
+import { openDB, unwrap } from 'idb';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
-import { repeatWhile } from '../utils/array';
-import { distinct, map, orderBy, reverse, whereEquals, whereRegex } from '../utils/db';
+import { distinctBy, repeatWhile, sortBy } from '../utils/array';
 import { pipe } from '../utils/function';
 import { structuralEq } from '../utils/object';
 
-const db = new Dexie('MediaDB');
+const idbReady = openDB('MediaDB', 1, {
+	upgrade(db /* , oldVersion, newVersion, transaction */) {
+		const media = db.createObjectStore('media', { keyPath: ['id', 'date'] });
+		media.createIndex('date', 'date');
 
-db.version(1).stores({
-	media: '[id+date],date,status,statusDate',
-	provider: 'id,&createdDate',
+		const provider = db.createObjectStore('provider', { keyPath: 'id' });
+		provider.createIndex('createdDate', 'createdDate', { unique: true });
+	},
 });
 
-db.open();
+async function transaction(storeNames, mode, callback) {
+	const idb = await idbReady;
+	const tx = idb.transaction(storeNames, mode);
+	let result;
+	try {
+		result = await callback(tx);
+	} catch (e) {
+		if (tx.error) {
+			// eslint-disable-next-line no-console
+			console.error('Overridden error during transaction:', e);
+			throw tx.error;
+		} else {
+			tx.abort();
+			throw e;
+		}
+	}
+	tx.commit();
+	return result;
+}
 
 // db.media (Item)
 
@@ -73,52 +93,72 @@ function validateItem(item) {
 	}
 }
 
-function _getItemHistory(id) {
-	return db.media.where('[id+date]').between([id, -Infinity], [id, Infinity]);
-}
-
 export function getItem(id) {
-	return _getItemHistory(id).last();
+	return transaction(['media'], 'readonly', async tx => {
+		// seek through all versions with this id in reverse order by date, i.e. get the most recent version
+		const cursor = await tx.store.openCursor(IDBKeyRange.bound([id, -Infinity], [id, Infinity]), 'prev');
+		if (!cursor) {
+			throw new Error(`Could not find item with id: ${id}`);
+		}
+		return cursor.value;
+	});
 }
 
 export function getItemHistory(id) {
-	return pipe(
-		_getItemHistory(id).toArray(),
-		map((item, i) => ({
-			...item,
-			id: `${item.id}-history${i}`,
-		})),
-	);
+	return transaction(['media'], 'readonly', async tx => {
+		const history = await tx.store.getAll(IDBKeyRange.bound([id, -Infinity], [id, Infinity]));
+		return history;
+	});
 }
 
 export function getItemHistoryAt(id, date) {
-	return db.media.get([id, date]);
+	return transaction(['media'], 'readonly', async tx => {
+		const item = await tx.store.get([id, date]);
+		if (!item) {
+			throw new Error(`Could not find item history with id: ${id}, date: ${date}`);
+		}
+		return item;
+	});
 }
 
 export function getItems() {
-	return pipe(db.media.orderBy('date').toArray(), reverse(), distinct('id'), orderBy('statusDate'));
+	return transaction(['media'], 'readonly', async tx => {
+		const items = await tx.store.index('date').getAll(IDBKeyRange.bound(-Infinity, Infinity));
+		return pipe(
+			items,
+			items => items.reverse(),
+			items => distinctBy(items, item => item.id),
+			items => sortBy(items, item => item.statusDate),
+		);
+	});
 }
 
-export function getFilteredItems(filterMap) {
+export async function getItemsFiltered(filterMap) {
+	const items = await getItems();
 	return Object.entries(filterMap).reduce(
-		(items, [key, value]) => (value ? pipe(items, whereEquals(key, value)) : items),
-		getItems(),
+		(items, [key, value]) => items.filter(item => item[key] === value),
+		items,
 	);
 }
 
 // field:regex field2:regex with spaces
-export function getQueriedItems(query) {
+export async function getItemsQueried(query) {
+	const items = await getItems();
 	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
 	return repeatWhile(() => re.exec(query)).reduce(
-		(items, [, key, regex]) => (regex ? pipe(items, whereRegex(key, regex)) : items),
-		getItems(),
+		(items, [, key, regex]) => {
+			const re = new RegExp(regex, 'i');
+			return items.filter(item => re.test(item[key]));
+		},
+		items,
 	);
 }
 
 export function addItem(id, item) {
 	const now = Date.now();
-	return db.transaction('rw', db.media, async () => {
-		if (await getItem(id)) {
+	return transaction(['media'], 'readwrite', async tx => {
+		const cursor = await tx.store.openCursor(IDBKeyRange.bound([id, -Infinity], [id, Infinity]), 'prev');
+		if (cursor) {
 			throw new Error(`Tried to add item with in-use id: ${id}`);
 		}
 		const newItem = {
@@ -128,16 +168,17 @@ export function addItem(id, item) {
 			statusDate: now,
 		};
 		validateItem(newItem);
-		db.media.add(newItem);
+		await tx.store.add(newItem);
 	});
 }
 
 export function updateItem(id, patch) {
-	return db.transaction('rw', db.media, async () => {
-		const existing = await getItem(id);
-		if (!existing) {
+	return transaction(['media'], 'readwrite', async tx => {
+		const cursor = await tx.store.openCursor(IDBKeyRange.bound([id, -Infinity], [id, Infinity]), 'prev');
+		if (!cursor) {
 			throw new Error(`Tried to update non-extant item with id: ${id}`);
 		}
+		const existing = cursor.value;
 		if ('id' in patch && patch.id !== existing.id) {
 			throw new Error(`Tried to change id of item to: ${patch.id}`);
 		}
@@ -157,7 +198,7 @@ export function updateItem(id, patch) {
 		}
 		// add the new version
 		validateItem(updated);
-		db.media.add(updated);
+		await tx.store.add(updated);
 	});
 }
 
@@ -186,25 +227,38 @@ function validateProvider(provider) {
 }
 
 export function getProvider(id) {
-	return db.provider.get(id);
+	return transaction(['provider'], 'readonly', async tx => {
+		const provider = await tx.store.get(id);
+		if (!provider) {
+			throw new Error(`Could not find provider with id: ${id}`);
+		}
+		return provider;
+	});
 }
 
 export function getProviders() {
-	return db.provider.orderBy('createdDate').toArray();
+	return transaction(['provider'], 'readonly', async tx => {
+		const providers = await tx.store.index('createdDate').getAll();
+		return providers;
+	});
 }
 
 export function addProvider(id) {
-	const provider = { id, infoCallback: '', createdDate: Date.now() };
-	validateProvider(provider);
-	return db.provider.add(provider);
+	const now = Date.now();
+	return transaction(['provider'], 'readwrite', async tx => {
+		const provider = { id, infoCallback: '', createdDate: now };
+		validateProvider(provider);
+		await tx.store.add(provider);
+	});
 }
 
 export function updateProvider(id, patch) {
-	return db.transaction('rw', db.provider, async () => {
-		const existing = await getProvider(id);
-		if (!existing) {
+	return transaction(['provider'], 'readwrite', async tx => {
+		const cursor = await tx.store.openCursor(IDBKeyRange.only(id));
+		if (!cursor) {
 			throw new Error(`Tried to update non-extant provider with id: ${id}`);
 		}
+		const existing = cursor.value;
 		if ('id' in patch && patch.id !== existing.id) {
 			throw new Error(`Tried to change id of provider (to ${patch.id})`);
 		}
@@ -213,20 +267,22 @@ export function updateProvider(id, patch) {
 		}
 		const updated = { ...existing, ...patch };
 		validateProvider(updated);
-		db.provider.update(id, patch);
+		await cursor.update(updated);
 	});
 }
 
 export function removeProvider(id) {
-	return db.provider.delete(id);
+	return transaction(['provider'], 'readwrite', async tx => {
+		await tx.store.delete(id);
+	});
 }
 
 // Bulk imports/exports
 
 export function getRawData() {
-	return db.transaction('r', [db.media, db.provider], async () => {
-		const media = await db.media.toArray();
-		const provider = await db.provider.toArray();
+	return transaction(['media', 'provider'], 'readonly', async tx => {
+		const media = await tx.objectStore('media').getAll();
+		const provider = await tx.objectStore('provider').getAll();
 		const backup = {
 			version: 1,
 			tables: {
@@ -256,14 +312,29 @@ export async function setRawData(backup) {
 		throw new Error('Unrecognised backup format');
 	}
 
-	await db.transaction('rw', [db.media, db.provider], () => {
+	await transaction(['media', 'provider'], 'readwrite', async tx => {
 		if (media) {
-			db.media.clear();
-			db.media.bulkAdd(media);
+			const store = tx.objectStore('media');
+			await store.clear();
+			// use raw add operations to avoid overhead of listening to onsuccess
+			// see https://stackoverflow.com/a/52555073
+			const rawStore = unwrap(store);
+			for (const item of media.slice(0, -1)) {
+				rawStore.add(item);
+			}
+			// ...but listen on last item to ensure we get exception for bad data
+			for (const lastItem of media.slice(-1)) {
+				// eslint-disable-next-line no-await-in-loop
+				await store.add(lastItem);
+			}
 		}
 		if (provider) {
-			db.provider.clear();
-			db.provider.bulkAdd(provider);
+			const store = tx.objectStore('provider');
+			await store.clear();
+			for (const p of provider) {
+				// eslint-disable-next-line no-await-in-loop
+				await store.add(p);
+			}
 		}
 	});
 }
