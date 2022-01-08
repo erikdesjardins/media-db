@@ -1,7 +1,7 @@
 import ItemHistory from './ItemHistory';
 import { useQueryItemHistory } from '../data/queries';
 
-export default function SidebarHistory({ itemId: id }) {
+export default function SidebarHistory({ itemId: id, onClickItemHistory }) {
 	const { isLoading, data: history } = useQueryItemHistory(id, { keepPreviousData: true });
 
 	if (isLoading) {
@@ -9,6 +9,6 @@ export default function SidebarHistory({ itemId: id }) {
 	}
 
 	return (
-		<ItemHistory history={history}/>
+		<ItemHistory history={history} onClickItemHistory={onClickItemHistory}/>
 	);
 }

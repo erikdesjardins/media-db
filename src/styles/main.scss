@@ -2,6 +2,8 @@
 @import 'components/CenteredColumn';
 @import 'components/Floating';
 @import 'components/Header';
+@import 'components/HistoryList';
+@import 'components/HistoryRaw';
 @import 'components/ItemRefreshButton';
 @import 'components/ItemThumbnail';
 @import 'components/ItemTitleBlock';
@@ -12,6 +14,7 @@
 @import 'components/SelectBar';
 @import 'components/SidebarItem';
 @import 'components/StorageEdit';
+@import 'containers/History';
 @import 'containers/Items';
 @import 'containers/Popup';
 @import 'containers/Providers';

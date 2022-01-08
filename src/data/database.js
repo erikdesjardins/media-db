@@ -91,6 +91,10 @@ export function getItemHistory(id) {
 	);
 }
 
+export function getItemHistoryAt(id, date) {
+	return db.media.get([id, date]);
+}
+
 export function getItems() {
 	return pipe(db.media.orderBy('date').toArray(), reverse(), distinct('id'), orderBy('statusDate'));
 }

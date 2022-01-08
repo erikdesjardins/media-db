@@ -1,5 +1,6 @@
 import Popup from './containers/Popup';
 import Header from './containers/Header';
+import History from './containers/History';
 import Items from './containers/Items';
 import Search from './containers/Search';
 import Sidebar from './containers/Sidebar';
@@ -23,6 +24,7 @@ ReactDOM.render((
 				<Route path="search/:query" element={<Search/>}>
 					<Route path=":id" element={<Sidebar/>}/>
 				</Route>
+				<Route path="history/:id/:date" element={<History/>}/>
 				<Route path="providers" element={<Providers/>}/>
 				<Route path="storage" element={<Storage/>}/>
 			</Routes>

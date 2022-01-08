@@ -10,6 +10,7 @@ import {
 	getFilteredItems,
 	getItem,
 	getItemHistory,
+	getItemHistoryAt,
 	getItems,
 	getProvider,
 	getProviders,
@@ -46,6 +47,10 @@ export function useQueryItem(id, options = {}) {
 
 export function useQueryItemHistory(id, options = {}) {
 	return useQuery([q.ITEM, id, 'history'], () => getItemHistory(id), options);
+}
+
+export function useQueryItemHistoryAt(id, date, options = {}) {
+	return useQuery([q.ITEM, id, 'history', date], () => getItemHistoryAt(id, date), options);
 }
 
 export function useQueryItems(options = {}) {

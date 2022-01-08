@@ -4,7 +4,7 @@ import SidebarInfo from './SidebarInfo';
 import SidebarHistory from './SidebarHistory';
 import SelectBar from './SelectBar';
 
-export default function SidebarItem({ itemId }) {
+export default function SidebarItem({ itemId: id, onClickItemHistory }) {
 	const [showInfo, setShowInfo] = useState(true);
 
 	return (
@@ -23,8 +23,8 @@ export default function SidebarItem({ itemId }) {
 				/>
 			</legend>
 			{showInfo ?
-				<SidebarInfo itemId={itemId}/> :
-				<SidebarHistory itemId={itemId}/>
+				<SidebarInfo itemId={id}/> :
+				<SidebarHistory itemId={id} onClickItemHistory={onClickItemHistory}/>
 			}
 		</fieldset>
 	);
