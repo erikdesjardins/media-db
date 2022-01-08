@@ -9,7 +9,7 @@ import { structuralEq } from '../utils/object';
 const db = new Dexie('MediaDB');
 
 db.version(1).stores({
-	media: '++,id,date,&[id+date],status,statusDate',
+	media: '[id+date],date,status,statusDate',
 	provider: 'id,&createdDate',
 });
 
