@@ -79,10 +79,10 @@ export function useQueryIdFromProvider(url, options = {}) {
 }
 
 export function useQueryItemFromProvider(url, options = {}) {
-	return useQuery([q.FROM_PROVIDER, url, 'item'], async () => {
+	return useQuery([q.FROM_PROVIDER, url, 'item'], async ({ signal }) => {
 		const providers = await getProviders();
 		for (const provider of providers) {
-			const result = await runProvider(provider, url); // eslint-disable-line no-await-in-loop
+			const result = await runProvider(provider, url, signal); // eslint-disable-line no-await-in-loop
 			if (result) {
 				console.info('Provider returned:', result); // eslint-disable-line no-console
 				return result;

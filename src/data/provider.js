@@ -44,7 +44,7 @@ export function runProviderForId(provider, url) {
 	return id;
 }
 
-export async function runProvider(provider, url) {
+export async function runProvider(provider, url, signal /*: AbortSignal */) {
 	const {
 		urlRegex,
 		idTemplate,
@@ -64,7 +64,7 @@ export async function runProvider(provider, url) {
 		// Disabled because Chrome Web Store review is obnoxious when you request host permissions.
 		// Needs the following in the manifest: "host_permissions": ["https://*/*"],
 		// await requestPermissionForUrl(urlToFetch);
-		const res = await fetch(urlToFetch, { headers });
+		const res = await fetch(urlToFetch, { headers, signal });
 		if (!res.ok) {
 			throw new Error(`Failed request to '${urlToFetch}': ${res.status}`);
 		}
