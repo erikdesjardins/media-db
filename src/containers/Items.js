@@ -1,6 +1,6 @@
-import ItemView from '../components/ItemView';
 import { useCallback } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import ItemView from '../components/ItemView';
 
 export default function Items() {
 	const navigate = useNavigate();

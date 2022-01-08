@@ -1,6 +1,6 @@
+import { useMutationUpdateItem } from '../data/queries';
 import AutosaveInput from './AutosaveInput';
 import ItemRefreshButton from './ItemRefreshButton';
-import { useMutationUpdateItem } from '../data/queries';
 
 export default function ItemGenres({ item }) {
 	const mutation = useMutationUpdateItem(item.id);

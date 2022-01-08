@@ -1,6 +1,6 @@
-import Provider from './Provider';
-import LinkButton from './LinkButton';
 import { useMutationAddProvider, useQueryProviders } from '../data/queries';
+import LinkButton from './LinkButton';
+import Provider from './Provider';
 
 export default function ProviderList() {
 	const { isLoading, data: providers } = useQueryProviders();

@@ -2069,11 +2069,6 @@ eslint-plugin-react@7.28.0:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.6"
 
-eslint-plugin-sort-imports-es6@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-sort-imports-es6/-/eslint-plugin-sort-imports-es6-0.0.3.tgz#959f391d459efbf971d3ebb696d79e1b567aeedc"
-  integrity sha1-lZ85HUWe+/lx0+u2lteeG1Z67tw=
-
 eslint-scope@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-4.0.3.tgz#ca03833310f6889a3264781aa82e63eb9cfe7848"

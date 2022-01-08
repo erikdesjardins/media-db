@@ -1,6 +1,6 @@
-import SidebarItem from '../components/SidebarItem';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import SidebarItem from '../components/SidebarItem';
 
 export default function Sidebar() {
 	const params = useParams();

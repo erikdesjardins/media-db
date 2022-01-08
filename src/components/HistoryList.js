@@ -1,7 +1,7 @@
-import FullDate from './FullDate';
+import { diffsFromItemHistory } from '../data/history';
 import { useQueryItemHistory } from '../data/queries';
 import { last } from '../utils/array';
-import { diffsFromItemHistory } from '../data/history';
+import FullDate from './FullDate';
 
 export default function HistoryList({ itemId: id, selectedDate, onClickItemHistory }) {
 	const { isLoading, data: history } = useQueryItemHistory(id, { keepPreviousData: true });

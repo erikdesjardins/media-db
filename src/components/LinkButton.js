@@ -1,5 +1,5 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
 export default React.memo(function LinkButton({ className, title, disabled, onClick, children }) {
 	const handleClick = e => {

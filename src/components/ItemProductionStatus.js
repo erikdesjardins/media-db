@@ -1,7 +1,7 @@
-import ItemRefreshButton from './ItemRefreshButton';
-import SelectBar from './SelectBar';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import { useMutationUpdateItem } from '../data/queries';
+import ItemRefreshButton from './ItemRefreshButton';
+import SelectBar from './SelectBar';
 
 export default function ItemProductionStatus({ item }) {
 	const mutation = useMutationUpdateItem(item.id);

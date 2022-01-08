@@ -1,8 +1,8 @@
 import Dexie from 'dexie';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
-import { distinct, map, whereEquals, whereRegex, reverse, orderBy } from '../utils/db';
 import { repeatWhile } from '../utils/array';
+import { distinct, map, orderBy, reverse, whereEquals, whereRegex } from '../utils/db';
 import { pipe } from '../utils/function';
 import { structuralEq } from '../utils/object';
 

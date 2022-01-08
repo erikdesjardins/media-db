@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import SearchList from '../components/SearchList';
-import { useParams, useNavigate, Outlet } from 'react-router-dom';
 
 export default function Search() {
 	const params = useParams();

@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import classNames from 'classnames';
-import SidebarInfo from './SidebarInfo';
-import SidebarHistory from './SidebarHistory';
+import { useState } from 'react';
 import SelectBar from './SelectBar';
+import SidebarHistory from './SidebarHistory';
+import SidebarInfo from './SidebarInfo';
 
 export default function SidebarItem({ itemId: id, onClickItemHistory }) {
 	const [showInfo, setShowInfo] = useState(true);

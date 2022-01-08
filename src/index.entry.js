@@ -1,15 +1,15 @@
-import Popup from './containers/Popup';
+import ReactDOM from 'react-dom';
+import { QueryClientProvider } from 'react-query';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Header from './containers/Header';
 import History from './containers/History';
 import Items from './containers/Items';
+import Popup from './containers/Popup';
+import Providers from './containers/Providers';
 import Search from './containers/Search';
 import Sidebar from './containers/Sidebar';
 import Storage from './containers/Storage';
-import Providers from './containers/Providers';
 import { queryClient } from './data/queries';
-import ReactDOM from 'react-dom';
-import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
-import { QueryClientProvider } from 'react-query';
 
 ReactDOM.render((
 	<QueryClientProvider client={queryClient}>
