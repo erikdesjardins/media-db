@@ -30,7 +30,7 @@ export const queryClient = new QueryClient({
 			staleTime: Infinity, // never consider query results stale
 			retry: false, // retries don't help any of our (local) requests
 			refetchOnReconnect: false, // we don't perform any uncacheable network requests
-			refetchOnWindowFocus: false, // we don't perform any uncacheable network requests
+			refetchOnWindowFocus: 'always', // ensure consistency when using multiple tabs
 		},
 	},
 });
@@ -38,7 +38,10 @@ export const queryClient = new QueryClient({
 // Queries
 
 export function useQueryActiveTab(options = {}) {
-	return useQuery([q.ACTIVE_TAB], () => activeTab(), options);
+	return useQuery([q.ACTIVE_TAB], () => activeTab(), {
+		refetchOnWindowFocus: false, // we only have permission to get active tab during initial open, can't refetch
+		...options,
+	});
 }
 
 export function useQueryItem(id, options = {}) {
