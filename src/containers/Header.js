@@ -61,7 +61,7 @@ export default function Header() {
 		<CenteredColumn className="Header">
 			<header className="Header-header">
 				<nav>
-					<Link to="/items"><img className="Header-img" src={icon}/></Link>
+					<Link to="#"><img className="Header-img" src={icon}/></Link>
 					{' '}
 					<Link to="/items">{'Home'}</Link>
 					{' '}
