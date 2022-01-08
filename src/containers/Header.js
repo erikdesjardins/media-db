@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react';
 import icon from '../images/icon32.png';
 import classNames from 'classnames';
 import { Link, useNavigate, useMatch } from 'react-router-dom';
-import CenteredColumn from '../components/CenteredColumn';
 import SearchList from '../components/SearchList';
 import Floating from '../components/Floating';
 
@@ -58,7 +57,7 @@ export default function Header() {
 	const showPreview = showPreviewState && query !== queryFromUrl;
 
 	return (
-		<CenteredColumn className="Header">
+		<div className="Header">
 			<header className="Header-header">
 				<nav>
 					<Link to="#"><img className="Header-img" src={icon}/></Link>
@@ -87,6 +86,6 @@ export default function Header() {
 					}
 				</form>
 			</header>
-		</CenteredColumn>
+		</div>
 	);
 }
