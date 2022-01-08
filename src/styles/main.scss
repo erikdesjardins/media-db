@@ -3,7 +3,6 @@
 @import 'components/Floating';
 @import 'components/Header';
 @import 'components/HistoryList';
-@import 'components/HistoryRaw';
 @import 'components/ItemRefreshButton';
 @import 'components/ItemThumbnail';
 @import 'components/ItemTitleBlock';
@@ -78,6 +77,10 @@ a {
 	&:visited {
 		color: $Theme-link;
 	}
+}
+
+code {
+	white-space: pre-wrap;
 }
 
 img {

@@ -13,7 +13,7 @@ export default function HistoryRaw({ itemId: id, date }) {
 			<legend>
 				<FullDate date={historyItem.date}/>
 			</legend>
-			<code className="HistoryRaw-code">
+			<code>
 				{JSON.stringify(historyItem, null, 2)}
 			</code>
 		</fieldset>
