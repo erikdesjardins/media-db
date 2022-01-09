@@ -1,15 +1,11 @@
 import classNames from 'classnames';
-import { useState } from 'react';
 import { useQueryItemFromProvider } from '../data/queries';
 
-export default function ProviderTest() {
-	const [url, setUrl] = useState('');
-
-	const { isLoading, isError, error, isPreviousData, isRefetching, data: itemFromProvider } =
-		useQueryItemFromProvider(url, { keepPreviousData: true });
+export default function ProviderTest({ url, onChangeUrl }) {
+	const { isLoading, isError, error, isPreviousData, isRefetching, data: itemFromProvider } = useQueryItemFromProvider(url, { keepPreviousData: true });
 
 	const handleChange = e => {
-		setUrl(e.target.value);
+		onChangeUrl(e.target.value);
 	};
 
 	let output;
