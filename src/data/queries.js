@@ -11,8 +11,7 @@ import {
 	getItemHistory,
 	getItemHistoryAt,
 	getItems,
-	getItemsFiltered,
-	getItemsQueried,
+	getItemsWithStatus,
 	getProvider,
 	getProviders,
 	getRawData,
@@ -60,12 +59,8 @@ export function useQueryItems(options = {}) {
 	return useQuery([q.ITEMS], () => getItems(), options);
 }
 
-export function useQueryItemsFilter(filters, options = {}) {
-	return useQuery([q.ITEMS, 'filters', filters], () => getItemsFiltered(filters), options);
-}
-
-export function useQueryItemsSearch(query, options = {}) {
-	return useQuery([q.ITEMS, 'query', query], () => getItemsQueried(query), options);
+export function useQueryItemsWithStatus(status, options = {}) {
+	return useQuery([q.ITEMS, 'status', status], () => getItemsWithStatus(status), options);
 }
 
 export function useQueryIdFromProvider(url, options = {}) {

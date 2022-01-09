@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as statusTypes from '../constants/statusTypes';
 import { ROW_LIMIT } from '../constants/table';
-import { useQueryItemsFilter } from '../data/queries';
+import { useQueryItemsWithStatus } from '../data/queries';
 import { roundDownToMultiple } from '../utils/math';
 import ItemList from './ItemList';
 import LinkButton from './LinkButton';
@@ -11,7 +11,7 @@ export default function ItemView({ onClickItem }) {
 	const [status, setStatus] = useState(statusTypes.IN_PROGRESS);
 	const [offset, setOffset] = useState(0);
 
-	const { isLoading, isFetching, data: items } = useQueryItemsFilter({ status }, { keepPreviousData: true });
+	const { isLoading, isFetching, data: items } = useQueryItemsWithStatus(status, { keepPreviousData: true });
 
 	if (isLoading) {
 		return null;

@@ -1,7 +1,7 @@
 import { openDB, unwrap } from 'idb';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as statusTypes from '../constants/statusTypes';
-import { distinctBy, repeatWhile, sortBy } from '../utils/array';
+import { distinctBy, sortBy } from '../utils/array';
 import { pipe } from '../utils/function';
 import { structuralEq } from '../utils/object';
 
@@ -133,25 +133,11 @@ export function getItems() {
 	});
 }
 
-export async function getItemsFiltered(filterMap) {
+export async function getItemsWithStatus(status) {
+	// this could be implemented more efficiently with an index on `status`
+	// (but it's nontrivial--a naive index would include previous versions of items that used to have the desired status but not longer do)
 	const items = await getItems();
-	return Object.entries(filterMap).reduce(
-		(items, [key, value]) => items.filter(item => item[key] === value),
-		items,
-	);
-}
-
-// field:regex field2:regex with spaces
-export async function getItemsQueried(query) {
-	const items = await getItems();
-	const re = /\b(\w+):((?:\S+\s*?)+)\s*(?=\w+:|$)/g;
-	return repeatWhile(() => re.exec(query)).reduce(
-		(items, [, key, regex]) => {
-			const re = new RegExp(regex, 'i');
-			return items.filter(item => re.test(item[key]));
-		},
-		items,
-	);
+	return items.filter(item => item.status === status);
 }
 
 export function addItem(id, item) {
