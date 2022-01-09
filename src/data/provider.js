@@ -10,6 +10,7 @@ const Path = {
 	props: 'props',
 	select: 'select',
 	map: 'map',
+	reverse: 'reverse',
 	replace: 'replace',
 	lowercase: 'lowercase',
 	relativeUrl: 'relativeUrl',
@@ -107,16 +108,26 @@ function substitutePlaceholders(template, substitutions) {
 }
 
 function traversePath(value, path, matches) {
-	if (Array.isArray(value)) {
-		return value.map(v => traversePath(v, path, matches));
-	}
-
 	const [[type, arg], ...rest] = Object.entries(path);
 
 	if (rest.length > 0) {
 		throw new Error(`Path component has extraneous properties: ${JSON.stringify(rest)}`);
 	}
 
+	// types which operate on entire arrays
+	switch (type) {
+		case Path.reverse: {
+			return value.slice().reverse();
+		}
+		default:
+			break;
+	}
+
+	if (Array.isArray(value)) {
+		return value.map(v => traversePath(v, path, matches));
+	}
+
+	// types which operate on individual elements
 	switch (type) {
 		case Path.props: {
 			const props /*: string[] */ = arg;
