@@ -26,6 +26,7 @@ ReactDOM.render((
 				</Route>
 				<Route path="history/:id/:date" element={<History/>}/>
 				<Route path="providers" element={<Providers/>}/>
+				<Route path="providers/:url" element={<Providers/>}/>
 				<Route path="storage" element={<Storage/>}/>
 			</Routes>
 		</HashRouter>
