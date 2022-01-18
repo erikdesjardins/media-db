@@ -1,18 +1,14 @@
 import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 export default React.memo(function AutosaveInput({ type, rows, className, defaultValue, onSave }) {
-	// eslint-disable-next-line prefer-const
-	let [value, setValue] = useState(defaultValue);
-
-	// if the component is clean and the default value is changed,
-	// `value` should follow `defaultValue` to avoid dirtying the component
-	const previousDefaultValue = useRef(defaultValue);
-	if (value === previousDefaultValue.current && defaultValue !== previousDefaultValue.current) {
+	const [value, setValue] = useState(defaultValue);
+	const [prevDefaultValue, setPrevDefaultValue] = useState(defaultValue);
+	// if the default value is changed, `value` should follow `defaultValue` to avoid dirtying the component
+	if (defaultValue !== prevDefaultValue) {
 		setValue(defaultValue);
-		value = defaultValue;
+		setPrevDefaultValue(defaultValue);
 	}
-	previousDefaultValue.current = defaultValue;
 
 	const isDirty = String(value) !== String(defaultValue);
 

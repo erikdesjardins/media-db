@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import Floating from '../components/Floating';
 import SearchList from '../components/SearchList';
@@ -10,17 +10,15 @@ export default function Header() {
 	const queryFromUrl = searchMatch && atob(searchMatch.params.query);
 	const isSearch = !!searchMatch;
 
-	// eslint-disable-next-line prefer-const
-	let [query, setQuery] = useState(queryFromUrl || '');
-	const [showPreviewState, setShowPreview] = useState(false);
-
+	const [query, setQuery] = useState(queryFromUrl || '');
+	const [prevQueryFromUrl, setPrevQueryFromUrl] = useState(queryFromUrl || '');
 	// if url changes, update query to match
-	const previousQueryFromUrl = useRef(queryFromUrl);
-	if (queryFromUrl && queryFromUrl !== previousQueryFromUrl.current && queryFromUrl !== query) {
-		setQuery(queryFromUrl);
-		query = queryFromUrl;
+	if (queryFromUrl !== prevQueryFromUrl) {
+		if (queryFromUrl) setQuery(queryFromUrl);
+		setPrevQueryFromUrl(queryFromUrl);
 	}
-	previousQueryFromUrl.current = queryFromUrl;
+
+	const [showPreviewState, setShowPreview] = useState(false);
 
 	const navigate = useNavigate();
 
