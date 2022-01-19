@@ -1,26 +1,24 @@
 import classNames from 'classnames';
 import numeral from 'numeral';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useMutationSetRawData, useQueryRawData } from '../data/queries';
 import { formatIsoDate } from '../utils/date';
 import LinkButton from './LinkButton';
 
 export default function StorageEdit() {
-	const { isLoading, isFetching, data: rawData = '' } = useQueryRawData({ keepPreviousData: true });
+	const { isLoading, isFetching, data: rawData } = useQueryRawData({ keepPreviousData: true });
 
 	const setRawDataMutation = useMutationSetRawData();
 
-	// eslint-disable-next-line prefer-const
-	let [value, setValue] = useState(rawData);
-	const [showTextarea, setShowTextarea] = useState(false);
-
+	const [value, setValue] = useState(rawData);
+	const [prevRawData, setPrevRawData] = useState(rawData);
 	// if rawData is updated by restoring a file, update the textarea
-	const previousRawData = useRef(rawData);
-	if (value === previousRawData.current && rawData !== previousRawData.current) {
+	if (rawData !== prevRawData) {
 		setValue(rawData);
-		value = rawData;
+		setPrevRawData(rawData);
 	}
-	previousRawData.current = rawData;
+
+	const [showTextarea, setShowTextarea] = useState(false);
 
 	if (isLoading) {
 		return null;
