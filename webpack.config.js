@@ -34,7 +34,6 @@ module.exports = (env, { mode }) => ({
 							mode === 'production' && ['babel-preset-minify', {
 								booleans: false,
 								builtIns: false,
-								deadcode: false,
 								flipComparisons: false,
 								mangle: false,
 							}],
@@ -75,7 +74,7 @@ module.exports = (env, { mode }) => ({
 								'typeof window': 'object',
 							}],
 
-							mode === 'production' && 'babel-plugin-transform-react-remove-prop-types',
+							mode === 'production' && '@babel/plugin-transform-react-constant-elements',
 						].filter(x => x),
 						comments: false,
 						compact: true,

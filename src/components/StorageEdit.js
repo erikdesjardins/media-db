@@ -85,28 +85,31 @@ export default function StorageEdit() {
 				>
 					{'Download'}
 				</LinkButton>
-				{showTextarea && isDirty &&
+				{showTextarea && isDirty ?
 					<>
 						{' | '}
 						<LinkButton
 							disabled={isFetching}
 							onClick={handleSave}
 						>
-							{setRawDataMutation.isError &&
-								<span title={setRawDataMutation.error.message}>{'❌'}</span>
+							{setRawDataMutation.isError ?
+								<span title={setRawDataMutation.error.message}>{'❌'}</span> :
+								null
 							}
 							{'Save'}
 						</LinkButton>
-					</>
+					</> :
+					null
 				}
 			</legend>
-			{showTextarea &&
+			{showTextarea ?
 				<textarea
 					className="StorageEdit-textarea"
 					rows={32}
 					value={value}
 					onChange={handleChange}
-				/>
+				/> :
+				null
 			}
 		</fieldset>
 	);

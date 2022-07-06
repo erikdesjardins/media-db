@@ -18,7 +18,7 @@ export default function Header() {
 		setPrevQueryFromUrl(queryFromUrl);
 	}
 
-	const [showPreviewState, setShowPreview] = useState(false);
+	const [showPreview, setShowPreview] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ export default function Header() {
 	};
 
 	// don't show the preview if the search page already has the same results
-	const showPreview = showPreviewState && query !== queryFromUrl;
+	const showPreviewForReal = showPreview && query !== queryFromUrl;
 
 	return (
 		<div className="Header">
@@ -70,17 +70,18 @@ export default function Header() {
 				<form className="Header-form" onSubmit={handleSubmitSearch}>
 					<input
 						type="text"
-						className={classNames({ 'Floating-externalElement--showAboveOverlay': showPreview })}
+						className={classNames({ 'Floating-externalElement--showAboveOverlay': showPreviewForReal })}
 						placeholder="Search"
 						autoFocus
 						value={query}
 						onFocus={handleFocusSearch}
 						onChange={handleChangeSearch}
 					/>
-					{showPreview &&
+					{showPreviewForReal ?
 						<Floating top right onBlur={handleBlurPreview}>
 							<SearchList query={query} preview onClickItem={handleClickItem}/>
-						</Floating>
+						</Floating> :
+						null
 					}
 				</form>
 			</header>

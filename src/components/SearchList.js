@@ -29,10 +29,11 @@ export default function SearchList({ query, preview = false, onClickItem }) {
 				{'Viewing'}
 				{' '}{Math.min(items.length, limit)}{' '}
 				{'results'}
-				{preview &&
+				{preview ?
 					<>
 						{' '}{'('}{items.length}{' '}{'total'}{')'}
-					</>
+					</> :
+					null
 				}
 			</legend>
 			<ItemList items={items.slice(0, limit)} onClickItem={onClickItem}/>
