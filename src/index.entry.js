@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { QueryClientProvider } from 'react-query';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Header from './containers/Header';
@@ -11,7 +11,9 @@ import Sidebar from './containers/Sidebar';
 import Storage from './containers/Storage';
 import { queryClient } from './data/queries';
 
-ReactDOM.render((
+const root = createRoot(document.getElementById('app'));
+
+root.render((
 	<QueryClientProvider client={queryClient}>
 		<HashRouter>
 			<Header/>
@@ -31,4 +33,4 @@ ReactDOM.render((
 			</Routes>
 		</HashRouter>
 	</QueryClientProvider>
-), document.getElementById('app'));
+));
