@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { activeTab } from '../api/tabs';
 import * as productionStatusTypes from '../constants/productionStatusTypes';
 import * as q from '../constants/queryTypes';
@@ -25,11 +25,17 @@ import { runProvider, runProviderForId } from './provider';
 export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
+			networkMode: 'always', // no connection used
 			cacheTime: Infinity, // cache unused query results forever
 			staleTime: Infinity, // never consider query results stale
 			retry: false, // retries don't help any of our (local) requests
 			refetchOnReconnect: false, // we don't perform any uncacheable network requests
 			refetchOnWindowFocus: 'always', // ensure consistency when using multiple tabs
+		},
+		mutations: {
+			networkMode: 'always', // no connection used
+			cacheTime: Infinity, // cache unused mutation results forever
+			retry: false, // retries don't help any of our (local) requests
 		},
 	},
 });
