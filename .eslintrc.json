@@ -7,6 +7,7 @@
 		}
 	},
 	"plugins": [
+		"@tanstack/eslint-plugin-query",
 		"eslint-plugin-react",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-consistent-return-legacy",
@@ -29,7 +30,12 @@
 		"node": true,
 		"es6": true
 	},
-	"extends": ["eslint:all", "plugin:react/all", "plugin:react-hooks/recommended"],
+	"extends": [
+		"eslint:all",
+		"plugin:@tanstack/eslint-plugin-query/recommended",
+		"plugin:react/all",
+		"plugin:react-hooks/recommended"
+	],
 	"rules": {
 		"react/destructuring-assignment": 0,
 		"react/forbid-component-props": 0,
